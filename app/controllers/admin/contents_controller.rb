@@ -47,11 +47,9 @@ class Admin::ContentsController < ApplicationController
   end
 
   def show
-    @content.increment_view_count! if @content.published?
   end
 
   def edit
-    redirect_to admin_contents_path, alert: '该内容无法编辑' unless @content.can_edit?
   end
 
   def update
@@ -63,12 +61,8 @@ class Admin::ContentsController < ApplicationController
   end
 
   def destroy
-    if @content.can_delete?
-      @content.destroy
-      redirect_to admin_contents_path, notice: '内容删除成功'
-    else
-      redirect_to admin_contents_path, alert: '该内容无法删除'
-    end
+    @content.destroy
+    redirect_to admin_contents_path, notice: '内容删除成功'
   end
 
   # 文件上传
