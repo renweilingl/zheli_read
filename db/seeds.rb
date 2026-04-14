@@ -1,10 +1,10 @@
 # 种子数据
 
 # 创建默认超级管理员
-if User.where(email: 'admin@greenleaf.com').empty?
+if User.where(email: 'admin@zheli.com').empty?
   admin = User.create!(
     name: '超级管理员',
-    email: 'admin@greenleaf.com',
+    email: 'admin@zheli.com',
     password: 'admin123456',
 #    password_confirmation: 'admin123456',
     role: 'super_admin'
@@ -13,10 +13,10 @@ if User.where(email: 'admin@greenleaf.com').empty?
 end
 
 # 创建测试编辑
-if User.where(email: 'editor@greenleaf.com').empty?
+if User.where(email: 'editor@zheli.com').empty?
   editor = User.create!(
     name: '测试编辑',
-    email: 'editor@greenleaf.com',
+    email: 'editor@zheli.com',
     password: 'editor123456',
 #    password_confirmation: 'editor123456',
     role: 'editor'
@@ -25,10 +25,10 @@ if User.where(email: 'editor@greenleaf.com').empty?
 end
 
 # 创建测试运营
-if User.where(email: 'operator@greenleaf.com').empty?
+if User.where(email: 'operator@zheli.com').empty?
   operator = User.create!(
     name: '测试运营',
-    email: 'operator@greenleaf.com',
+    email: 'operator@zheli.com',
     password: 'operator123456',
 #    password_confirmation: 'operator123456',
     role: 'operator'
@@ -37,10 +37,10 @@ if User.where(email: 'operator@greenleaf.com').empty?
 end
 
 # 创建测试财务
-if User.where(email: 'finance@greenleaf.com').empty?
+if User.where(email: 'finance@zheli.com').empty?
   finance = User.create!(
     name: '测试财务',
-    email: 'finance@greenleaf.com',
+    email: 'finance@zheli.com',
     password: 'finance123456',
 #    password_confirmation: 'finance123456',
     role: 'finance'
@@ -50,10 +50,10 @@ end
 
 puts "\n🎉 种子数据创建完成！"
 puts "\n默认账号信息："
-puts "超级管理员: admin@greenleaf.com / admin123456"
-puts "测试编辑: editor@greenleaf.com / editor123456"
-puts "测试运营: operator@greenleaf.com / operator123456"
-puts "测试财务: finance@greenleaf.com / finance123456"
+puts "超级管理员: admin@zheli.com / admin123456"
+puts "测试编辑: editor@zheli.com / editor123456"
+puts "测试运营: operator@zheli.com / operator123456"
+puts "测试财务: finance@zheli.com / finance123456"
 
 [{group_name: "学龄前", name: "4-6岁"},
  {group_name: "小学", name: "一年级"},
