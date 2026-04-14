@@ -25,7 +25,7 @@ class Admin::ContentsController < ApplicationController
   end
 
   def new
-    @content = Content.new
+    @content = Content.new(description: "", copy_right: "")
     grade = Category.find_by(name: "三年级")
     @content.grade_level = grade.id
   end
@@ -133,6 +133,7 @@ class Admin::ContentsController < ApplicationController
       :duration,
       :third_level,
       :second_level,
+      :copy_right,
       :grade_level,
       :status
     )

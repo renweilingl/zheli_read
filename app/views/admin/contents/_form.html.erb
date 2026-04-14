@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, @content], local: true, class: "layui-form", id: "content-form") do |f| %>
+<%= form_for(@content, url: @content.new_record? ? :admin_contents : :admin_content,method: @content.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %> 
   <fieldset class="layui-elem-field layui-field-title">
     <legend>基本信息</legend>
   </fieldset>
@@ -15,7 +15,7 @@
     <%= f.label :description, "简介", class: "layui-form-label" %>
     <div class="layui-input-block">
       <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入简介（1-200字）", maxlength: 200, rows: 4 %>
-      <div class="layui-form-mid layui-word-aux" id="desc-count">0/200</div>
+      <div class="layui-form-mid layui-word-aux" id="desc-count"><%= @content.description.length %>/200</div>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
     <%= f.label :copy_right, "版权信息", class: "layui-form-label" %>
     <div class="layui-input-block">
       <%= f.text_area :copy_right, class: "layui-textarea", placeholder: "请输入版权信息（1-200字）", maxlength: 200, rows: 4 %>
-      <div class="layui-form-mid layui-word-aux" id="copy-right-count">0/200</div>
+      <div class="layui-form-mid layui-word-aux" id="copy-right-count"><%= @content.copy_right.length %>/200</div>
     </div>
   </div>
 
