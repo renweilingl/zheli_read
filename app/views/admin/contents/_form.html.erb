@@ -20,6 +20,14 @@
   </div>
 
   <div class="layui-form-item">
+    <%= f.label :copy_right, "版权信息", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_area :copy_right, class: "layui-textarea", placeholder: "请输入版权信息（1-200字）", maxlength: 200, rows: 4 %>
+      <div class="layui-form-mid layui-word-aux" id="copy-right-count">0/200</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <div class="layui-inline">
       <%= f.label :grade_level, "一级分类", class: "layui-form-label" %>
       <div class="layui-input-inline" style="width: 200px;">
@@ -224,6 +232,16 @@
         $('#desc-count').css('color', '#ef4444');
       } else {
         $('#desc-count').css('color', '#9ca3af');
+      }
+    });
+
+    $('#content_copy_right').on('input', function(){
+      var len = $(this).val().length;
+      $('#copy-right-count').text(len + '/200');
+      if (len > 200) {
+        $('#copy-right-count').css('color', '#ef4444');
+      } else {
+        $('#copy-right-count').css('color', '#9ca3af');
       }
     });
 

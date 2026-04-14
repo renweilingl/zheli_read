@@ -18,7 +18,8 @@ class CreateContents < ActiveRecord::Migration[7.1]
       t.integer :file_size, comment: '文件大小（字节）'
       t.integer :duration, comment: '时长（秒）- 音视频'
 
-      t.string :copy_right, comment: '版权信息'
+      t.text :copy_right, comment: '版权信息'
+      t.string :cover_img, comment: '封面'
       t.boolean :status, default: true
 
       t.timestamps

@@ -36,7 +36,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.string "file_name", comment: "原始文件名"
     t.integer "file_size", comment: "文件大小（字节）"
     t.integer "duration", comment: "时长（秒）- 音视频"
-    t.string "copy_right", comment: "版权信息"
+    t.text "copy_right", comment: "版权信息"
+    t.string "cover_img", comment: "封面"
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
