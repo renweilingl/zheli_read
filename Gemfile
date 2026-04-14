@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 # source 'https://gems.ruby-china.com/'
 
-ruby "3.2.2"
+ruby "3.3.3"
 
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem 'psych', '< 4'
