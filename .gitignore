@@ -1,0 +1,16 @@
+config/database.yml
+config/yetting.yml
+config/credentials.yml.enc
+shared
+tmp
+log
+log/*.log
+test
+.env
+.idea
+.DS_Store
+start.sh
+config/*.pem
+dump.rdb
+/config/master.key
+public/assets
