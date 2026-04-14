@@ -1,0 +1,291 @@
+<% content_for :title, "编辑内容" %>
+
+<div class="page-header">
+  <h1 class="page-title">编辑内容</h1>
+  <div class="page-actions">
+    <%= link_to admin_content_path(@content), class: "layui-btn layui-btn-primary" do %>
+      <i class="layui-icon layui-icon-return"></i>
+      返回详情
+    <% end %>
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-body" style="padding: 30px;">
+    <%= form_with(model: [:admin, @content], local: true, class: "layui-form", id: "content-form") do |f| %>
+      <!-- 基本信息 -->
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>基本信息</legend>
+      </fieldset>
+
+      <!-- 标题 -->
+      <div class="layui-form-item">
+        <%= f.label :title, "标题", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.text_field :title, class: "layui-input", placeholder: "请输入标题（1-30字）", maxlength: 30, lay_verify: "required|titleLength", lay_reqtext: "标题不能为空" %>
+          <div class="layui-form-mid layui-word-aux" id="title-count"><%= @content.title.length %>/30</div>
+        </div>
+      </div>
+
+      <!-- 简介 -->
+      <div class="layui-form-item">
+        <%= f.label :description, "简介", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入简介（1-200字）", maxlength: 200, rows: 4 %>
+          <div class="layui-form-mid layui-word-aux" id="desc-count"><%= @content.description.length %>/200</div>
+        </div>
+      </div>
+
+      <!-- 分类和版权 -->
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <%= f.label :category_id, "分类", class: "layui-form-label" %>
+          <div class="layui-input-inline" style="width: 200px;">
+            <%= f.select :category_id,
+                options_for_select(Category.active.sorted.map { |c| [c.name, c.id] }.unshift(['请选择分类', '']), @content.category_id),
+                {},
+                class: "layui-select" %>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <%= f.label :copyright_id, "版权信息", class: "layui-form-label" %>
+          <div class="layui-input-inline" style="width: 250px;">
+            <%= f.select :copyright_id,
+                options_for_select(Copyright.active_copyrights.map { |c| [c.name, c.id] }.unshift(['请选择版权', '']), @content.copyright_id),
+                {},
+                class: "layui-select",
+                lay_verify: "required" %>
+            <div class="layui-form-mid">
+              <%= link_to "新增版权", new_admin_copyright_path, class: "layui-btn layui-btn-xs", target: "_blank" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 标签 -->
+      <div class="layui-form-item">
+        <%= f.label :tags, "标签", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <div class="layui-input-wrap">
+            <input type="text" id="tag-input" class="layui-input" placeholder="输入标签后按回车添加（最多5个，每个5字）" maxlength="5">
+          </div>
+          <div id="tags-container" class="layui-form-mid" style="padding: 10px 0;">
+            <!-- 标签将在这里显示 -->
+          </div>
+          <div class="layui-form-mid layui-word-aux">已添加 <span id="tag-count">0</span>/5 个标签</div>
+          <%= f.hidden_field :tags, id: "tags-hidden" %>
+        </div>
+      </div>
+
+      <!-- 文件信息（只读） -->
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>文件信息</legend>
+      </fieldset>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">文件类型</label>
+        <div class="layui-input-block">
+          <span class="layui-badge" style="background-color: <%= @content.file_type_color %>; color: white;">
+            <%= @content.file_type_name %>
+          </span>
+          <%= f.hidden_field :file_type %>
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">文件</label>
+        <div class="layui-input-block">
+          <div class="layui-card" style="display: inline-block; padding: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <div style="width: 40px; height: 40px; background-color: <%= @content.file_type_color %>20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                <i class="layui-icon <%= @content.file_type_icon %>" style="color: <%= @content.file_type_color %>; font-size: 20px;"></i>
+              </div>
+              <div>
+                <div style="font-weight: bold;"><%= @content.file_name %></div>
+                <div class="layui-word-aux"><%= @content.file_size_desc %></div>
+              </div>
+            </div>
+          </div>
+          <%= f.hidden_field :file_url %>
+          <%= f.hidden_field :file_name %>
+          <%= f.hidden_field :file_size %>
+        </div>
+      </div>
+
+      <!-- 状态 -->
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>状态</legend>
+      </fieldset>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">当前状态</label>
+        <div class="layui-input-block">
+          <span class="layui-badge <%= status_badge_class(@content.status) %>">
+            <%= @content.status_name %>
+          </span>
+          <%= f.hidden_field :status %>
+        </div>
+      </div>
+
+      <!-- 提交按钮 -->
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button type="submit" class="layui-btn" lay-submit lay-filter="submit-content">
+            <i class="layui-icon layui-icon-release"></i>
+            保存修改
+          </button>
+          <%= link_to "取消", admin_content_path(@content), class: "layui-btn layui-btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .layui-input-wrap {
+    position: relative;
+  }
+
+  .tag-item {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #eff6ff;
+    color: #3b82f6;
+    border-radius: 4px;
+    margin: 5px 5px 5px 0;
+    font-size: 13px;
+  }
+
+  .tag-item .remove-tag {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #9ca3af;
+  }
+
+  .tag-item .remove-tag:hover {
+    color: #ef4444;
+  }
+
+  #tags-container {
+    min-height: 40px;
+  }
+</style>
+
+<script>
+  layui.use(['layer', 'form'], function(){
+    var layer = layui.layer,
+        form = layui.form,
+        $ = layui.$;
+
+    form.render();
+
+    // 初始化已有标签
+    var tags = <%= raw @content.tags_array.to_json %>;
+
+    function renderTags() {
+      var html = '';
+      tags.forEach(function(tag, index){
+        html += '<span class="tag-item">';
+        html += tag;
+        html += '<span class="remove-tag" data-index="' + index + '">&times;</span>';
+        html += '</span>';
+      });
+      $('#tags-container').html(html);
+      $('#tag-count').text(tags.length);
+      $('#tags-hidden').val(JSON.stringify(tags));
+
+      // 更新输入框提示
+      if (tags.length >= 5) {
+        $('#tag-input').attr('placeholder', '已添加5个标签').attr('disabled', true);
+      } else {
+        $('#tag-input').attr('placeholder', '输入标签后按回车添加（' + (5 - tags.length) + '个可添加）').attr('disabled', false);
+      }
+    }
+
+    renderTags();
+
+    // 添加标签
+    $('#tag-input').on('keyup', function(e){
+      if (e.keyCode === 13) {
+        var value = $(this).val().trim();
+        if (value && value.length <= 5 && tags.length < 5 && !tags.includes(value)) {
+          tags.push(value);
+          $(this).val('');
+          renderTags();
+        } else if (value.length > 5) {
+          layer.msg('每个标签最多5个字', {icon: 5});
+        } else if (tags.length >= 5) {
+          layer.msg('最多添加5个标签', {icon: 5});
+        } else if (tags.includes(value)) {
+          layer.msg('该标签已添加', {icon: 5});
+        }
+      }
+    });
+
+    // 移除标签
+    $(document).on('click', '.remove-tag', function(){
+      var index = $(this).data('index');
+      tags.splice(index, 1);
+      renderTags();
+    });
+
+    // 字数统计
+    $('#content_title').on('input', function(){
+      var len = $(this).val().length;
+      $('#title-count').text(len + '/30');
+      if (len > 30) {
+        $('#title-count').css('color', '#ef4444');
+      } else {
+        $('#title-count').css('color', '#9ca3af');
+      }
+    });
+
+    $('#content_description').on('input', function(){
+      var len = $(this).val().length;
+      $('#desc-count').text(len + '/200');
+      if (len > 200) {
+        $('#desc-count').css('color', '#ef4444');
+      } else {
+        $('#desc-count').css('color', '#9ca3af');
+      }
+    });
+
+    // 验证
+    form.verify({
+      titleLength: function(value){
+        if (value.length < 1) {
+          return '标题不能为空';
+        }
+        if (value.length > 30) {
+          return '标题不能超过30字';
+        }
+      }
+    });
+
+    // 表单提交
+    form.on('submit(submit-content)', function(data){
+      var copyrightId = $('#content_copyright_id').val();
+      if (!copyrightId) {
+        layer.msg('请选择版权信息（必填）', {icon: 5});
+        return false;
+      }
+
+      return true;
+    });
+  });
+</script>
+
+<% def status_badge_class(status) %>
+  <% case status.to_sym %>
+  <% when :draft %>
+    layui-bg-gray
+  <% when :pending %>
+    layui-bg-orange
+  <% when :published %>
+    layui-bg-green
+  <% when :offline %>
+    layui-bg-red
+  <% else %>
+    layui-bg-gray
+  <% end %>
+<% end %>

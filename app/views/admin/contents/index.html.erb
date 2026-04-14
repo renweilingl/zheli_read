@@ -1,0 +1,145 @@
+<div class="layui-tab">                                                          
+  <div class="x-nav">                                                            
+    <span class="layui-breadcrumb">                                              
+      <a href="">内容管理</a>                                                    
+    </span>                                                                      
+    <%= render 'common/user_info' %>                                             
+  </div>                                                                         
+                                                                                 
+  <div class="x-body"> 
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :admin_contents, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline">
+            <%= f.select :file_type_eq, options_for_select([['epub', 'epub'], ['pdf', 'mp3'], ['pdf', 'mp3'],['mp4', 'mp4']], @q.file_type_eq), { include_blank: "类型" } %>
+          </div>
+          <div class="layui-input-inline">
+            <%= f.text_field :title_cont, class: :'layui-input', placeholder: "名称" %>
+          </div>
+          <button class="layui-btn layui-bg-blue" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :admin_contents, class: "layui-btn layui-btn-primary" %>
+        <% end %>
+      </div>
+      <div class="layui-col-3 text-right">
+        <%= link_to :new_admin_content, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增内容
+        <% end %>
+      </div>
+    </div>
+
+    <table class="layui-table" lay-skin="line">
+      <thead>
+        <tr>
+          <th width="50">ID</th>
+          <th>标题</th>
+          <th width="80">类型</th>
+          <th width="80">分类</th>
+          <th width="80">状态</th>
+          <th width="100">创建时间</th>
+          <th width="280">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @contents.empty? %>
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 40px 0; color: #9ca3af;">
+              <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
+              <div style="margin-top: 10px;">暂无内容数据</div>
+            </td>
+          </tr>
+        <% else %>
+          <% @contents.each do |content| %>
+            <tr>
+              <td><%= content.id %></td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; background-color: <%= content.file_type_color %>20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <i class="layui-icon <%= content.file_type_icon %>" style="color: <%= content.file_type_color %>; font-size: 18px;"></i>
+                  </div>
+                  <div>
+                    <div style="font-weight: 500;"><%= content.title %></div>
+                    <div style="font-size: 12px; color: #9ca3af; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                      <%= content.description %>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="layui-badge" style="background-color: <%= content.file_type_color %>; color: white;">
+                  <%= content.file_type_name %>
+                </span>
+              </td>
+              <td><%= '-' %></td>
+              <td>
+                <span class="layui-badge <%= content.status? ? "layui-bg-green " : "layui-bg-red" %>">
+                  <%= content.status? ? "正常" : "下线" %>
+                </span>
+              </td>
+              <td><%= content.created_at.strftime("%Y-%m-%d") %></td>
+              <td>
+                <div class="layui-btn-group">
+                  <%= link_to admin_content_path(content), class: "layui-btn layui-btn-sm", title: "预览" do %>
+                    <i class="layui-icon layui-icon-read"></i>
+                    预览
+                  <% end %>
+                  <%= link_to edit_admin_content_path(content), class: "layui-btn layui-btn-sm layui-btn-normal", title: "编辑信息" do %>
+                    <i class="layui-icon layui-icon-edit"></i>
+                    编辑
+                  <% end %>
+                  <%= link_to admin_content_path(content), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: '确定要删除此内容吗？此操作不可恢复。' } do %>
+                    <i class="layui-icon layui-icon-delete"></i>
+                    删除
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- 分页 -->
+    <% if @contents.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px;"></div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .layui-btn-group .layui-btn {
+    margin: 0;
+  }
+
+  .layui-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 400;
+  }
+</style>
+
+<script>
+  layui.use(['laypage', 'layer', 'form'], function(){
+    var laypage = layui.laypage,
+        layer = layui.layer,
+        form = layui.form;
+
+    // 分页
+    <% if @contents.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @contents.total_entries %>,
+      limit: <%= @contents.per_page %>,
+      curr: <%= @contents.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>

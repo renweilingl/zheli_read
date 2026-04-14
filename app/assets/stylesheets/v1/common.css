@@ -1,0 +1,23 @@
+.flash-messages {                                                          
+    margin-bottom: 20px;                                                     
+}                                                                          
+                                                                                 
+.flash-notice {                                                            
+    background-color: #ecfdf5;                                               
+    border-left: 4px solid #10b981;                                          
+    color: #065f46;                                                          
+    padding: 12px 15px;                                                      
+    border-radius: 0;                                                        
+    margin-bottom: 10px;                                                     
+    font-size: 14px;                                                         
+}                                                                          
+                                                                                 
+.flash-alert {                                                             
+    background-color: #fef2f2;                                               
+    border-left: 4px solid #ef4444;                                          
+    color: #991b1b;                                                          
+    padding: 12px 15px;                                                      
+    border-radius: 0;                                                        
+    margin-bottom: 10px;                                                     
+    font-size: 14px;                                                         
+}

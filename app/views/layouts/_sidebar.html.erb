@@ -1,0 +1,32 @@
+<div class="left-nav">
+  <div class="logo">
+    <img src="/assets/book.png">浙里阅读
+  </div>
+  <div id="side-nav">
+    <ul id="nav"> 
+      <li>
+        <a href="javascript:;">
+          <i class="layui-icon layui-icon-file"></i>
+          <cite>内容管理</cite>
+          <i class="iconfont nav_right">&#xe602;</i>
+        </a>
+        <ul class="sub-menu">
+          <li><%= link_to "分类管理", :admin_categories, class: "sub-link" %></li>
+          <li><%= link_to "内容管理", :admin_contents, class: "sub-link" %></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:;">
+          <i class="layui-icon layui-icon-set"></i>
+          <cite>权限设置</cite>
+          <i class="iconfont nav_right">&#xe602;</i>
+        </a>
+        <ul class="sub-menu">
+          <li><%= link_to "账号管理", :admin_accounts, class: "sub-link" %></li>
+          <li><%= link_to "角色管理", :admin_permissions, class: "sub-link" %></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

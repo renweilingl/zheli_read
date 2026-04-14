@@ -1,0 +1,324 @@
+<%= form_with(model: [:admin, @content], local: true, class: "layui-form", id: "content-form") do |f| %>
+  <fieldset class="layui-elem-field layui-field-title">
+    <legend>基本信息</legend>
+  </fieldset>
+
+  <div class="layui-form-item">
+    <%= f.label :title, "标题", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_field :title, class: "layui-input", placeholder: "请输入标题（1-30字）", maxlength: 30, lay_verify: "required|titleLength", lay_reqtext: "标题不能为空" %>
+      <div class="layui-form-mid layui-word-aux" id="title-count">0/30</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :description, "简介", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入简介（1-200字）", maxlength: 200, rows: 4 %>
+      <div class="layui-form-mid layui-word-aux" id="desc-count">0/200</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :grade_level, "一级分类", class: "layui-form-label" %>
+      <div class="layui-input-inline" style="width: 200px;">
+        <%= f.select :grade_level, options_for_select(Category.grade_levels.active.sorted.map { |c| [c.name, c.id]}, @content.grade_level),{},class: "layui-select" %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :second_level, "二级分类", class: "layui-form-label" %>
+      <div class="layui-input-inline" style="width: 200px;">
+        <%= f.select :second_level,
+            options_for_select(Category.second_level.active.sorted.map { |c| [c.name, c.id] }.unshift(['请选择分类', '']), @content.second_level),
+            {},
+            class: "layui-select" %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :third_level, "三级分类", class: "layui-form-label" %>
+      <div class="layui-input-inline" style="width: 200px;">
+        <%= f.select :third_level,
+            options_for_select(Category.third_level.active.sorted.map { |c| [c.name, c.id] }.unshift(['请选择分类', '']), @content.third_level),
+            {},
+            class: "layui-select" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :tags, "标签", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <div class="layui-input-wrap">
+        <input type="text" id="tag-input" class="layui-input" placeholder="输入标签后按回车添加（最多5个，每个5字）" maxlength="5">
+      </div>
+      <div id="tags-container" class="layui-form-mid" style="padding: 10px 0;">
+      </div>
+      <div class="layui-form-mid layui-word-aux">已添加 <span id="tag-count">0</span>/5 个标签</div>
+      <%= f.hidden_field :tags, id: "tags-hidden" %>
+    </div>
+  </div>
+
+  <fieldset class="layui-elem-field layui-field-title">
+    <legend>文件上传</legend>
+  </fieldset>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">上传文件</label>
+    <div class="layui-input-block">
+      <div class="layui-upload-drag" id="file-upload" style="width: 100%; padding: 30px; text-align: center;">
+        <i class="layui-icon layui-icon-upload" style="font-size: 48px; color: #9ca3af;"></i>
+        <p style="margin-top: 15px; color: #6b7280;">点击上传，或将文件拖拽到此处</p>
+        <p class="layui-word-aux" id="file-restriction" style="margin-top: 5px;">支持格式：epub、pdf、mp3、mp4</p>
+      </div>
+      <div id="upload-progress" style="display: none; margin-top: 15px;">
+        <div class="layui-progress" lay-filter="upload-progress">
+          <div class="layui-progress-bar" lay-percent="0%"></div>
+        </div>
+        <div style="margin-top: 10px; text-align: center;">
+          <span id="upload-status">上传中...</span>
+          <span id="upload-percent">0%</span>
+        </div>
+      </div>
+      <div id="upload-result" style="display: none; margin-top: 15px;" class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <i class="layui-icon layui-icon-ok-circle" style="font-size: 32px; color: #10b981;"></i>
+            <div>
+              <div id="file-name" style="font-weight: bold;"></div>
+              <div style="display: flex; gap: 10px;">
+                <span id="file-type-badge" class="layui-badge"></span>
+                <span id="file-size" class="layui-word-aux"></span>
+              </div>
+            </div>
+            <div style="margin-left: auto;">
+              <button type="button" class="layui-btn layui-btn-xs layui-btn-danger" id="remove-file">移除</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%= f.hidden_field :file_url, id: "file-url-hidden" %>
+      <%= f.hidden_field :file_name, id: "file-name-hidden" %>
+      <%= f.hidden_field :file_size, id: "file-size-hidden" %>
+      <%= f.hidden_field :file_type, id: "file-type-hidden" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="submit-content">
+        <i class="layui-icon layui-icon-release"></i>
+        创建内容
+      </button>
+      <%= link_to "取消", admin_contents_path, class: "layui-btn layui-btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  .layui-input-wrap {
+    position: relative;
+  }
+
+  .tag-item {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #eff6ff;
+    color: #3b82f6;
+    border-radius: 4px;
+    margin: 5px 5px 5px 0;
+    font-size: 13px;
+  }
+
+  .tag-item .remove-tag {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #9ca3af;
+  }
+
+  .tag-item .remove-tag:hover {
+    color: #ef4444;
+  }
+
+  #tags-container {
+    min-height: 40px;
+  }
+</style>
+
+<script>
+  layui.use(['upload', 'element', 'layer', 'form'], function(){
+    var upload = layui.upload,
+        element = layui.element,
+        layer = layui.layer,
+        form = layui.form,
+        $ = layui.$;
+
+    form.render();
+
+    // 标签管理
+    var tags = [];
+
+    function renderTags() {
+      var html = '';
+      tags.forEach(function(tag, index){
+        html += '<span class="tag-item">';
+        html += tag;
+        html += '<span class="remove-tag" data-index="' + index + '">&times;</span>';
+        html += '</span>';
+      });
+      $('#tags-container').html(html);
+      $('#tag-count').text(tags.length);
+      $('#tags-hidden').val(JSON.stringify(tags));
+
+      // 更新输入框提示
+      if (tags.length >= 5) {
+        $('#tag-input').attr('placeholder', '已添加5个标签').attr('disabled', true);
+      } else {
+        $('#tag-input').attr('placeholder', '输入标签后按回车添加（' + (5 - tags.length) + '个可添加）').attr('disabled', false);
+      }
+    }
+
+    // 添加标签
+    $('#tag-input').on('keyup', function(e){
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        var value = $(this).val().trim();
+        if (value && value.length <= 5 && tags.length < 5 && !tags.includes(value)) {
+          tags.push(value);
+          $(this).val('');
+          renderTags();
+        } else if (value.length > 5) {
+          layer.msg('每个标签最多5个字', {icon: 5});
+        } else if (tags.length >= 5) {
+          layer.msg('最多添加5个标签', {icon: 5});
+        } else if (tags.includes(value)) {
+          layer.msg('该标签已添加', {icon: 5});
+        }
+      }
+    });
+
+    // 移除标签
+    $(document).on('click', '.remove-tag', function(){
+      var index = $(this).data('index');
+      tags.splice(index, 1);
+      renderTags();
+    });
+
+    // 字数统计
+    $('#content_title').on('input', function(){
+      var len = $(this).val().length;
+      $('#title-count').text(len + '/30');
+      if (len > 30) {
+        $('#title-count').css('color', '#ef4444');
+      } else {
+        $('#title-count').css('color', '#9ca3af');
+      }
+    });
+
+    $('#content_description').on('input', function(){
+      var len = $(this).val().length;
+      $('#desc-count').text(len + '/200');
+      if (len > 200) {
+        $('#desc-count').css('color', '#ef4444');
+      } else {
+        $('#desc-count').css('color', '#9ca3af');
+      }
+    });
+
+    // 文件上传
+    var uploadInst = upload.render({
+      elem: '#file-upload',
+      url: '/admin/contents/upload', // 上传接口
+      auto: true,
+      accept: 'file',
+      size: 204800, // 200MB
+      before: function(obj){
+        // 显示进度条
+        $('#upload-progress').show();
+        $('#upload-result').hide();
+        element.progress('upload-progress', '0%');
+        $('#upload-percent').text('0%');
+        $('#upload-status').text('上传中...');
+      },
+      progress: function(n, elem){
+        element.progress('upload-progress', n + '%');
+        $('#upload-percent').text(n + '%');
+      },
+      done: function(res){
+        if (res.code === 0) {
+          console.log(res.data);
+          $('#upload-progress').hide();
+          $('#upload-result').show();
+          $('#file-name').text(res.data.file_name);
+          $('#file-size').text(res.data.file_size);
+          $('#file-url-hidden').val(res.data.file_url);
+          $('#file-name-hidden').val(res.data.file_name);
+          $('#file-size-hidden').val(res.data.file_size);
+          $('#file-type-hidden').val(res.data.file_type);
+          var fileTypeColors = {
+            'epub': '#10b981',
+            'pdf': '#ef4444',
+            'mp3': '#8b5cf6',
+            'mp4': '#3b82f6'
+          };
+          var fileType = res.data.file_type || '';
+          $('#file-type-badge').text(res.data.file_type_name || fileType.toUpperCase());
+          if (fileTypeColors[fileType]) {
+            $('#file-type-badge').css('background-color', fileTypeColors[fileType]);
+          }
+
+          layer.msg('上传成功', {icon: 6});
+        } else {
+          layer.msg(res.msg || '上传失败', {icon: 5});
+          $('#upload-progress').hide();
+        }
+      },
+      error: function(){
+        layer.msg('上传失败，请重试', {icon: 5});
+        $('#upload-progress').hide();
+      }
+    });
+
+    // 移除文件
+    $('#remove-file').on('click', function(){
+      $('#upload-result').hide();
+      $('#file-url-hidden').val('');
+      $('#file-name-hidden').val('');
+      $('#file-size-hidden').val('');
+      layer.msg('已移除文件', {icon: 6});
+    });
+
+    // 验证
+    form.verify({
+      titleLength: function(value){
+        if (value.length < 1) {
+          return '标题不能为空';
+        }
+        if (value.length > 30) {
+          return '标题不能超过30字';
+        }
+      }
+    });
+
+    // 表单提交
+   form.on('submit(submit-content)', function(data){
+      var fileUrl = $('#file-url-hidden').val();
+      if (!fileUrl) {
+        layer.msg('请上传文件', {icon: 5});
+        return false;
+      }
+
+      return true;
+    });
+
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            return false;
+        }
+    });
+  });
+</script>

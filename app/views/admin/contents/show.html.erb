@@ -1,0 +1,221 @@
+<% content_for :title, "内容详情" %>
+
+<div class="page-header">
+  <h1 class="page-title">内容详情</h1>
+  <div class="page-actions">
+    <%= link_to admin_contents_path, class: "layui-btn layui-btn-primary" do %>
+      <i class="layui-icon layui-icon-return"></i>
+      返回列表
+    <% end %>
+    <% if @content.can_edit? %>
+      <%= link_to edit_admin_content_path(@content), class: "layui-btn" do %>
+        <i class="layui-icon layui-icon-edit"></i>
+        编辑内容
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="layui-row layui-col-space15">
+  <!-- 左侧：基本信息 -->
+  <div class="layui-col-md8">
+    <div class="layui-card">
+      <div class="layui-card-header">
+        基本信息
+      </div>
+      <div class="layui-card-body">
+        <div class="layui-form" lay-filter="content-info">
+          <div class="layui-form-item">
+            <label class="layui-form-label">ID</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid layui-word-aux"><%= @content.id %></div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid" style="font-size: 16px; font-weight: bold;">
+                <%= @content.title %>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">简介</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid" style="color: #666;">
+                <%= @content.description.presence || '暂无简介' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">标签</label>
+            <div class="layui-input-block">
+              <% if @content.tags_array.any? %>
+                <% @content.tags_array.each do |tag| %>
+                  <span class="layui-badge layui-bg-blue" style="margin-right: 5px;"><%= tag %></span>
+                <% end %>
+              <% else %>
+                <div class="layui-form-mid layui-word-aux">暂无标签</div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">分类</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid">
+                <%= @content.category&.name.presence || '-' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">版权信息</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid">
+                <%= link_to @content.copyright.name, admin_copyright_path(@content.copyright), class: "layui-btn layui-btn-xs layui-btn-warm" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+              <span class="layui-badge <%= status_badge_class(@content.status) %>">
+                <%= @content.status_name %>
+              </span>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">创建者</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid"><%= @content.user.name %></div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid layui-word-aux">
+                <%= @content.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+              </div>
+            </div>
+          </div>
+
+          <% if @content.published_at %>
+          <div class="layui-form-item">
+            <label class="layui-form-label">发布时间</label>
+            <div class="layui-input-block">
+              <div class="layui-form-mid layui-word-aux">
+                <%= @content.published_at.strftime("%Y-%m-%d %H:%M:%S") %>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右侧：文件信息和操作 -->
+  <div class="layui-col-md4">
+    <!-- 文件信息 -->
+    <div class="layui-card">
+      <div class="layui-card-header">
+        文件信息
+      </div>
+      <div class="layui-card-body" style="text-align: center; padding: 30px;">
+        <div style="width: 80px; height: 80px; background-color: <%= @content.file_type_color %>20; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+          <i class="layui-icon <%= @content.file_type_icon %>" style="font-size: 40px; color: <%= @content.file_type_color %>;"></i>
+        </div>
+        <div style="margin-top: 15px;">
+          <span class="layui-badge" style="background-color: <%= @content.file_type_color %>; color: white;">
+            <%= @content.file_type_name %>
+          </span>
+        </div>
+        <div style="margin-top: 15px; color: #666;">
+          <div><%= @content.file_name.presence || '-' %></div>
+          <div class="layui-word-aux"><%= @content.file_size_desc %></div>
+        </div>
+        <% if @content.duration %>
+        <div style="margin-top: 10px;" class="layui-word-aux">
+          时长：<%= @content.duration_desc %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 统计数据 -->
+    <div class="layui-card">
+      <div class="layui-card-header">
+        统计数据
+      </div>
+      <div class="layui-card-body">
+        <div style="display: flex; justify-content: space-around; text-align: center;">
+          <div>
+            <div style="font-size: 24px; font-weight: bold; color: #3b82f6;"><%= @content.view_count %></div>
+            <div class="layui-word-aux" style="font-size: 12px;">浏览次数</div>
+          </div>
+          <div>
+            <div style="font-size: 24px; font-weight: bold; color: #ef4444;"><%= @content.like_count %></div>
+            <div class="layui-word-aux" style="font-size: 12px;">点赞次数</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快捷操作 -->
+    <div class="layui-card">
+      <div class="layui-card-header">
+        快捷操作
+      </div>
+      <div class="layui-card-body">
+        <div class="layui-btn-container" style="width: 100%;">
+          <% if @content.can_publish? %>
+            <%= link_to publish_admin_content_path(@content), method: :post, class: "layui-btn layui-btn-fluid layui-btn-warm" do %>
+              <i class="layui-icon layui-icon-release"></i>
+              发布内容
+            <% end %>
+          <% end %>
+          <% if @content.can_offline? %>
+            <%= link_to offline_admin_content_path(@content), method: :post, class: "layui-btn layui-btn-fluid layui-btn-danger" do %>
+              <i class="layui-icon layui-icon-prev"></i>
+              下线内容
+            <% end %>
+          <% end %>
+          <% if @content.can_delete? %>
+            <%= link_to admin_content_path(@content), method: :delete, class: "layui-btn layui-btn-fluid layui-btn-danger", data: { confirm: '确定要删除此内容吗？此操作不可恢复。' } do %>
+              <i class="layui-icon layui-icon-delete"></i>
+              删除内容
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% def status_badge_class(status) %>
+  <% case status.to_sym %>
+  <% when :draft %>
+    layui-bg-gray
+  <% when :pending %>
+    layui-bg-orange
+  <% when :published %>
+    layui-bg-green
+  <% when :offline %>
+    layui-bg-red
+  <% else %>
+    layui-bg-gray
+  <% end %>
+<% end %>
+
+<style>
+  .layui-btn-fluid {
+    margin-bottom: 10px;
+  }
+</style>

@@ -1,0 +1,79 @@
+# 种子数据
+
+# 创建默认超级管理员
+if User.where(email: 'admin@greenleaf.com').empty?
+  admin = User.create!(
+    name: '超级管理员',
+    email: 'admin@greenleaf.com',
+    password: 'admin123456',
+#    password_confirmation: 'admin123456',
+    role: 'super_admin'
+  )
+  puts "✅ 创建超级管理员: #{admin.email}"
+end
+
+# 创建测试编辑
+if User.where(email: 'editor@greenleaf.com').empty?
+  editor = User.create!(
+    name: '测试编辑',
+    email: 'editor@greenleaf.com',
+    password: 'editor123456',
+#    password_confirmation: 'editor123456',
+    role: 'editor'
+  )
+  puts "✅ 创建测试编辑: #{editor.email}"
+end
+
+# 创建测试运营
+if User.where(email: 'operator@greenleaf.com').empty?
+  operator = User.create!(
+    name: '测试运营',
+    email: 'operator@greenleaf.com',
+    password: 'operator123456',
+#    password_confirmation: 'operator123456',
+    role: 'operator'
+  )
+  puts "✅ 创建测试运营: #{operator.email}"
+end
+
+# 创建测试财务
+if User.where(email: 'finance@greenleaf.com').empty?
+  finance = User.create!(
+    name: '测试财务',
+    email: 'finance@greenleaf.com',
+    password: 'finance123456',
+#    password_confirmation: 'finance123456',
+    role: 'finance'
+  )
+  puts "✅ 创建测试财务: #{finance.email}"
+end
+
+puts "\n🎉 种子数据创建完成！"
+puts "\n默认账号信息："
+puts "超级管理员: admin@greenleaf.com / admin123456"
+puts "测试编辑: editor@greenleaf.com / editor123456"
+puts "测试运营: operator@greenleaf.com / operator123456"
+puts "测试财务: finance@greenleaf.com / finance123456"
+
+[{group_name: "学龄前", name: "4-6岁"},
+ {group_name: "小学", name: "一年级"},
+ {group_name: "小学", name: "二年级"},
+ {group_name: "小学", name: "三年级"},
+ {group_name: "小学", name: "四年级"},
+ {group_name: "小学", name: "五年级"},
+ {group_name: "小学", name: "六年级"},
+ {group_name: "初中", name: "初一"},
+ {group_name: "初中", name: "初二"},
+ {group_name: "初中", name: "初三"},
+ {group_name: "高中", name: "高中"},
+].each do |x|
+  if Grade.where(name: x[:name]).empty?
+    Grade.create(group_name: x[:group_name], name: x[:name])
+  end
+end
+
+Grade.all.each do |grade|
+  if Category.where(name: grade.name, level: 1).empty?
+    Category.create(name: grade.name, level: 1, active: true)
+  end
+end
