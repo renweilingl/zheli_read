@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <table class="layui-table" lay-skin="line">
+    <table class="layui-table">
       <thead>
         <tr>
           <th width="50">ID</th>
@@ -36,7 +36,7 @@
           <th width="80">分类</th>
           <th width="80">状态</th>
           <th width="100">创建时间</th>
-          <th width="280">操作</th>
+          <th width="220" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -76,19 +76,16 @@
                 </span>
               </td>
               <td><%= content.created_at.strftime("%Y-%m-%d") %></td>
-              <td>
+              <td style="text-align:center;">
                 <div class="layui-btn-group">
                   <%= link_to admin_content_path(content), class: "layui-btn layui-btn-sm", title: "预览" do %>
-                    <i class="layui-icon layui-icon-read"></i>
-                    预览
+                    <i class="layui-icon layui-icon-read"></i>详情
                   <% end %>
                   <%= link_to edit_admin_content_path(content), class: "layui-btn layui-btn-sm layui-btn-normal", title: "编辑信息" do %>
-                    <i class="layui-icon layui-icon-edit"></i>
-                    编辑
+                    <i class="layui-icon layui-icon-edit"></i>编辑
                   <% end %>
                   <%= link_to admin_content_path(content), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: '确定要删除此内容吗？此操作不可恢复。' } do %>
-                    <i class="layui-icon layui-icon-delete"></i>
-                    删除
+                    <i class="layui-icon layui-icon-delete"></i>删除
                   <% end %>
                 </div>
               </td>
