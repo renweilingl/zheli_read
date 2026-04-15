@@ -22,12 +22,12 @@
           <div class="layui-input-inline">
             <%= f.text_field :name_cont, class: :'layui-input', placeholder: "分类名称" %>
           </div>
-          <button class="layui-btn layui-bg-blue" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
+          <button class="layui-btn layui-bg-wgreen" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
           <%= link_to "重置", :admin_categories, class: "layui-btn layui-btn-primary" %>
         <% end %>
       </div>
       <div class="layui-col-3 text-right">
-        <%= link_to :new_admin_category, class: 'layui-btn layui-bg-blue' do %>
+        <%= link_to :new_admin_category, class: 'layui-btn layui-bg-wgreen' do %>
           <i class="layui-icon"></i>新增分类
         <% end %>
       </div>
@@ -41,7 +41,7 @@
           <th>级别</th>
           <th>描述</th>
           <th>序号</th>
-          <th width="200">操作</th>
+          <th width="200" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -85,11 +85,11 @@
                 <%= category.description || '-' %>
               </td>
               <td><%= category.sn %></td>
-              <td>
+              <td style="text-align:center;">
                 <div class="layui-btn-group">
                   <%= link_to '详情', admin_category_path(category), class: "layui-btn layui-btn-sm" %>
-                  <%= link_to '编辑', edit_admin_category_path(category), class: "layui-btn layui-btn-normal layui-btn-sm" %>
-                  <%= link_to '删除', admin_category_path(category), method: :delete, class: "layui-btn layui-btn-danger layui-btn-sm", title: "删除", data: { confirm: "确定要删除此分类吗？此操作不可恢复。" } %>
+                  <%= link_to '编辑', edit_admin_category_path(category), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to '删除', admin_category_path(category), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此分类吗？此操作不可恢复。" } %>
                 </div>
               </td>
             </tr>
