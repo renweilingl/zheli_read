@@ -147,6 +147,7 @@ class Admin::ContentsController < ApplicationController
         msg: '上传成功',
         data: {
           cover_url: FileMap.new(oss_path, "img").secrity_src,
+          oss_path: oss_path,
           cover_name: file.original_filename
         }
       }
