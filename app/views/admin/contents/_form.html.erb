@@ -186,7 +186,8 @@
     form.render();
 
     // 标签管理
-    var tags = [];
+    //var tags = [];
+    var tags = <%= raw @content.tags_array.to_json %>;
 
     function renderTags() {
       var html = '';
@@ -207,6 +208,7 @@
         $('#tag-input').attr('placeholder', '输入标签后按回车添加（' + (5 - tags.length) + '个可添加）').attr('disabled', false);
       }
     }
+    renderTags();
 
     // 添加标签
     $('#tag-input').on('keyup', function(e){
