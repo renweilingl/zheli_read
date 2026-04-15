@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     resources :contents, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       collection do
         post :upload
+        post :upload_cover
       end
     end
 

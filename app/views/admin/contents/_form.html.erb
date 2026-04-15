@@ -74,6 +74,25 @@
   </fieldset>
 
   <div class="layui-form-item">
+    <%= f.label :cover_img, "封面图片", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <div class="layui-upload">
+        <button type="button" class="layui-btn layui-btn-normal" id="cover-upload-btn">
+          <i class="layui-icon layui-icon-upload"></i>上传封面
+        </button>
+        <span class="layui-word-aux" style="margin-left: 10px;">支持 jpg、png、gif、webp 格式，大小不超过 5MB</span>
+      </div>
+      <div id="cover-preview" style="margin-top: 15px; <%= 'display: none;' if @content.cover_img.blank? %>">
+        <div style="display: inline-block; position: relative;">
+          <img id="cover-img" src="<%= @content.cover_img %>" style="max-width: 200px; max-height: 150px; border-radius: 4px; border: 1px solid #e5e7eb;">
+          <button type="button" id="remove-cover" style="position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #ef4444; color: white; border: none; cursor: pointer; font-size: 14px; line-height: 24px;">&times;</button>
+        </div>
+      </div>
+      <%= f.hidden_field :cover_img, id: "cover-url-hidden" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <label class="layui-form-label">上传文件</label>
     <div class="layui-input-block">
       <div class="layui-upload-drag" id="file-upload" style="width: 100%; padding: 30px; text-align: center;">
@@ -321,6 +340,38 @@
       }
     });
 
+    var coverUpload = upload.render({
+      elem: '#cover-upload-btn',
+      url: '/admin/contents/upload_cover',
+      auto: true,
+      accept: 'images',
+      exts: 'jpg|jpeg|png|gif|webp',
+      size: 5120, // 5MB
+      done: function(res){
+        if (res.code === 0) {
+          $('#cover-preview').show();
+          $('#cover-img').attr('src', res.data.cover_url);
+          $('#cover-url-hidden').val(res.data.cover_url);
+          //$('#cover-name-hidden').val(res.data.cover_name);
+          layer.msg('封面上传成功', {icon: 6});
+        } else {
+          layer.msg(res.msg || '封面上传失败', {icon: 5});
+        }
+      },
+      error: function(){
+        layer.msg('封面上传失败，请重试', {icon: 5});
+      }
+    });
+
+    // 移除封面
+    $('#remove-cover').on('click', function(){
+      $('#cover-preview').hide();
+      $('#cover-img').attr('src', '');
+      $('#cover-url-hidden').val('');
+      //$('#cover-name-hidden').val('');
+      layer.msg('封面已移除', {icon: 6});
+    });
+
     // 移除文件
     $('#remove-file').on('click', function(){
       $('#upload-result').hide();
@@ -352,7 +403,6 @@
 
       return true;
     });
-
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {

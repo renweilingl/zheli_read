@@ -102,7 +102,7 @@ class Admin::ContentsController < ApplicationController
         code: 0,
         msg: '上传成功',
         data: {
-          file_url: new_filename,
+          file_url: oss_path,
           file_type: extension,
           file_name: file.original_filename,
           file_size: file.size,
@@ -112,6 +112,47 @@ class Admin::ContentsController < ApplicationController
     rescue => e
       Rails.logger.error "文件上传失败: #{e.message}"
       render json: { code: 1, msg: '文件上传失败，请重试' }
+    end
+  end
+
+    # 封面上传
+  def upload_cover
+    file = params[:file]
+
+    if file.blank?
+      render json: { code: 1, msg: '请选择要上传的图片' }
+      return
+    end
+
+    extension = File.extname(file.original_filename).downcase.delete('.')
+    allowed_extensions = %w[jpg jpeg png gif webp]
+
+    unless allowed_extensions.include?(extension)
+      render json: { code: 1, msg: '不支持的图片格式，请上传 jpg、png、gif 或 webp 格式的图片' }
+      return
+    end
+
+    begin
+      # 生成唯一文件名
+      timestamp = Time.now.strftime('%Y%m%d%H%M%S')
+      random_str = SecureRandom.hex(8)
+      new_filename = "cover_#{timestamp}_#{random_str}.#{extension}"
+
+      tmp_file_path = file.tempfile.path
+      mime = `file --brief --mime-type "#{tmp_file_path}"`.strip
+      oss_path = AliyunOss.instance.put(new_filename, File.open(file.path), {'content_type': mime})
+
+      render json: {
+        code: 0,
+        msg: '上传成功',
+        data: {
+          cover_url: FileMap.new(oss_path, "img").secrity_src,
+          cover_name: file.original_filename
+        }
+      }
+    rescue => e
+      Rails.logger.error "封面上传失败: #{e.message}"
+      render json: { code: 1, msg: '封面上传失败，请重试' }
     end
   end
 
@@ -135,6 +176,7 @@ class Admin::ContentsController < ApplicationController
       :second_level,
       :copy_right,
       :grade_level,
+      :cover_img,
       :status
     )
   end
