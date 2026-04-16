@@ -21,7 +21,7 @@
           <th>邮箱</th>
           <th>角色</th>
           <th>创建时间</th>
-          <th width="200">操作</th>
+          <th width="180" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -57,19 +57,19 @@
               </span>
             </td>
             <td><%= user.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-            <td>
+            <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to '详情', admin_account_path(user), class: "layui-btn layui-btn-sm" %>
                 <% if policy(user).update? %>
-                  <%= link_to '编辑', edit_admin_account_path(user), class: "layui-btn layui-btn-normal layui-btn-sm" %>
+                  <%= link_to '编辑', edit_admin_account_path(user), class: "layui-btn layui-btn-sm" %>
                 <% end %>
                 <% if false %>
-                  <%= link_to reset_password_admin_account_path(user), method: :post, class: "layui-btn layui-btn-warm layui-btn-sm", title: "重置密码", data: { confirm: "确定要重置此账号的密码吗？" } do %>
+                  <%= link_to reset_password_admin_account_path(user), method: :post, class: "layui-btn layui-btn-sm", title: "重置密码", data: { confirm: "确定要重置此账号的密码吗？" } do %>
                     <i class="layui-icon layui-icon-key"></i>
                   <% end %>
                 <% end %>
                 <% if current_user.super_admin? && user.id != current_user.id %>
-                  <%= link_to '删除', admin_account_path(user), method: :delete, class: "layui-btn layui-btn-danger layui-btn-sm", title: "删除", data: { confirm: "确定要删除此账号吗？此操作不可恢复。" } %>
+                  <%= link_to '删除', admin_account_path(user), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此账号吗？此操作不可恢复。" } %>
                 <% end %>
               </div>
             </td>
