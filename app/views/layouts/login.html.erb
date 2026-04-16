@@ -61,7 +61,7 @@
 
       .login-card {
         width: 100%;
-        max-width: 520px;
+        max-width: 480px;
         background: var(--card-bg);
         border-radius: 16px;
         box-shadow: var(--shadow-lg);
@@ -147,7 +147,8 @@
         margin-bottom: 24px;
       }
       .layui-form-label {
-        padding: 0 0 8px 0;
+        padding: 12px 0 8px 0;
+        min-height: 36px;
         width: auto;
         font-size: 14px;
         color: var(--text-primary);
@@ -181,6 +182,9 @@
       .input-with-icon .layui-input:focus + .input-icon,
       .input-with-icon .layui-input:focus ~ .layui-input-prefix {
         color: var(--primary-color);
+      }
+      .layui-input-block {
+        margin-left: 40px;
       }
       .layui-btn-login {
         width: 100%;
