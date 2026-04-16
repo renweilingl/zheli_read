@@ -1,88 +1,81 @@
-<div class="main-container">
-  <div class="auth-card">
-    <div class="auth-card-header">
-      <!-- Logo -->
-      <div class="logo-container">
-        <div class="logo-circle">
-          <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-          </svg>
-          <div class="logo-dot"></div>
+<div class="login-card">                                                       
+  <div class="login-header">                                                   
+    <div class="login-logo">                                                   
+      <i class="layui-icon layui-icon-release"></i>                            
+    </div>                                                                     
+    <h1>欢迎回来</h1>                                                          
+    <p>登录您的账户以继续</p>                                                  
+  </div>
+
+  <div class="login-body">
+    <% if alert %>
+      <div class="layui-alert layui-alert-danger" style="background: #fff2f0; border-color: #ffccc7; color: #ff4d4f; margin-bottom: 20px; border-radius: 8px;">
+        <i class="layui-icon layui-icon-close-fill"></i>
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <% if notice %>
+      <div class="layui-alert layui-alert-success" style="background: #f6ffed; border-color: #b7eb8f; color: #52c41a; margin-bottom: 20px; border-radius: 8px;">
+        <i class="layui-icon layui-icon-ok-circle"></i>
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <%= form_with url: login_path, local: true, class: "layui-form", id: "login-form" do |f| %>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+          <div class="input-with-icon">
+            <i class="layui-icon layui-icon-email input-icon" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 20px; color: #8c8c8c; z-index: 1;"></i>
+            <%= f.email_field :email,
+                placeholder: "请输入邮箱地址",
+                required: true,
+                class: "layui-input",
+                style: "padding-left: 46px;",
+                lay_verify: "required|email" %>
+          </div>
         </div>
       </div>
-      
-      <h1 class="auth-title">欢迎回来</h1>
-      <p class="auth-subtitle">登录您的账户以继续</p>
-    </div>
-    
-    <!-- Flash 消息 -->
-    <div class="flash-messages">
-      <% if flash[:alert] %>
-        <div class="flash-alert"><%= flash[:alert] %></div>
-      <% end %>
-      <% if flash[:notice] %>
-        <div class="flash-notice"><%= flash[:notice] %></div>
-      <% end %>
-    </div>
-    
-    <%= form_with url: login_path, local: true, class: "auth-form" do |f| %>
-      <div class="form-group">
-        <label class="form-label">登录邮箱</label>
-        <div class="form-input-wrapper">
-          <svg class="form-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-          </svg>
-          <%= f.email_field :email, placeholder: "your@email.com", class: "form-input", required: true %>
-        </div>
-      </div>
-      
-      <!-- 密码 -->
-      <div class="form-group">
-        <label class="form-label">密码</label>
-        <div class="form-input-wrapper">
-          <svg class="form-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-          </svg>
-          <%= f.password_field :password, placeholder: "••••••••", class: "form-input", required: true, id: "password-field" %>
-          <button type="button" class="password-toggle" onclick="togglePassword()">
-            <svg id="eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-            </svg>
-            <svg id="eye-off-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" style="display: none;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      
-      <!--div class="form-options">
-        <div class="checkbox-wrapper">
-          <input type="checkbox" id="remember" name="remember" class="checkbox-input">
-          <label for="remember" class="checkbox-label">记住我</label>
-        </div>
-        <a href="#" class="forgot-link">忘记密码？</a>
-      </div-->
-      
-      <%= f.submit "登录", class: "btn-primary" %>
+
+      <div class="layui-form-item">                                            
+        <label class="layui-form-label">密码</label>                           
+        <div class="layui-input-block">                                        
+          <div class="input-with-icon">                                        
+            <i class="layui-icon layui-icon-password input-icon" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 20px; color: #8c8c8c; z-index: 1;"></i>
+            <%= f.password_field :password,                                    
+                placeholder: "请输入密码",                                     
+                required: true,                                                
+                class: "layui-input",                                          
+                style: "padding-left: 46px;",                                  
+                lay_verify: "required",                                        
+                id: "password-field" %>                                        
+          </div>                                                               
+        </div>                                                                 
+      </div> 
+
+      <div class="layui-form-item" style="margin-top: 24px; margin-bottom: 0;">
+        <button type="submit" class="layui-btn-login" lay-submit lay-filter="login">
+          <i class="layui-icon layui-icon-ok"></i>                             
+          登 录                                                                
+        </button>                                                              
+      </div> 
     <% end %>
   </div>
 </div>
 
-<script>
-function togglePassword() {
-  const passwordField = document.getElementById('password-field');
-  const eyeIcon = document.getElementById('eye-icon');
-  const eyeOffIcon = document.getElementById('eye-off-icon');
-  
-  if (passwordField.type === 'password') {
-    passwordField.type = 'text';
-    eyeIcon.style.display = 'none';
-    eyeOffIcon.style.display = 'block';
-  } else {
-    passwordField.type = 'password';
-    eyeIcon.style.display = 'block';
-    eyeOffIcon.style.display = 'none';
-  }
-}
+<script>                                                                       
+    layui.use(['form', 'layer'], function(){                                     
+      var form = layui.form,                                                     
+          layer = layui.layer,                                                   
+          $ = layui.$;                                                           
+                                                                                 
+      form.render();                                                             
+                                                                                 
+      $('.layui-input').on('focus', function(){                                  
+        $(this).closest('.input-with-icon').find('.input-icon').css('color', '#52c41a');
+      }).on('blur', function(){                                                  
+        $(this).closest('.input-with-icon').find('.input-icon').css('color', '#8c8c8c');
+      });
+    }); 
 </script>
