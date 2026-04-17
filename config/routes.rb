@@ -16,15 +16,14 @@ Rails.application.routes.draw do
 
   # Admin routes
   namespace :admin do
-    # Accounts management
     resources :accounts, only: [:index, :new, :create, :edit, :update, :show, :destroy] do
       member do
         post :reset_password
       end
     end
 
-    # Permissions management
     resources :permissions, only: [:index, :show]
+    resources :suppliers
 
     resources :categories, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       member do
@@ -36,7 +35,6 @@ Rails.application.routes.draw do
       end
     end
 
-    # Contents management
     resources :contents, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       collection do
         post :upload

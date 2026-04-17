@@ -29,32 +29,10 @@ module Admin
       user.super_admin? || user.editor?
     end
 
-    # 超级管理员可以删除内容
     def destroy?
       user.super_admin?
     end
 
-    # 发布内容
-    def publish?
-      user.super_admin? || user.editor?
-    end
-
-    # 下线内容
-    def offline?
-      user.super_admin? || user.editor?
-    end
-
-    # 审核内容
-    def approve?
-      user.super_admin?
-    end
-
-    # 驳回内容
-    def reject?
-      user.super_admin?
-    end
-
-    # 文件上传
     def upload?
       user.super_admin? || user.editor?
     end

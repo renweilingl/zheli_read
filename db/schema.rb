@@ -53,6 +53,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", null: false, comment: "供应商名称"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_suppliers_on_name"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "name"

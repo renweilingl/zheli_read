@@ -1,0 +1,119 @@
+<% content_for :title, "供应商管理" %>
+
+<div class="page-header">
+  <h1 class="page-title">供应商管理</h1>
+  <div class="page-actions">
+    <%= link_to new_admin_supplier_path, class: "layui-btn" do %>
+      <i class="layui-icon layui-icon-add-1"></i>
+      新建供应商
+    <% end %>
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-header">
+    供应商列表
+    <div style="float: right;">
+    </div>
+  </div>
+  <div class="layui-card-body">
+    <table class="layui-table" lay-skin="line">
+      <thead>
+        <tr>
+          <th width="60">ID</th>
+          <th>供应商名称</th>
+          <th width="150">创建时间</th>
+          <th width="200">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @suppliers.empty? %>
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 40px 0; color: #9ca3af;">
+              <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
+              <div style="margin-top: 10px;">暂无供应商数据</div>
+            </td>
+          </tr>
+        <% else %>
+          <% @suppliers.each do |supplier| %>
+            <tr>
+              <td><%= supplier.id %></td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <i class="layui-icon layui-icon-group" style="color: #52c41a; font-size: 18px;"></i>
+                  </div>
+                  <div>
+                    <div style="font-weight: 500;"><%= supplier.name %></div>
+                    <% if supplier.description.present? %>
+                      <div style="font-size: 12px; color: #9ca3af; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <%= supplier.description %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+              <td><%= supplier.created_at.strftime("%Y-%m-%d") %></td>
+              <td>
+                <div class="layui-btn-group">
+                  <%= link_to admin_supplier_path(supplier), class: "layui-btn layui-btn-xs", title: "查看" do %>
+                    <i class="layui-icon layui-icon-about"></i>
+                    详情
+                  <% end %>
+                  <%= link_to edit_admin_supplier_path(supplier), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
+                    <i class="layui-icon layui-icon-edit"></i>
+                    编辑
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- 分页 -->
+    <% if @suppliers.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px;"></div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .layui-btn-group .layui-btn {
+    margin: 0;
+  }
+
+  .layui-btn-xs {
+    padding: 0 8px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+  }
+</style>
+
+<script>
+  layui.use(['laypage', 'form'], function(){
+    var laypage = layui.laypage,
+        form = layui.form;
+
+    // 分页
+    <% if @suppliers.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @suppliers.total_entries %>,
+      limit: <%= @suppliers.per_page %>,
+      curr: <%= @suppliers.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>
