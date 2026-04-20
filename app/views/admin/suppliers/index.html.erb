@@ -1,29 +1,27 @@
-<% content_for :title, "供应商管理" %>
-
-<div class="page-header">
-  <h1 class="page-title">供应商管理</h1>
-  <div class="page-actions">
-    <%= link_to new_admin_supplier_path, class: "layui-btn" do %>
-      <i class="layui-icon layui-icon-add-1"></i>
-      新建供应商
-    <% end %>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">内容管理</a>
+      <a><cite>供应商管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
   </div>
-</div>
-
-<div class="layui-card">
-  <div class="layui-card-header">
-    供应商列表
-    <div style="float: right;">
+  <div class="x-body">
+    <div class="layui-row">
+      <div class="layui-col-3 text-right">
+        <%= link_to :new_admin_supplier, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增供应商
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="layui-card-body">
-    <table class="layui-table" lay-skin="line">
+
+    <table class="layui-table">
       <thead>
         <tr>
           <th width="60">ID</th>
           <th>供应商名称</th>
           <th width="150">创建时间</th>
-          <th width="200">操作</th>
+          <th width="200" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -39,31 +37,13 @@
             <tr>
               <td><%= supplier.id %></td>
               <td>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div style="width: 36px; height: 36px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                    <i class="layui-icon layui-icon-group" style="color: #52c41a; font-size: 18px;"></i>
-                  </div>
-                  <div>
-                    <div style="font-weight: 500;"><%= supplier.name %></div>
-                    <% if supplier.description.present? %>
-                      <div style="font-size: 12px; color: #9ca3af; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        <%= supplier.description %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
+                <div style="font-weight: 500;"><%= supplier.name %></div>
               </td>
               <td><%= supplier.created_at.strftime("%Y-%m-%d") %></td>
-              <td>
+              <td style="text-align:center;">
                 <div class="layui-btn-group">
-                  <%= link_to admin_supplier_path(supplier), class: "layui-btn layui-btn-xs", title: "查看" do %>
-                    <i class="layui-icon layui-icon-about"></i>
-                    详情
-                  <% end %>
-                  <%= link_to edit_admin_supplier_path(supplier), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
-                    <i class="layui-icon layui-icon-edit"></i>
-                    编辑
-                  <% end %>
+                  <%= link_to "详情", admin_supplier_path(supplier), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to "编辑", edit_admin_supplier_path(supplier), class: "layui-btn layui-btn-sm" %>
                 </div>
               </td>
             </tr>
