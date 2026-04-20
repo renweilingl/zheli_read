@@ -1,24 +1,26 @@
-<% content_for :title, "新建供应商" %>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">内容管理</a>
+      <%= link_to "供应商管理", :admin_suppliers %>
+      <a><cite>新增供应商</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
 
-<div class="page-header">
-  <h1 class="page-title">新建供应商</h1>
-  <div class="page-actions">
-    <%= link_to admin_suppliers_path, class: "layui-btn layui-btn-primary" do %>
-      <i class="layui-icon layui-icon-return"></i>
-      返回列表
-    <% end %>
+  <div class="x-body">
+    <%= render 'form' %>
   </div>
 </div>
 
+<% if false %>
 <div class="layui-card">
   <div class="layui-card-body" style="padding: 30px;">
     <%= form_with(model: [:admin, @supplier], local: true, class: "layui-form", id: "supplier-form") do |f| %>
-      <!-- 基本信息 -->
       <fieldset class="layui-elem-field layui-field-title">
         <legend>基本信息</legend>
       </fieldset>
 
-      <!-- 供应商名称 -->
       <div class="layui-form-item">
         <%= f.label :name, "供应商名称", class: "layui-form-label" %>
         <div class="layui-input-block">
@@ -26,52 +28,6 @@
         </div>
       </div>
 
-      <!-- 描述 -->
-      <div class="layui-form-item">
-        <%= f.label :description, "描述", class: "layui-form-label" %>
-        <div class="layui-input-block">
-          <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入供应商描述（如有）", maxlength: 500, rows: 3, style: "width: 400px;" %>
-        </div>
-      </div>
-
-      <!-- 联系方式 -->
-      <fieldset class="layui-elem-field layui-field-title">
-        <legend>联系方式</legend>
-      </fieldset>
-
-      <!-- 联系人 -->
-      <div class="layui-form-item">
-        <%= f.label :contact_person, "联系人", class: "layui-form-label" %>
-        <div class="layui-input-block">
-          <%= f.text_field :contact_person, class: "layui-input", placeholder: "请输入联系人姓名", maxlength: 50, style: "width: 300px;" %>
-        </div>
-      </div>
-
-      <!-- 联系电话 -->
-      <div class="layui-form-item">
-        <%= f.label :contact_phone, "联系电话", class: "layui-form-label" %>
-        <div class="layui-input-block">
-          <%= f.text_field :contact_phone, class: "layui-input", placeholder: "请输入联系电话", maxlength: 20, style: "width: 300px;" %>
-        </div>
-      </div>
-
-      <!-- 联系邮箱 -->
-      <div class="layui-form-item">
-        <%= f.label :contact_email, "联系邮箱", class: "layui-form-label" %>
-        <div class="layui-input-block">
-          <%= f.email_field :contact_email, class: "layui-input", placeholder: "请输入联系邮箱", maxlength: 100, style: "width: 300px;" %>
-        </div>
-      </div>
-
-      <!-- 地址 -->
-      <div class="layui-form-item">
-        <%= f.label :address, "地址", class: "layui-form-label" %>
-        <div class="layui-input-block">
-          <%= f.text_area :address, class: "layui-textarea", placeholder: "请输入详细地址", maxlength: 200, rows: 2, style: "width: 500px;" %>
-        </div>
-      </div>
-
-      <!-- 提交按钮 -->
       <div class="layui-form-item">
         <div class="layui-input-block">
           <button type="submit" class="layui-btn" lay-submit lay-filter="submit-supplier">
@@ -84,17 +40,5 @@
     <% end %>
   </div>
 </div>
+<% end %>
 
-<script>
-  layui.use(['form'], function(){
-    var form = layui.form,
-        $ = layui.$;
-
-    form.render();
-
-    // 表单验证
-    form.on('submit(submit-supplier)', function(data){
-      return true;
-    });
-  });
-</script>
