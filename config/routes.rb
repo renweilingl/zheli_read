@@ -54,10 +54,6 @@ Rails.application.routes.draw do
         post :toggle_status
         post :toggle_lock
       end
-      collection do
-        post :upload_cover
-        post :upload_intro_image
-      end
     end
 
   end
