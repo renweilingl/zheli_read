@@ -99,6 +99,17 @@
     <legend><i class="layui-icon layui-icon-rmb"></i> 版权与出版信息</legend>
   </fieldset>
   <div class="layui-form-item">
+    <%= f.label :supplier_id, class: "layui-form-label" do %>
+      <span class="required">*</span> 归属供应商
+    <% end %>
+    <div class="layui-input-block">
+      <%= f.select :supplier_id,
+            options_from_collection_for_select(@suppliers, :id, :name, @book.supplier_id),
+            { include_blank: '请选择供应商' },
+            { class: "layui-input", style: "width: 250px;" } %>
+    </div>
+  </div>
+  <div class="layui-form-item">
     <div class="layui-inline">
       <%= f.label :has_copyright, "是否有版权", class: "layui-form-label" %>
       <div class="layui-input-block">
@@ -186,6 +197,89 @@
   <fieldset class="layui-elem-field layui-field-title">
     <legend><i class="layui-icon layui-icon-picture"></i> 内容与展示信息</legend>
   </fieldset>
+
+  <div class="layui-form-item">
+    <%= f.label :description, "内容简介", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入绘本的内容简介", rows: 5, style: "width: 100%;" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :orientation, "横屏/竖屏", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.select :orientation,
+              options_for_select([['竖屏', 'portrait'], ['横屏', 'landscape']], @book.orientation),
+              { include_blank: '请选择' },
+              { class: "layui-input", style: "width: 150px;" } %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :purchasable, "是否可购买", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.select :purchasable,
+              options_for_select([['是', true], ['否', false]], @book.purchasable),
+              { include_blank: '请选择' },
+              { class: "layui-input", style: "width: 150px;" } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :editor_recommendation, "编辑推荐语", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_field :editor_recommendation, class: "layui-input", placeholder: "请输入编辑推荐语", maxlength: 200 %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :detail_recommendation, "详情页推荐语", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_field :detail_recommendation, class: "layui-input", placeholder: "请输入详情页推荐语", maxlength: 200 %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :page_count, "页数", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.number_field :page_count, class: "layui-input", placeholder: "请输入总页数", min: 0, style: "width: 150px;" %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :full_trial_read, "整本试读", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.select :full_trial_read,
+              options_for_select([['否', false], ['是', true]], @book.full_trial_read),
+              { include_blank: '请选择' },
+              { class: "layui-input", style: "width: 150px;" } %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :trial_page_count, "试读页数", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.number_field :trial_page_count, class: "layui-input", placeholder: "请输入试读页数", min: 0, style: "width: 150px;" %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :word_count, "字数", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.number_field :word_count, class: "layui-input", placeholder: "请输入总字数", min: 0, style: "width: 150px;" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :remark, "备注", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_area :remark, class: "layui-textarea", placeholder: "请输入备注信息", rows: 3 %>
+    </div>
+  </div>
 
   <div class="layui-form-item">
     <div class="layui-input-block">
