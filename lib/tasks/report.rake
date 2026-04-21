@@ -25,17 +25,17 @@ namespace :reports do
 
   desc "任务测试"
   task :job_test => :environment do
-    text = extract_pdf_text("1.pdf")
-    puts text if text.length > 0
-    #reader = PDF::Reader.new("和大人一起读1.pdf")
-    #puts reader.info
+    #text = extract_pdf_text("1.pdf")
+    #puts text if text.length > 0
+    reader = PDF::Reader.new("1.pdf")
+    puts reader.info
     #puts "PDF 版本: #{reader.pdf_version}"
     #puts "页数: #{reader.page_count}"
 
-    #reader.pages.each_with_index do |page, i|
-    #  puts "=== 第 #{i+1} 页 ==="
+    reader.pages.each_with_index do |page, i|
+      puts "=== 第 #{i+1} 页 ==="
     #  puts page.text
-    #  puts page.raw_content
-    #end
+      puts page.raw_content
+    end
   end
 end

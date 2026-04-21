@@ -13,5 +13,6 @@ start.sh
 config/*.pem
 dump.rdb
 *.pdf
+*.txt
 /config/master.key
 public/assets
