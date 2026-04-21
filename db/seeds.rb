@@ -72,8 +72,8 @@ puts "测试财务: finance@zheli.com / finance123456"
   end
 end
 
-Grade.all.each do |grade|
-  if Category.where(name: grade.name, level: 1).empty?
-    Category.create(name: grade.name, level: 1, active: true)
+["有声", "视频", "图书", "绘本"].each do |name|
+  if Category.where(name: name).empty?
+    Category.create(name: name, active: true)
   end
 end
