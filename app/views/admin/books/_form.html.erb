@@ -34,6 +34,160 @@
   </div>
 
   <div class="layui-form-item">
+    <%= f.label :book_type, class: "layui-form-label" do %>
+      <span class="required">*</span> 绘本类型
+    <% end %>
+    <div class="layui-input-block">
+      <%= f.select :book_type,
+            options_for_select(Book::BOOK_TYPE_NAMES.map { |k, v| [v, k] }, @book.book_type),
+            { include_blank: '请选择绘本类型' },
+            { class: "layui-input", required: true, style: "width: 200px;" } %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :age_range, class: "layui-form-label" do %>
+        <span class="required">*</span> 年龄范围
+      <% end %>
+      <div class="layui-input-inline" style="width: 100px;">
+        <%= f.number_field :min_age, class: "layui-input", placeholder: "最小", min: 0, value: @book.min_age || 8 %>
+      </div>
+      <div class="layui-form-mid" style="padding: 0 10px !important;">至</div>
+      <div class="layui-input-inline" style="width: 100px;">
+        <%= f.number_field :max_age, class: "layui-input", placeholder: "最大", min: 0, value: @book.max_age || 12 %>
+      </div>
+      <div class="layui-form-mid" style="padding: 0 !important;">岁</div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :recommended_age, class: "layui-form-label" do %>
+        <span class="required">*</span> 最佳年龄推荐
+      <% end %>
+      <div class="layui-input-block">
+        <%= f.text_field :recommended_age, class: "layui-input", placeholder: "如：3-6", maxlength: 20, required: true  %>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :intro_image_url, "图片简介", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <div class="layui-upload">
+        <button type="button" class="layui-btn layui-btn-normal" id="upload-intro">
+          <i class="layui-icon layui-icon-upload"></i> 上传图片简介
+        </button>
+      </div>
+      <div id="intro-preview" style="margin-top: 10px; display: none;">
+        <img id="intro-img" src="" style="max-width: 300px; max-height: 400px; border-radius: 4px; border: 1px solid #e6e6e6;">
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger intro-remove" style="margin-left: 10px;">
+          <i class="layui-icon layui-icon-close"></i> 移除
+        </button>
+      </div>
+      <%= f.hidden_field :intro_image_url %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :image_description, "图片文字(app不展示)", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.text_area :image_description, class: "layui-textarea", placeholder: "图片说明文字，该内容不在APP端展示", rows: 3 %>
+    </div>
+  </div>
+
+  <fieldset class="layui-elem-field layui-field-title">
+    <legend><i class="layui-icon layui-icon-rmb"></i> 版权与出版信息</legend>
+  </fieldset>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :has_copyright, "是否有版权", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.select :has_copyright,
+              options_for_select([['否', false], ['是', true]], @book.has_copyright),
+              { include_blank: '请选择' },
+              { class: "layui-input", style: "width: 150px;" } %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :payment_type, "付费类型", class: "layui-form-label" %>      
+      <div class="layui-input-block">                                          
+        <%= f.select :payment_type,                                            
+              options_for_select([['免费', 'free'], ['付费', 'paid'], ['会员专享', 'vip']], @book.payment_type),
+              { include_blank: '请选择付费类型' },                             
+              { class: "layui-input", style: "width: 150px;" } %>              
+      </div> 
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :price, "单价", class: "layui-form-label" %>
+      <div class="layui-input-inline" style="width: 120px;">
+        <%= f.number_field :price, class: "layui-input", placeholder: "0.00", min: 0, step: 0.01 %>
+      </div>
+      <div class="layui-form-mid" style="padding: 0 !important;">元</div>
+    </div>
+  </div>
+
+  <fieldset class="layui-elem-field layui-field-title">
+    <legend><i class="layui-icon layui-icon-user"></i> 作者/译者信息</legend>
+  </fieldset>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :author, "作者", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.text_field :author, class: "layui-input", placeholder: "请输入作者", maxlength: 100, style: "width: 250px;" %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :translator, "译者", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.text_field :translator, class: "layui-input", placeholder: "请输入译者", maxlength: 100, style: "width: 250px;" %>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <%= f.label :compiler, "编著", class: "layui-form-label" %>
+      <div class="layui-input-block">
+        <%= f.text_field :compiler, class: "layui-input", placeholder: "请输入编著者", maxlength: 100, style: "width: 250px;" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <%= f.label :illustrator, "编绘", class: "layui-form-label" %>           
+      <div class="layui-input-block">                                          
+        <%= f.text_field :illustrator, class: "layui-input", placeholder: "请输入编绘者", maxlength: 100, style: "width: 250px;" %>
+      </div>                                                                   
+    </div>                                                                     
+                                                                                 
+    <div class="layui-inline">
+      <%= f.label :editor_in_chief, "主编", class: "layui-form-label" %>       
+      <div class="layui-input-block">                                          
+        <%= f.text_field :editor_in_chief, class: "layui-input", placeholder: "请输入主编", maxlength: 100, style: "width: 250px;" %>
+      </div>                                                                   
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :awards, "关联奖项", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <div id="award-tags" class="tag-container" style="min-height: 38px; border: 1px solid #e6e6e6; border-radius: 2px; padding: 5px 10px; background: #fff;">
+        <% @book.awards_array.each do |award| %>
+          <span class="tag-item"><%= award %><i class="layui-icon layui-icon-close tag-remove" data-value="<%= award %>"></i></span>
+        <% end %>
+      </div>
+      <%= f.hidden_field :awards, id: "awards-input", value: @book.awards_array.join(',') %>
+      <input type="text" id="award-input" class="layui-input" placeholder="输入奖项名称后按回车添加" style="width: 250px; margin-top: 10px;" />
+    </div>
+  </div>
+
+  <fieldset class="layui-elem-field layui-field-title">
+    <legend><i class="layui-icon layui-icon-picture"></i> 内容与展示信息</legend>
+  </fieldset>
+
+  <div class="layui-form-item">
     <div class="layui-input-block">
       <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="submit-content">
         <i class="layui-icon layui-icon-release"></i>提交保存
@@ -85,6 +239,33 @@
     $('.cover-remove').on('click', function(){
       $('#cover_image_url').val('');
       $('#cover-preview').hide();
+    });
+
+    // 图片简介上传
+    upload.render({
+      elem: '#upload-intro',
+      url: '<%= upload_img_files_path %>',
+      accept: 'images',
+      exts: 'jpg|jpeg|png|gif|webp',
+      size: 5 * 1024,
+      done: function(res){
+        if(res.success){
+          $('#intro_image_url').val(res.url);
+          $('#intro-preview').show();
+          $('#intro-img').attr('src', res.preivew_url);
+          layer.msg('上传成功');
+        } else {
+          layer.msg(res.message || '上传失败', {icon: 2});
+        }
+      },
+      error: function(){
+        layer.msg('上传失败', {icon: 2});
+      }
+    });
+
+    $('.intro-remove').on('click', function(){
+      $('#intro_image_url').val('');
+      $('#intro-preview').hide();
     });
   })
 </script>

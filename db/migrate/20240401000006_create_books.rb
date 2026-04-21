@@ -36,10 +36,10 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       # 内容与展示信息
       t.text :description, comment: '内容简介'
       t.string :orientation, default: 'portrait', comment: '横屏/竖屏: portrait/landscape'
-      #t.string :intro_image_url, comment: '图片简介URL'
+      t.string :intro_image_url, comment: '图片简介URL'
       #t.string :intro_image_name, comment: '图片简介文件名'
       #t.boolean :quote_current_owner, default: false, comment: '是否引用当前所属主'
-      #t.text :image_description, comment: '图片文字(app不展示)'
+      t.text :image_description, comment: '图片文字(app不展示)'
       t.boolean :purchasable, default: true, comment: '是否可购买'
       t.string :editor_recommendation, comment: '编辑推荐语'
       t.string :detail_recommendation, comment: '详情页推荐语'

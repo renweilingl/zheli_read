@@ -24,23 +24,13 @@ class Book < ApplicationRecord
 
   # 绘本类型
   BOOK_TYPES = {
-    picture_book: 'picture_book',           # 绘本
-    comic: 'comic',                         # 漫画
-    illustrated: 'illustrated',             # 图画书
-    early_education: 'early_education',    # 早教
-    puzzle: 'puzzle',                      # 益智
-    fairy_tale: 'fairy_tale',              # 童话
-    other: 'other'                         # 其他
+    chinese: 'chinese',
+    en: 'en',
   }.freeze
 
   BOOK_TYPE_NAMES = {
-    picture_book: '绘本',
-    comic: '漫画',
-    illustrated: '图画书',
-    early_education: '早教',
-    puzzle: '益智',
-    fairy_tale: '童话',
-    other: '其他'
+    chinese: '中文',
+    en: '英文',
   }.freeze
 
   # 主题分类
