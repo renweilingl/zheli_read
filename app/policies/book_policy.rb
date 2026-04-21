@@ -32,6 +32,14 @@ class BookPolicy < ApplicationPolicy
     true
   end
 
+  def upload_cover?
+    user.super_admin? || user.editor?
+  end
+
+  def upload_intro_image?
+    user.super_admin? || user.editor?
+  end
+
   # 超级管理员和编辑可以管理推荐分类
   def manage_recommended?
     user.super_admin? || user.editor?

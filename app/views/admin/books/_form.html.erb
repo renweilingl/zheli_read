@@ -1,0 +1,90 @@
+<%= form_for(@book, url: @book.new_record? ? :admin_books : :admin_book,method: @book.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %> 
+  <fieldset class="layui-elem-field layui-field-title">
+    <legend><i class="layui-icon layui-icon-note"></i> 基本信息</legend>
+  </fieldset>
+
+  <div class="layui-form-item">
+    <%= f.label :name, class: "layui-form-label" do %>
+      <span class="required">*</span> 绘本名称
+    <% end %>
+    <div class="layui-input-block">
+      <%= f.text_field :name, class: "layui-input", placeholder: "请输入绘本名称", maxlength: 100, required: true %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :cover_image_url, class: "layui-form-label" do %>
+      <span class="required">*</span> 绘本封面
+    <% end %>
+    <div class="layui-input-block">
+      <div class="layui-upload">
+        <button type="button" class="layui-btn layui-btn-normal" id="upload-cover">
+          <i class="layui-icon layui-icon-upload"></i> 上传封面
+        </button>
+        <span class="upload-tip" style="margin-left: 10px; color: #999;">支持 JPG、PNG、GIF、WebP 格式，最大 5MB</span>
+      </div>
+      <div id="cover-preview" style="margin-top: 10px; display: none;">
+        <img id="cover-img" src="" style="max-width: 200px; max-height: 280px; border-radius: 4px; border: 1px solid #e6e6e6;">
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" style="margin-left: 10px;">
+          <i class="layui-icon layui-icon-close"></i> 移除
+        </button>
+      </div>
+      <%= f.hidden_field :cover_image_url %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="submit-content">
+        <i class="layui-icon layui-icon-release"></i>提交保存
+      </button>
+      <%= link_to "取消", :admin_books, class: "layui-btn layui-btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  layui.use(['form', 'laydate', 'upload', 'layer'], function(){
+    var form = layui.form,
+        laydate = layui.laydate,
+        upload = layui.upload,
+        layer = layui.layer,
+        $ = layui.$;
+
+    form.render();
+
+    // 日期时间选择器
+    laydate.render({
+      elem: '#scheduled_online_at',
+      type: 'datetime',
+      format: 'yyyy-MM-dd HH:mm:ss'
+    });
+
+    // 封面上传
+    upload.render({
+      elem: '#upload-cover',
+      url: '<%= upload_cover_admin_books_path %>',
+      accept: 'images',
+      exts: 'jpg|jpeg|png|gif|webp',
+      size: 5 * 1024,
+      done: function(res){
+        if(res.success){
+          $('#cover_image_url').val(res.url);
+          $('#cover-img').attr('src', res.preivew_url);
+          $('#cover-preview').show();
+          layer.msg('上传成功');
+        } else {
+          layer.msg(res.message || '上传失败', {icon: 2});
+        }
+      },
+      error: function(){
+        layer.msg('上传失败', {icon: 2});
+      }
+    });
+
+    $('.cover-remove').on('click', function(){
+      $('#cover_image_url').val('');
+      $('#cover-preview').hide();
+    });
+  })
+</script>
