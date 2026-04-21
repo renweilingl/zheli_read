@@ -7,12 +7,17 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  # Registration routes
   get "register", to: "users#new"
   post "register", to: "users#create"
 
-  # Dashboard
   get "dashboard", to: "pages#dashboard"
+
+  resources :files, only: [:show] do
+    collection do
+      post :upload
+      post :upload_img
+    end
+  end
 
   # Admin routes
   namespace :admin do
