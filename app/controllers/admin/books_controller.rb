@@ -43,12 +43,12 @@ class Admin::BooksController < ApplicationController
 
   def edit
     authorize @book
-    @suppliers = Supplier.active_suppliers
+    @suppliers = Supplier.all
   end
 
   def update
     authorize @book
-    @suppliers = Supplier.active_suppliers
+    @suppliers = Supplier.all
 
     if @book.update(book_params)
       redirect_to admin_book_path(@book), notice: '绘本更新成功'
