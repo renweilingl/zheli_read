@@ -12,5 +12,6 @@ test
 start.sh
 config/*.pem
 dump.rdb
+*.pdf
 /config/master.key
 public/assets
