@@ -31,9 +31,8 @@ class Admin::BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
-    @book.user = current_user
     authorize @book
-    @suppliers = Supplier.active_suppliers
+    @suppliers = Supplier.all
 
     if @book.save
       redirect_to admin_book_path(@book), notice: '绘本创建成功'
