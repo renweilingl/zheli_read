@@ -42,5 +42,18 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+      member do
+        post :publish
+        post :offline
+        post :toggle_status
+        post :toggle_lock
+      end
+      collection do
+        post :upload_cover
+        post :upload_intro_image
+      end
+    end
+
   end
 end

@@ -1,0 +1,240 @@
+<% content_for :title, "绘本管理" %>
+
+<div class="page-header">
+  <h1 class="page-title">绘本管理</h1>
+  <div class="page-actions">
+    <%= link_to new_admin_book_path, class: "layui-btn" do %>
+      <i class="layui-icon layui-icon-add-1"></i>
+      新建绘本
+    <% end %>
+  </div>
+</div>
+
+<!-- 绘本列表 -->
+<div class="layui-card">
+  <div class="layui-card-header">
+    绘本列表
+    <div style="float: right;">
+      <div class="layui-form" style="display: inline-flex; gap: 8px;">
+        <input type="text" name="search" id="search-input" placeholder="搜索绘本名称..." class="layui-input" style="width: 150px;" value="<%= params[:search] %>">
+
+        <select name="status" id="status-select" class="layui-select" style="width: 90px;">
+          <option value="">全部状态</option>
+          <option value="draft" <%= 'selected' if params[:status] == 'draft' %>>草稿</option>
+          <option value="published" <%= 'selected' if params[:status] == 'published' %>>已上线</option>
+          <option value="offline" <%= 'selected' if params[:status] == 'offline' %>>已下线</option>
+        </select>
+
+        <select name="book_type" id="book-type-select" class="layui-select" style="width: 90px;">
+          <option value="">类型</option>
+          <% Book::BOOK_TYPE_NAMES.each do |key, name| %>
+            <option value="<%= key %>" <%= 'selected' if params[:book_type] == key.to_s %>><%= name %></option>
+          <% end %>
+        </select>
+
+        <select name="payment_type" id="payment-type-select" class="layui-select" style="width: 90px;">
+          <option value="">付费</option>
+          <option value="free" <%= 'selected' if params[:payment_type] == 'free' %>>免费</option>
+          <option value="paid" <%= 'selected' if params[:payment_type] == 'paid' %>>付费</option>
+          <option value="vip" <%= 'selected' if params[:payment_type] == 'vip' %>>会员</option>
+        </select>
+
+        <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="filterBook()">
+          <i class="layui-icon layui-icon-search"></i> 查询
+        </button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="resetFilter()">
+          <i class="layui-icon layui-icon-refresh"></i> 重置
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="layui-card-body">
+    <table class="layui-table" lay-skin="line">
+      <thead>
+        <tr>
+          <th width="60">ID</th>
+          <th>绘本信息</th>
+          <th width="80">类型</th>
+          <th width="70">年龄</th>
+          <th width="70">付费</th>
+          <th width="60">页数</th>
+          <th width="60">锁定</th>
+          <th width="70">状态</th>
+          <th width="130">创建时间</th>
+          <th width="240">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @books.empty? %>
+          <tr>
+            <td colspan="10" style="text-align: center; padding: 40px 0; color: #9ca3af;">
+              <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
+              <div style="margin-top: 10px;">暂无绘本数据</div>
+            </td>
+          </tr>
+        <% else %>
+          <% @books.each do |book| %>
+            <tr>
+              <td><%= book.id %></td>
+              <td>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                  <% if book.cover_image_url.present? %>
+                    <img src="<%= book.cover_image_url %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
+                  <% else %>
+                    <div style="width: 48px; height: 64px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                      <i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i>
+                    </div>
+                  <% end %>
+                  <div>
+                    <div style="font-weight: 500; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                      <%= book.name %>
+                    </div>
+                    <div style="font-size: 12px; color: #9ca3af;">
+                      <% if book.supplier %>
+                        <span><i class="layui-icon layui-icon-group"></i> <%= book.supplier.name %></span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="layui-badge layui-bg-gray"><%= book.book_type_name %></span>
+              </td>
+              <td><%= book.recommended_age %></td>
+              <td>
+                <span class="layui-badge <%= book.free? ? 'layui-bg-green' : (book.vip? ? 'layui-bg-purple' : 'layui-bg-red') %>">
+                  <%= book.payment_type_name %>
+                </span>
+              </td>
+              <td><%= book.page_count %>页</td>
+              <td>
+                <span class="layui-badge <%= book.locked? ? 'layui-bg-red' : 'layui-bg-gray' %>">
+                  <%= book.locked? ? '是' : '否' %>
+                </span>
+              </td>
+              <td>
+                <span class="layui-badge <%= case book.status when 'published' then 'layui-bg-green' when 'draft' then 'layui-bg-orange' else 'layui-bg-gray' end %>">
+                  <%= book.status_name %>
+                </span>
+              </td>
+              <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
+              <td>
+                <div class="layui-btn-group">
+                  <%= link_to admin_book_path(book), class: "layui-btn layui-btn-xs", title: "查看" do %>
+                    <i class="layui-icon layui-icon-about"></i>
+                  <% end %>
+                  <%= link_to edit_admin_book_path(book), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
+                    <i class="layui-icon layui-icon-edit"></i>
+                  <% end %>
+                  <% if book.draft? %>
+                    <%= link_to toggle_status_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs layui-btn-normal", title: "发布" do %>
+                      <i class="layui-icon layui-icon-release"></i>
+                    <% end %>
+                  <% elsif book.published? %>
+                    <%= link_to toggle_status_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs layui-btn-danger", title: "下线" do %>
+                      <i class="layui-icon layui-icon-down"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to toggle_status_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs layui-btn-normal", title: "重新上线" do %>
+                      <i class="layui-icon layui-icon-up"></i>
+                    <% end %>
+                  <% end %>
+                  <%= link_to toggle_lock_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs #{book.locked? ? 'layui-btn-primary' : 'layui-btn-danger'}", title: book.locked? ? '解锁' : '锁定' do %>
+                    <i class="layui-icon layui-icon-password"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- 分页 -->
+    <% if @books.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .layui-btn-group .layui-btn {
+    margin: 0 2px;
+  }
+
+  .layui-btn-xs {
+    padding: 0 6px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+  }
+
+  .layui-badge-purple {
+    background-color: #722ed1;
+  }
+</style>
+
+<script>
+  layui.use(['laypage', 'form', 'layer'], function(){
+    var laypage = layui.laypage,
+        form = layui.form,
+        layer = layui.layer;
+
+    // 分页
+    <% if @books.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @books.total_entries %>,
+      limit: <%= @books.per_page %>,
+      curr: <%= @books.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+
+    // 筛选
+    function filterBook() {
+      var search = document.getElementById('search-input').value;
+      var status = document.getElementById('status-select').value;
+      var bookType = document.getElementById('book-type-select').value;
+      var paymentType = document.getElementById('payment-type-select').value;
+
+      var url = new URL(window.location.href);
+      if (search) url.searchParams.set('search', search);
+      else url.searchParams.delete('search');
+      if (status) url.searchParams.set('status', status);
+      else url.searchParams.delete('status');
+      if (bookType) url.searchParams.set('book_type', bookType);
+      else url.searchParams.delete('book_type');
+      if (paymentType) url.searchParams.set('payment_type', paymentType);
+      else url.searchParams.delete('payment_type');
+      url.searchParams.delete('page');
+
+      window.location.href = url.toString();
+    }
+
+    // 重置
+    function resetFilter() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('status-select').value = '';
+      document.getElementById('book-type-select').value = '';
+      document.getElementById('payment-type-select').value = '';
+      form.render('select');
+      filterBook();
+    }
+
+    // 回车搜索
+    document.getElementById('search-input').addEventListener('keyup', function(e){
+      if(e.keyCode === 13){
+        filterBook();
+      }
+    });
+  });
+</script>

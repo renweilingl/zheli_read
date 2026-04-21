@@ -1,9 +1,9 @@
-class SupplierPolicy < ApplicationPolicy
-  attr_reader :user, :supplier
+class BookPolicy < ApplicationPolicy
+  attr_reader :user, :book
 
-  def initialize(user, supplier)
+  def initialize(user, book)
     @user = user
-    @category = supplier
+    @book = book
   end
 
   # 所有用户都可以查看分类列表
