@@ -49,9 +49,9 @@ Rails.application.routes.draw do
 
     resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       member do
-        post :publish
-        post :offline
-        post :toggle_status
+        put :publish
+        put :offline
+        put :toggle_status
         post :toggle_lock
       end
     end

@@ -35,7 +35,7 @@
           <th width="60">锁定</th>
           <th width="70">状态</th>
           <th width="130">创建时间</th>
-          <th width="240">操作</th>
+          <th width="220" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -89,29 +89,16 @@
                 </span>
               </td>
               <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
-              <td>
+              <td style="text-align:center;">
                 <div class="layui-btn-group">
-                  <%= link_to admin_book_path(book), class: "layui-btn layui-btn-xs", title: "查看" do %>
-                    <i class="layui-icon layui-icon-about"></i>
-                  <% end %>
-                  <%= link_to edit_admin_book_path(book), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
-                    <i class="layui-icon layui-icon-edit"></i>
-                  <% end %>
+                  <%= link_to "详情", admin_book_path(book), class: "layui-btn layui-btn-xs" %>
+                  <%= link_to "编辑", edit_admin_book_path(book), class: "layui-btn layui-btn-xs" %>
                   <% if book.draft? %>
-                    <%= link_to toggle_status_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs layui-btn-normal", title: "发布" do %>
-                      <i class="layui-icon layui-icon-release"></i>
-                    <% end %>
+                    <%= link_to "发布", toggle_status_admin_book_path(book), method: :put, class: "layui-btn layui-btn-xs", data: { confirm: '确认发布吗?' } %>
                   <% elsif book.published? %>
-                    <%= link_to toggle_status_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs layui-btn-danger", title: "下线" do %>
-                      <i class="layui-icon layui-icon-down"></i>
-                    <% end %>
+                    <%= link_to "下线", toggle_status_admin_book_path(book), method: :put, class: "layui-btn layui-btn-xs", data: { confirm: '确认下线吗?' } %>
                   <% else %>
-                    <%= link_to toggle_status_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs layui-btn-normal", title: "重新上线" do %>
-                      <i class="layui-icon layui-icon-up"></i>
-                    <% end %>
-                  <% end %>
-                  <%= link_to toggle_lock_admin_book_path(book), method: :post, class: "layui-btn layui-btn-xs #{book.locked? ? 'layui-btn-primary' : 'layui-btn-danger'}", title: book.locked? ? '解锁' : '锁定' do %>
-                    <i class="layui-icon layui-icon-password"></i>
+                    <%= link_to "上线", toggle_status_admin_book_path(book), method: :put, class: "layui-btn layui-btn-xs", data: { confirm: '确认上线吗?' } %>
                   <% end %>
                 </div>
               </td>
@@ -139,10 +126,6 @@
     line-height: 24px;
     font-size: 12px;
   }
-
-  .layui-badge-purple {
-    background-color: #722ed1;
-  }
 </style>
 
 <script>
@@ -169,43 +152,5 @@
       }
     });
     <% end %>
-
-    // 筛选
-    function filterBook() {
-      var search = document.getElementById('search-input').value;
-      var status = document.getElementById('status-select').value;
-      var bookType = document.getElementById('book-type-select').value;
-      var paymentType = document.getElementById('payment-type-select').value;
-
-      var url = new URL(window.location.href);
-      if (search) url.searchParams.set('search', search);
-      else url.searchParams.delete('search');
-      if (status) url.searchParams.set('status', status);
-      else url.searchParams.delete('status');
-      if (bookType) url.searchParams.set('book_type', bookType);
-      else url.searchParams.delete('book_type');
-      if (paymentType) url.searchParams.set('payment_type', paymentType);
-      else url.searchParams.delete('payment_type');
-      url.searchParams.delete('page');
-
-      window.location.href = url.toString();
-    }
-
-    // 重置
-    function resetFilter() {
-      document.getElementById('search-input').value = '';
-      document.getElementById('status-select').value = '';
-      document.getElementById('book-type-select').value = '';
-      document.getElementById('payment-type-select').value = '';
-      form.render('select');
-      filterBook();
-    }
-
-    // 回车搜索
-    document.getElementById('search-input').addEventListener('keyup', function(e){
-      if(e.keyCode === 13){
-        filterBook();
-      }
-    });
   });
 </script>
