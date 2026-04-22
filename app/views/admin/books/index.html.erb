@@ -1,61 +1,35 @@
-<% content_for :title, "绘本管理" %>
-
-<div class="page-header">
-  <h1 class="page-title">绘本管理</h1>
-  <div class="page-actions">
-    <%= link_to new_admin_book_path, class: "layui-btn" do %>
-      <i class="layui-icon layui-icon-add-1"></i>
-      新建绘本
-    <% end %>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">内容管理</a>
+      <a><cite>图书管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
   </div>
-</div>
-
-<!-- 绘本列表 -->
-<div class="layui-card">
-  <div class="layui-card-header">
-    绘本列表
-    <div style="float: right;">
-      <div class="layui-form" style="display: inline-flex; gap: 8px;">
-        <input type="text" name="search" id="search-input" placeholder="搜索绘本名称..." class="layui-input" style="width: 150px;" value="<%= params[:search] %>">
-
-        <select name="status" id="status-select" class="layui-select" style="width: 90px;">
-          <option value="">全部状态</option>
-          <option value="draft" <%= 'selected' if params[:status] == 'draft' %>>草稿</option>
-          <option value="published" <%= 'selected' if params[:status] == 'published' %>>已上线</option>
-          <option value="offline" <%= 'selected' if params[:status] == 'offline' %>>已下线</option>
-        </select>
-
-        <select name="book_type" id="book-type-select" class="layui-select" style="width: 90px;">
-          <option value="">类型</option>
-          <% Book::BOOK_TYPE_NAMES.each do |key, name| %>
-            <option value="<%= key %>" <%= 'selected' if params[:book_type] == key.to_s %>><%= name %></option>
-          <% end %>
-        </select>
-
-        <select name="payment_type" id="payment-type-select" class="layui-select" style="width: 90px;">
-          <option value="">付费</option>
-          <option value="free" <%= 'selected' if params[:payment_type] == 'free' %>>免费</option>
-          <option value="paid" <%= 'selected' if params[:payment_type] == 'paid' %>>付费</option>
-          <option value="vip" <%= 'selected' if params[:payment_type] == 'vip' %>>会员</option>
-        </select>
-
-        <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="filterBook()">
-          <i class="layui-icon layui-icon-search"></i> 查询
-        </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="resetFilter()">
-          <i class="layui-icon layui-icon-refresh"></i> 重置
-        </button>
+  <div class="x-body">
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :admin_books, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline">
+            <%= f.text_field :name_cont, class: :'layui-input', placeholder: "名称" %>
+          </div>
+          <button class="layui-btn layui-bg-blue" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :admin_books, class: "layui-btn layui-btn-primary" %>
+        <% end %>
+      </div>
+      <div class="layui-col-3 text-right">
+        <%= link_to :new_admin_book, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增图书
+        <% end %>
       </div>
     </div>
-  </div>
-  <div class="layui-card-body">
-    <table class="layui-table" lay-skin="line">
+
+    <table class="layui-table">
       <thead>
         <tr>
           <th width="60">ID</th>
-          <th>绘本信息</th>
+          <th>图书信息</th>
           <th width="80">类型</th>
-          <th width="70">年龄</th>
           <th width="70">付费</th>
           <th width="60">页数</th>
           <th width="60">锁定</th>
@@ -69,7 +43,7 @@
           <tr>
             <td colspan="10" style="text-align: center; padding: 40px 0; color: #9ca3af;">
               <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
-              <div style="margin-top: 10px;">暂无绘本数据</div>
+              <div style="margin-top: 10px;">暂无图书数据</div>
             </td>
           </tr>
         <% else %>
@@ -79,7 +53,7 @@
               <td>
                 <div style="display: flex; align-items: flex-start; gap: 10px;">
                   <% if book.cover_image_url.present? %>
-                    <img src="<%= book.cover_image_url %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
+                    <img src="<%= FileMap.new(book.cover_image_url, "img").secrity_src %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
                   <% else %>
                     <div style="width: 48px; height: 64px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
                       <i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i>
@@ -97,12 +71,9 @@
                   </div>
                 </div>
               </td>
-              <td>
-                <span class="layui-badge layui-bg-gray"><%= book.book_type_name %></span>
-              </td>
               <td><%= book.recommended_age %></td>
               <td>
-                <span class="layui-badge <%= book.free? ? 'layui-bg-green' : (book.vip? ? 'layui-bg-purple' : 'layui-bg-red') %>">
+                <span class="layui-badge <%= book.payment_type == "free" ? 'layui-bg-green' : (book.vip? ? 'layui-bg-purple' : 'layui-bg-red') %>">
                   <%= book.payment_type_name %>
                 </span>
               </td>

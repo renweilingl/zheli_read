@@ -190,6 +190,14 @@ class Book < ApplicationRecord
     update(status: :offline)
   end
 
+  def published?
+    status == "published"
+  end
+
+  def draft?
+    status == "draft"
+  end
+
   private
 
   def validate_age_range
@@ -202,5 +210,9 @@ class Book < ApplicationRecord
     if themes.present? && themes.length < 1
       errors.add(:themes, '请至少选择一个主题')
     end
+  end
+
+   def self.ransackable_attributes(auth_object = nil)
+    ["author", "awards", "base_rating", "base_rating_count", "base_read_count", "book_type", "cat_display", "compiler", "cover_image_url", "created_at", "description", "detail_recommendation", "editor_in_chief", "editor_recommendation", "full_trial_read", "has_copyright", "has_isbn", "id", "id_value", "illustrator", "image_description", "intro_image_url", "lan_type", "locked", "max_age", "min_age", "name", "orientation", "page_count", "payment_type", "price", "publisher", "purchasable", "recommended_age", "remark", "scheduled_online_at", "status", "supplier_id", "themes", "translator", "trial_page_count", "updated_at", "word_count"]
   end
 end

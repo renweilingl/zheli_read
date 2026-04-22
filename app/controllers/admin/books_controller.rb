@@ -5,14 +5,24 @@ class Admin::BooksController < ApplicationController
 
   def index
     authorize Book
-    @books = Book
-            .search(params[:search])
-            .filter_by_status(params[:status])
-            .filter_by_payment_type(params[:payment_type])
-            .filter_by_book_type(params[:book_type])
-            .filter_by_supplier(params[:supplier_id])
-            .paginate(page: params[:page], per_page: params[:per_page] || 15)
+    @per_page = params[:per_page] || 20
 
+    @q = Book.ransack(params[:q])
+    @books = @q.result.paginate(page: params[:page], per_page: @per_page)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: {
+        success: true,
+        categories: @books.map(&:as_json),
+        pagination: {
+          current_page: @books.current_page,
+          total_pages: @books.total_pages,
+          total_count: @books.total_entries,
+          per_page: @books.per_page
+        }
+      }}
+    end
     @suppliers = Supplier.all
   end
 
