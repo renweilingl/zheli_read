@@ -23,12 +23,12 @@ class Book < ApplicationRecord
   }, prefix: true
 
   # 绘本类型
-  BOOK_TYPES = {
+  LAN_TYPES = {
     chinese: 'chinese',
     en: 'en',
   }.freeze
 
-  BOOK_TYPE_NAMES = {
+  LAN_TYPE_NAMES = {
     chinese: '中文',
     en: '英文',
   }.freeze
@@ -107,8 +107,8 @@ class Book < ApplicationRecord
   end
 
   # 实例方法
-  def book_type_name
-    BOOK_TYPE_NAMES[book_type.to_sym] || book_type
+  def book_lan_type_name
+    LAN_TYPE_NAMES[book_type.to_sym] || book_type
   end
 
   def payment_type_name

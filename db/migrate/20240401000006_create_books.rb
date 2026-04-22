@@ -2,12 +2,14 @@ class CreateBooks < ActiveRecord::Migration[7.1]
   def change
     create_table :books do |t|
       # 核心基础信息
+      t.string :book_type, null: false, :default => "book", comment: '合辑类型：图书|绘本'
       t.string :name, null: false, comment: '绘本名称'
       t.string :cover_image_url, comment: '绘本封面URL'
-      t.string :book_type, comment: '绘本类型'
+      t.string :lan_type, comment: '语言类型'
       t.integer :min_age, default: 0, comment: '最小年龄'
       t.integer :max_age, default: 99, comment: '最大年龄'
       t.string :recommended_age, comment: '最佳年龄推荐'
+      t.boolean :cat_display, default: false, comment: '分类展示'
       t.json :themes, comment: '主题'
       t.references :supplier, foreign_key: true, comment: '归属供应商'
 
@@ -37,7 +39,6 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       t.text :description, comment: '内容简介'
       t.string :orientation, default: 'portrait', comment: '横屏/竖屏: portrait/landscape'
       t.string :intro_image_url, comment: '图片简介URL'
-      #t.string :intro_image_name, comment: '图片简介文件名'
       #t.boolean :quote_current_owner, default: false, comment: '是否引用当前所属主'
       t.text :image_description, comment: '图片文字(app不展示)'
       t.boolean :purchasable, default: true, comment: '是否可购买'
@@ -64,9 +65,9 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
+    add_index :books, :book_type
     add_index :books, :name
     add_index :books, :status
-    add_index :books, :book_type
     add_index :books, :payment_type
   end
 end

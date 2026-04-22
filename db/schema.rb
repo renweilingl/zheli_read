@@ -12,12 +12,14 @@
 
 ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
   create_table "books", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "book_type", default: "book", null: false, comment: "合辑类型：图书|绘本"
     t.string "name", null: false, comment: "绘本名称"
     t.string "cover_image_url", comment: "绘本封面URL"
-    t.string "book_type", comment: "绘本类型"
+    t.string "lan_type", comment: "语言类型"
     t.integer "min_age", default: 0, comment: "最小年龄"
     t.integer "max_age", default: 99, comment: "最大年龄"
     t.string "recommended_age", comment: "最佳年龄推荐"
+    t.boolean "cat_display", default: false, comment: "分类展示"
     t.json "themes", comment: "主题"
     t.bigint "supplier_id", comment: "归属供应商"
     t.boolean "has_copyright", default: false, comment: "是否有版权"
