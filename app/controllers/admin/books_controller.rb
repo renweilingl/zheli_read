@@ -107,6 +107,8 @@ class Admin::BooksController < ApplicationController
       :min_age,
       :max_age,
       :recommended_age,
+      :lan_type,
+      :cat_display,
       #:categories => [],
       #:themes => [],
       :supplier_id,
