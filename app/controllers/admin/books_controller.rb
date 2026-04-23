@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Admin::BooksController < ApplicationController
   before_action :require_login
-  before_action :set_book, only: [:show, :edit, :update, :destroy, :publish, :offline, :toggle_lock]
+  before_action :set_book, only: [:show, :edit, :update, :destroy, :publish, :offline, :toggle_lock, :chapters, :new_chapter]
 
   def index
     authorize Book
@@ -28,6 +28,15 @@ class Admin::BooksController < ApplicationController
 
   def show
     authorize @book
+  end
+
+  def chapters
+    authorize @book
+  end
+
+  def new_chapter
+    authorize @book
+    @chapter = Chapter.new(book_id: @book.id)
   end
 
   def new

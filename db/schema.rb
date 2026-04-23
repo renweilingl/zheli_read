@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_22_070028) do
   create_table "books", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "book_type", default: "book", null: false, comment: "合辑类型：图书|绘本"
     t.string "name", null: false, comment: "绘本名称"
@@ -73,6 +73,24 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.index ["level"], name: "index_categories_on_level"
   end
 
+  create_table "chapters", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "book_id", null: false, comment: "所属绘本"
+    t.string "name", null: false, comment: "章节名称"
+    t.integer "chapter_number", null: false, comment: "章节序号"
+    t.string "cover_image_url", comment: "章节封面图片URL"
+    t.string "cover_image_name", comment: "章节封面图片名"
+    t.string "content_file_url", comment: "章节内容文件URL"
+    t.string "content_file_name", comment: "章节内容文件名"
+    t.string "content_file_type", comment: "内容文件类型 (epub/pdf/txt)"
+    t.integer "content_file_size", comment: "内容文件大小(字节)"
+    t.boolean "is_free", default: false, comment: "是否免费"
+    t.boolean "is_published", default: false, comment: "是否上线"
+    t.integer "sort_order", default: 0, comment: "排序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_chapters_on_book_id"
+  end
+
   create_table "contents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title", null: false, comment: "标题"
     t.text "description", comment: "简介"
@@ -125,4 +143,5 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
   end
 
   add_foreign_key "books", "suppliers"
+  add_foreign_key "chapters", "books"
 end

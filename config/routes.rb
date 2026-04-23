@@ -53,6 +53,11 @@ Rails.application.routes.draw do
         put :offline
         put :toggle_status
         post :toggle_lock
+        get 'chapters'
+        get 'new_chapter'
+        post 'add_chapter'
+        get 'edit_chapter'
+        post 'update_chapter'
       end
     end
 

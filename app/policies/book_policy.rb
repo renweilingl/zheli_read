@@ -26,6 +26,14 @@ class BookPolicy < ApplicationPolicy
     user.super_admin? || user.editor?
   end
 
+  def chapters?
+    user.super_admin? || user.editor?
+  end
+
+  def new_chapter?
+    user.super_admin? || user.editor?
+  end
+
   # 超级管理员和编辑可以删除分类
   def destroy?
     return false unless user.super_admin? || user.editor?

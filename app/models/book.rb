@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Book < ApplicationRecord
-  # 关联
   belongs_to :supplier, optional: true
+  has_many :chapters
 
   # 枚举定义
   enum :payment_type, {
@@ -72,39 +72,6 @@ class Book < ApplicationRecord
 
   # 排序
   default_scope { order(created_at: :desc) }
-
-  # 类方法
-  class << self
-    def search(keyword)
-      return all if keyword.blank?
-
-      where('name LIKE ?', "%#{keyword}%")
-    end
-
-    def filter_by_status(status)
-      return all if status.blank?
-
-      where(status: status)
-    end
-
-    def filter_by_payment_type(type)
-      return all if type.blank?
-
-      where(payment_type: type)
-    end
-
-    def filter_by_book_type(type)
-      return all if type.blank?
-
-      where(book_type: type)
-    end
-
-    def filter_by_supplier(supplier_id)
-      return all if supplier_id.blank?
-
-      where(supplier_id: supplier_id)
-    end
-  end
 
   # 实例方法
   def book_lan_type_name
