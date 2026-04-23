@@ -67,13 +67,13 @@ puts "测试财务: finance@zheli.com / finance123456"
  {group_name: "初中", name: "初三"},
  {group_name: "高中", name: "高中"},
 ].each do |x|
-  if Grade.where(name: x[:name]).empty?
-    Grade.create(group_name: x[:group_name], name: x[:name])
-  end
+  #if Grade.where(name: x[:name]).empty?
+  #  Grade.create(group_name: x[:group_name], name: x[:name])
+  #end
 end
 
-["有声", "视频", "图书", "绘本"].each do |name|
-  if Category.where(name: name).empty?
-    Category.create(name: name, active: true)
-  end
-end
+#["有声", "视频", "图书", "绘本"].each do |name|
+#  if Category.where(name: name).empty?
+#    Category.create(name: name, active: true)
+#  end
+#end
