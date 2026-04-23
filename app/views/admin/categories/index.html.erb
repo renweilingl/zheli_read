@@ -39,9 +39,8 @@
           <th width="80">ID</th>
           <th>分类名称</th>
           <th>级别</th>
-          <th>描述</th>
           <th>序号</th>
-          <th width="200" style="text-align:center;">操作</th>
+          <th width="160" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -81,13 +80,10 @@
                   <%= level_names[category.level] %>
                 </span>
               </td>
-              <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                <%= category.description || '-' %>
-              </td>
               <td><%= category.sn %></td>
               <td style="text-align:center;">
                 <div class="layui-btn-group">
-                  <%= link_to '详情', admin_category_path(category), class: "layui-btn layui-btn-sm" %>
+                  <%#= link_to '详情', admin_category_path(category), class: "layui-btn layui-btn-sm" %>
                   <%= link_to '编辑', edit_admin_category_path(category), class: "layui-btn layui-btn-sm" %>
                   <%= link_to '删除', admin_category_path(category), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此分类吗？此操作不可恢复。" } %>
                 </div>
