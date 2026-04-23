@@ -22,43 +22,7 @@ class Compilation < ApplicationRecord
   validate :validate_age_range
   validate :validate_age_groups
 
-  # ===== 排序 =====
   default_scope { order(sort_order: :asc, created_at: :desc) }
-
-  # ===== 类方法 =====
-  class << self
-    def search(keyword)
-      return all if keyword.blank?
-
-      where('name LIKE ?', "%#{keyword}%")
-    end
-
-    def filter_by_status(status)
-      return all if status.blank?
-
-      where(status: status)
-    end
-
-    def filter_by_age_group(age_group)
-      return all if age_group.blank?
-
-      where('age_groups @>?', "\"#{age_group}\"")
-    end
-
-    def filter_by_sub_type(type)
-      return all if type.blank?
-
-      where(sub_type: type)
-    end
-
-    def filter_by_category(category)
-      return all if category.blank?
-
-      where('categories @>?', "\"#{category}\"")
-    end
-  end
-
-  # ===== 实例方法 =====
 
   # 状态名称
   def status_name

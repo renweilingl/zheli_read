@@ -23,7 +23,6 @@ class Admin::CompilationsController < ApplicationController
     authorize @compilation
   end
 
-  # 创建合辑
   def create
     @compilation = Compilation.new(compilation_params)
     authorize @compilation
@@ -31,6 +30,8 @@ class Admin::CompilationsController < ApplicationController
     if @compilation.save
       redirect_to admin_compilation_path(@compilation), notice: '合辑创建成功'
     else
+      flash.now[:alert] = "合辑创建失败：#{@compilation.errors.full_messages.join(', ')}"
+      logger.info @compilation.errors.full_messages.join(',')
       render :new
     end
   end
