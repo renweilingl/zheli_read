@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 class Compilation < ApplicationRecord
-  # ===== 二级类型 =====
-  SUB_TYPES = {
-    picture_book: 'picture_book',       # 绘本
-    comic: 'comic',                   # 漫画
-    bridge_book: 'bridge_book',       # 桥梁书
-    english: 'english',               # 英语
-    ip_picture_book: 'ip_picture_book'  # IP图画书
-  }.freeze
-
-  SUB_TYPE_NAMES = {
-    picture_book: '绘本',
-    comic: '漫画',
-    bridge_book: '桥梁书',
-    english: '英语',
-    ip_picture_book: 'IP图画书'
-  }.freeze
-
   # ===== 预设年龄段 =====
   AGE_GROUPS = {
     '0-3' => '0-3岁',
@@ -27,33 +10,6 @@ class Compilation < ApplicationRecord
     '12+' => '12岁以上',
     '0-6' => '0-6岁',
     '3-12' => '3-12岁'
-  }.freeze
-
-  # ===== 主题分类 =====
-  THEMES = {
-    life: 'life',                 # 生活习惯
-    emotion: 'emotion',           # 情绪管理
-    cognition: 'cognition',       # 认知启蒙
-    science: 'science',           # 科普百科
-    art: 'art',                   # 艺术创意
-    language: 'language',        # 语言发展
-    social: 'social',            # 社会交往
-    creativity: 'creativity',     # 创造力
-    family: 'family',            # 亲子关系
-    culture: 'culture'           # 文化传承
-  }.freeze
-
-  THEME_NAMES = {
-    life: '生活习惯',
-    emotion: '情绪管理',
-    cognition: '认知启蒙',
-    science: '科普百科',
-    art: '艺术创意',
-    language: '语言发展',
-    social: '社会交往',
-    creativity: '创造力',
-    family: '亲子关系',
-    culture: '文化传承'
   }.freeze
 
   # ===== 验证 =====
