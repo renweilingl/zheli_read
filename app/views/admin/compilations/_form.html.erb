@@ -1,3 +1,5 @@
+<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
 <%= form_for(@compilation, url: @compilation.new_record? ? :admin_compilations : :admin_compilation,method: @compilation.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
   <fieldset class="layui-elem-field layui-field-title">
     <legend>
@@ -189,24 +191,17 @@
     </div>
   </div>
 
+  <!-- 合辑简介 -->
   <div class="layui-form-item">
     <%= f.label :content_description, "合辑简介", class: "layui-form-label" %>
     <div class="layui-input-block">
-      <div class="description-editor-toggle">
-        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal editor-mode-btn active" data-mode="richtext">富文本模式</button>
-        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary editor-mode-btn" data-mode="markdown">Markdown模式</button>
-      </div>
       <div id="richtext-editor" class="description-editor">
-        <%= f.text_area :content_description, class: "layui-textarea", placeholder: "请输入合辑简介（富文本模式）", rows: 8, style: "width: 100%;" %>
-      </div>
-      <div id="markdown-editor" class="description-editor" style="display: none;">
-        <textarea class="layui-textarea" placeholder="请输入合辑简介（Markdown模式）" rows="8" style="width: 100%; font-family: Consolas, monospace;"></textarea>
-      </div>
-      <div style="margin-top: 5px; color: #999; font-size: 12px;">
-        支持富文本和Markdown两种编辑模式，可插入图片
+        <div id="wang-editor-toolbar" style="border-bottom: 1px solid #e6e6e6;"></div>
+        <div id="wang-editor-content" style="height: 250px; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
+
 
   <div class="layui-form-item" style="margin-top: 30px;">
     <div class="layui-input-block">
@@ -233,7 +228,6 @@
     margin-right: 2px;
   }
 
-  /* 多封面网格布局 */
   .cover-uploads-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -395,20 +389,54 @@
       $('#intro-preview').hide();
     });
 
-    // 编辑器模式切换
-    $('.editor-mode-btn').on('click', function(){
-      var mode = $(this).data('mode');
-      $('.editor-mode-btn').removeClass('active');
-      $(this).addClass('active');
+    var wangEditor = window.wangEditor;
+    var E = wangEditor;
 
-      if(mode === 'richtext'){
-        $('#richtext-editor').show();
-        $('#markdown-editor').hide();
-      } else {
-        $('#richtext-editor').hide();
-        $('#markdown-editor').show();
+    var editor = E.createEditor({
+      selector: '#wang-editor-content',
+      html: '',
+      config: {
+        placeholder: '请输入合辑简介...',
+        MENU_CONF: {
+          uploadImage: {
+            server: '<%= upload_img_files_path %>',
+            fieldName: 'file',
+            maxFileSize: 5 * 1024 * 1024, // 5MB
+            headers: {
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            },
+            customInsert(res, insertFn) {
+              console.log(res);
+              if (res.errno === 0 || res.success) {
+                var url = res.url || (res.data && res.data[0] && res.data[0].url);
+                if (url) {
+                  insertFn(url, res.name || '', url);
+                }
+              } else {
+                layer.msg(res.message || '上传失败', { icon: 2 });
+              }
+            }
+          }
+        }
       }
     });
+
+    var toolbar = E.createToolbar({
+      editor: editor,
+      selector: '#wang-editor-toolbar',
+      config: {
+        excludeKeys: [
+          'group-video',
+          'todo',
+          'emotion',
+          'codeBlock',
+          'insertTable',
+          'undo',
+          'redo'
+        ]
+      }
+    });
+
 
     // 表单提交
     form.on('submit(submit-form)', function(data){
@@ -425,11 +453,6 @@
         themes.push($(this).val());
       });
       data.field.themes = themes;
-
-      // 处理分类数据
-      if(data.field.categories_text){
-        data.field.categories = data.field.categories_text.split(',').map(function(t){ return t.trim(); }).filter(function(t){ return t; });
-      }
 
       // 处理标签数据
       if(data.field.tags){
