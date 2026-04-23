@@ -61,13 +61,6 @@
               </div>
 
               <div class="layui-form-item">
-                <label class="layui-form-label">描述</label>
-                <div class="layui-input-block">
-                  <div class="layui-form-mid" style="color: #666;"><%= @category.description || '暂无描述' %></div>
-                </div>
-              </div>
-
-              <div class="layui-form-item">
                 <label class="layui-form-label">创建时间</label>
                 <div class="layui-input-block">
                   <div class="layui-form-mid layui-word-aux"><%= @category.created_at.strftime("%Y-%m-%d %H:%M:%S") %></div>

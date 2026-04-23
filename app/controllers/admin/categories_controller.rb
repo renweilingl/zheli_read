@@ -69,7 +69,7 @@ class Admin::CategoriesController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:notice] = "分类创建成功！"
-          redirect_to admin_category_path(@category)
+          redirect_to :admin_categories
         end
         format.json { render json: { success: true, message: "分类创建成功", category: @category.as_json }, status: :created }
       end
@@ -106,7 +106,7 @@ class Admin::CategoriesController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:notice] = "分类更新成功！"
-          redirect_to admin_category_path(@category)
+          redirect_to :admin_categories
         end
         format.json { render json: { success: true, message: "分类更新成功", category: @category.as_json } }
       end
@@ -130,7 +130,7 @@ class Admin::CategoriesController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:notice] = "分类删除成功！"
-          redirect_to admin_categories_path(level: @category.level)
+          redirect_to :admin_categories
         end
         format.json { render json: { success: true, message: "分类删除成功" } }
       end
@@ -217,6 +217,6 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :level, :sn, :description, :active)
+    params.require(:category).permit(:name, :level, :sn, :active)
   end
 end

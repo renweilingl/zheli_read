@@ -28,38 +28,6 @@ class Category < ApplicationRecord
   LEVEL_THIRD = 3       # 三级分类
   LEVEL_RECOMMENDED = 4 # 推荐分类
 
-  # 分类级别枚举
-  LEVEL_TYPES = {
-    LEVEL_GRADE => {
-      name: '一级分类（年级）',
-      code: 'grade',
-      description: '年级分类，如"小学一年级"、"初中一年级"等',
-      icon: '🎓',
-      color: '#10b981'
-    },
-    LEVEL_SECOND => {
-      name: '二级分类',
-      code: 'second',
-      description: '学科分类，如"语文"、"数学"、"英语"等',
-      icon: '📚',
-      color: '#3b82f6'
-    },
-    LEVEL_THIRD => {
-      name: '三级分类',
-      code: 'third',
-      description: '主题分类，如"阅读理解"、"写作练习"等',
-      icon: '📝',
-      color: '#8b5cf6'
-    },
-    LEVEL_RECOMMENDED => {
-      name: '推荐分类',
-      code: 'recommended',
-      description: '系统推荐的热门分类，用于内容推荐和展示',
-      icon: '⭐',
-      color: '#f59e0b'
-    }
-  }.freeze
-
   # 获取级别信息
   def level_info
     LEVEL_TYPES[level] || {}
@@ -103,23 +71,14 @@ class Category < ApplicationRecord
     level == LEVEL_THIRD
   end
 
-  def recommended?
-    level == LEVEL_RECOMMENDED
-  end
-
-  # 是否可以删除
   def can_destroy?
-    # 所有分类都可以删除，除非有其他依赖
     true
   end
 
-  # 是否可以编辑
   def can_edit?
-    # 所有分类都可以编辑
     true
   end
 
-  # 生成唯一代码
   def self.generate_code(base_code)
     base_code = base_code.parameterize.underscore[0..40]
     code = base_code
