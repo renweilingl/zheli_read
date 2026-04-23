@@ -1,0 +1,523 @@
+<div class="page-header">
+  <h1 class="page-title">
+    <i class="layui-icon layui-icon-add-1"></i> 新建合辑
+  </h1>
+  <div class="page-actions">
+    <%= link_to :admin_compilations, class: "layui-btn layui-btn-primary" do %>
+      <i class="layui-icon layui-icon-return"></i> 返回列表
+    <% end %>
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-body" style="padding: 30px;">
+    <%= form_for(@compilation, url: @compilation.new_record? ? :admin_compilations : :admin_compilation,method: @compilation.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>
+          <i class="layui-icon layui-icon-picture"></i> 基本信息
+        </legend>
+      </fieldset>
+
+      <div class="layui-form-item">
+        <%= f.label :name, class: "layui-form-label" do %>
+          <span class="required">*</span> 合辑名称
+        <% end %>
+        <div class="layui-input-block">
+          <%= f.text_field :name, class: "layui-input", placeholder: "请输入合辑名称", maxlength: 100, required: true, style: "width: 400px;" %>
+          <span style="margin-left: 10px; color: #999; font-size: 12px;">合辑名称不可重复</span>
+        </div>
+      </div>
+
+      <!-- 多规格封面 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label"><span class="required">*</span> 合辑封面</label>
+        <div class="layui-input-block">
+          <div class="cover-uploads-grid">
+
+            <!-- 合辑banner -->
+            <div class="cover-upload-item">
+              <div class="cover-upload-label">
+                <span>合辑Banner</span>
+                <span class="cover-specs">(1500×932, ≤500KB)</span>
+              </div>
+              <div class="cover-upload-box" id="banner-upload-box">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-banner">
+                  <i class="layui-icon layui-icon-upload"></i> 上传Banner
+                </button>
+                <div class="cover-preview" id="banner-preview" style="display: none;">
+                  <img id="banner-img" src="" />
+                  <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="banner">
+                    <i class="layui-icon layui-icon-close"></i>
+                  </button>
+                </div>
+              </div>
+              <%= f.hidden_field :banner_image_url %>
+              <%= f.hidden_field :banner_image_name %>
+            </div>
+
+            <!-- 横图封面 -->
+            <div class="cover-upload-item">
+              <div class="cover-upload-label">
+                <span>横图封面</span>
+                <span class="cover-specs required-tag">(1125×540, ≤500KB)</span>
+              </div>
+              <div class="cover-upload-box" id="landscape-upload-box">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-landscape">
+                  <i class="layui-icon layui-icon-upload"></i> 上传封面
+                </button>
+                <div class="cover-preview" id="landscape-preview" style="display: none;">
+                  <img id="landscape-img" src="" />
+                  <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="landscape">
+                    <i class="layui-icon layui-icon-close"></i>
+                  </button>
+                </div>
+              </div>
+              <%= f.hidden_field :landscape_cover_url %>
+              <%= f.hidden_field :landscape_cover_name %>
+            </div>
+
+            <!-- 长方形封面 -->
+            <div class="cover-upload-item">
+              <div class="cover-upload-label">
+                <span>长方形封面</span>
+                <span class="cover-specs required-tag">(600×768, ≤300KB)</span>
+              </div>
+              <div class="cover-upload-box" id="portrait-upload-box">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-portrait">
+                  <i class="layui-icon layui-icon-upload"></i> 上传封面
+                </button>
+                <div class="cover-preview" id="portrait-preview" style="display: none;">
+                  <img id="portrait-img" src="" />
+                  <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="portrait">
+                    <i class="layui-icon layui-icon-close"></i>
+                  </button>
+                </div>
+              </div>
+              <%= f.hidden_field :portrait_cover_url %>
+              <%= f.hidden_field :portrait_cover_name %>
+            </div>
+
+            <!-- 正方形封面 -->
+            <div class="cover-upload-item">
+              <div class="cover-upload-label">
+                <span>正方形封面</span>
+                <span class="cover-specs required-tag">(600×600, ≤300KB)</span>
+              </div>
+              <div class="cover-upload-box" id="square-upload-box">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-square">
+                  <i class="layui-icon layui-icon-upload"></i> 上传封面
+                </button>
+                <div class="cover-preview" id="square-preview" style="display: none;">
+                  <img id="square-img" src="" />
+                  <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="square">
+                    <i class="layui-icon layui-icon-close"></i>
+                  </button>
+                </div>
+              </div>
+              <%= f.hidden_field :square_cover_url %>
+              <%= f.hidden_field :square_cover_name %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 模块2：年龄与分类 ==================== -->
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>
+          <i class="layui-icon layui-icon-survey"></i> 年龄与分类
+        </legend>
+      </fieldset>
+
+      <!-- 年龄段勾选 -->
+      <div class="layui-form-item">
+        <%= f.label :age_groups, class: "layui-form-label" do %>
+          <span class="required">*</span> 年龄段
+        <% end %>
+        <div class="layui-input-block">
+          <div class="age-groups-checkbox">
+            <% Compilation::AGE_GROUPS.each do |key, name| %>
+              <input type="checkbox" name="compilation[age_groups][]" value="<%= key %>" title="<%= name %>"
+                <%= 'checked' if @compilation.age_groups_array.include?(key.to_s) %> />
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- 年龄范围 -->
+      <div class="layui-form-item">
+        <%= f.label :age_range, "年龄范围（自定义）", class: "layui-form-label" do %>
+          <span class="required">*</span> 年龄范围
+        <% end %>
+        <div class="layui-input-block">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <%= f.number_field :min_age, class: "layui-input", placeholder: "最小年龄", min: 0, style: "width: 100px;" %>
+            <span>~</span>
+            <%= f.number_field :max_age, class: "layui-input", placeholder: "最大年龄", min: 0, style: "width: 100px;" %>
+            <span>岁</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 最佳年龄推荐 -->
+      <div class="layui-form-item">
+        <%= f.label :recommended_age, class: "layui-form-label" do %>
+          <span class="required">*</span> 最佳年龄推荐
+        <% end %>
+        <div class="layui-input-block">
+          <%= f.text_field :recommended_age, class: "layui-input", placeholder: "如：3-6岁", maxlength: 20, style: "width: 200px;" %>
+        </div>
+      </div>
+
+      <!-- 主题 -->
+      <div class="layui-form-item">
+        <%= f.label :themes, "主题", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <div class="themes-checkbox">
+            <% Compilation::THEME_NAMES.each do |key, name| %>
+              <input type="checkbox" name="compilation[themes][]" value="<%= key %>" title="<%= name %>"
+                <%= 'checked' if @compilation.themes_array.include?(key.to_s) %> />
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 模块3：内容属性 ==================== -->
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>
+          <i class="layui-icon layui-icon-chart-screen"></i> 内容属性
+        </legend>
+      </fieldset>
+
+      <!-- 编辑推荐语 -->
+      <div class="layui-form-item">
+        <%= f.label :editor_recommendation, class: "layui-form-label" do %>
+          <span class="required">*</span> 编辑推荐语
+        <% end %>
+        <div class="layui-input-block">
+          <%= f.text_field :editor_recommendation, class: "layui-input", placeholder: "简短推荐语", maxlength: 15, style: "width: 400px;" %>
+          <span style="margin-left: 10px; color: #999;">15个字以内</span>
+        </div>
+      </div>
+
+      <!-- 出版社 -->
+      <div class="layui-form-item">
+        <%= f.label :publisher, "出版社", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.text_field :publisher, class: "layui-input", placeholder: "请输入出版社名称", maxlength: 100, style: "width: 300px;" %>
+        </div>
+      </div>
+
+      <!-- 合辑总集数 -->
+      <div class="layui-form-item">
+        <%= f.label :total_count, "合辑总集数", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.number_field :total_count, class: "layui-input", placeholder: "合辑包含的绘本数量", min: 0, style: "width: 150px;" %>
+        </div>
+      </div>
+
+      <!-- 作者 -->
+      <div class="layui-form-item">
+        <%= f.label :author, "作者", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.text_field :author, class: "layui-input", placeholder: "请输入作者名称", maxlength: 100, style: "width: 300px;" %>
+        </div>
+      </div>
+
+      <!-- 标签 -->
+      <div class="layui-form-item">
+        <%= f.label :tags, "标签", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.text_field :tags, class: "layui-input", placeholder: "多个标签用逗号分隔", style: "width: 400px;",
+                value: @compilation.tags_array.join(', ') %>
+        </div>
+      </div>
+
+      <!-- ==================== 模块4：图片与介绍 ==================== -->
+      <fieldset class="layui-elem-field layui-field-title">
+        <legend>
+          <i class="layui-icon layui-icon-picture-fine"></i> 图片与介绍
+        </legend>
+      </fieldset>
+
+      <!-- 图片简介 -->
+      <div class="layui-form-item">
+        <%= f.label :intro_image_url, "图片简介", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <div class="layui-upload">
+            <button type="button" class="layui-btn layui-btn-normal" id="upload-intro">
+              <i class="layui-icon layui-icon-upload"></i> 上传图片简介
+            </button>
+            <span style="margin-left: 10px; color: #999;">支持 JPG、PNG 格式</span>
+          </div>
+          <div id="intro-preview" style="margin-top: 10px; display: none;">
+            <img id="intro-img" src="" style="max-width: 300px; border-radius: 4px; border: 1px solid #e6e6e6;" />
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-danger intro-remove" style="margin-left: 10px;">
+              <i class="layui-icon layui-icon-close"></i> 移除
+            </button>
+          </div>
+          <%= f.hidden_field :intro_image_url %>
+          <%= f.hidden_field :intro_image_name %>
+        </div>
+      </div>
+
+      <!-- 合辑简介 -->
+      <div class="layui-form-item">
+        <%= f.label :content_description, "合辑简介", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <div class="description-editor-toggle">
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal editor-mode-btn active" data-mode="richtext">富文本模式</button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-primary editor-mode-btn" data-mode="markdown">Markdown模式</button>
+          </div>
+          <div id="richtext-editor" class="description-editor">
+            <%= f.text_area :content_description, class: "layui-textarea", placeholder: "请输入合辑简介（富文本模式）", rows: 8, style: "width: 100%;" %>
+          </div>
+          <div id="markdown-editor" class="description-editor" style="display: none;">
+            <textarea class="layui-textarea" placeholder="请输入合辑简介（Markdown模式）" rows="8" style="width: 100%; font-family: Consolas, monospace;"></textarea>
+          </div>
+          <div style="margin-top: 5px; color: #999; font-size: 12px;">
+            支持富文本和Markdown两种编辑模式，可插入图片
+          </div>
+        </div>
+      </div>
+
+      <!-- 内容简介 -->
+      <div class="layui-form-item">
+        <%= f.label :description, "内容简介", class: "layui-form-label" %>
+        <div class="layui-input-block">
+          <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入内容简介", rows: 4, style: "width: 100%;" %>
+        </div>
+      </div>
+
+      <!-- 提交按钮 -->
+      <div class="layui-form-item" style="margin-top: 30px;">
+        <div class="layui-input-block">
+          <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-form">
+            <i class="layui-icon layui-icon-release"></i> 创建合辑
+          </button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+          <%= link_to "取消", admin_compilations_path, class: "layui-btn layui-btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .layui-elem-field {
+    margin-top: 30px;
+  }
+
+  .layui-elem-field legend {
+    font-size: 16px;
+    color: #52c41a;
+  }
+
+  .required {
+    color: #ff4d4f;
+    margin-right: 2px;
+  }
+
+  /* 多封面网格布局 */
+  .cover-uploads-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+  }
+
+  .cover-upload-item {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    padding: 15px;
+    background: #fafafa;
+  }
+
+  .cover-upload-label {
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cover-specs {
+    font-size: 12px;
+    color: #999;
+    font-weight: normal;
+  }
+
+  .required-tag::before {
+    content: '*';
+    color: #ff4d4f;
+    margin-right: 2px;
+  }
+
+  .cover-specs.required-tag {
+    color: #ff4d4f;
+  }
+
+  .cover-upload-box {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cover-preview {
+    text-align: center;
+  }
+
+  .cover-preview img {
+    max-width: 150px;
+    max-height: 100px;
+    border-radius: 4px;
+    border: 1px solid #e6e6e6;
+  }
+
+  .cover-preview .layui-btn {
+    margin-top: 8px;
+  }
+
+  /* 年龄段和主题复选框 */
+  .age-groups-checkbox,
+  .themes-checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* 编辑器切换 */
+  .description-editor-toggle {
+    margin-bottom: 10px;
+  }
+
+  .editor-mode-btn.active {
+    background-color: #52c41a !important;
+    border-color: #52c41a !important;
+    color: #fff !important;
+  }
+
+  .description-editor {
+    min-height: 200px;
+  }
+</style>
+
+<script>
+  layui.use(['form', 'upload', 'layer'], function(){
+    var form = layui.form,
+        upload = layui.upload,
+        layer = layui.layer,
+        $ = layui.$;
+
+    form.render();
+
+    Object.keys(uploadConfigs).forEach(function(type) {
+      var config = uploadConfigs[type];
+      upload.render({
+        elem: config.elem,
+        url: config.url,
+        accept: 'images',
+        exts: 'jpg|jpeg|png',
+        size: config.maxSize,
+        done: function(res){
+          if(res.success){
+            $('#' + type + '_image_url').val(res.url);
+            $('#' + type + '_image_name').val(res.name);
+            $('#' + type + '-preview').show();
+            $('#' + type + '-img').attr('src', res.url);
+            $(config.elem).hide();
+            layer.msg(config.title + '上传成功');
+          } else {
+            layer.msg(res.message || '上传失败', {icon: 2});
+          }
+        },
+        error: function(){
+          layer.msg(config.title + '上传失败', {icon: 2});
+        }
+      });
+    });
+
+    // 封面移除
+    $('.cover-remove').on('click', function(){
+      var type = $(this).data('type');
+      $('#' + type + '_image_url').val('');
+      $('#' + type + '_image_name').val('');
+      $('#' + type + '-preview').hide();
+      $('#upload-' + type).show();
+    });
+
+    // 图片简介上传
+    upload.render({
+      elem: '#upload-intro',
+      url: '<%= upload_img_files_path %>',
+      accept: 'images',
+      exts: 'jpg|jpeg|png',
+      size: 5 * 1024,
+      done: function(res){
+        if(res.success){
+          $('#intro_image_url').val(res.url);
+          $('#intro_image_name').val(res.name);
+          $('#intro-preview').show();
+          $('#intro-img').attr('src', res.url);
+          layer.msg('图片简介上传成功');
+        } else {
+          layer.msg(res.message || '上传失败', {icon: 2});
+        }
+      },
+      error: function(){
+        layer.msg('上传失败', {icon: 2});
+      }
+    });
+
+    $('.intro-remove').on('click', function(){
+      $('#intro_image_url').val('');
+      $('#intro_image_name').val('');
+      $('#intro-preview').hide();
+    });
+
+    // 编辑器模式切换
+    $('.editor-mode-btn').on('click', function(){
+      var mode = $(this).data('mode');
+      $('.editor-mode-btn').removeClass('active');
+      $(this).addClass('active');
+
+      if(mode === 'richtext'){
+        $('#richtext-editor').show();
+        $('#markdown-editor').hide();
+      } else {
+        $('#richtext-editor').hide();
+        $('#markdown-editor').show();
+      }
+    });
+
+    // 表单提交
+    form.on('submit(submit-form)', function(data){
+      // 处理年龄组数据
+      var ageGroups = [];
+      $('input[name="collection[age_groups][]"]:checked').each(function(){
+        ageGroups.push($(this).val());
+      });
+      data.field.age_groups = ageGroups;
+
+      // 处理主题数据
+      var themes = [];
+      $('input[name="collection[themes][]"]:checked').each(function(){
+        themes.push($(this).val());
+      });
+      data.field.themes = themes;
+
+      // 处理分类数据
+      if(data.field.categories_text){
+        data.field.categories = data.field.categories_text.split(',').map(function(t){ return t.trim(); }).filter(function(t){ return t; });
+      }
+
+      // 处理标签数据
+      if(data.field.tags){
+        data.field.tags = data.field.tags.split(',').map(function(t){ return t.trim(); }).filter(function(t){ return t; });
+      }
+
+      return true;
+    });
+  });
+</script>

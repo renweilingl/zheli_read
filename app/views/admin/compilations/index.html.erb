@@ -1,0 +1,153 @@
+<div class="page-header">
+  <h1 class="page-title">
+    <i class="layui-icon layui-icon-set"></i> 合辑管理
+  </h1>
+  <div class="page-actions">
+    <%= link_to new_admin_compilation_path, class: "layui-btn" do %>
+      <i class="layui-icon layui-icon-add-1"></i> 新建合辑
+    <% end %>
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-header">
+    合辑列表
+  </div>
+  <div class="layui-card-body">
+    <table class="layui-table" lay-skin="line">
+      <thead>
+        <tr>
+          <th width="80">封面</th>
+          <th>合辑信息</th>
+          <th width="100">类型</th>
+          <th width="120">年龄段</th>
+          <th width="80">状态</th>
+          <th width="80">浏览</th>
+          <th width="200">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @compilations.empty? %>
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 40px 0; color: #9ca3af;">
+              <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
+              <div style="margin-top: 10px;">暂无合辑数据</div>
+              <div style="margin-top: 10px;">
+                <%= link_to '添加第一个合辑', new_admin_compilation_path, class: "layui-btn layui-btn-sm layui-btn-normal" %>
+              </div>
+            </td>
+          </tr>
+        <% else %>
+          <% @compilation.each do |collection| %>
+            <tr>
+              <td>
+                <% if collection.main_cover_url.present? %>
+                  <img src="<%= collection.main_cover_url %>" style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;" />
+                <% else %>
+                  <div style="width: 50px; height: 70px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <i class="layui-icon layui-icon-picture" style="color: #ccc;"></i>
+                  </div>
+                <% end %>
+              </td>
+              <td>
+                <div style="font-weight: 500;"><%= collection.name %></div>
+                <div style="font-size: 12px; color: #9ca3af; margin-top: 4px;">
+                  <% if collection.editor_recommendation.present? %>
+                    <span style="color: #52c41a;">「<%= collection.editor_recommendation %>」</span>
+                  <% end %>
+                  <% if collection.books.any? %>
+                    包含<%= collection.books.count %>个图书
+                  <% end %>
+                </div>
+              </td>
+              <td><%= collection.sub_type_name.presence || '-' %></td>
+              <td>
+                <div><%= collection.age_range %></div>
+                <div style="font-size: 12px; color: #9ca3af;">
+                  <% if collection.age_groups_array.any? %>
+                    <%= collection.age_groups_names.truncate(15) %>
+                  <% else %>
+                    -
+                  <% end %>
+                </div>
+              </td>
+              <td>
+                <span class="layui-badge <%= status_badge_class(collection.status) %>">
+                  <%= collection.status_name %>
+                </span>
+                <% if collection.locked? %>
+                  <i class="layui-icon layui-icon-password" style="color: #ff4d4f;" title="已锁定"></i>
+                <% end %>
+              </td>
+              <td><%= collection.view_count %></td>
+              <td>
+                <div class="layui-btn-group">
+                  <%= link_to admin_collection_path(collection), class: "layui-btn layui-btn-xs", title: "查看" do %>
+                    <i class="layui-icon layui-icon-about"></i>
+                  <% end %>
+                  <%= link_to edit_admin_collection_path(collection), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
+                    <i class="layui-icon layui-icon-edit"></i>
+                  <% end %>
+                  <% if policy(collection).toggle_status? %>
+                    <%= link_to toggle_status_admin_collection_path(collection), method: :post, class: "layui-btn layui-btn-xs #{collection.published? ? 'layui-btn-danger' : 'layui-btn-normal'}", title: collection.published? ? '下线' : '上线' do %>
+                      <i class="layui-icon <%= collection.published? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
+                    <% end %>
+                  <% end %>
+                  <% if policy(collection).destroy? %>
+                    <%= link_to admin_collection_path(collection), method: :delete, data: { confirm: '确定要删除吗？' }, class: "layui-btn layui-btn-xs layui-btn-danger", title: "删除" do %>
+                      <i class="layui-icon layui-icon-delete"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @compilations.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+    <% end %>
+  </div>
+</div>
+
+<%
+=begin
+%>
+<!-- 状态徽章样式 -->
+<style>
+  .status-draft { background-color: #faad14; }
+  .status-published { background-color: #52c41a; }
+  .status-offline { background-color: #ff4d4f; }
+</style>
+<%
+=end
+%>
+
+<script>
+  layui.use(['laypage', 'form', 'layer'], function(){
+    var laypage = layui.laypage,
+        form = layui.form,
+        layer = layui.layer;
+
+    // 分页
+    <% if @compilations.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @compilations.total_entries %>,
+      limit: <%= @compilations.per_page %>,
+      curr: <%= @compilations.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>
