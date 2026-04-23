@@ -36,8 +36,8 @@
               </button>
             </div>
           </div>
-          <%= f.hidden_field :banner_image_url %>
-          <%= f.hidden_field :banner_image_name %>
+          <%= f.hidden_field :banner_image_url, id: "banner_image_url" %>
+          <%= f.hidden_field :banner_image_name, id: "banner_image_name" %>
         </div>
 
         <div class="cover-upload-item">
@@ -56,8 +56,8 @@
               </button>
             </div>
           </div>
-          <%= f.hidden_field :landscape_cover_url %>
-          <%= f.hidden_field :landscape_cover_name %>
+          <%= f.hidden_field :landscape_cover_url, id: "landscape_cover_url" %>
+          <%= f.hidden_field :landscape_cover_name, id: "landscape_cover_name" %>
         </div>
       </div>
     </div>
@@ -137,21 +137,21 @@
   <div class="layui-form-item">
     <%= f.label :publisher, "出版社", class: "layui-form-label" %>
     <div class="layui-input-block">
-      <%= f.text_field :publisher, class: "layui-input", placeholder: "请输入出版社名称", maxlength: 100, style: "width: 300px;" %>
+      <%= f.text_field :publisher, class: "layui-input", placeholder: "请输入出版社名称", maxlength: 100, style: "width: 400px;" %>
     </div>
   </div>
 
   <div class="layui-form-item">
     <%= f.label :total_count, "合辑总集数", class: "layui-form-label" %>
     <div class="layui-input-block">
-      <%= f.number_field :total_count, class: "layui-input", placeholder: "合辑包含的绘本数量", min: 0, style: "width: 150px;" %>
+      <%= f.number_field :total_count, class: "layui-input", placeholder: "合辑包含的绘本数量", min: 0, style: "width: 400px;" %>
     </div>
   </div>
 
   <div class="layui-form-item">
     <%= f.label :author, "作者", class: "layui-form-label" %>
     <div class="layui-input-block">
-      <%= f.text_field :author, class: "layui-input", placeholder: "请输入作者名称", maxlength: 100, style: "width: 300px;" %>
+      <%= f.text_field :author, class: "layui-input", placeholder: "请输入作者名称", maxlength: 100, style: "width: 400px;" %>
     </div>
   </div>
 
@@ -184,8 +184,8 @@
           <i class="layui-icon layui-icon-close"></i> 移除
         </button>
       </div>
-      <%= f.hidden_field :intro_image_url %>
-      <%= f.hidden_field :intro_image_name %>
+      <%= f.hidden_field :intro_image_url, id: "intro_image_url" %>
+      <%= f.hidden_field :intro_image_name, id: "intro_image_name" %>
     </div>
   </div>
 
@@ -205,13 +205,6 @@
       <div style="margin-top: 5px; color: #999; font-size: 12px;">
         支持富文本和Markdown两种编辑模式，可插入图片
       </div>
-    </div>
-  </div>
-
-  <div class="layui-form-item">
-    <%= f.label :description, "内容简介", class: "layui-form-label" %>
-    <div class="layui-input-block">
-      <%= f.text_area :description, class: "layui-textarea", placeholder: "请输入内容简介", rows: 4, style: "width: 100%;" %>
     </div>
   </div>
 
@@ -333,12 +326,16 @@
         $ = layui.$;
 
     form.render();
+    var uploadConfigs = {
+      banner: { elem: '#upload-banner', maxSize: 500 * 1024, title: 'Banner' },
+      landscape: { elem: '#upload-landscape', maxSize: 500 * 1024, title: '横图封面' },
+    };
 
     Object.keys(uploadConfigs).forEach(function(type) {
       var config = uploadConfigs[type];
       upload.render({
         elem: config.elem,
-        url: config.url,
+        url: '<%= upload_img_files_path %>',
         accept: 'images',
         exts: 'jpg|jpeg|png',
         size: config.maxSize,
@@ -347,7 +344,7 @@
             $('#' + type + '_image_url').val(res.url);
             $('#' + type + '_image_name').val(res.name);
             $('#' + type + '-preview').show();
-            $('#' + type + '-img').attr('src', res.url);
+            $('#' + type + '-img').attr('src', res.preivew_url);
             $(config.elem).hide();
             layer.msg(config.title + '上传成功');
           } else {
@@ -381,7 +378,7 @@
           $('#intro_image_url').val(res.url);
           $('#intro_image_name').val(res.name);
           $('#intro-preview').show();
-          $('#intro-img').attr('src', res.url);
+          $('#intro-img').attr('src', res.preivew_url);
           layer.msg('图片简介上传成功');
         } else {
           layer.msg(res.message || '上传失败', {icon: 2});
