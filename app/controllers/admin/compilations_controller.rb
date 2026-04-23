@@ -96,16 +96,11 @@ class Admin::CompilationsController < ApplicationController
 
   def compilation_params
     params.require(:compilation).permit(
-      # ===== 基本信息 =====
       :name,
       :banner_image_url,
       :banner_image_name,
       :landscape_cover_url,
       :landscape_cover_name,
-      :portrait_cover_url,
-      :portrait_cover_name,
-      :square_cover_url,
-      :square_cover_name,
 
       :age_groups,
       :min_age,
@@ -123,7 +118,6 @@ class Admin::CompilationsController < ApplicationController
       :intro_image_url,
       :intro_image_name,
       :content_description,
-      :description,
     )
   end
 end
