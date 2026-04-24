@@ -76,6 +76,7 @@ class Admin::CompilationsController < ApplicationController
       #:themes,
       #:sub_type,
 
+      :grade_ids,
       :editor_recommendation,
       :publisher,
       :total_count,

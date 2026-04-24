@@ -31,6 +31,7 @@
         <tr>
           <th width="80">Banner</th>
           <th>合辑名称</th>
+          <th>年龄段</th>
           <th width="160" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -65,7 +66,7 @@
                   <% end %>
                 </div>
               </td>
-              </td>
+              <td><%= compilation.grades.pluck(:name) %></td>
               <td style="text-align:center;">
                 <div class="layui-btn-group">
                   <%= link_to '详情', admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
