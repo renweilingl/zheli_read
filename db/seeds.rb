@@ -55,21 +55,21 @@ puts "测试编辑: editor@zheli.com / editor123456"
 puts "测试运营: operator@zheli.com / operator123456"
 puts "测试财务: finance@zheli.com / finance123456"
 
-[{group_name: "学龄前", name: "4-6岁"},
- {group_name: "小学", name: "一年级"},
- {group_name: "小学", name: "二年级"},
- {group_name: "小学", name: "三年级"},
- {group_name: "小学", name: "四年级"},
- {group_name: "小学", name: "五年级"},
- {group_name: "小学", name: "六年级"},
- {group_name: "初中", name: "初一"},
- {group_name: "初中", name: "初二"},
- {group_name: "初中", name: "初三"},
- {group_name: "高中", name: "高中"},
+[{group_name: "学龄前", name: "4-6岁", description: "4-6岁"},
+ {group_name: "小学", name: "一年级", description: "6-7岁"},
+ {group_name: "小学", name: "二年级", description: "7-8岁"},
+ {group_name: "小学", name: "三年级", description: "8-9岁"},
+ {group_name: "小学", name: "四年级", description: "9-10岁"},
+ {group_name: "小学", name: "五年级", description: "10-11岁"},
+ {group_name: "小学", name: "六年级", description: "11-12岁"},
+ {group_name: "初中", name: "初一", description: "12-13岁"},
+ {group_name: "初中", name: "初二", description: "13-14岁"},
+ {group_name: "初中", name: "初三", description: "14-15岁"},
+ {group_name: "高中", name: "高中", description: "15-18岁"},
 ].each do |x|
-  #if Grade.where(name: x[:name]).empty?
-  #  Grade.create(group_name: x[:group_name], name: x[:name])
-  #end
+  if Grade.where(name: x[:name]).empty?
+    Grade.create(group_name: x[:group_name], name: x[:name], description: x[:description])
+  end
 end
 
 #["有声", "视频", "图书", "绘本"].each do |name|

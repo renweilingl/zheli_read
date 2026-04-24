@@ -3,6 +3,7 @@ class CreateGrades < ActiveRecord::Migration[7.1]
     create_table :grades do |t|
       t.string :group_name, :limit => 8 
       t.string :name, :limit => 16
+      t.string :description, :limit => 32
       t.timestamps
     end
   end
