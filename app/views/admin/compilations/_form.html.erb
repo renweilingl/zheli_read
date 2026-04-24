@@ -306,45 +306,63 @@
         $ = layui.$;
 
     form.render();
-    var uploadConfigs = {
-      banner: { elem: '#upload-banner', maxSize: 500 * 1024, title: 'Banner' },
-      landscape: { elem: '#upload-landscape', maxSize: 500 * 1024, title: '横图封面' },
-    };
 
-    Object.keys(uploadConfigs).forEach(function(type) {
-      var config = uploadConfigs[type];
-      upload.render({
-        elem: config.elem,
-        url: '<%= upload_img_files_path %>',
-        accept: 'images',
-        exts: 'jpg|jpeg|png',
-        size: config.maxSize,
-        done: function(res){
-          if(res.success){
-            $('#' + type + '_image_url').val(res.url);
-            $('#' + type + '_image_name').val(res.name);
-            $('#' + type + '-preview').show();
-            $('#' + type + '-img').attr('src', res.preivew_url);
-            $(config.elem).hide();
-            layer.msg(config.title + '上传成功');
-          } else {
-            layer.msg(res.message || '上传失败', {icon: 2});
-          }
-        },
-        error: function(){
-          layer.msg(config.title + '上传失败', {icon: 2});
+    // banner上传
+    upload.render({
+      elem: '#upload-banner',
+      url: '<%= upload_img_files_path %>',
+      accept: 'images',
+      exts: 'jpg|jpeg|png',
+      size: 5 * 1024,
+      done: function(res){
+        if(res.success){
+          $('#banner_image_url').val(res.url);
+          $('#banner_image_name').val(res.name);
+          $('#banner-preview').show();
+          $('#banner-img').attr('src', res.preivew_url);
+          layer.msg('图片简介上传成功');
+        } else {
+          layer.msg(res.message || '上传失败', {icon: 2});
         }
-      });
+      },
+      error: function(){
+        layer.msg('上传失败', {icon: 2});
+      }
+    });
+    $('.cover-remove').on('click', function(){
+      $('#banner_image_url').val('');
+      $('#banner_image_name').val('');
+      $('#banner-preview').hide();
     });
 
-    // 封面移除
-    $('.cover-remove').on('click', function(){
-      var type = $(this).data('type');
-      $('#' + type + '_image_url').val('');
-      $('#' + type + '_image_name').val('');
-      $('#' + type + '-preview').hide();
-      $('#upload-' + type).show();
+    // 封面上传
+    upload.render({
+      elem: '#upload-landscape',
+      url: '<%= upload_img_files_path %>',
+      accept: 'images',
+      exts: 'jpg|jpeg|png',
+      size: 5 * 1024,
+      done: function(res){
+        if(res.success){
+          $('#landscape_cover_url').val(res.url);
+          $('#landscape_cover_name').val(res.name);
+          $('#landscape-preview').show();
+          $('#landscape-img').attr('src', res.preivew_url);
+          layer.msg('图片简介上传成功');
+        } else {
+          layer.msg(res.message || '上传失败', {icon: 2});
+        }
+      },
+      error: function(){
+        layer.msg('上传失败', {icon: 2});
+      }
     });
+    $('.landscape-remove').on('click', function(){
+      $('#landscape_cover_url').val('');
+      $('#landscape_cover_name').val('');
+      $('#landscape-preview').hide();
+    });
+
 
     // 图片简介上传
     upload.render({
@@ -426,22 +444,7 @@
       }
     });
 
-    // 表单提交
     form.on('submit(submit-form)', function(data){
-      // 处理年龄组数据
-      var ageGroups = [];
-      $('input[name="collection[age_groups][]"]:checked').each(function(){
-        ageGroups.push($(this).val());
-      });
-      data.field.age_groups = ageGroups;
-
-      // 处理主题数据
-      var themes = [];
-      $('input[name="collection[themes][]"]:checked').each(function(){
-        themes.push($(this).val());
-      });
-      data.field.themes = themes;
-
       // 处理标签数据
       if(data.field.tags){
         data.field.tags = data.field.tags.split(',').map(function(t){ return t.trim(); }).filter(function(t){ return t; });
