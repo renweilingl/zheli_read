@@ -18,6 +18,7 @@ class Admin::CompilationsController < ApplicationController
     @compilation = Compilation.new
     @compilation.min_age = 6
     @compilation.max_age = 8
+    @compilation.recommended_age = 12
     authorize @compilation
   end
 

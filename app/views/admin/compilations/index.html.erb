@@ -1,26 +1,40 @@
-<div class="page-header">
-  <h1 class="page-title">
-    <i class="layui-icon layui-icon-set"></i> 合辑管理
-  </h1>
-  <div class="page-actions">
-    <%= link_to new_admin_compilation_path, class: "layui-btn" do %>
-      <i class="layui-icon layui-icon-add-1"></i> 新建合辑
-    <% end %>
+<div class="layui-tab">                                                                                                    
+  <div class="x-nav">                                                            
+    <span class="layui-breadcrumb">                                              
+      <a href="">内容管理</a>
+      <a><cite>合辑管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
   </div>
-</div>
+                                                                                 
+  <div class="x-body"> 
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :admin_categories, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline">
+            <%= f.text_field :name_cont, class: :'layui-input', placeholder: "合辑名称" %>
+          </div>
+          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :admin_compilations, class: "layui-btn layui-btn-primary" %> 
+        <% end %>
+      </div>
 
-<div class="layui-card">
-  <div class="layui-card-header">
-    合辑列表
-  </div>
-  <div class="layui-card-body">
-    <table class="layui-table" lay-skin="line">
+      <div class="layui-col-3 text-right">
+        <%= link_to :new_admin_compilation, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增合辑
+        <% end %>
+      </div>
+    </div>
+
+    <table class="layui-table">
       <thead>
         <tr>
-          <th width="80">封面</th>
-          <th>合辑信息</th>
+          <th width="80">Banner</th>
+          <th>合辑名称</th>
+          <th>一级分类</th>
+          <th>二级分类</th>
           <th width="120">年龄段</th>
-          <th width="200">操作</th>
+          <th width="160" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +68,8 @@
                   <% end %>
                 </div>
               </td>
+              <td></td>
+              <td></td>
               <td>
                 <div><%= compilation.age_range %></div>
                 <div style="font-size: 12px; color: #9ca3af;">
@@ -64,19 +80,11 @@
                   <% end %>
                 </div>
               </td>
-              <td>
+              <td style="text-align:center;">
                 <div class="layui-btn-group">
-                  <%= link_to admin_compilation_path(compilation), class: "layui-btn layui-btn-xs", title: "查看" do %>
-                    <i class="layui-icon layui-icon-about"></i>
-                  <% end %>
-                  <%= link_to edit_admin_compilation_path(compilation), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
-                    <i class="layui-icon layui-icon-edit"></i>
-                  <% end %>
-                  <% if policy(compilation).destroy? %>
-                    <%= link_to admin_compilation_path(compilation), method: :delete, data: { confirm: '确定要删除吗？' }, class: "layui-btn layui-btn-xs layui-btn-danger", title: "删除" do %>
-                      <i class="layui-icon layui-icon-delete"></i>
-                    <% end %>
-                  <% end %>
+                  <%= link_to '详情', admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to '编辑', edit_admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to '删除', admin_compilation_path(compilation), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此合辑吗？此操作不可恢复。" } %>
                 </div>
               </td>
             </tr>
@@ -90,19 +98,6 @@
     <% end %>
   </div>
 </div>
-
-<%
-=begin
-%>
-<!-- 状态徽章样式 -->
-<style>
-  .status-draft { background-color: #faad14; }
-  .status-published { background-color: #52c41a; }
-  .status-offline { background-color: #ff4d4f; }
-</style>
-<%
-=end
-%>
 
 <script>
   layui.use(['laypage', 'form', 'layer'], function(){
