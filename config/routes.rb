@@ -31,15 +31,8 @@ Rails.application.routes.draw do
     resources :permissions, only: [:index, :show]
     resources :suppliers
 
-    resources :categories, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-      member do
-        patch :toggle_active
-      end
-      collection do
-        get :statistics
-        post :batch_action
-      end
-    end
+    resources :categories
+    resources :grades
 
     #resources :contents, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     #  collection do
