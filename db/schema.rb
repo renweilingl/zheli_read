@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "level", default: 1, null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["level"], name: "index_categories_on_level"
+  end
+
+  create_table "compilation_categories", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "compilation_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_compilation_categories_on_category_id"
+    t.index ["compilation_id", "category_id"], name: "index_compilation_categories_on_compilation_id_and_category_id", unique: true
+    t.index ["compilation_id"], name: "index_compilation_categories_on_compilation_id"
   end
 
   create_table "compilation_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -103,6 +113,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "compilation_categories", "categories"
+  add_foreign_key "compilation_categories", "compilations"
   add_foreign_key "compilation_grades", "compilations"
   add_foreign_key "compilation_grades", "grades"
 end

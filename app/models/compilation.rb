@@ -2,6 +2,7 @@
 
 class Compilation < ApplicationRecord
   has_and_belongs_to_many :grades, join_table: :compilation_grades
+  has_and_belongs_to_many :categories, join_table: :compilation_categories
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }
   #validates :recommended_age, presence: true, length: { maximum: 20 }

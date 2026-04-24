@@ -1,13 +1,13 @@
 class Category < ApplicationRecord
+  has_and_belongs_to_many :compilations, join_table: :compilation_categories
+
   # 验证规则
   validates :name, presence: true, length: { maximum: 100 }
-  validates :level, presence: true, inclusion: { in: 1..4 }
-  validates :sn, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  #validates :level, presence: true, inclusion: { in: 1..4 }
+  #validates :sn, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   
 
   # 作用域
-  scope :active, -> { where(active: true) }
-  scope :inactive, -> { where(active: false) }
   scope :by_level, ->(level) { where(level: level) }
   scope :recommended, -> { where(level: 4) }
   scope :sorted, -> { order(sn: :asc, created_at: :asc) }
