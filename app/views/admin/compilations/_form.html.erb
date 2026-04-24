@@ -83,33 +83,16 @@
     </div>
   </div>
 
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类</label>
+    <div class="layui-input-block">
+      <% Category.all.each do |cat| %>
+        <input type="checkbox" name="compilation[category_ids][]" value=<%= cat.id %> title="<%= cat.name %>" <%= 'checked' if @compilation.category_ids.include?(cat.id) %> />
+      <% end %>
+    </div>
+  </div>
+
   <% if false %>
-  <div class="layui-form-item">
-    <%= f.label :first_category_id, class: "layui-form-label" do %>
-      <span class="required">*</span> 年龄段
-    <% end %>
-    <div class="layui-input-block">
-      <%= f.select :first_category_id,
-        options_for_select(Category.grade_levels.collect { |x| [x.name, x.id] }, @compilation.first_category_id),
-        { include_blank: '请选择一级分类' },
-        { class: "layui-input", required: true, style: "width: 200px;" } 
-      %>
-    </div>
-  </div>
-
-  <div class="layui-form-item">
-    <%= f.label :second_category_id, class: "layui-form-label" do %>
-      <span class="required">*</span> 二级分类
-    <% end %>
-    <div class="layui-input-block">
-      <%= f.select :second_category_id,
-        options_for_select(Category.second_level.collect { |x| [x.name, x.id] }, @compilation.second_category_id),
-        { include_blank: '请选择二级分类' },
-        { class: "layui-input", required: true, style: "width: 200px;" }
-      %>
-    </div>
-  </div>
-
   <div class="layui-form-item">
     <%= f.label :themes, "主题", class: "layui-form-label" %>
     <div class="layui-input-block">
@@ -119,43 +102,6 @@
             <%= 'checked' if @compilation.themes_array.include?(name) %> />
         <% end %>
       </div>
-    </div>
-  </div>
-
-  <div class="layui-form-item">
-    <%= f.label :age_groups, class: "layui-form-label" do %>
-      <span class="required">*</span> 年龄段
-    <% end %>
-    <div class="layui-input-block">
-      <div class="age-groups-checkbox">
-        <% Compilation::AGE_GROUPS.each do |key, name| %>
-          <input type="checkbox" name="compilation[age_groups][]" value="<%= key %>" title="<%= name %>"
-            <%= 'checked' if @compilation.age_groups_array.include?(key.to_s) %> />
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="layui-form-item">
-    <%= f.label :age_range, "年龄范围（自定义）", class: "layui-form-label" do %>
-      <span class="required">*</span> 年龄范围
-    <% end %>
-    <div class="layui-input-block">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <%= f.number_field :min_age, class: "layui-input", placeholder: "最小年龄", min: 0, style: "width: 100px;" %>
-        <span>~</span>
-        <%= f.number_field :max_age, class: "layui-input", placeholder: "最大年龄", min: 0, style: "width: 100px;" %>
-        <span>岁</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="layui-form-item">
-    <%= f.label :recommended_age, class: "layui-form-label" do %>
-      <span class="required">*</span> 最佳年龄推荐
-    <% end %>
-    <div class="layui-input-block">
-      <%= f.text_field :recommended_age, class: "layui-input", placeholder: "如：3-6岁", maxlength: 20, style: "width: 200px;" %>
     </div>
   </div>
   <% end %>

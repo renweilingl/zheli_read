@@ -79,6 +79,7 @@ class Admin::CompilationsController < ApplicationController
       :intro_image_name,
       :content_description,
       :grade_ids => [],
+      :category_ids => []
     )
   end
 end
