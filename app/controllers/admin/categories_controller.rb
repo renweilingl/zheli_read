@@ -27,18 +27,7 @@ class Admin::CategoriesController < ApplicationController
   def new
     authorize Category
     @category = Category.new
-    @level = params[:level].to_i
-
-    # 根据级别设置默认值
-    if @level == Category::LEVEL_SECOND
-      @category.level = Category::LEVEL_SECOND
-    elsif @level == Category::LEVEL_THIRD
-      @category.level = Category::LEVEL_THIRD
-    elsif @level == Category::LEVEL_RECOMMENDED
-      @category.level = Category::LEVEL_RECOMMENDED
-    else
-      @category.level = Category::LEVEL_GRADE
-    end
+    #@level = params[:level].to_i
   end
 
   # 创建分类
@@ -48,8 +37,8 @@ class Admin::CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     # 设置默认值
-    @category.sn ||= 0
-    @category.active = true if @category.active.nil?
+    #@category.sn ||= 0
+    #@category.active = true if @category.active.nil?
 
     if @category.save
       respond_to do |format|
@@ -62,7 +51,7 @@ class Admin::CategoriesController < ApplicationController
     else
       respond_to do |format|
         format.html do
-          @level = @category.level
+          #@level = @category.level
           flash.now[:alert] = "分类创建失败：#{@category.errors.full_messages.join(', ')}"
           render :new, status: :unprocessable_entity
         end
@@ -74,19 +63,12 @@ class Admin::CategoriesController < ApplicationController
   # 编辑分类
   def edit
     authorize @category
-    @level = @category.level
+    #@level = @category.level
   end
 
   # 更新分类
   def update
     authorize @category
-
-    # 检查是否允许修改级别
-    if params[:category][:level].present? && params[:category][:level].to_i != @category.level
-      flash[:alert] = "分类级别不可修改，如需更改级别请删除后重新创建"
-      redirect_to edit_admin_category_path(@category)
-      return
-    end
 
     if @category.update(category_params)
       respond_to do |format|
@@ -99,7 +81,7 @@ class Admin::CategoriesController < ApplicationController
     else
       respond_to do |format|
         format.html do
-          @level = @category.level
+          #@level = @category.level
           flash.now[:alert] = "分类更新失败：#{@category.errors.full_messages.join(', ')}"
           render :edit, status: :unprocessable_entity
         end
@@ -203,6 +185,6 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :level, :sn, :active)
+    params.require(:category).permit(:name)
   end
 end
