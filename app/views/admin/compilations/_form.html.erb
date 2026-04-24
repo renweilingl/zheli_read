@@ -71,6 +71,31 @@
       <i class="layui-icon layui-icon-survey"></i> 年龄与分类
     </legend>
   </fieldset>
+  <div class="layui-form-item">
+    <%= f.label :first_category_id, class: "layui-form-label" do %>
+      <span class="required">*</span> 一级分类
+    <% end %>
+    <div class="layui-input-block">
+      <%= f.select :first_category_id,
+        options_for_select(Category.grade_levels.collect { |x| [x.name, x.id] }, @compilation.first_category_id),
+        { include_blank: '请选择一级分类' },
+        { class: "layui-input", required: true, style: "width: 200px;" } 
+      %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :second_category_id, class: "layui-form-label" do %>
+      <span class="required">*</span> 二级分类
+    <% end %>
+    <div class="layui-input-block">
+      <%= f.select :second_category_id,
+        options_for_select(Category.second_level.collect { |x| [x.name, x.id] }, @compilation.second_category_id),
+        { include_blank: '请选择二级分类' },
+        { class: "layui-input", required: true, style: "width: 200px;" }
+      %>
+    </div>
+  </div>
 
   <div class="layui-form-item">
     <%= f.label :age_groups, class: "layui-form-label" do %>
@@ -396,7 +421,6 @@
     var editor = E.createEditor({
       selector: '#wang-editor-content',
       html: '',
-//      html: this.textareaTarget.value || "<p><br></p>",
       onChange: (editor) => {
         const html = editor.getHtml()
         this.textareaTarget.value = html
