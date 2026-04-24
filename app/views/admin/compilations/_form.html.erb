@@ -77,7 +77,7 @@
     <div class="layui-input-block">
       <div class="grade-checkbox" id="grade-checkbox">
         <% Grade.all.each do |grade| %>
-          <input type="checkbox" name="compilation[grade_ids][]" value="<%= grade.id %>" title="<%= grade.name %>" <%= 'checked' if @compilation.grade_ids.include?(grade.id) %> />
+          <input type="checkbox" name="compilation[grade_ids][]" value=<%= grade.id %> title="<%= grade.name %>" <%= 'checked' if @compilation.grade_ids.include?(grade.id) %> />
         <% end %>
       </div>
     </div>
@@ -246,7 +246,7 @@
   <div class="layui-form-item" style="margin-top: 30px;">
     <div class="layui-input-block">
       <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-form">
-        <i class="layui-icon layui-icon-release"></i> 创建合辑
+        <i class="layui-icon layui-icon-release"></i> 提交保存
       </button>
       <%= link_to "取消", admin_compilations_path, class: "layui-btn layui-btn-primary" %>
     </div>

@@ -43,7 +43,7 @@ class Admin::CompilationsController < ApplicationController
     authorize Compilation
 
     if @compilation.update(compilation_params)
-      redirect_to admin_collection_path(@collection), notice: '合辑更新成功'
+      redirect_to :admin_compilations, notice: '合辑更新成功'
     else
       render :edit
     end
@@ -69,14 +69,6 @@ class Admin::CompilationsController < ApplicationController
       :landscape_cover_url,
       :landscape_cover_name,
 
-      #:age_groups,
-      #:min_age,
-      #:max_age,
-      #:recommended_age,
-      #:themes,
-      #:sub_type,
-
-      :grade_ids,
       :editor_recommendation,
       :publisher,
       :total_count,
@@ -86,6 +78,7 @@ class Admin::CompilationsController < ApplicationController
       :intro_image_url,
       :intro_image_name,
       :content_description,
+      :grade_ids => [],
     )
   end
 end
