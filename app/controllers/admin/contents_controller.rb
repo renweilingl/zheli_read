@@ -1,7 +1,6 @@
 class Admin::ContentsController < ApplicationController
   before_action :set_content, only: [:show, :edit, :update, :destroy]
 
-
   def index
     #authorize Content
     @per_page = params[:per_page] || 20

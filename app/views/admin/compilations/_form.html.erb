@@ -1,5 +1,6 @@
-<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
-<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
+<%= stylesheet_link_tag 'wangeditor', media: 'all' %>
+<%= javascript_include_tag 'wangeditor', 'data-turbolinks-track': 'reload' %>
+
 <%= form_for(@compilation, url: @compilation.new_record? ? :admin_compilations : :admin_compilation,method: @compilation.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
   <fieldset class="layui-elem-field layui-field-title">
     <legend>
@@ -404,7 +405,7 @@
         placeholder: '请输入合辑简介...',
         MENU_CONF: {
           uploadImage: {
-            server: '<%= upload_img_files_path %>',
+            server: '<%= upload_open_img_files_path %>',
             fieldName: 'file',
             maxFileSize: 5 * 1024 * 1024, // 5MB
             headers: {

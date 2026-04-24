@@ -59,6 +59,10 @@ class Compilation < ApplicationRecord
     tags || []
   end
 
+  def themes_array
+    themes || []
+  end
+
   # ===== 封面图片相关 =====
 
   # 封面完整性检查
