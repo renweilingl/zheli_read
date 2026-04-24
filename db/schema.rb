@@ -21,6 +21,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.index ["level"], name: "index_categories_on_level"
   end
 
+  create_table "compilation_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "compilation_id", null: false
+    t.bigint "grade_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["compilation_id", "grade_id"], name: "index_compilation_grades_on_compilation_id_and_grade_id", unique: true
+    t.index ["compilation_id"], name: "index_compilation_grades_on_compilation_id"
+    t.index ["grade_id"], name: "index_compilation_grades_on_grade_id"
+  end
+
   create_table "compilations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "合辑名称"
     t.string "banner_image_url", comment: "合辑banner图片URL (1500×932, ≤500KB)"
@@ -93,4 +103,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_09_065251) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "compilation_grades", "compilations"
+  add_foreign_key "compilation_grades", "grades"
 end

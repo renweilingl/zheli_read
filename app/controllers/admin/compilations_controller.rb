@@ -16,9 +16,9 @@ class Admin::CompilationsController < ApplicationController
 
   def new
     @compilation = Compilation.new
-    @compilation.min_age = 6
-    @compilation.max_age = 8
-    @compilation.recommended_age = 12
+    #@compilation.min_age = 6
+    #@compilation.max_age = 8
+    #@compilation.recommended_age = 12
     authorize @compilation
   end
 
@@ -49,43 +49,10 @@ class Admin::CompilationsController < ApplicationController
     end
   end
 
-  # 删除合辑
   def destroy
     authorize Compilation
     @compilation.destroy
     redirect_to admin_collections_path, notice: '合辑删除成功'
-  end
-
-
-  # ===== 封面上传 =====
-  # 上传banner (1500×932, ≤500KB)
-  def upload_banner
-    authorize Compilation
-    upload_image('banner', 500)
-  end
-
-  # 上传横图封面 (1125×540, ≤500KB)
-  def upload_landscape_cover
-    authorize Compilation
-    upload_image('landscape', 500)
-  end
-
-  # 上传长方形封面 (600×768, ≤300KB)
-  def upload_portrait_cover
-    authorize Compilation
-    upload_image('portrait', 300)
-  end
-
-  # 上传正方形封面 (600×600, ≤300KB)
-  def upload_square_cover
-    authorize Compilation
-    upload_image('square', 300)
-  end
-
-  # 上传图片简介
-  def upload_intro_image
-   authorize Compilation
-   upload_image('intro', 5 * 1024)
   end
 
   private
@@ -102,13 +69,13 @@ class Admin::CompilationsController < ApplicationController
       :landscape_cover_url,
       :landscape_cover_name,
 
-      :age_groups,
-      :min_age,
-      :max_age,
-      :recommended_age,
-      :themes,
+      #:age_groups,
+      #:min_age,
+      #:max_age,
+      #:recommended_age,
+      #:themes,
+      #:sub_type,
 
-      :sub_type,
       :editor_recommendation,
       :publisher,
       :total_count,

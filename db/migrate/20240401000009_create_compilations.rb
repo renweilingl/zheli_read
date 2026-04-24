@@ -44,5 +44,15 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
     end
 
     add_index :compilations, :name, unique: true
+
+    # 创建合辑与年级的关联表
+    create_table :compilation_grades, id: false do |t|
+      t.references :compilation, null: false, foreign_key: true
+      t.references :grade, null: false, foreign_key: true
+      t.timestamps
+    end
+
+    # 添加复合索引
+    add_index :compilation_grades, [:compilation_id, :grade_id], unique: true
   end
 end

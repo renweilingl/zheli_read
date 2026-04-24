@@ -71,6 +71,19 @@
       <i class="layui-icon layui-icon-survey"></i> 年龄与分类
     </legend>
   </fieldset>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">年龄范围</label>
+    <div class="layui-input-block">
+      <div class="grade-checkbox" id="grade-checkbox">
+        <% Grade.all.each do |grade| %>
+          <input type="checkbox" name="compilation[grade_ids][]" value="<%= grade.id %>" title="<%= grade.name %>" <%= 'checked' if @compilation.grade_ids.include?(grade.id) %> />
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if false %>
   <div class="layui-form-item">
     <%= f.label :first_category_id, class: "layui-form-label" do %>
       <span class="required">*</span> 年龄段
@@ -109,7 +122,6 @@
     </div>
   </div>
 
-  <% if false %>
   <div class="layui-form-item">
     <%= f.label :age_groups, class: "layui-form-label" do %>
       <span class="required">*</span> 年龄段
@@ -137,7 +149,6 @@
       </div>
     </div>
   </div>
-  <% end %>
 
   <div class="layui-form-item">
     <%= f.label :recommended_age, class: "layui-form-label" do %>
@@ -147,6 +158,7 @@
       <%= f.text_field :recommended_age, class: "layui-input", placeholder: "如：3-6岁", maxlength: 20, style: "width: 200px;" %>
     </div>
   </div>
+  <% end %>
 
   <fieldset class="layui-elem-field layui-field-title">
     <legend>

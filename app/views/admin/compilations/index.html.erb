@@ -31,9 +31,6 @@
         <tr>
           <th width="80">Banner</th>
           <th>合辑名称</th>
-          <th>一级分类</th>
-          <th>二级分类</th>
-          <th width="120">年龄段</th>
           <th width="160" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -68,17 +65,6 @@
                   <% end %>
                 </div>
               </td>
-              <td></td>
-              <td></td>
-              <td>
-                <div><%= compilation.age_range %></div>
-                <div style="font-size: 12px; color: #9ca3af;">
-                  <% if compilation.age_groups_array.any? %>
-                    <%= compilation.age_groups_names.truncate(15) %>
-                  <% else %>
-                    -
-                  <% end %>
-                </div>
               </td>
               <td style="text-align:center;">
                 <div class="layui-btn-group">
