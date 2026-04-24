@@ -5,11 +5,9 @@ class Admin::CompilationsController < ApplicationController
 
   def index
     authorize Compilation
-    @compilations = Compilation
-                  .search(params[:search])
-                  .filter_by_status(params[:status])
-                  .filter_by_sub_type(params[:sub_type])
-                  .paginate(page: params[:page], per_page: params[:per_page] || 15)
+
+    @q = Compilation.ransack(params[:q])
+    @compilations = @q.result.paginate(page: params[:page], per_page: @per_page)
   end
 
   def show

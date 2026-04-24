@@ -19,10 +19,7 @@
         <tr>
           <th width="80">封面</th>
           <th>合辑信息</th>
-          <th width="100">类型</th>
           <th width="120">年龄段</th>
-          <th width="80">状态</th>
-          <th width="80">浏览</th>
           <th width="200">操作</th>
         </tr>
       </thead>
@@ -38,11 +35,11 @@
             </td>
           </tr>
         <% else %>
-          <% @compilation.each do |collection| %>
+          <% @compilations.each do |compilation| %>
             <tr>
               <td>
-                <% if collection.main_cover_url.present? %>
-                  <img src="<%= collection.main_cover_url %>" style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;" />
+                <% if compilation.main_cover_url.present? %>
+                  <img src="<%= compilation.main_cover_url %>" style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;" />
                 <% else %>
                   <div style="width: 50px; height: 70px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
                     <i class="layui-icon layui-icon-picture" style="color: #ccc;"></i>
@@ -50,51 +47,33 @@
                 <% end %>
               </td>
               <td>
-                <div style="font-weight: 500;"><%= collection.name %></div>
+                <div style="font-weight: 500;"><%= compilation.name %></div>
                 <div style="font-size: 12px; color: #9ca3af; margin-top: 4px;">
-                  <% if collection.editor_recommendation.present? %>
-                    <span style="color: #52c41a;">「<%= collection.editor_recommendation %>」</span>
-                  <% end %>
-                  <% if collection.books.any? %>
-                    包含<%= collection.books.count %>个图书
+                  <% if compilation.editor_recommendation.present? %>
+                    <span style="color: #52c41a;">「<%= compilation.editor_recommendation %>」</span>
                   <% end %>
                 </div>
               </td>
-              <td><%= collection.sub_type_name.presence || '-' %></td>
               <td>
-                <div><%= collection.age_range %></div>
+                <div><%= compilation.age_range %></div>
                 <div style="font-size: 12px; color: #9ca3af;">
-                  <% if collection.age_groups_array.any? %>
-                    <%= collection.age_groups_names.truncate(15) %>
+                  <% if compilation.age_groups_array.any? %>
+                    <%= compilation.age_groups_names.truncate(15) %>
                   <% else %>
                     -
                   <% end %>
                 </div>
               </td>
               <td>
-                <span class="layui-badge <%= status_badge_class(collection.status) %>">
-                  <%= collection.status_name %>
-                </span>
-                <% if collection.locked? %>
-                  <i class="layui-icon layui-icon-password" style="color: #ff4d4f;" title="已锁定"></i>
-                <% end %>
-              </td>
-              <td><%= collection.view_count %></td>
-              <td>
                 <div class="layui-btn-group">
-                  <%= link_to admin_collection_path(collection), class: "layui-btn layui-btn-xs", title: "查看" do %>
+                  <%= link_to admin_compilation_path(compilation), class: "layui-btn layui-btn-xs", title: "查看" do %>
                     <i class="layui-icon layui-icon-about"></i>
                   <% end %>
-                  <%= link_to edit_admin_collection_path(collection), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
+                  <%= link_to edit_admin_compilation_path(compilation), class: "layui-btn layui-btn-xs layui-btn-warm", title: "编辑" do %>
                     <i class="layui-icon layui-icon-edit"></i>
                   <% end %>
-                  <% if policy(collection).toggle_status? %>
-                    <%= link_to toggle_status_admin_collection_path(collection), method: :post, class: "layui-btn layui-btn-xs #{collection.published? ? 'layui-btn-danger' : 'layui-btn-normal'}", title: collection.published? ? '下线' : '上线' do %>
-                      <i class="layui-icon <%= collection.published? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
-                    <% end %>
-                  <% end %>
-                  <% if policy(collection).destroy? %>
-                    <%= link_to admin_collection_path(collection), method: :delete, data: { confirm: '确定要删除吗？' }, class: "layui-btn layui-btn-xs layui-btn-danger", title: "删除" do %>
+                  <% if policy(compilation).destroy? %>
+                    <%= link_to admin_compilation_path(compilation), method: :delete, data: { confirm: '确定要删除吗？' }, class: "layui-btn layui-btn-xs layui-btn-danger", title: "删除" do %>
                       <i class="layui-icon layui-icon-delete"></i>
                     <% end %>
                   <% end %>
