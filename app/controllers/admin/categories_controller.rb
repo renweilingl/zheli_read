@@ -11,20 +11,6 @@ class Admin::CategoriesController < ApplicationController
 
     @q = Category.ransack(params[:q])
     @categories = @q.result.paginate(page: params[:page], per_page: @per_page)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: {
-        success: true,
-        categories: @categories.map(&:as_json),
-        pagination: {
-          current_page: @categories.current_page,
-          total_pages: @categories.total_pages,
-          total_count: @categories.total_entries,
-          per_page: @categories.per_page
-        }
-      }}
-    end
   end
 
   # 显示分类详情
