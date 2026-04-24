@@ -161,7 +161,7 @@
     <%= f.label :tags, "标签", class: "layui-form-label" %>
     <div class="layui-input-block">
       <%= f.text_field :tags, class: "layui-input", placeholder: "多个标签用逗号分隔", style: "width: 400px;",
-            value: @compilation.tags_array.join(', ') %>
+        value: @compilation.tags_array.blank? ? "" : @compilation.tags_array.join(', ') %>
     </div>
   </div>
 

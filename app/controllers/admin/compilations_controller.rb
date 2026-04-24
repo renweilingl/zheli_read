@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::CompilationsController < ApplicationController
-  before_action :set_collection, only: [:show, :edit, :update, :destroy]
+  before_action :set_compilation, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize Compilation
@@ -30,7 +30,7 @@ class Admin::CompilationsController < ApplicationController
     if @compilation.save
       redirect_to admin_compilation_path(@compilation), notice: '合辑创建成功'
     else
-      flash.now[:alert] = "合辑创建失败：#{@compilation.errors.full_messages.join(', ')}"
+      flash[:alert] = "合辑创建失败：#{@compilation.errors.full_messages.join(', ')}"
       logger.info @compilation.errors.full_messages.join(',')
       render :new
     end
@@ -92,7 +92,7 @@ class Admin::CompilationsController < ApplicationController
   private
 
   def set_compilation
-    @collection = Collection.find(params[:id])
+    @compilation = Compilation.find(params[:id])
   end
 
   def compilation_params

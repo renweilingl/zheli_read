@@ -1,61 +1,37 @@
-<% content_for :title, "合辑详情 - #{@collection.name}" %>
-
-<div class="page-header">
-  <h1 class="page-title">
-    <%= @collection.name %>
-    <small style="font-size: 14px; color: #999; margin-left: 10px;">
-      <span class="layui-badge <%= status_badge_class(@collection.status) %>">
-        <%= @collection.status_name %>
-      </span>
-      <% if @collection.locked? %>
-        <i class="layui-icon layui-icon-password" style="color: #ff4d4f; margin-left: 5px;" title="已锁定"></i>
-      <% end %>
-    </small>
-  </h1>
-  <div class="page-actions">
-    <%= link_to admin_collections_path, class: "layui-btn layui-btn-primary" do %>
-      <i class="layui-icon layui-icon-return"></i> 返回列表
-    <% end %>
-    <%= link_to edit_admin_collection_path(@collection), class: "layui-btn layui-btn-warm" do %>
-      <i class="layui-icon layui-icon-edit"></i> 编辑
-    <% end %>
-    <% if policy(@collection).toggle_status? %>
-      <%= link_to toggle_status_admin_collection_path(@collection), method: :post, class: "layui-btn #{@collection.published? ? 'layui-btn-danger' : 'layui-btn-normal'}" do %>
-        <i class="layui-icon <%= @collection.published? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
-        <%= @collection.published? ? '下线' : '上线' %>
-      <% end %>
-    <% end %>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">内容管理</a>
+      <a href="/admin/compilations">合辑管理</a>
+      <a><cite>合辑详情</cite></a>
+    </span>
+    <%= render 'common/user_info' %>                                             
   </div>
-</div>
 
-<!-- 合辑基本信息 -->
-<div class="layui-row layui-col-space15">
-  <div class="layui-col-md8">
-    <!-- 合辑信息 -->
-    <div class="layui-card">
-      <div class="layui-card-header">
-        <i class="layui-icon layui-icon-note"></i> 合辑信息
-      </div>
-      <div class="layui-card-body">
-        <table class="layui-table" style="margin: 0;">
-          <colgroup>
-            <col width="120">
-            <col>
-          </colgroup>
-          <tbody>
+  <div class="x-body">
+
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md8">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-note"></i> 合辑信息
+          </div>
+            <div class="layui-card-body">
+              <table class="layui-table" style="margin: 0;">
+                <colgroup>
+                  <col width="120">
+                  <col>
+                </colgroup>
+                <tbody>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">合辑名称</td>
-              <td><%= @collection.name %></td>
-            </tr>
-            <tr>
-              <td style="background: #f5f7fa; font-weight: 500;">二级类型</td>
-              <td><%= @collection.sub_type_name.presence || '-' %></td>
+              <td><%= @compilation.name %></td>
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">编辑推荐语</td>
               <td>
-                <% if @collection.editor_recommendation.present? %>
-                  <span style="color: #52c41a; font-weight: bold;">「<%= @collection.editor_recommendation %>」</span>
+                <% if @compilation.editor_recommendation.present? %>
+                  <span style="color: #52c41a; font-weight: bold;">「<%= @compilation.editor_recommendation %>」</span>
                 <% else %>
                   -
                 <% end %>
@@ -63,31 +39,31 @@
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">作者</td>
-              <td><%= @collection.author.presence || '-' %></td>
+              <td><%= @compilation.author.presence || '-' %></td>
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">出版社</td>
-              <td><%= @collection.publisher.presence || '-' %></td>
+              <td><%= @compilation.publisher.presence || '-' %></td>
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">合辑总集数</td>
-              <td><%= @collection.total_count %> 个</td>
+              <td><%= @compilation.total_count %> 个</td>
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">标签</td>
               <td>
-                <% if @collection.tags_array.any? %>
-                  <% @collection.tags_array.each do |tag| %>
+                <% if @compilation.tags_array.blank? %>
+                  -
+                <% else %>
+                  <% @compilation.tags_array.each do |tag| %>
                     <span class="layui-badge layui-bg-gray" style="margin-right: 5px;"><%= tag %></span>
                   <% end %>
-                <% else %>
-                  -
                 <% end %>
               </td>
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">创建时间</td>
-              <td><%= @collection.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+              <td><%= @compilation.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             </tr>
           </tbody>
         </table>
@@ -109,8 +85,8 @@
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">年龄段</td>
               <td>
-                <% if @collection.age_groups_array.any? %>
-                  <% @collection.age_groups_array.each do |group| %>
+                <% if @compilation.age_groups_array.any? %>
+                  <% @compilation.age_groups_array.each do |group| %>
                     <span class="layui-badge layui-bg-green" style="margin-right: 5px;"><%= Collection::AGE_GROUPS[group.to_sym] || group %></span>
                   <% end %>
                 <% else %>
@@ -120,35 +96,11 @@
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">年龄范围</td>
-              <td><%= @collection.age_range %></td>
+              <td><%= @compilation.age_range %></td>
             </tr>
             <tr>
               <td style="background: #f5f7fa; font-weight: 500;">最佳年龄推荐</td>
-              <td><%= @collection.recommended_age.presence || '-' %></td>
-            </tr>
-            <tr>
-              <td style="background: #f5f7fa; font-weight: 500;">分类</td>
-              <td>
-                <% if @collection.categories_array.any? %>
-                  <% @collection.categories_array.each do |cat| %>
-                    <span class="layui-badge" style="margin-right: 5px;"><%= cat %></span>
-                  <% end %>
-                <% else %>
-                  -
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td style="background: #f5f7fa; font-weight: 500;">主题</td>
-              <td>
-                <% if @collection.themes_array.any? %>
-                  <% @collection.themes_array.each do |theme| %>
-                    <span class="layui-badge layui-bg-blue" style="margin-right: 5px;"><%= Collection::THEME_NAMES[theme.to_sym] || theme %></span>
-                  <% end %>
-                <% else %>
-                  -
-                <% end %>
-              </td>
+              <td><%= @compilation.recommended_age.presence || '-' %></td>
             </tr>
           </tbody>
         </table>
@@ -260,62 +212,7 @@
       </div>
     <% end %>
 
-    <!-- 统计 -->
-    <div class="layui-card">
-      <div class="layui-card-header">
-        <i class="layui-icon layui-icon-chart-screen"></i> 统计数据
-      </div>
-      <div class="layui-card-body">
-        <table class="layui-table" style="margin: 0;">
-          <tbody>
-            <tr>
-              <td style="background: #f5f7fa; font-weight: 500;">浏览次数</td>
-              <td><%= @collection.view_count %> 次</td>
-            </tr>
-            <tr>
-              <td style="background: #f5f7fa; font-weight: 500;">封面完整性</td>
-              <td>
-                <% if @collection.covers_complete? %>
-                  <span class="layui-badge layui-bg-green">完整</span>
-                <% else %>
-                  <span class="layui-badge layui-bg-orange">不完整</span>
-                <% end %>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 快捷操作 -->
-    <div class="layui-card">
-      <div class="layui-card-header">
-        <i class="layui-icon layui-icon-set"></i> 快捷操作
-      </div>
-      <div class="layui-card-body">
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <%= link_to edit_admin_collection_path(@collection), class: "layui-btn layui-btn-warm" do %>
-            <i class="layui-icon layui-icon-edit"></i> 编辑合辑
-          <% end %>
-          <% if policy(@collection).toggle_status? %>
-            <%= link_to toggle_status_admin_collection_path(@collection), method: :post, class: "layui-btn #{@collection.published? ? 'layui-btn-danger' : 'layui-btn-normal'}" do %>
-              <i class="layui-icon <%= @collection.published? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
-              <%= @collection.published? ? '下线合辑' : '上线合辑' %>
-            <% end %>
-          <% end %>
-          <% if policy(@collection).toggle_lock? %>
-            <%= link_to toggle_lock_admin_collection_path(@collection), method: :post, class: "layui-btn layui-btn-primary" do %>
-              <i class="layui-icon <%= @collection.locked? ? 'layui-icon-unlock' : 'layui-icon-password' %>"></i>
-              <%= @collection.locked? ? '解锁合辑' : '锁定合辑' %>
-            <% end %>
-          <% end %>
-          <% if policy(@collection).destroy? %>
-            <%= link_to admin_collection_path(@collection), method: :delete, data: { confirm: '确定要删除吗？' }, class: "layui-btn layui-btn-danger" do %>
-              <i class="layui-icon layui-icon-delete"></i> 删除合辑
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
+  </div>
+</div>
   </div>
 </div>

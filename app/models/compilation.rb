@@ -22,7 +22,7 @@ class Compilation < ApplicationRecord
   validate :validate_age_range
   validate :validate_age_groups
 
-  default_scope { order(sort_order: :asc, created_at: :desc) }
+  #default_scope { order(sort_order: :asc, created_at: :desc) }
 
   # 状态名称
   def status_name
@@ -54,21 +54,6 @@ class Compilation < ApplicationRecord
     "#{min_age || 0}~#{max_age || 99}岁"
   end
 
-  # 分类数组
-  def categories_array
-    categories || []
-  end
-
-  # 主题数组
-  def themes_array
-    themes || []
-  end
-
-  # 主题名称
-  def themes_names
-    themes_array.map { |t| THEME_NAMES[t.to_sym] || t }.join(', ')
-  end
-
   # 标签数组
   def tags_array
     tags || []
@@ -84,12 +69,6 @@ class Compilation < ApplicationRecord
   # 获取主封面
   def main_cover_url
     landscape_cover_url || banner_image_url
-  end
-
-  # ===== 发布相关 =====
-
-  def publish!
-    update(status: :published)
   end
 
   def offline!
