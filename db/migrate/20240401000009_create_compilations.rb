@@ -15,19 +15,19 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
       t.string :banner_image_name, comment: '合辑banner图片文件名'
       t.string :landscape_cover_url, comment: '横图封面URL (1125×540, ≤500KB)'
       t.string :landscape_cover_name, comment: '横图封面文件名'
-      t.string :portrait_cover_url, comment: '长方形封面URL (600×768, ≤300KB)'
-      t.string :portrait_cover_name, comment: '长方形封面文件名'
-      t.string :square_cover_url, comment: '正方形封面URL (600×600, ≤300KB)'
-      t.string :square_cover_name, comment: '正方形封面文件名'
+      #t.string :portrait_cover_url, comment: '长方形封面URL (600×768, ≤300KB)'
+      #t.string :portrait_cover_name, comment: '长方形封面文件名'
+      #t.string :square_cover_url, comment: '正方形封面URL (600×600, ≤300KB)'
+      #t.string :square_cover_name, comment: '正方形封面文件名'
 
-      t.json :age_groups, comment: '年龄段勾选（多选）'
-      t.integer :min_age, default: 0, comment: '最小年龄'
-      t.integer :max_age, default: 99, comment: '最大年龄'
-      t.string :recommended_age, comment: '最佳年龄推荐'
+      #t.json :age_groups, comment: '年龄段勾选（多选）'
+      #t.integer :min_age, default: 0, comment: '最小年龄'
+      #t.integer :max_age, default: 99, comment: '最大年龄'
+      #t.string :recommended_age, comment: '最佳年龄推荐'
 
-      t.bigint :first_category_id, comment: '一级分类'
-      t.bigint :second_category_id, comment: '二级分类'
-      t.json :themes, comment: '主题分类'
+      #t.bigint :first_category_id, comment: '一级分类'
+      #t.bigint :second_category_id, comment: '二级分类'
+      #t.json :themes, comment: '主题分类'
 
       t.string :editor_recommendation, comment: '编辑推荐语（15字以内）'
       t.string :publisher, comment: '出版社'
@@ -44,6 +44,5 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
     end
 
     add_index :compilations, :name, unique: true
-    add_index :compilations, :first_category_id
   end
 end
