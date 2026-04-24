@@ -98,6 +98,18 @@
   </div>
 
   <div class="layui-form-item">
+    <%= f.label :themes, "主题", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <div class="themes-checkbox">
+        <% Category.third_level.pluck(:name).each do |name| %>
+          <input type="checkbox" name="compilation[themes][]" value="<%= name %>" title="<%= name %>"
+            <%= 'checked' if @compilation.themes_array.include?(name) %> />
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <%= f.label :age_groups, class: "layui-form-label" do %>
       <span class="required">*</span> 年龄段
     <% end %>
@@ -131,18 +143,6 @@
     <% end %>
     <div class="layui-input-block">
       <%= f.text_field :recommended_age, class: "layui-input", placeholder: "如：3-6岁", maxlength: 20, style: "width: 200px;" %>
-    </div>
-  </div>
-
-  <div class="layui-form-item">
-    <%= f.label :themes, "主题", class: "layui-form-label" %>
-    <div class="layui-input-block">
-      <div class="themes-checkbox">
-        <% Category.third_level.pluck(:name).each do |name| %>
-          <input type="checkbox" name="compilation[themes][]" value="<%= name %>" title="<%= name %>"
-            <%= 'checked' if @compilation.themes_array.include?(name) %> />
-        <% end %>
-      </div>
     </div>
   </div>
 
