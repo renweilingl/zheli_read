@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
     resources :categories
     resources :grades
+    resources :chapters
 
     #resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     #  member do
