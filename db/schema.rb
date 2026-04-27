@@ -11,6 +11,29 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
+  create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "grade_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "grade_id"], name: "index_book_grades_on_book_id_and_grade_id", unique: true
+    t.index ["book_id"], name: "index_book_grades_on_book_id"
+    t.index ["grade_id"], name: "index_book_grades_on_grade_id"
+  end
+
+  create_table "books", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", null: false, comment: "绘本名称"
+    t.string "cover_image_url", comment: "绘本封面URL"
+    t.bigint "category_id", comment: "绘本类型"
+    t.json "themes", comment: "主题"
+    t.bigint "supplier_id", comment: "归属供应商"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_books_on_category_id"
+    t.index ["name"], name: "index_books_on_name"
+    t.index ["supplier_id"], name: "index_books_on_supplier_id"
+  end
+
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "level", default: 1, null: false
@@ -113,6 +136,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "book_grades", "books"
+  add_foreign_key "book_grades", "grades"
+  add_foreign_key "books", "suppliers"
   add_foreign_key "compilation_categories", "categories"
   add_foreign_key "compilation_categories", "compilations"
   add_foreign_key "compilation_grades", "compilations"
