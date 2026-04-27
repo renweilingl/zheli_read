@@ -29,6 +29,7 @@
         <tr>
           <th width="60">ID</th>
           <th>图书信息</th>
+          <th>年级范围</th>
           <th width="80">类型</th>
           <th width="130">创建时间</th>
           <th width="220" style="text-align:center;">操作</th>
@@ -67,6 +68,7 @@
                   </div>
                 </div>
               </td>
+              <td><%= book.grades.pluck(:name).join(" | ") %></td>
               <td><%= book.category.name %></td>
               <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
               <td style="text-align:center;">
