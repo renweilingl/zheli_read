@@ -19,49 +19,43 @@
   </div>
 
   <div class="layui-form-item">
-    <label class="layui-form-label"><span class="required">*</span> 合辑封面</label>
+    <label class="layui-form-label"><span class="required">*</span> Banner</label>
     <div class="layui-input-block">
-      <div class="cover-uploads-grid">
-
-        <div class="cover-upload-item">
-          <div class="cover-upload-label">
-            <span>合辑Banner</span>
-            <span class="cover-specs">(1500×932, ≤500KB)</span>
-          </div>
-          <div class="cover-upload-box" id="banner-upload-box">
-            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-banner">
-              <i class="layui-icon layui-icon-upload"></i> 上传Banner
-            </button>
-            <div class="cover-preview" id="banner-preview" style="display: <%= @compilation.banner_image_url.blank? ?  'none' : 'block' %>;">
-              <img id="banner-img" src="<%= @compilation.banner_image_url.blank? ? '' : FileMap.new(@compilation.banner_image_url, 'img').secrity_src %>" />
-              <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="banner">
-                <i class="layui-icon layui-icon-close"></i>
-              </button>
-            </div>
-          </div>
-          <%= f.hidden_field :banner_image_url, id: "banner_image_url" %>
-          <%= f.hidden_field :banner_image_name, id: "banner_image_name" %>
-        </div>
-
-        <div class="cover-upload-item">
-          <div class="cover-upload-label">
-            <span>横图封面</span>
-          </div>
-          <div class="cover-upload-box" id="landscape-upload-box">
-            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-landscape">
-              <i class="layui-icon layui-icon-upload"></i> 上传封面
-            </button>
-            <div class="cover-preview" id="landscape-preview" style="display: none;">
-              <img id="landscape-img" src="" />
-              <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="landscape">
-               <i class="layui-icon layui-icon-close"></i>
-              </button>
-            </div>
-          </div>
-          <%= f.hidden_field :landscape_cover_url, id: "landscape_cover_url" %>
-          <%= f.hidden_field :landscape_cover_name, id: "landscape_cover_name" %>
-        </div>
+      <div class="layui-upload">
+        <button type="button" class="layui-btn layui-btn-normal" id="upload-banner">
+          <i class="layui-icon layui-icon-upload"></i> 上传Banner
+        </button>
+        <span style="margin-left: 10px; color: #999;">支持 JPG、PNG 格式</span>
       </div>
+      <div id="banner-preview" style="margin-top: 10px; display: <%= @compilation.banner_image_url.blank? ?  'none' : 'block' %>;">
+        <img id="banner-img" src="<%= @compilation.banner_image_url.blank? ? '' : FileMap.new(@compilation.banner_image_url, 'img').secrity_src %>" style="max-width: 300px; border-radius: 4px; border: 1px solid #e6e6e6;" />
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" style="margin-left: 10px;">
+          <i class="layui-icon layui-icon-close"></i> 移除
+        </button>
+      </div>
+      <%= f.hidden_field :banner_image_url, id: "banner_image_url" %>
+      <%= f.hidden_field :banner_image_name, id: "banner_image_name" %>
+    </div>
+  </div>
+      
+
+  <div class="layui-form-item">
+    <label class="layui-form-label"><span class="required">*</span> 横图封面</label>
+    <div class="layui-input-block">
+      <div class="layui-upload">
+        <button type="button" class="layui-btn layui-btn-normal" id="upload-landscape">
+          <i class="layui-icon layui-icon-upload"></i> 上传封面
+        </button>
+        <span style="margin-left: 10px; color: #999;">支持 JPG、PNG 格式</span>
+      </div>
+      <div id="landscape-preview" style="margin-top: 10px; display: <%= @compilation.landscape_cover_url.blank? ?  'none' : 'block' %>;">
+        <img id="landscape-img" src="<%= @compilation.landscape_cover_url.blank? ? '' : FileMap.new(@compilation.landscape_cover_url, 'img').secrity_src %>" style="max-width: 300px; border-radius: 4px; border: 1px solid #e6e6e6;" />
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger landscape-remove" style="margin-left: 10px;">
+          <i class="layui-icon layui-icon-close"></i> 移除
+        </button>
+      </div>
+      <%= f.hidden_field :landscape_cover_url, id: "landscape_cover_url" %>
+      <%= f.hidden_field :landscape_cover_name, id: "landscape_cover_name" %>
     </div>
   </div>
 
@@ -90,20 +84,6 @@
       <% end %>
     </div>
   </div>
-
-  <% if false %>
-  <div class="layui-form-item">
-    <%= f.label :themes, "主题", class: "layui-form-label" %>
-    <div class="layui-input-block">
-      <div class="themes-checkbox">
-        <% Category.third_level.pluck(:name).each do |name| %>
-          <input type="checkbox" name="compilation[themes][]" value="<%= name %>" title="<%= name %>"
-            <%= 'checked' if @compilation.themes_array.include?(name) %> />
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <% end %>
 
   <fieldset class="layui-elem-field layui-field-title">
     <legend>
@@ -251,34 +231,8 @@
     color: #ff4d4f;
   }
 
-  .cover-upload-box {
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cover-preview {
-    text-align: center;
-  }
-
-  .cover-preview img {
-    max-width: 150px;
-    max-height: 100px;
-    border-radius: 4px;
-    border: 1px solid #e6e6e6;
-  }
-
   .cover-preview .layui-btn {
     margin-top: 8px;
-  }
-
-  /* 年龄段和主题复选框 */
-  .age-groups-checkbox,
-  .themes-checkbox {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
   }
 
   /* 编辑器切换 */
