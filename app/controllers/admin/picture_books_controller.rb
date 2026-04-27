@@ -19,6 +19,8 @@ class Admin::PictureBooksController < ApplicationController
 
   def chapters
     authorize @book
+
+    @chapters = @book.chapters.order("sn asc")
   end
 
   def new_chapter
