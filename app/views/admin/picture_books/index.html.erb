@@ -30,8 +30,6 @@
           <th width="60">ID</th>
           <th>图书信息</th>
           <th width="80">类型</th>
-          <th width="70">付费</th>
-          <th width="60">页数</th>
           <th width="130">创建时间</th>
           <th width="220" style="text-align:center;">操作</th>
         </tr>
@@ -69,18 +67,12 @@
                   </div>
                 </div>
               </td>
-              <td>
-                <span class="layui-badge <%= book.payment_type == "free" ? 'layui-bg-green' : (book.vip? ? 'layui-bg-purple' : 'layui-bg-red') %>">
-                  <%= book.payment_type_name %>
-                </span>
-              </td>
-              <td><%= book.page_count %>页</td>
+              <td><%= book.category.name %></td>
               <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
               <td style="text-align:center;">
                 <div class="layui-btn-group">
-                  <%#= link_to "详情", admin_book_path(book), class: "layui-btn layui-btn-sm" %>
-                  <%= link_to "编辑", edit_admin_book_path(book), class: "layui-btn layui-btn-sm" %>
-                  <%= link_to "章节管理", chapters_admin_book_path(book), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
+                  <%#= link_to "章节管理", chapters_admin_book_path(book), class: "layui-btn layui-btn-sm" %>
                 </div>
               </td>
             </tr>

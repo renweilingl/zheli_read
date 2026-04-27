@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   has_and_belongs_to_many :compilations, join_table: :compilation_categories
+  has_many :books
 
   # 验证规则
   validates :name, presence: true, length: { maximum: 100 }
