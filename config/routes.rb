@@ -34,13 +34,6 @@ Rails.application.routes.draw do
     resources :categories
     resources :grades
 
-    #resources :contents, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-    #  collection do
-    #    post :upload
-    #    post :upload_cover
-    #  end
-    #end
-
     #resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     #  member do
     #    put :publish

@@ -23,7 +23,7 @@ class Admin::PictureBooksController < ApplicationController
 
   def new_chapter
     authorize @book
-    @chapter = Chapter.new(book_id: @book.id)
+    @chapter = Chapter.new(book_id: @book.id, is_published: true)
   end
 
   def new

@@ -87,7 +87,6 @@ class Admin::ContentsController < ApplicationController
     end
 
     begin
-      # 生成唯一文件名
       timestamp = Time.now.strftime('%Y%m%d%H%M%S')
       random_str = SecureRandom.hex(8)
       new_filename = "#{timestamp}_#{random_str}.#{extension}"
