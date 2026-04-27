@@ -5,12 +5,7 @@ class Compilation < ApplicationRecord
   has_and_belongs_to_many :categories, join_table: :compilation_categories
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }
-  #validates :recommended_age, presence: true, length: { maximum: 20 }
   validates :editor_recommendation, length: { maximum: 15 }, allow_blank: true
-  #validates :min_age, numericality: { greater_than_or_equal_to: 0 }, allow_blank: true
-  #validates :max_age, numericality: { greater_than_or_equal_to: 0 }, allow_blank: true
-  #validate :validate_age_range
-  #validate :validate_age_groups
 
   #def age_groups_array
   #  age_groups || []

@@ -1,0 +1,21 @@
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a>图书管理</a>
+      <a><cite>章节管理<span><%= @book.name %></span></cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+
+  <div class="x-body">
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+      </div>
+      <div class="layui-col-3 text-right">
+        <%= link_to new_chapter_admin_book_path(@book), class: 'layui-btn layui-bg-wgreen' do %>
+          <i class="layui-icon"></i>新增单本
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
