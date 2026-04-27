@@ -46,5 +46,35 @@
         <% end %>
       </tbody>
     </table>
+
+    <% if @chapters.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+    <% end %>
   </div>
 </div>
+
+<script>
+  layui.use(['laypage', 'form', 'layer'], function(){
+    var laypage = layui.laypage,
+        form = layui.form,
+        layer = layui.layer;
+
+    <% if @chapters.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @chapters.total_entries %>,
+      limit: <%= @chapters.per_page %>,
+      curr: <%= @chapters.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>
