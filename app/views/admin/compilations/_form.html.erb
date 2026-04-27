@@ -162,11 +162,11 @@
     <div class="layui-input-block">
       <div id="richtext-editor" class="description-editor">
         <div id="wang-editor-toolbar" style="border-bottom: 1px solid #e6e6e6;"></div>
-        <div name="xxx" id="wang-editor-content" style="height: 250px; overflow-y: auto;border: 1px solid #e6e6e6;"></div>
+        <div name="content_description" id="wang-editor-content" style="height: 320px; overflow-y: auto;border: 1px solid #e6e6e6;"></div>
+        <%= f.hidden_field :content_description, id: "content-description-hidden" %>
       </div>
     </div>
   </div>
-  <%= f.hidden_field :content_description, id: "content-description-hidden" %>
 
   <div class="layui-form-item" style="margin-top: 30px;">
     <div class="layui-input-block">
@@ -380,6 +380,7 @@
         }
       }
     });
+    editor.setHtml('<%= j @compilation.content_description.to_s %>');
 
     var toolbar = E.createToolbar({
       editor: editor,
@@ -403,7 +404,6 @@
         data.field.tags = data.field.tags.split(',').map(function(t){ return t.trim(); }).filter(function(t){ return t; });
       }
 
-      // 处理富文本/Markdown内容 - 根据当前模式同步到 content_description
       $('#content-description-hidden').val(editor.getHtml());
 
       return true;
