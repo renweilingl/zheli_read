@@ -3,26 +3,8 @@
 <div class="page-header">
   <h1 class="page-title">绘本详情</h1>
   <div class="page-actions">
-    <%= link_to admin_books_path, class: "layui-btn layui-btn-primary" do %>
+    <%= link_to admin_picture_books_path, class: "layui-btn layui-btn-primary" do %>
       <i class="layui-icon layui-icon-return"></i> 返回列表
-    <% end %>
-    <% unless @book.locked? %>
-      <%= link_to edit_admin_book_path(@book), class: "layui-btn layui-btn-warm" do %>
-        <i class="layui-icon layui-icon-edit"></i> 编辑
-      <% end %>
-    <% end %>
-    <% if @book.draft? %>
-      <%= link_to toggle_status_admin_book_path(@book), method: :post, class: "layui-btn layui-btn-normal" do %>
-        <i class="layui-icon layui-icon-release"></i> 发布
-      <% end %>
-    <% elsif @book.published? %>
-      <%= link_to toggle_status_admin_book_path(@book), method: :post, class: "layui-btn layui-btn-danger" do %>
-        <i class="layui-icon layui-icon-down"></i> 下线
-      <% end %>
-    <% else %>
-      <%= link_to toggle_status_admin_book_path(@book), method: :post, class: "layui-btn layui-btn-normal" do %>
-        <i class="layui-icon layui-icon-up"></i> 重新上线
-      <% end %>
     <% end %>
     <%= link_to toggle_lock_admin_book_path(@book), method: :post, class: "layui-btn #{@book.locked? ? 'layui-btn-primary' : 'layui-btn-danger'}" do %>
       <i class="layui-icon layui-icon-password"></i> <%= @book.locked? ? '解锁' : '锁定' %>

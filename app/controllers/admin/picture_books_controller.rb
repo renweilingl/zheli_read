@@ -40,7 +40,7 @@ class Admin::PictureBooksController < ApplicationController
     @suppliers = Supplier.all
 
     if @book.save
-      redirect_to admin_book_path(@book), notice: '绘本创建成功'
+      redirect_to :admin_picture_books, notice: '绘本创建成功'
     else
       render :new
     end
@@ -56,7 +56,7 @@ class Admin::PictureBooksController < ApplicationController
     @suppliers = Supplier.all
 
     if @book.update(book_params)
-      redirect_to admin_book_path(@book), notice: '绘本更新成功'
+      redirect_to admin_picture_books_path, notice: '绘本更新成功'
     else
       render :edit
     end
@@ -65,36 +65,7 @@ class Admin::PictureBooksController < ApplicationController
   def destroy
     authorize @book
     @book.destroy
-    redirect_to admin_books_path, notice: '绘本删除成功'
-  end
-
-  def publish
-    authorize @book
-
-    if @book.publish!
-      redirect_to admin_book_path(@book), notice: '绘本已上线'
-    else
-      redirect_to admin_book_path(@book), alert: '上线失败'
-    end
-  end
-
-  def offline
-    authorize @book
-
-    if @book.offline!
-      redirect_to admin_book_path(@book), notice: '绘本已下线'
-    else
-      redirect_to admin_book_path(@book), alert: '下线失败'
-    end
-  end
-
-  def toggle_lock
-    authorize @book
-
-    @book.update(locked: !@book.locked)
-    notice = @book.locked? ? '绘本已锁定' : '绘本已解锁'
-
-    redirect_to admin_book_path(@book), notice: notice
+    redirect_to admin_picture_books_path, notice: '绘本删除成功'
   end
 
   private
