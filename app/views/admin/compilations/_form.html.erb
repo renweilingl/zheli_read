@@ -32,8 +32,8 @@
             <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-banner">
               <i class="layui-icon layui-icon-upload"></i> 上传Banner
             </button>
-            <div class="cover-preview" id="banner-preview" style="display: none;">
-              <img id="banner-img" src="" />
+            <div class="cover-preview" id="banner-preview" style="display: <%= @compilation.banner_image_url.blank? ?  'none' : 'block' %>;">
+              <img id="banner-img" src="<%= @compilation.banner_image_url.blank? ? '' : FileMap.new(@compilation.banner_image_url, 'img').secrity_src %>" />
               <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" data-type="banner">
                 <i class="layui-icon layui-icon-close"></i>
               </button>
@@ -46,7 +46,6 @@
         <div class="cover-upload-item">
           <div class="cover-upload-label">
             <span>横图封面</span>
-            <!--span class="cover-specs required-tag">(1125×540, ≤500KB)</span-->
           </div>
           <div class="cover-upload-box" id="landscape-upload-box">
             <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-landscape">
