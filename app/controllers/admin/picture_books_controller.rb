@@ -28,6 +28,8 @@ class Admin::PictureBooksController < ApplicationController
 
   def new
     @book = Book.new
+    cat = Category.find_by(name: "绘本")
+    @book.category_id = cat.id
     authorize @book
     @suppliers = Supplier.all
   end
@@ -38,7 +40,7 @@ class Admin::PictureBooksController < ApplicationController
     @suppliers = Supplier.all
 
     if @book.save
-      redirect_to admin_book_path(@book), notice: '绘本创建成功'
+      redirect_to admin_picture_books_path, notice: '图书创建成功'
     else
       render :new
     end
@@ -54,7 +56,7 @@ class Admin::PictureBooksController < ApplicationController
     @suppliers = Supplier.all
 
     if @book.update(book_params)
-      redirect_to admin_book_path(@book), notice: '绘本更新成功'
+      redirect_to admin_picture_books_path, notice: '图书更新成功'
     else
       render :edit
     end
@@ -63,7 +65,7 @@ class Admin::PictureBooksController < ApplicationController
   def destroy
     authorize @book
     @book.destroy
-    redirect_to admin_books_path, notice: '绘本删除成功'
+    redirect_to admin_picture_books_path, notice: '图书删除成功'
   end
 
   def publish
@@ -107,9 +109,8 @@ class Admin::PictureBooksController < ApplicationController
       :name,
       :cover_image_url,
       :supplier_id,
-      :has_copyright,
-      :payment_type,
-      :publisher,
+      :category_id,
+      :grade_ids => []
     )
   end
 end

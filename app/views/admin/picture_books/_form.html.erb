@@ -8,10 +8,9 @@
       <span class="required">*</span> 类型
     <% end %>
     <div class="layui-input-block">
-      <%= f.select :category_id,
-          options_from_collection_for_select(Category.all, :id, :name, @book.category_id),
-          { include_blank: '请选绘本类型' },
-          { class: "layui-input", required: true, style: "width: 250px;" } %>
+      <% Category.all.each do |x| %>
+        <input type="radio" name="book[category_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.category_id == x.id %>>
+      <% end %>
     </div>
   </div>
 
