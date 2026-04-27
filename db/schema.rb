@@ -44,6 +44,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
     t.index ["level"], name: "index_categories_on_level"
   end
 
+  create_table "chapters", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "book_id", null: false, comment: "所属绘本"
+    t.string "name", null: false, comment: "章节名称"
+    t.string "cover_image_url", comment: "章节封面图片URL"
+    t.string "content_file_url", comment: "章节内容文件URL"
+    t.string "content_file_name", comment: "章节内容文件名"
+    t.string "content_file_type", comment: "内容文件类型 (epub/pdf/txt)"
+    t.boolean "is_free", default: false, comment: "是否免费"
+    t.boolean "is_published", default: false, comment: "是否上线"
+    t.integer "sn", default: 0, comment: "排序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_chapters_on_book_id"
+  end
+
   create_table "compilation_categories", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "compilation_id", null: false
     t.bigint "category_id", null: false
@@ -139,6 +154,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
   add_foreign_key "book_grades", "books"
   add_foreign_key "book_grades", "grades"
   add_foreign_key "books", "suppliers"
+  add_foreign_key "chapters", "books"
   add_foreign_key "compilation_categories", "categories"
   add_foreign_key "compilation_categories", "compilations"
   add_foreign_key "compilation_grades", "compilations"

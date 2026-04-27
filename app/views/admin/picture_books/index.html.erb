@@ -32,7 +32,7 @@
           <th>年级范围</th>
           <th width="80">类型</th>
           <th width="130">创建时间</th>
-          <th width="220" style="text-align:center;">操作</th>
+          <th width="200" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -74,8 +74,8 @@
               <td style="text-align:center;">
                 <div class="layui-btn-group">
                   <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to "章节管理", chapters_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
                   <%= link_to '删除', admin_picture_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除绘本吗？此操作不可恢复。" } %>
-                  <%#= link_to "章节管理", chapters_admin_book_path(book), class: "layui-btn layui-btn-sm" %>
                 </div>
               </td>
             </tr>
