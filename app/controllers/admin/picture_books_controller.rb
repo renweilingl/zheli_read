@@ -20,7 +20,7 @@ class Admin::PictureBooksController < ApplicationController
   def chapters
     authorize @book
 
-    @chapters = @book.chapters.order("sn asc")
+    @chapters = @book.chapters.paginate(page: params[:page], per_page: @per_page)
   end
 
   def new_chapter
