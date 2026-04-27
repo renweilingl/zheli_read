@@ -45,8 +45,8 @@
         </button>
         <span class="upload-tip" style="margin-left: 10px; color: #999;">支持 JPG、PNG、GIF、WebP 格式，最大 5MB</span>
       </div>
-      <div id="cover-preview" style="margin-top: 10px; display: none;">
-        <img id="cover-img" src="" style="max-width: 200px; max-height: 280px; border-radius: 4px; border: 1px solid #e6e6e6;">
+      <div id="cover-preview" style="margin-top: 10px; display: <%= @book.cover_image_url.blank? ?  'none' : 'block' %>;">
+        <img id="cover-img" src="<%= @book.cover_image_url.blank? ? '' : FileMap.new(@book.cover_image_url, 'img').secrity_src %>" style="max-width: 200px; max-height: 280px; border-radius: 4px; border: 1px solid #e6e6e6;">
         <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove" style="margin-left: 10px;">
           <i class="layui-icon layui-icon-close"></i> 移除
         </button>
