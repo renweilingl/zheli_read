@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+# Sidekiq configuration
+# Sidekiq 配置
+
+# Redis URL
+redis_url = ENV.fetch('REDIS_URL', 'redis://localhost:6379/1')
+
+Sidekiq.configure_server do |config|
+  config.redis = { url: redis_url, size: 10, network_timeout: 5 }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { url: redis_url, size: 5 }
+end
+
+# Sidekiq 默认配置
+Sidekiq.default_job_options = {
+  'retry' => 3,                    # 最多重试3次
+  'backtrace' => true,            # 记录完整错误堆栈
+  'dead' => true                   # 开启死亡队列
+}

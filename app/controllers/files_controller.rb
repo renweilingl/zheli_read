@@ -29,19 +29,22 @@ class FilesController < ApplicationController
       tmp_file_path = file.tempfile.path                                         
       mime = `file --brief --mime-type "#{tmp_file_path}"`.strip                 
                                                                                  
-      oss_path = AliyunOss.instance.put(new_filename, File.open(file.path), {'content_type': mime})
+      temp_path = save_temp_file(file, new_filename)
+      FileUploadJob.perform_later(new_filename, temp_path, mime)
+      #oss_path = AliyunOss.instance.put(new_filename, File.open(file.path), {'content_type': mime})
                                                                                  
-      render json: {                                                             
-        code: 0,                                                                 
-        msg: '上传成功',                                                         
-        data: {                                                                  
-          file_url: oss_path,                                                    
-          file_type: extension,                                                  
-          file_name: file.original_filename,                                     
-          file_size: file.size,                                                  
+      render json: {
+        code: 0,
+        msg: '上传成功',
+        data: {
+          file_url: "http://#{Yetting.aliyun_oss['aliyun_bucket']}.oss-cn-beijing.aliyuncs.com/#{new_filename}",
+          #file_url: oss_path,
+          file_type: extension,
+          file_name: file.original_filename,
+          file_size: file.size,
           file_size_desc: ActiveSupport::NumberHelper.number_to_human_size(file.size)
-        }                                                                        
-      }                                                                          
+        }
+      }
     rescue => e                                                                  
       Rails.logger.error "文件上传失败: #{e.message}"                            
       render json: { code: 1, msg: '文件上传失败，请重试' }                      
@@ -119,6 +122,15 @@ class FilesController < ApplicationController
       name: file.original_filename,
       size: file.size
     }
+  end
+  
+  private
+  def save_temp_file(file, filename)
+    temp_dir = Rails.root.join('tmp', 'uploads')
+    FileUtils.mkdir_p(temp_dir) unless Dir.exist?(temp_dir)
+    temp_path = temp_dir.join(filename)
+    File.open(temp_path, 'wb') { |f| f.write(file.read) }
+    temp_path.to_s
   end
 
 end

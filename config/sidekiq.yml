@@ -1,0 +1,17 @@
+---
+:logfile: ./log/sidekiq.log
+:pidfile: tmp/pids/sidekiq.pid
+:verbose: false
+:concurrency: 1
+:tag: zheli
+:queues:
+  - zheli_high
+  - zheli_middle
+  - zheli_low
+test:
+  :concurrency: 1
+development:
+  :concurrency: 1
+production:
+  :concurrency: 2
+

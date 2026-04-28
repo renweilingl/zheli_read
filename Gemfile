@@ -23,8 +23,8 @@ gem 'sorcery'
 gem 'pundit'
 
 gem 'mina'
-gem 'mina-sidekiq', require: false
-gem 'mina-unicorn', require: false
+#gem 'mina-sidekiq', require: false
+#gem 'mina-unicorn', require: false
 
 gem "jbuilder"
 
@@ -40,7 +40,7 @@ gem 'jquery-rails'
 
 gem 'ransack'
 
-gem 'sidekiq', '~> 6'
+gem "sidekiq", "~> 7.0"
 gem 'redis-namespace'
 
 gem 'hiredis'
