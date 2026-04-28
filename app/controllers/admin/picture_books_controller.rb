@@ -41,7 +41,9 @@ class Admin::PictureBooksController < ApplicationController
   end
 
   def update_chapter
-    @chapter = Chapter.find_by_id params[:id]
+    chapter = Chapter.find_by_id params[:id]
+    chapter.update(params[:chapter].permit!)
+    redirect_to chapters_admin_picture_book_path(chapter.book_id)
   end
 
   def new
