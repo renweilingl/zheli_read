@@ -40,7 +40,10 @@
             <td><%= x.content_file_type %></td>
             <td><%= x.created_at.strftime("%Y-%m-%d")%></td>
             <td style="text-align:center;">
-              <%= link_to '删除', admin_chapter_path(x), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除该内容吗？此操作不可恢复。" } %>
+              <div class="layui-btn-group">
+                <%= link_to "编辑", edit_chapter_admin_picture_book_path(x), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '删除', admin_chapter_path(x), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除该内容吗？此操作不可恢复。" } %>
+              </div>
             </td>
           </tr>
         <% end %>

@@ -35,20 +35,6 @@ Rails.application.routes.draw do
     resources :grades
     resources :chapters
 
-    #resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-    #  member do
-    #    put :publish
-    #    put :offline
-    #    put :toggle_status
-    #    post :toggle_lock
-    #    get 'chapters'
-    #    get 'new_chapter'
-    #    post 'add_chapter'
-    #    get 'edit_chapter'
-    #    post 'update_chapter'
-    #  end
-    #end
-
     # Collections management (绘本合辑)
     resources :compilations, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 

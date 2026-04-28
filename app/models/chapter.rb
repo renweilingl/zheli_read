@@ -18,6 +18,20 @@ class Chapter < ApplicationRecord
     mp4: '视频'
   }.freeze
 
+  FILE_TYPE_ICONS = {
+    epub: 'layui-icon-read',
+    pdf: 'layui-icon-file-b',
+    mp3: 'layui-icon-headset',
+    mp4: 'layui-icon-video'
+  }.freeze
+
+  FILE_TYPE_COLORS = {
+    epub: '#10b981',
+    pdf: '#ef4444',
+    mp3: '#8b5cf6',
+    mp4: '#3b82f6'
+  }.freeze
+
   # 验证
   validates :name, presence: true, length: { maximum: 100 }
   validates :content_file_type, inclusion: { in: FILE_TYPES.values }, allow_blank: true
@@ -25,6 +39,14 @@ class Chapter < ApplicationRecord
   # 实例方法
   def file_type_name
     FILE_TYPE_NAMES[content_file_type.to_sym] || content_file_type
+  end
+
+  def file_type_icon
+    FILE_TYPE_ICONS[content_file_type.to_sym] || 'layui-icon-file'
+  end
+
+  def file_type_color
+    FILE_TYPE_COLORS[content_file_type.to_sym] || '#6b7280'
   end
 
   def publish!

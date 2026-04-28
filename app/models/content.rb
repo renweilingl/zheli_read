@@ -78,12 +78,12 @@ class Content < ApplicationRecord
 
   # 获取文件类型图标
   def file_type_icon
-    FILE_TYPE_ICONS[file_type.to_sym] || 'layui-icon-file'
+    FILE_TYPE_ICONS[content_file_type.to_sym] || 'layui-icon-file'
   end
 
   # 获取文件类型颜色
   def file_type_color
-    FILE_TYPE_COLORS[file_type.to_sym] || '#6b7280'
+    FILE_TYPE_COLORS[content_file_type.to_sym] || '#6b7280'
   end
 
   # 解析标签

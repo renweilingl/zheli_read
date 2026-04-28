@@ -36,6 +36,14 @@ class Admin::PictureBooksController < ApplicationController
     redirect_to chapters_admin_picture_book_path(chapter.book_id)
   end
 
+  def edit_chapter
+    @chapter = Chapter.find_by_id params[:id]
+  end
+
+  def update_chapter
+    @chapter = Chapter.find_by_id params[:id]
+  end
+
   def new
     @book = Book.new
     cat = Category.find_by(name: "绘本")
