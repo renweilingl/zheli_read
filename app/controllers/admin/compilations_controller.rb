@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::CompilationsController < ApplicationController
-  before_action :set_compilation, only: [:show, :edit, :update, :destroy]
+  before_action :set_compilation, only: [:show, :edit, :update, :destroy, :books]
 
   def index
     authorize Compilation
@@ -16,9 +16,6 @@ class Admin::CompilationsController < ApplicationController
 
   def new
     @compilation = Compilation.new
-    #@compilation.min_age = 6
-    #@compilation.max_age = 8
-    #@compilation.recommended_age = 12
     authorize @compilation
   end
 
@@ -53,6 +50,10 @@ class Admin::CompilationsController < ApplicationController
     authorize Compilation
     @compilation.destroy
     redirect_to admin_collections_path, notice: '合辑删除成功'
+  end
+
+  def books
+    authorize Compilation
   end
 
   private

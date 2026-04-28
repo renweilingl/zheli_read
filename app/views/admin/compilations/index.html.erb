@@ -33,7 +33,7 @@
           <th>合辑名称</th>
           <th>年龄段</th>
           <th>分类</th>
-          <th width="160" style="text-align:center;">操作</th>
+          <th width="180" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -71,8 +71,8 @@
               <td><%= compilation.categories.pluck(:name).join(" | ") %></td>
               <td style="text-align:center;">
                 <div class="layui-btn-group">
-                  <%#= link_to '详情', admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
                   <%= link_to '编辑', edit_admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to '内容', books_admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
                   <%= link_to '删除', admin_compilation_path(compilation), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此合辑吗？此操作不可恢复。" } %>
                 </div>
               </td>

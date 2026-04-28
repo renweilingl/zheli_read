@@ -1,0 +1,43 @@
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">内容管理</a>
+      <%= link_to "合辑管理", :admin_compilations %>
+      <a><cite>合辑内容</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+  <div class="x-body">
+    <div id="ID-transfer-demo-value"></div>
+  </div>
+</div>
+
+<script>
+layui.use(function(){
+  var transfer = layui.transfer;
+  // 数据
+  var data = [
+    {"value": "1", "title": "瓦罐汤"},
+    {"value": "2", "title": "油酥饼"},
+    {"value": "3", "title": "炸酱面"},
+    {"value": "4", "title": "串串香"},
+    {"value": "5", "title": "豆腐脑"},
+    {"value": "6", "title": "驴打滚"},
+    {"value": "7", "title": "北京烤鸭"},
+    {"value": "8", "title": "烤冷面"},
+    {"value": "9", "title": "毛血旺"},
+    {"value": "10", "title": "肉夹馍"},
+    {"value": "11", "title": "臊子面"},
+    {"value": "12", "title": "凉皮"},
+    {"value": "13", "title": "羊肉泡馍"},
+    {"value": "14", "title": "冰糖葫芦"},
+    {"value": "15", "title": "狼牙土豆"}
+  ];
+  // 渲染
+  transfer.render({
+    elem: '#ID-transfer-demo-value',
+    data: data,
+    value: ["1", "3", "5", "7", "9", "11"]
+  });
+});
+</script>

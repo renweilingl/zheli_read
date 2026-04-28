@@ -30,6 +30,10 @@ class CompilationPolicy < ApplicationPolicy
     user.super_admin? || user.editor?
   end
 
+  def books?
+    user.super_admin? || user.editor?
+  end
+
   def new_chapter?
     user.super_admin? || user.editor?
   end
