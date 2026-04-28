@@ -4,6 +4,7 @@ class Book < ApplicationRecord
   belongs_to :supplier, optional: true
   belongs_to :category
   has_and_belongs_to_many :grades, join_table: :book_grades
+  has_and_belongs_to_many :compilations, join_table: :compilation_book
   has_many :chapters
 
   # 主题分类

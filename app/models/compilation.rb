@@ -3,25 +3,11 @@
 class Compilation < ApplicationRecord
   has_and_belongs_to_many :grades, join_table: :compilation_grades
   has_and_belongs_to_many :categories, join_table: :compilation_categories
+  has_and_belongs_to_many :books, join_table: :compilation_books
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }
   validates :editor_recommendation, length: { maximum: 15 }, allow_blank: true
 
-  #def age_groups_array
-  #  age_groups || []
-  #end
-
-  # 年龄段名称
-  #def age_groups_names
-  #  age_groups_array.map { |g| AGE_GROUPS[g.to_sym] || g }.join(', ')
-  #end
-
-  # 年龄范围
-  #def age_range
-  #  "#{min_age || 0}~#{max_age || 99}岁"
-  #end
-
-  # 标签数组
   def tags_array
     tags || []
   end

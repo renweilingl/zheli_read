@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
   create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.bigint "grade_id", null: false
@@ -57,6 +57,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_chapters_on_book_id"
+  end
+
+  create_table "compilation_books", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "compilation_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_compilation_books_on_book_id"
+    t.index ["compilation_id", "book_id"], name: "index_compilation_books_on_compilation_id_and_book_id", unique: true
+    t.index ["compilation_id"], name: "index_compilation_books_on_compilation_id"
   end
 
   create_table "compilation_categories", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -155,6 +165,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_24_082329) do
   add_foreign_key "book_grades", "grades"
   add_foreign_key "books", "suppliers"
   add_foreign_key "chapters", "books"
+  add_foreign_key "compilation_books", "books"
+  add_foreign_key "compilation_books", "compilations"
   add_foreign_key "compilation_categories", "categories"
   add_foreign_key "compilation_categories", "compilations"
   add_foreign_key "compilation_grades", "compilations"

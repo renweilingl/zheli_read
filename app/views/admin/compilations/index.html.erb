@@ -67,8 +67,8 @@
                   <% end %>
                 </div>
               </td>
-              <td><%= compilation.grades.pluck(:name) %></td>
-              <td><%= compilation.categories.pluck(:name) %></td>
+              <td><%= compilation.grades.pluck(:name).join(" | ") %></td>
+              <td><%= compilation.categories.pluck(:name).join(" | ") %></td>
               <td style="text-align:center;">
                 <div class="layui-btn-group">
                   <%= link_to '详情', admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
