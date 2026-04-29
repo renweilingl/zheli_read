@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::CompilationsController < ApplicationController
-  before_action :set_compilation, only: [:show, :edit, :update, :destroy, :books]
+  before_action :set_compilation, only: [:show, :edit, :update, :destroy, :books, :update_books]
 
   def index
     authorize Compilation
@@ -55,8 +55,19 @@ class Admin::CompilationsController < ApplicationController
   def books
     authorize Compilation
 
-    @q = Book.ransack(params[:q])
-    @books = @q.result.paginate(page: params[:page], per_page: @per_page)
+    @books = Book.all
+  end
+
+  def update_books
+    book_ids = []
+    if params[:bood_ids].present?
+      params[:bood_ids].each do |x|
+        book_ids << x[1]['value']
+      end
+    end
+    @compilation.book_ids = book_ids
+    @compilation.save!
+    render json: {code: 0}
   end
 
   private

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     resources :compilations, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       member do
         get 'books'
+        post 'update_books'
       end
     end
 
