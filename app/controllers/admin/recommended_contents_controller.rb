@@ -27,7 +27,7 @@ module Admin
       authorize [:admin, @recommended_content], policy_class: Admin::RecommendedContentPolicy
 
       if @recommended_content.save
-        redirect_to grade_recommended_contents_path(@grade), notice: '推荐内容创建成功'
+        redirect_to admin_grade_recommended_contents_path(@grade), notice: '推荐内容创建成功'
       else
         render :new, status: :unprocessable_entity
       end

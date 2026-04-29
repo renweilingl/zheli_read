@@ -89,15 +89,6 @@
         <div class="content-list">
           <% @recommended_contents.each do |content| %>
             <div class="content-card">
-              <div class="content-cover">
-                <% if content.cover_image_url.present? %>
-                  <img src="<%= content.cover_image_url %>" alt="<%= content.name %>">
-                <% else %>
-                  <div class="content-cover-placeholder">
-                    <i class="layui-icon layui-icon-picture" style="font-size: 30px;"></i>
-                  </div>
-                <% end %>
-              </div>
               <div class="content-info">
                 <div class="content-name">
                   <%= content.name %>
@@ -107,41 +98,30 @@
                     <span class="layui-badge" style="margin-left: 10px;">草稿</span>
                   <% end %>
                 </div>
-                <div class="content-desc">
-                  <%= content.description.presence || '暂无描述' %>
-                </div>
                 <div class="content-meta">
-                  排序：<%= content.sort_order || 0 %>
-                  <% if content.link_url.present? %>
-                    | 链接：<a href="<%= content.link_url %>" target="_blank"><%= content.link_url %></a>
-                  <% end %>
+                  排序：<%= content.sn || 0 %>
                   | 创建：<%= content.created_at.strftime('%Y-%m-%d') %>
                 </div>
               </div>
               <div class="content-actions">
-                <a class="layui-btn layui-btn-xs" href="<%= edit_grade_recommended_content_path(@grade, content) %>">
+                <a class="layui-btn layui-btn-xs" href="<%= edit_admin_grade_recommended_content_path(@grade, content) %>">
                   <i class="layui-icon layui-icon-edit"></i> 编辑
                 </a>
-                <a href="<%= toggle_status_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs <%= content.status? ? 'layui-btn-danger' : 'layui-btn-normal' %>" data-method="post">
+                <a href="<%= toggle_status_admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs <%= content.status? ? 'layui-btn-danger' : 'layui-btn-normal' %>" data-method="post">
                   <i class="layui-icon <%= content.status? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
                   <%= content.status? ? '下架' : '发布' %>
                 </a>
-                <% if policy(:admin/recommended_content).destroy? %>
-                  <a href="<%= grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs layui-btn-danger" data-method="delete" data-confirm="确定要删除该推荐内容吗？">
-                    <i class="layui-icon layui-icon-delete"></i> 删除
-                  </a>
-                <% end %>
+                <a href="<%= admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs layui-btn-danger" data-method="delete" data-confirm="确定要删除该推荐内容吗？">
+                  <i class="layui-icon layui-icon-delete"></i> 删除
+                </a>
               </div>
             </div>
           <% end %>
         </div>
 
-        <div class="pagination-container">
-          <%= will_paginate @recommended_contents, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-          <div class="page-info">
-            共 <%= @recommended_contents.total_entries %> 条记录
-          </div>
-        </div>
+        <% if @recommended_contents.total_pages > 1 %>
+          <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+        <% end %>
       <% else %>
         <div style="text-align: center; padding: 50px; color: #999;">
           <i class="layui-icon layui-icon-notice" style="font-size: 50px;"></i>

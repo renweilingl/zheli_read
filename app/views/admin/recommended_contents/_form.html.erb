@@ -4,7 +4,14 @@
       <span class="required">*</span> 推荐名称
     <% end %>
     <div class="layui-input-block">
-      <%= f.text_field :name, class: "layui-input", placeholder: "请输入推荐名称", maxlength: 10, required: true %>
+      <%= f.text_field :name, class: "layui-input", placeholder: "请输入推荐名称", maxlength: 10, required: true, style: "width: 400px;" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-col-md6">
+    <label class="layui-form-label">序号</label>
+    <div class="layui-input-block">
+      <%= f.number_field :sn, class: "layui-input", min: 1, step: 1, required: true, style: "width: 400px;" %>
     </div>
   </div>
 
