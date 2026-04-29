@@ -23,7 +23,7 @@
           <th>组名</th>
           <th>名称</th>
           <th>年龄段</th>
-          <th width="160" style="text-align:center;">操作</th>
+          <th width="220" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -36,6 +36,7 @@
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to '编辑', edit_admin_grade_path(grade), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '推荐内容 ', admin_grade_recommended_contents_path(grade), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', admin_grade_path(grade), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此分类吗？此操作不可恢复。" } %>
               </div>
             </td>

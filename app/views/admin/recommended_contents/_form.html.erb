@@ -1,0 +1,19 @@
+<%= form_for(@recommended_content, url: :admin_grade_recommended_contents,method: :post, :html => {:class => "layui-form"}) do |f| %>
+  <div class="layui-form-item">
+    <%= f.label :name, class: "layui-form-label" do %>
+      <span class="required">*</span> 推荐名称
+    <% end %>
+    <div class="layui-input-block">
+      <%= f.text_field :name, class: "layui-input", placeholder: "请输入推荐名称", maxlength: 10, required: true %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="submit-content">
+        <i class="layui-icon layui-icon-release"></i>提交保存
+      </button>
+      <%= link_to "取消", admin_grade_recommended_contents_path(@grade), class: "layui-btn layui-btn-primary" %>
+    </div>
+  </div>
+<% end %>

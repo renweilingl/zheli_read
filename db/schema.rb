@@ -139,6 +139,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "recommended_contents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "grade_id", null: false, comment: "关联年级"
+    t.string "name", null: false, comment: "推荐内容名称"
+    t.integer "sn", default: 0, comment: "排序"
+    t.boolean "status", default: true, comment: "状态: true发布/false草稿"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grade_id", "sn"], name: "index_recommended_contents_on_grade_id_and_sn"
+    t.index ["grade_id"], name: "index_recommended_contents_on_grade_id"
+  end
+
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "供应商名称"
     t.datetime "created_at", null: false
@@ -171,4 +182,5 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
   add_foreign_key "compilation_categories", "compilations"
   add_foreign_key "compilation_grades", "compilations"
   add_foreign_key "compilation_grades", "grades"
+  add_foreign_key "recommended_contents", "grades"
 end

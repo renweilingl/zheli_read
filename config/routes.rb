@@ -32,7 +32,17 @@ Rails.application.routes.draw do
     resources :suppliers
 
     resources :categories
-    resources :grades
+    resources :grades do
+      resources :recommended_contents, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+        member do
+          post :toggle_status
+        end
+        collection do
+          post :upload_cover
+        end
+      end
+    end
+
     resources :chapters
 
     # Collections management (绘本合辑)

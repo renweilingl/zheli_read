@@ -1,0 +1,116 @@
+<% content_for :title, "编辑推荐内容 - #{@grade.full_name}" %>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-header">
+      <span class="layui-breadcrumb">
+        <a href="<%= admin_dashboard_path %>">首页</a>
+        <a href="<%= admin_grades_path %>">年级管理</a>
+        <a href="<%= grade_recommended_contents_path(@grade) %>"><%= @grade.full_name %></a>
+        <a><cite>编辑推荐内容</cite></a>
+      </span>
+    </div>
+    <div class="layui-card-body">
+      <%= form_for [@grade, @recommended_content], html: { class: 'layui-form', lay_filter: 'form' } do |f| %>
+        <div class="layui-form-item">
+          <label class="layui-form-label"><span class="required">*</span>名称</label>
+          <div class="layui-input-block">
+            <%= f.text_field :name, class: 'layui-input', placeholder: '请输入推荐内容名称', maxlength: 100, required: true %>
+          </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">描述</label>
+          <div class="layui-input-block">
+            <%= f.text_area :description, class: 'layui-textarea', placeholder: '请输入推荐内容描述（选填）', maxlength: 500, rows: 3 %>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">封面图片</label>
+          <div class="layui-input-block">
+            <div class="layui-upload">
+              <button type="button" class="layui-btn layui-btn-normal" id="upload-cover">
+                <i class="layui-icon layui-icon-upload"></i> <%= @recommended_content.cover_image_url.present? ? '更换封面' : '上传封面' %>
+              </button>
+              <div class="layui-upload-list" id="cover-preview" style="display: <%= @recommended_content.cover_image_url.present? ? 'block' : 'none' %>;">
+                <img src="<%= @recommended_content.cover_image_url %>" alt="封面预览" style="max-width: 200px; max-height: 150px;">
+                <button type="button" class="layui-btn layui-btn-xs layui-btn-danger cover-remove">移除</button>
+              </div>
+            </div>
+            <div class="layui-form-mid layui-word-aux">支持 jpg、jpeg、png、gif、webp 格式，大小不超过 5MB</div>
+            <%= f.hidden_field :cover_image_url, id: 'cover_image_url' %>
+            <%= f.hidden_field :cover_image_name, id: 'cover_image_name' %>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">链接地址</label>
+          <div class="layui-input-block">
+            <%= f.text_field :link_url, class: 'layui-input', placeholder: '请输入链接地址（选填）', maxlength: 500 %>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">排序</label>
+          <div class="layui-input-inline" style="width: 150px;">
+            <%= f.number_field :sort_order, class: 'layui-input', placeholder: '数字越小越靠前', min: 0, value: @recommended_content.sort_order || 0 %>
+          </div>
+          <div class="layui-form-mid layui-word-aux">数字越小排序越靠前</div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">状态</label>
+          <div class="layui-input-block">
+            <%= f.check_box :status, { 'lay-skin': 'switch', 'lay-text': '发布|草稿' }, 'true', 'false' } %>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit>提交</button>
+            <a href="<%= grade_recommended_contents_path(@grade) %>" class="layui-btn layui-btn-primary">取消</a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+layui.use(['upload', 'form'], function(){
+  var $ = layui.$;
+  var upload = layui.upload;
+  var form = layui.form;
+
+  // 封面图片上传
+  var uploadInst = upload.render({
+    elem: '#upload-cover',
+    url: '<%= upload_cover_admin_recommended_contents_path %>',
+    field: 'file',
+    size: 5120, // 5MB
+    accept: 'images',
+    exts: 'jpg|jpeg|png|gif|webp',
+    done: function(res){
+      if (res.success) {
+        $('#cover_image_url').val(res.url);
+        $('#cover_image_name').val(res.name);
+        $('#cover-preview').show().find('img').attr('src', res.url);
+        layer.msg('上传成功', {icon: 1});
+      } else {
+        layer.msg(res.error || '上传失败', {icon: 2});
+      }
+    },
+    error: function(){
+      layer.msg('上传失败', {icon: 2});
+    }
+  });
+
+  // 移除封面
+  $('.cover-remove').on('click', function(){
+    $('#cover_image_url').val('');
+    $('#cover_image_name').val('');
+    $('#cover-preview').hide();
+  });
+});
+</script>
