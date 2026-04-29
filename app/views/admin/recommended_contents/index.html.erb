@@ -105,11 +105,11 @@
               <a class="layui-btn layui-btn-xs layui-btn-normal" href="<%= edit_admin_grade_recommended_content_path(@grade, content) %>">
                 <i class="layui-icon layui-icon-edit"></i>编辑
               </a>
-              <a href="<%= toggle_status_admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs <%= content.status? ? 'layui-btn-danger' : 'layui-btn-normal' %>" data-method="post">
+              <a href="<%= toggle_status_admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs <%= content.status? ? 'layui-btn-danger' : 'layui-btn-normal' %>" data-method="post" style="margin-left: 0;">
                 <i class="layui-icon <%= content.status? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
                 <%= content.status? ? '下架' : '发布' %>
               </a>
-              <a href="<%= admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs layui-btn-danger" data-method="delete" data-confirm="确定要删除该推荐内容吗？">
+              <a href="<%= admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs layui-btn-danger" data-method="delete" data-confirm="确定要删除该推荐内容吗？" style="margin-left: 0;">
                 <i class="layui-icon layui-icon-delete"></i> 删除
               </a>
             </div>
