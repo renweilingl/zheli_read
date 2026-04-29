@@ -54,6 +54,9 @@ class Admin::CompilationsController < ApplicationController
 
   def books
     authorize Compilation
+
+    @q = Book.ransack(params[:q])
+    @books = @q.result.paginate(page: params[:page], per_page: @per_page)
   end
 
   private

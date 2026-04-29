@@ -67,6 +67,6 @@ class Compilation < ApplicationRecord
   #end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "banner_image_name", "banner_image_url", "content_description", "created_at", "description", "editor_recommendation", "first_category_id", "id", "id_value", "intro_image_name", "intro_image_url", "landscape_cover_name", "landscape_cover_url", "name", "portrait_cover_name", "portrait_cover_url", "publisher", "square_cover_name", "square_cover_url", "tags", "total_count", "updated_at"]
+    ["author", "created_at", "description", "editor_recommendation", "first_category_id", "id", "id_value", "intro_image_name", "intro_image_url", "landscape_cover_name", "landscape_cover_url", "name", "portrait_cover_name", "portrait_cover_url", "publisher", "square_cover_name", "square_cover_url", "tags", "total_count", "updated_at"]
   end
 end
