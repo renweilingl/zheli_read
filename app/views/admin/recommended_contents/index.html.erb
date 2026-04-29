@@ -48,90 +48,87 @@
   }
 </style>
 
-<div class="layui-fluid">
-  <div class="layui-card">
-    <div class="layui-card-header">
-      <span class="layui-breadcrumb">
-        <a href="<%= admin_grades_path %>">年级管理</a>
-        <a><cite><%= @grade.name %></cite></a>
-        <a><cite>推荐内容管理</cite></a>
-      </span>
-    </div>
-    <div class="layui-card-body">
-      <!-- 操作栏 -->
-      <div class="layui-form" style="margin-bottom: 15px;">
-        <div class="layui-form-item" style="margin: 0;">
-          <div class="layui-inline">
-            <a class="layui-btn" href="<%= new_admin_grade_recommended_content_path(@grade) %>">
-              <i class="layui-icon layui-icon-add-1"></i> 新增推荐内容
-            </a>
-            <a class="layui-btn layui-btn-primary" href="<%= admin_grade_path(@grade) %>">
-              <i class="layui-icon layui-icon-return"></i> 返回年级
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 统计信息 -->
-      <div style="margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 4px;">
-        <span class="layui-badge layui-bg-green" style="margin-right: 15px;">
-          <i class="layui-icon layui-icon-release"></i> 已发布：<%= @grade.recommended_contents.where(status: true).count %>
-        </span>
-        <span class="layui-badge" style="margin-right: 15px;">
-          <i class="layui-icon layui-icon-draft"></i> 草稿：<%= @grade.recommended_contents.where(status: false).count %>
-        </span>
-        <span class="layui-badge layui-bg-gray">
-          <i class="layui-icon layui-icon-chart"></i> 总计：<%= @grade.recommended_contents.count %>
-        </span>
-      </div>
-
-      <% if @recommended_contents.any? %>
-        <div class="content-list">
-          <% @recommended_contents.each do |content| %>
-            <div class="content-card">
-              <div class="content-info">
-                <div class="content-name">
-                  <%= content.name %>
-                  <% if content.status? %>
-                    <span class="layui-badge layui-bg-green" style="margin-left: 10px;">已发布</span>
-                  <% else %>
-                    <span class="layui-badge" style="margin-left: 10px;">草稿</span>
-                  <% end %>
-                </div>
-                <div class="content-meta">
-                  排序：<%= content.sn || 0 %>
-                  | 创建：<%= content.created_at.strftime('%Y-%m-%d') %>
-                </div>
-              </div>
-              <div class="content-actions">
-                <a class="layui-btn layui-btn-xs" href="<%= edit_admin_grade_recommended_content_path(@grade, content) %>">
-                  <i class="layui-icon layui-icon-edit"></i> 编辑
-                </a>
-                <a href="<%= toggle_status_admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs <%= content.status? ? 'layui-btn-danger' : 'layui-btn-normal' %>" data-method="post">
-                  <i class="layui-icon <%= content.status? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
-                  <%= content.status? ? '下架' : '发布' %>
-                </a>
-                <a href="<%= admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs layui-btn-danger" data-method="delete" data-confirm="确定要删除该推荐内容吗？">
-                  <i class="layui-icon layui-icon-delete"></i> 删除
-                </a>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-        <% if @recommended_contents.total_pages > 1 %>
-          <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
-        <% end %>
-      <% else %>
-        <div style="text-align: center; padding: 50px; color: #999;">
-          <i class="layui-icon layui-icon-notice" style="font-size: 50px;"></i>
-          <p style="margin-top: 10px;">暂无推荐内容</p>
-          <a href="<%= new_admin_grade_recommended_content_path(@grade) %>" class="layui-btn layui-btn-normal" style="margin-top: 10px;">
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="<%= admin_grades_path %>">年级管理</a>
+      <a><cite><%= @grade.name %></cite></a>
+      <a><cite>推荐内容管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+  <div class="x-body">
+    <div class="layui-form" style="margin-bottom: 15px;">
+      <div class="layui-form-item" style="margin: 0;">
+        <div class="layui-inline">
+          <a class="layui-btn layui-bg-blue" href="<%= new_admin_grade_recommended_content_path(@grade) %>">
             <i class="layui-icon layui-icon-add-1"></i> 新增推荐内容
           </a>
+          <a class="layui-btn layui-btn-primary" href="<%= admin_grade_path(@grade) %>">
+            <i class="layui-icon layui-icon-return"></i> 返回年级
+          </a>
         </div>
-      <% end %>
+      </div>
     </div>
+
+    <div style="margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 4px;">
+      <span class="layui-badge layui-bg-green" style="margin-right: 15px;">
+        <i class="layui-icon layui-icon-release"></i> 已发布：<%= @grade.recommended_contents.where(status: true).count %>
+      </span>
+      <span class="layui-badge" style="margin-right: 15px;">
+        <i class="layui-icon layui-icon-draft"></i> 草稿：<%= @grade.recommended_contents.where(status: false).count %>
+      </span>
+      <span class="layui-badge layui-bg-gray">
+        <i class="layui-icon layui-icon-chart"></i> 总计：<%= @grade.recommended_contents.count %>
+      </span>
+    </div>
+
+    <% if @recommended_contents.any? %>
+      <div class="content-list">
+        <% @recommended_contents.each do |content| %>
+          <div class="content-card">
+            <div class="content-info">
+              <div class="content-name">
+                <%= content.name %>
+                <% if content.status? %>
+                  <span class="layui-badge layui-bg-green" style="margin-left: 10px;">已发布</span>
+                <% else %>
+                  <span class="layui-badge" style="margin-left: 10px;">草稿</span>
+                <% end %>
+              </div>
+              <div class="content-meta">
+                排序：<%= content.sn || 0 %>
+                | 创建：<%= content.created_at.strftime('%Y-%m-%d') %>
+              </div>
+            </div>
+            <div class="content-actions">
+              <a class="layui-btn layui-btn-xs layui-btn-normal" href="<%= edit_admin_grade_recommended_content_path(@grade, content) %>">
+                <i class="layui-icon layui-icon-edit"></i>编辑
+              </a>
+              <a href="<%= toggle_status_admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs <%= content.status? ? 'layui-btn-danger' : 'layui-btn-normal' %>" data-method="post">
+                <i class="layui-icon <%= content.status? ? 'layui-icon-down' : 'layui-icon-up' %>"></i>
+                <%= content.status? ? '下架' : '发布' %>
+              </a>
+              <a href="<%= admin_grade_recommended_content_path(@grade, content) %>" class="layui-btn layui-btn-xs layui-btn-danger" data-method="delete" data-confirm="确定要删除该推荐内容吗？">
+                <i class="layui-icon layui-icon-delete"></i> 删除
+              </a>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @recommended_contents.total_pages > 1 %>
+        <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+      <% end %>
+    <% else %>
+      <div style="text-align: center; padding: 50px; color: #999;">
+        <i class="layui-icon layui-icon-notice" style="font-size: 50px;"></i>
+        <p style="margin-top: 10px;">暂无推荐内容</p>
+        <a href="<%= new_admin_grade_recommended_content_path(@grade) %>" class="layui-btn layui-btn-normal" style="margin-top: 10px;">
+          <i class="layui-icon layui-icon-add-1"></i> 新增推荐内容
+        </a>
+      </div>
+    <% end %>
   </div>
 </div>
 
