@@ -33,6 +33,7 @@
           <th>合辑名称</th>
           <th>年龄段</th>
           <th>分类</th>
+          <th>内容</th>
           <th width="180" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -58,6 +59,7 @@
             </td>
             <td><%= compilation.grades.pluck(:name).join(" | ") %></td>
             <td><%= compilation.categories.pluck(:name).join(" | ") %></td>
+            <td><%= compilation.books.pluck(:name).join(" | ") %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to '编辑', edit_admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
