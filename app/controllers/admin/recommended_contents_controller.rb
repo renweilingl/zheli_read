@@ -58,7 +58,7 @@ module Admin
       authorize [:admin, @recommended_content], policy_class: Admin::RecommendedContentPolicy
 
       @recommended_content.update(status: !@recommended_content.status)
-      redirect_to grade_recommended_contents_path(@grade), notice: @recommended_content.status ? '已发布' : '已下架'
+      redirect_to admin_grade_recommended_contents_path(@grade), notice: @recommended_content.status ? '已发布' : '已下架'
     end
 
     private
