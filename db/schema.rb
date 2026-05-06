@@ -109,28 +109,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
     t.index ["name"], name: "index_compilations_on_name", unique: true
   end
 
-  create_table "contents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "title", null: false, comment: "标题"
-    t.text "description", comment: "简介"
-    t.string "tags", comment: "标签（JSON格式）"
-    t.string "grade_level", comment: "一级分类"
-    t.string "second_level", comment: "二级分类"
-    t.string "third_level", comment: "三级分类"
-    t.string "file_type", comment: "文件类型：epub/pdf/mp3/mp4"
-    t.string "file_url", comment: "文件URL"
-    t.string "file_name", comment: "原始文件名"
-    t.integer "file_size", comment: "文件大小（字节）"
-    t.integer "duration", comment: "时长（秒）- 音视频"
-    t.text "copy_right", comment: "版权信息"
-    t.string "cover_img", comment: "封面"
-    t.boolean "status", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["file_type"], name: "index_contents_on_file_type"
-    t.index ["grade_level"], name: "index_contents_on_grade_level"
-    t.index ["title"], name: "index_contents_on_title"
-  end
-
   create_table "grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "group_name", limit: 8
     t.string "name", limit: 16
