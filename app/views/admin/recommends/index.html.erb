@@ -53,8 +53,7 @@
                 <a href="<%= toggle_status_admin_grade_recommend_path(@grade, r) %>" class="layui-btn layui-btn-sm <%= r.status? ? 'layui-btn-danger' : '' %>" data-method="post" style="margin-left: 0;">
                   <%= r.status? ? '下架' : '上架' %>
                 </a>
-                <%= link_to '删除', admin_grade_recommend_path(@grade, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除
-", data: { confirm: "确定要删除此内容吗？此操作不可恢复。" } %>
+                <%= link_to '删除', admin_grade_recommend_path(@grade, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除此内容吗？此操作不可恢复。" } %>
               </div>
             </td>
           </tr>

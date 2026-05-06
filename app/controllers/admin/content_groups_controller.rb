@@ -63,7 +63,7 @@ module Admin
     end
 
     def set_group
-      @content_group = @recommend.content_group.find(params[:id])
+      @content_group = @recommend.content_groups.find(params[:id])
     end
 
     def group_params

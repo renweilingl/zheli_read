@@ -25,15 +25,29 @@
     <table class="layui-table">
       <thead>
         <tr>
-          <th width="220">名称</th>
-          <th width="80" style="text-align:center;">状态</th>
+          <th width="140">名称</th>
+          <th width="120">分组类型</th>
           <th width="60">排序</th>
-          <th>内容分组</th>
-          <th width="160">创建时间</th>
+          <th>内容</th>
+          <th width="160">添加时间</th>
           <th width="220" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
+        <% @content_groups.each do |r| %>
+          <tr>
+            <td><%= r.name %></td>
+            <td><%= r.group_type_name %></td>
+            <td><%= r.sn %></td>
+            <td></td>
+            <td><%= r.created_at.strftime('%Y-%m-%d') %></td>
+            <td>
+              <div class="layui-btn-group">
+                <%= link_to '删除', admin_grade_recommend_content_group_path(@grade, @recommend, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除分组吗？此操作不可恢复。" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
