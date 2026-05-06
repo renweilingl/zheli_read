@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
   create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.bigint "grade_id", null: false
@@ -119,6 +119,18 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
     t.index ["recommend_id"], name: "index_content_groups_on_recommend_id"
   end
 
+  create_table "contents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "content_group_id", null: false, comment: "关联内容分组"
+    t.string "content_type", null: false, comment: "类型"
+    t.string "img_url", null: false, comment: "图片链接"
+    t.bigint "compilation_id", null: false, comment: "合辑信息"
+    t.bigint "book_id", null: false, comment: "单本信息"
+    t.integer "sn", default: 0, comment: "排序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_group_id"], name: "index_contents_on_content_group_id"
+  end
+
   create_table "grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "group_name", limit: 8
     t.string "name", limit: 16
@@ -171,5 +183,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
   add_foreign_key "compilation_grades", "compilations"
   add_foreign_key "compilation_grades", "grades"
   add_foreign_key "content_groups", "recommends"
+  add_foreign_key "contents", "content_groups"
   add_foreign_key "recommends", "grades"
 end
