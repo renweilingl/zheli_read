@@ -39,7 +39,7 @@ module Admin
       authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
 
       if @recommend.update(recommend_params)
-        redirect_to grade_recommends_path(@grade), notice: '推荐内容更新成功'
+        redirect_to admin_grade_recommends_path(@grade), notice: '推荐内容更新成功'
       else
         render :edit, status: :unprocessable_entity
       end
@@ -73,8 +73,8 @@ module Admin
       params.require(:recommend).permit(
         :name,
       ).merge(
-        status: params.dig(:recommended_content, :status) == 'true',
-        sn: params.dig(:recommended_content, :sn).to_i
+        status: params.dig(:recommend, :status) == 'true',
+        sn: params.dig(:recommend, :sn).to_i
       )
     end
   end

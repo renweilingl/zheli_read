@@ -1,4 +1,4 @@
-<%= form_for(@recommend, url: :admin_grade_recommends,method: :post, :html => {:class => "layui-form"}) do |f| %>
+<%= form_for(@recommend, url: @recommend.new_record? ? :admin_grade_recommends : :admin_grade_recommend,method: @recommend.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
   <div class="layui-form-item">
     <%= f.label :name, class: "layui-form-label" do %>
       <span class="required">*</span> 推荐名称
@@ -11,7 +11,7 @@
   <div class="layui-form-item layui-col-md6">
     <label class="layui-form-label">序号</label>
     <div class="layui-input-block">
-      <%= f.number_field :sn, class: "layui-input", min: 1, step: 1, required: true, style: "width: 400px;" %>
+      <%= f.number_field :sn, class: "layui-input", min: 0, step: 1, required: true, style: "width: 400px;" %>
     </div>
   </div>
 

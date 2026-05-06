@@ -1,51 +1,12 @@
-<div class="layui-fluid">
-  <div class="layui-card">
-    <div class="layui-card-header">
-      <span class="layui-breadcrumb">
-        <a href="<%= admin_dashboard_path %>">首页</a>
-        <a href="<%= admin_grades_path %>">年级管理</a>
-        <a href="<%= grade_recommends_path(@grade) %>"><%= @grade.full_name %></a>
-        <a><cite>编辑推荐内容</cite></a>
-      </span>
-    </div>
-    <div class="layui-card-body">
-      <%= form_for [@grade, @recommend], html: { class: 'layui-form', lay_filter: 'form' } do |f| %>
-        <div class="layui-form-item">
-          <label class="layui-form-label"><span class="required">*</span>名称</label>
-          <div class="layui-input-block">
-            <%= f.text_field :name, class: 'layui-input', placeholder: '请输入推荐内容名称', maxlength: 100, required: true %>
-          </div>
-        </div>
-
-        <div class="layui-form-item layui-form-text">
-          <label class="layui-form-label">描述</label>
-          <div class="layui-input-block">
-            <%= f.text_area :description, class: 'layui-textarea', placeholder: '请输入推荐内容描述（选填）', maxlength: 500, rows: 3 %>
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">排序</label>
-          <div class="layui-input-inline" style="width: 150px;">
-            <%= f.number_field :sort_order, class: 'layui-input', placeholder: '数字越小越靠前', min: 0, value: @recommended_content.sort_order || 0 %>
-          </div>
-          <div class="layui-form-mid layui-word-aux">数字越小排序越靠前</div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">状态</label>
-          <div class="layui-input-block">
-            <%= f.check_box :status, { 'lay-skin': 'switch', 'lay-text': '发布|草稿' }, 'true', 'false' } %>
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit>提交</button>
-            <a href="<%= admin_grade_recommends_path(@grade) %>" class="layui-btn layui-btn-primary">取消</a>
-          </div>
-        </div>
-      <% end %>
-    </div>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <%= link_to "年级管理", :admin_picture_books %>
+      <a><cite>修改推荐内容</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+  <div class="x-body">
+    <%= render 'form' %>
   </div>
 </div>
