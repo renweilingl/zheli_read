@@ -10,6 +10,6 @@ class Recommend < ApplicationRecord
   scope :sorted, -> { order(sn: :asc, id: :desc) }
 
   def status_text
-    published? ? '已发布' : '草稿'
+    published? ? '已发布' : '未发布'
   end
 end
