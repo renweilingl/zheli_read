@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
     resources :categories
     resources :grades do
-      resources :recommended_contents, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+      resources :recommends, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
         member do
           post :toggle_status
         end

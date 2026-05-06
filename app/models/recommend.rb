@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RecommendedContent < ApplicationRecord
+class Recommend < ApplicationRecord
   belongs_to :grade
 
   validates :name, presence: true, length: { maximum: 10 }
