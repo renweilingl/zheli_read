@@ -73,7 +73,6 @@ module Admin
       params.require(:recommend).permit(
         :name,
       ).merge(
-        status: params.dig(:recommend, :status) == 'true',
         sn: params.dig(:recommend, :sn).to_i
       )
     end
