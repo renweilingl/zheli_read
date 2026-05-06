@@ -40,6 +40,8 @@ Rails.application.routes.draw do
         collection do
           post :upload_cover
         end
+
+        resources :content_groups
       end
     end
 
