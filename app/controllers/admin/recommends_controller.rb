@@ -49,7 +49,7 @@ module Admin
       authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
 
       @recommend.destroy
-      redirect_to grade_recommends_path(@grade), notice: '推荐内容删除成功'
+      redirect_to admin_grade_recommends_path(@grade), notice: '推荐内容删除成功'
     end
 
     def toggle_status
