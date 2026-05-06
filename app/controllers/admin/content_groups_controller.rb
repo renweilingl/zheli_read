@@ -4,7 +4,7 @@ module Admin
   class ContentGroupsController < ApplicationController
     before_action :set_grade
     before_action :set_recommend
-    before_action :set_group, only: [:show, :edit, :update, :destroy, :toggle_status]
+    before_action :set_group, only: [:show, :edit, :update, :destroy]
 
     def index
       authorize [:admin, ContentGroup], policy_class: Admin::ContentGroupPolicy
@@ -17,13 +17,13 @@ module Admin
     end
 
     def new
-      @recommend = @grade.recommends.new
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
+      @content_group = @recommend.content_groups.new
+      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
     end
 
     def create
       @recommend = @grade.recommends.new(recommend_params)
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
+      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
 
       if @recommend.save
         redirect_to admin_grade_recommends_path(@grade), notice: '推荐内容创建成功'

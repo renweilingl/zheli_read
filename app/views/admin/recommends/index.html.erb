@@ -27,7 +27,7 @@
           <th width="220">名称</th>
           <th width="80" style="text-align:center;">状态</th>
           <th width="60">排序</th>
-          <th>内容</th>
+          <th>内容分组</th>
           <th width="160">创建时间</th>
           <th width="220" style="text-align:center;">操作</th>
         </tr>
@@ -48,7 +48,7 @@
             <td><%= r.created_at.strftime('%Y-%m-%d') %></td>
             <td>
               <div class="layui-btn-group">
-                <%= link_to '内容管理', admin_grade_recommend_content_groups_path(@grade, r), class: "layui-btn layui-btn-sm layui-bg-blue" %>
+                <%= link_to '分组管理', admin_grade_recommend_content_groups_path(@grade, r), class: "layui-btn layui-btn-sm layui-bg-blue" %>
                 <%= link_to '编辑', edit_admin_grade_recommend_path(@grade, r), class: "layui-btn layui-btn-sm" %>
                 <a href="<%= toggle_status_admin_grade_recommend_path(@grade, r) %>" class="layui-btn layui-btn-sm <%= r.status? ? 'layui-btn-danger' : '' %>" data-method="post" style="margin-left: 0;">
                   <%= r.status? ? '下架' : '上架' %>
