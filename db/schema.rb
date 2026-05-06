@@ -109,6 +109,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
     t.index ["name"], name: "index_compilations_on_name", unique: true
   end
 
+  create_table "content_groups", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "recommend_id", null: false, comment: "关联年级"
+    t.string "name", null: false, comment: "小组名称"
+    t.string "group_type", null: false, comment: "小组类型"
+    t.integer "sn", default: 0, comment: "排序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recommend_id"], name: "index_content_groups_on_recommend_id"
+  end
+
   create_table "grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "group_name", limit: 8
     t.string "name", limit: 16
@@ -160,5 +170,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_28_064534) do
   add_foreign_key "compilation_categories", "compilations"
   add_foreign_key "compilation_grades", "compilations"
   add_foreign_key "compilation_grades", "grades"
+  add_foreign_key "content_groups", "recommends"
   add_foreign_key "recommends", "grades"
 end
