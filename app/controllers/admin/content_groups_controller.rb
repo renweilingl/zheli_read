@@ -2,6 +2,7 @@
 
 module Admin
   class ContentGroupsController < ApplicationController
+    before_action :set_grade
     before_action :set_recommend
     before_action :set_group, only: [:show, :edit, :update, :destroy, :toggle_status]
 
@@ -60,6 +61,9 @@ module Admin
     end
 
     private
+    def set_grade
+      @grade = Grade.find(params[:grade_id])
+    end
 
     def set_recommend
       @recommend = Recommend.find(params[:recommend_id])

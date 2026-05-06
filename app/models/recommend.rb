@@ -2,6 +2,7 @@
 
 class Recommend < ApplicationRecord
   belongs_to :grade
+  has_many :content_groups, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 10 }
   validates :grade_id, presence: true
