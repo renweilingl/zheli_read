@@ -22,42 +22,35 @@ module Admin
     end
 
     def create
-      @recommend = @grade.recommends.new(recommend_params)
+      @content_group = @recommend.content_groups.new(group_params)
       authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
 
-      if @recommend.save
-        redirect_to admin_grade_recommends_path(@grade), notice: '推荐内容创建成功'
+      if @content_group.save
+        redirect_to admin_grade_recommend_content_groups_path(@grade, @recommend), notice: '内容分组创建成功'
       else
         render :new, status: :unprocessable_entity
       end
     end
 
     def edit
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
+      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
     end
 
     def update
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
+      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
 
-      if @recommend.update(recommend_params)
-        redirect_to admin_grade_recommends_path(@grade), notice: '推荐内容更新成功'
+      if @content_group.update(group_params)
+        redirect_to admin_grade_recommend_content_groups_path(@grade, @recommend),notice: '内容分组更新成功'
       else
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
+      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
 
-      @recommend.destroy
-      redirect_to grade_recommends_path(@grade), notice: '推荐内容删除成功'
-    end
-
-    def toggle_status
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
-
-      @recommend.update(status: !@recommend.status)
-      redirect_to admin_grade_recommends_path(@grade), notice: @recommend.status ? '已发布' : '已下架'
+      @content_group.destroy
+      redirect_to admin_grade_recommend_content_groups_path(@grade, @recommend),notice: '内容分组删除成功'
     end
 
     private
@@ -74,7 +67,7 @@ module Admin
     end
 
     def group_params
-      params.require(:recommend).permit(
+      params.require(:content_group).permit(
         :name,
         :group_type
       ).merge(
