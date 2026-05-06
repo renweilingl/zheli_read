@@ -30,7 +30,7 @@
           <th width="60">排序</th>
           <th>内容</th>
           <th width="160">添加时间</th>
-          <th width="220" style="text-align:center;">操作</th>
+          <th width="200" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -41,8 +41,9 @@
             <td><%= r.sn %></td>
             <td></td>
             <td><%= r.created_at.strftime('%Y-%m-%d') %></td>
-            <td>
+            <td style="text-align:center;">
               <div class="layui-btn-group">
+                <%= link_to '编辑', edit_admin_grade_recommend_content_group_path(@grade, @recommend, r), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', admin_grade_recommend_content_group_path(@grade, @recommend, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除分组吗？此操作不可恢复。" } %>
               </div>
             </td>
