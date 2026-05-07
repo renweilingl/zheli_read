@@ -15,6 +15,15 @@
   </div>
 
   <div class="layui-form-item">
+    <label class="layui-form-label">图书分级</label>
+    <div class="layui-input-block">
+      <% BookLevel.all.sorted.each do |x| %>
+        <input type="radio" name="book[book_level_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.book_level_id == x.id %>>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <label class="layui-form-label">年龄范围</label>
     <div class="layui-input-block">
       <div class="grade-checkbox" id="grade-checkbox">

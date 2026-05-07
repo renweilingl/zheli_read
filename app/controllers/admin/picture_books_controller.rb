@@ -101,6 +101,7 @@ class Admin::PictureBooksController < ApplicationController
       :cover_image_url,
       :supplier_id,
       :category_id,
+      :book_level_id,
       :grade_ids => []
     )
   end

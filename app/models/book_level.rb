@@ -14,6 +14,7 @@ class BookLevel < ApplicationRecord
   validates :sn, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   
   default_scope { order(sn: :asc) }
+  scope :sorted, -> { order(sn: :asc, id: :desc)}
   
   def self.active
     where(deleted_at: nil).order(sn: :asc)
