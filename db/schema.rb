@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
     t.bigint "category_id", null: false, comment: "关联分类"
     t.string "name", null: false, comment: "子类名称"
     t.string "icon", comment: "图标URL"
+    t.integer "sn", default: 0, comment: "排序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_category_subs_on_category_id"
