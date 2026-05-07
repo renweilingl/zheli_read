@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_07_065650) do
   create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.bigint "grade_id", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
     t.bigint "supplier_id", comment: "归属供应商"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "book_level_id"
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["name"], name: "index_books_on_name"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
