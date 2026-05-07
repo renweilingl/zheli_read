@@ -35,6 +35,8 @@ Rails.application.routes.draw do
       resources :category_subs
     end
 
+    resources :book_levels
+
     resources :grades do
       resources :recommends, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
         member do

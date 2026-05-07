@@ -10,19 +10,6 @@ class Admin::BooksController < ApplicationController
     @q = Book.ransack(params[:q])
     @books = @q.result.paginate(page: params[:page], per_page: @per_page)
 
-    respond_to do |format|
-      format.html
-      format.json { render json: {
-        success: true,
-        categories: @books.map(&:as_json),
-        pagination: {
-          current_page: @books.current_page,
-          total_pages: @books.total_pages,
-          total_count: @books.total_entries,
-          per_page: @books.per_page
-        }
-      }}
-    end
     @suppliers = Supplier.all
   end
 
