@@ -21,19 +21,9 @@ module Admin
       authorize [:admin, @sub], policy_class: Admin::CategorySubPolicy
 
       if @sub.save
-        render json: {
-          success: true,
-          notice: '子类创建成功',
-          data: {
-            id: @sub.id,
-            name: @sub.name,
-            icon: @sub.icon,
-            icon_url: @sub.icon_url,
-            sort_order: @sub.sort_order
-          }
-        }
+        redirect_to admin_category_category_subs_path(@category), notice: '二级分类创建成功'
       else
-        render json: { success: false, error: @sub.errors.full_messages.join(', ') }
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -45,19 +35,9 @@ module Admin
       authorize [:admin, @sub], policy_class: Admin::CategorySubPolicy
 
       if @sub.update(sub_params)
-        render json: {
-          success: true,
-          notice: '子类更新成功',
-          data: {
-            id: @sub.id,
-            name: @sub.name,
-            icon: @sub.icon,
-            icon_url: @sub.icon_url,
-            sort_order: @sub.sort_order
-          }
-        }
+        redirect_to admin_category_category_subs_path(@category), notice: '二级分类更新成功'
       else
-        render json: { success: false, error: @sub.errors.full_messages.join(', ') }
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -65,7 +45,7 @@ module Admin
       authorize [:admin, @sub], policy_class: Admin::CategorySubPolicy
 
       @sub.destroy
-      render json: { success: true, notice: '子类删除成功' }
+      redirect_to admin_category_category_subs_path(@category), notice: '二级分类删除成功'
     end
 
     private
@@ -81,6 +61,7 @@ module Admin
       params.require(:category_sub).permit(
         :name,
         :icon,
+        :sn
       )
     end
   end

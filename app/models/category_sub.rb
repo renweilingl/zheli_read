@@ -6,5 +6,5 @@ class CategorySub < ApplicationRecord
   validates :name, presence: true, length: { maximum: 100 }
   validates :category_id, presence: true
 
-  scope :sorted, -> { order(id: :desc)}
+  scope :sorted, -> { order(sn: :asc, id: :desc)}
 end
