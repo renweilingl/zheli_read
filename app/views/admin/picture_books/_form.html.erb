@@ -3,20 +3,17 @@
     <legend><i class="layui-icon layui-icon-note"></i> 基本信息</legend>
   </fieldset>
 
-  <%= f.hidden_field :category_id %>
 
-  <% if false %>
   <div class="layui-form-item">
     <%= f.label :lan_type, class: "layui-form-label" do %>
       <span class="required">*</span> 类型
     <% end %>
     <div class="layui-input-block">
       <% Category.all.each do |x| %>
-        <input type="radio" name="book[category_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.category_id == x.id %>>
+        <input type="radio" name="book[category_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.category_id == x.id %> <%= 'disabled' unless @book.new_record? %>>
       <% end %>
     </div>
   </div>
-  <% end %>
 
   <div class="layui-form-item">
     <label class="layui-form-label">二级分类</label>
@@ -27,14 +24,16 @@
     </div>
   </div>
 
-  <div class="layui-form-item">
-    <label class="layui-form-label">图书分级</label>
-    <div class="layui-input-block">
-      <% BookLevel.all.sorted.each do |x| %>
-        <input type="radio" name="book[book_level_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.book_level_id == x.id %>>
-      <% end %>
+  <% if @book.category_id == 1 %>
+    <div class="layui-form-item">
+      <label class="layui-form-label">图书分级</label>
+      <div class="layui-input-block">
+        <% BookLevel.all.sorted.each do |x| %>
+          <input type="radio" name="book[book_level_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.book_level_id == x.id %>>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="layui-form-item">
     <label class="layui-form-label">年龄范围</label>
