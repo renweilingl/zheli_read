@@ -48,7 +48,7 @@ class Admin::PictureBooksController < ApplicationController
 
   def new
     @book = Book.new
-    cat = Category.find_by(name: "绘本")
+    cat = Category.find_by(name: "图书")
     @book.category_id = cat.id
     authorize @book
     @suppliers = Supplier.all

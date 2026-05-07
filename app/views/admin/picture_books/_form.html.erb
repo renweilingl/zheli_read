@@ -17,7 +17,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">二级分类</label>
     <div class="layui-input-block">
-      <% CategorySub.all.each do |cat| %>
+      <% CategorySub.by_category_id(@book.category_id).each do |cat| %>
         <input type="checkbox" name="book[category_sub_ids][]" value=<%= cat.id %> title="<%= cat.name %>" <%= 'checked' if @book.category_sub_ids.include?(cat.id) %> />
       <% end %>
     </div>
