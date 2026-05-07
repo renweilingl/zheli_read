@@ -4,14 +4,14 @@
       <span class="required">*</span> 分组名称
     <% end %>
     <div class="layui-input-block">
-      <%= f.text_field :name, class: "layui-input", placeholder: "请输入分组名称", maxlength: 10, required: true, style: "width: 400px;" %>
+      <%= f.text_field :name, class: "layui-input", placeholder: "请输入分组名称", maxlength: 10, required: true  %>
     </div>
   </div>
 
   <div class="layui-form-item">
     <label class="layui-form-label"><span class="required">*</span>小组类型</label>
     <div class="layui-input-block">
-      <%= f.select :group_type, ContentGroup::GROUP_TYPE_NAMES.map { |k, v| [v, k] }, { prompt: '请选择小组类型' }, { class: 'layui-input', required: true } %>
+      <%= f.select :group_type, ContentGroup::GROUP_TYPE_NAMES.map { |k, v| [v, k] }, { prompt: '请选择小组类型' }, { class: 'layui-input', required: true, disabled: !@content_group.new_record? } %>
     </div>
   </div>
 
