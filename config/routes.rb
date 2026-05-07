@@ -31,7 +31,10 @@ Rails.application.routes.draw do
     resources :permissions, only: [:index, :show]
     resources :suppliers
 
-    resources :categories
+    resources :categories do
+      resources :category_subs
+    end
+
     resources :grades do
       resources :recommends, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
         member do
