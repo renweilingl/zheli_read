@@ -3,6 +3,9 @@
     <legend><i class="layui-icon layui-icon-note"></i> 基本信息</legend>
   </fieldset>
 
+  <%= f.hidden_field :category_id %>
+
+  <% if false %>
   <div class="layui-form-item">
     <%= f.label :lan_type, class: "layui-form-label" do %>
       <span class="required">*</span> 类型
@@ -13,6 +16,7 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 
   <div class="layui-form-item">
     <label class="layui-form-label">二级分类</label>
