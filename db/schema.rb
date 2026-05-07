@@ -21,6 +21,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
     t.index ["grade_id"], name: "index_book_grades_on_grade_id"
   end
 
+  create_table "book_levels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", limit: 50, null: false, comment: "等级名称"
+    t.integer "sn", default: 0, null: false, comment: "序号"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "books", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "绘本名称"
     t.string "cover_image_url", comment: "绘本封面URL"
