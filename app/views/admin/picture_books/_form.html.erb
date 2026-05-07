@@ -24,16 +24,14 @@
     </div>
   </div>
 
-  <% if @book.category_id == 1 %>
-    <div class="layui-form-item">
-      <label class="layui-form-label">图书分级</label>
-      <div class="layui-input-block">
-        <% BookLevel.all.sorted.each do |x| %>
-          <input type="radio" name="book[book_level_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.book_level_id == x.id %>>
-        <% end %>
-      </div>
+  <div class="layui-form-item" style="display:  <%= @book.category_id == 1 ? 'block' : 'none' %>;" id="level-wrap">
+    <label class="layui-form-label">图书分级</label>
+    <div class="layui-input-block">
+      <% BookLevel.all.sorted.each do |x| %>
+        <input type="radio" name="book[book_level_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.book_level_id == x.id %>>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 
   <div class="layui-form-item">
     <label class="layui-form-label">年龄范围</label>
@@ -109,14 +107,20 @@
     form.render();
 
     form.on('radio(levelFilter)', function(data) {
-        //console.log('被选中的值:', data.value); // 输出 value 值，如 "1", "2", "3"
+        var cat_id = data.value;
+        //console.log('被选中的值:', cat_id);
         $.ajax({
-            url: "/admin/categories/" + data.value + "/subs",
+            url: "/admin/categories/" + cat_id + "/subs",
             type: 'get',
             dataType: 'json',
             data: {},
             success: function (json) {
                 $("#category-sub-wrap").html(json.sub_opts);
+                if(1 === parseInt(cat_id)){
+                    $("#level-wrap").show();
+                } else {
+                    $("#level-wrap").hide();
+                }
                 form.render();
             },
             error: function (e) {
