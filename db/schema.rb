@@ -44,6 +44,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
     t.index ["level"], name: "index_categories_on_level"
   end
 
+  create_table "category_subs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "category_id", null: false, comment: "关联分类"
+    t.string "name", null: false, comment: "子类名称"
+    t.string "icon", comment: "图标URL"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_category_subs_on_category_id"
+  end
+
   create_table "chapters", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "book_id", null: false, comment: "所属绘本"
     t.string "name", null: false, comment: "章节名称"
@@ -175,6 +184,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_06_084310) do
   add_foreign_key "book_grades", "books"
   add_foreign_key "book_grades", "grades"
   add_foreign_key "books", "suppliers"
+  add_foreign_key "category_subs", "categories"
   add_foreign_key "chapters", "books"
   add_foreign_key "compilation_books", "books"
   add_foreign_key "compilation_books", "compilations"
