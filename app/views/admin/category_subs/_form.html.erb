@@ -2,7 +2,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label"><span class="required">*</span>子类名称</label>
     <div class="layui-input-block">
-      <input type="text" name="category_sub[name]" id="name" required lay-verify="required" placeholder="请输入子类名称" maxlength="50" class="layui-input">
+    <%= f.text_field :name, class: "layui-input", placeholder: "请输入分类名称", lay_verify: "required", lay_reqtext: "分类名称不能为空" %>
     </div>
   </div>
 
@@ -13,8 +13,8 @@
         <button type="button" class="layui-btn layui-btn-normal" id="uploadBtn">上传图标</button>
         <span style="margin-left: 10px; color: #999; font-size: 12px;">支持 jpg、png、gif、webp、svg 格式，不超过 2MB</span>
         <div class="layui-upload-list" id="iconPreview" style="margin-top: 10px;">
-          <img id="previewImg" style="width: 60px; height: 60px; object-fit: contain; display: none;">
-          <input type="hidden" name="category_sub[icon]" id="iconInput">
+          <img src="<%= @sub.icon.blank? ? '' : FileMap.new(@sub.icon, 'img').secrity_src %>" id="previewImg" style="width: 60px; height: 60px; object-fit: contain; display: <%= @sub.icon.blank? ?  'none' : 'block' %>;">
+          <%= f.hidden_field :icon, id: "iconInput" %>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ module Admin
     def index
       authorize [:admin, CategorySub], policy_class: Admin::CategorySubPolicy
 
-      @subs = @category.category_subs.sorted
+      @subs = @category.category_subs.sorted.paginate(page: params[:page], per_page: @per_page) 
     end
 
     def new

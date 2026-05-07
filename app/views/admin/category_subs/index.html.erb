@@ -19,7 +19,69 @@
       </div>
 
       <table class="layui-table">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>序号</th>
+            <th>图标</th>
+            <th>添加时间</th>
+            <th width="160" style="text-align:center;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @subs.each do |sub| %>
+            <tr>
+              <td><%= sub.name %></td>
+              <td><%= sub.sn %></td>
+              <td>
+                <% if sub.icon.present? %>
+                  <img src="<%= FileMap.new(sub.icon, "img").secrity_src %>" style="width: 48px; object-fit: cover; border-radius: 4px;" />
+                <% else %>
+                  <div style="width: 48px; height: 64px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i>
+                  </div>
+                <% end %>
+              </td>
+              <td><%= sub.created_at.strftime("%Y-%m-%d") %></td>
+              <td style="text-align:center;">
+                <div class="layui-btn-group">
+                  <%= link_to '编辑', edit_admin_category_category_sub_path(@category, sub), class: "layui-btn layui-btn-sm" %>
+                  <%= link_to '删除', admin_category_category_sub_path(@category, sub), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除该二级分类吗？此操作不可恢复。" } %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
+
+      <% if @subs.total_pages > 1 %>
+        <div id="pagination" style="margin-top: 20px;"></div>
+      <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  layui.use(['laypage', 'layer'], function(){
+    var laypage = layui.laypage,
+        layer = layui.layer;
+
+    <% if @subs.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @subs.total_entries %>,
+      limit: <%= @subs.per_page %>,
+      curr: <%= @subs.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  })
+</script>
