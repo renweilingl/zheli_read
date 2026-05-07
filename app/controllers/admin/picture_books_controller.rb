@@ -102,7 +102,8 @@ class Admin::PictureBooksController < ApplicationController
       :supplier_id,
       :category_id,
       :book_level_id,
-      :grade_ids => []
+      :grade_ids => [],
+      :category_sub_ids => []
     )
   end
 end
