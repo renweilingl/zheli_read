@@ -1,10 +1,9 @@
 class Admin::CategoriesController < ApplicationController
   before_action :require_login
-  before_action :set_category, only: [:show, :edit, :update, :destroy, :toggle_active]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :toggle_active, :subs]
 
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
 
-  # 分类列表
   def index
     authorize Category
     @per_page = params[:per_page] || 20
@@ -13,7 +12,6 @@ class Admin::CategoriesController < ApplicationController
     @categories = @q.result.paginate(page: params[:page], per_page: @per_page)
   end
 
-  # 显示分类详情
   def show
     authorize @category
 
@@ -23,22 +21,16 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
-  # 新建分类
   def new
     authorize Category
     @category = Category.new
-    #@level = params[:level].to_i
   end
 
-  # 创建分类
   def create
     authorize Category
 
     @category = Category.new(category_params)
 
-    # 设置默认值
-    #@category.sn ||= 0
-    #@category.active = true if @category.active.nil?
 
     if @category.save
       respond_to do |format|
@@ -51,7 +43,6 @@ class Admin::CategoriesController < ApplicationController
     else
       respond_to do |format|
         format.html do
-          #@level = @category.level
           flash.now[:alert] = "分类创建失败：#{@category.errors.full_messages.join(', ')}"
           render :new, status: :unprocessable_entity
         end
@@ -60,13 +51,10 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
-  # 编辑分类
   def edit
     authorize @category
-    #@level = @category.level
   end
 
-  # 更新分类
   def update
     authorize @category
 
@@ -81,7 +69,6 @@ class Admin::CategoriesController < ApplicationController
     else
       respond_to do |format|
         format.html do
-          #@level = @category.level
           flash.now[:alert] = "分类更新失败：#{@category.errors.full_messages.join(', ')}"
           render :edit, status: :unprocessable_entity
         end
@@ -90,7 +77,6 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
-  # 删除分类
   def destroy
     authorize @category
 
@@ -111,6 +97,10 @@ class Admin::CategoriesController < ApplicationController
         format.json { render json: { success: false, error: "分类删除失败" }, status: :unprocessable_entity }
       end
     end
+  end
+
+  def subs
+    render json: { sub_opts: render_to_string(partial: 'sub_opts', layout: false) }
   end
 
   # 切换启用状态

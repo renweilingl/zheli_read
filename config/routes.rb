@@ -33,6 +33,9 @@ Rails.application.routes.draw do
 
     resources :categories do
       resources :category_subs
+      member do
+        get :subs
+      end
     end
 
     resources :book_levels
