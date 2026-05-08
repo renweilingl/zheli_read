@@ -1,6 +1,6 @@
 <label class="layui-form-label"><%= @title %></label>
 <div class="layui-input-block">
-  <select name="content[compilation_id]" lay-search="" lay-verify="required">
+  <select name="content[<%= @name %>]" lay-search="" lay-verify="required">
     <option value="">选择链接内容</option>
     <% @opts.each do |x| %>
       <option value="<%= x.id %>"><%= x.name %></option>

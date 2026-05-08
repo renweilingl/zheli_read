@@ -29,20 +29,20 @@ module Admin
     end
 
     def update
-      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
+      authorize [:admin, @content], policy_class: Admin::ContentPolicy
 
-      if @content_group.update(group_params)
-        redirect_to admin_grade_recommend_content_groups_path(@grade, @recommend),notice: '内容分组更新成功'
+      if @content.update(content_params)
+        redirect_to admin_grade_recommend_content_group_path(@grade, @recommend, @content_group), notice: '内容更新成功'
       else
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
+      authorize [:admin, @content], policy_class: Admin::ContentPolicy
 
-      @content_group.destroy
-      redirect_to admin_grade_recommend_content_groups_path(@grade, @recommend),notice: '内容分组删除成功'
+      @content.destroy
+      redirect_to admin_grade_recommend_content_group_path(@grade, @recommend, @content_group), notice: '内容删除成功'
     end
 
     private
@@ -64,6 +64,8 @@ module Admin
         :img_url,
         :compilation_id,
         :book_id,
+        :recommend_id,
+        :author_id
       ).merge(
         sn: params.dig(:content, :sn).to_i
       )
