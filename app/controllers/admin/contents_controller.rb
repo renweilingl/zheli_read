@@ -8,6 +8,7 @@ module Admin
 
     def new
       @content = @content_group.contents.new
+      @content.content_type = "compilation"
       authorize [:admin, @content], policy_class: Admin::ContentPolicy
     end
 
@@ -16,7 +17,7 @@ module Admin
       authorize [:admin, @content], policy_class: Admin::ContentPolicy
 
       if @content.save
-        redirect_to admin_grade_recommend_content_group_path(@grade, @recommend, @content_group), , notice: '内容创建成功'
+        redirect_to admin_grade_recommend_content_group_path(@grade, @recommend, @content_group), notice: '内容创建成功'
       else
         render :new, status: :unprocessable_entity
       end

@@ -1,4 +1,13 @@
 <%= form_for(@content, url: @content.new_record? ? :admin_grade_recommend_content_group_contents : :admin_grade_recommend_content_group_content,method: @content.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
+  <div class="layui-form-item">
+    <label class="layui-form-label">链接类型</label>
+    <div class="layui-input-block">
+      <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="recommend" title="推荐内容" <%= 'checked' if @content.content_type== "recommend" %>>
+      <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
+      <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="book" title="单本" <%= 'checked' if @content.content_type== "book" %>>
+    </div>
+  </div>
+
   <% if @content_group.group_type == "multi_images" %>
     <div class="layui-form-item">
       <label class="layui-form-label">图标</label>
