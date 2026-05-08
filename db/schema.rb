@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_08_035304) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_07_071914) do
   create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.bigint "grade_id", null: false
@@ -150,14 +150,14 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_08_035304) do
   create_table "contents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "content_group_id", null: false, comment: "关联内容分组"
     t.string "content_type", null: false, comment: "类型"
-    t.string "img_url", null: false, comment: "图片链接"
-    t.bigint "compilation_id", null: false, comment: "合辑信息"
-    t.bigint "book_id", null: false, comment: "单本信息"
+    t.string "img_url", comment: "图片链接"
+    t.bigint "compilation_id", comment: "合辑信息"
+    t.bigint "book_id", comment: "单本信息"
+    t.bigint "recommend_id", comment: "推荐信息"
+    t.bigint "author_id", comment: "作者信息"
     t.integer "sn", default: 0, comment: "排序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "recommend_id"
-    t.bigint "author_id"
     t.index ["content_group_id"], name: "index_contents_on_content_group_id"
   end
 
