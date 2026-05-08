@@ -1,2 +1,5 @@
 class Author < ApplicationRecord
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "head_img", "id", "id_value", "name", "updated_at"]
+  end
 end
