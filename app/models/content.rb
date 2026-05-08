@@ -1,19 +1,41 @@
 class Content < ApplicationRecord
   belongs_to :content_group
+  belongs_to :compilation, optional: true
+  belongs_to :book, optional: true
+
+  scope :sorted, -> { order(sn: :asc, id: :desc) }
 
   enum :content_type, {
     compilation: 'compilation',           # 合辑
     book: 'book', # 单本
-    recommend: 'recommends' #推荐
   }, prefix: true
 
   CONTENT_TYPES = {
     compilation: '合辑',
     book: '单本',
-    recommend: '推荐内容'
   }.freeze
 
   def content_type_name
     CONTENT_TYPES[content_type.to_sym] || content_type
+  end
+
+  def display_img_url
+    if content_group.group_type == "multi_images"
+      img_url
+    else
+      if content_type == "compilation"
+        compilation.banner_image_url
+      elsif content_type == "book"
+        book.cover_image_url
+      end
+    end
+  end
+
+  def content_name
+    if content_type == "compilation"
+      compilation.name
+    elsif content_type == "book"
+      book.name
+    end
   end
 end

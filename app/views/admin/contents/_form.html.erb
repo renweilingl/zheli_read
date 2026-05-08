@@ -2,7 +2,6 @@
   <div class="layui-form-item">
     <label class="layui-form-label">链接类型</label>
     <div class="layui-input-block">
-      <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="recommend" title="推荐内容" <%= 'checked' if @content.content_type== "recommend" %>>
       <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
       <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="book" title="单本" <%= 'checked' if @content.content_type== "book" %>>
     </div>

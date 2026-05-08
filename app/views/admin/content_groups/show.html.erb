@@ -23,5 +23,36 @@
         </div>
       </div>
     </div>
+
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th>类型</th>
+          <th>图标</th>
+          <th>序号</th>
+          <th>链接内容</th>
+          <th>添加时间</th>
+          <th width="220" style="text-align:center;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @content_group.contents.sorted.each do |r| %>
+          <% img_url = r.display_img_url %>
+          <tr>
+            <td><%= r.content_type_name %></td>
+            <td>
+              <% unless img_url.blank? %>
+                <img src="<%= FileMap.new(img_url, "img").secrity_src %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
+              <% end %>
+            </td>
+            <td><%= r.sn %></td>
+            <td><%= r.content_name %></td>
+            <td><%= r.created_at.strftime("%Y-%m-%d") %></td>
+            <td style="text-align:center;">
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

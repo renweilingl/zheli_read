@@ -14,10 +14,10 @@ class Admin::OptionsController < ApplicationController
       @title = "选择单本"
       @name = "book_id"
       @opts = Book.all
-    else
-      @title = "选择推荐"
-      @name = "recommend_id"
-      @opts = Recommend.all
+    #else
+    #  @title = "选择推荐"
+    #  @name = "recommend_id"
+    #  @opts = Recommend.all
     end
 
     render json: { opts: render_to_string(partial: 'opts', layout: false) }
