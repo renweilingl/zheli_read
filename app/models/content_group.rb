@@ -2,6 +2,7 @@
 
 class ContentGroup < ApplicationRecord
   belongs_to :recommend
+  has_many :contents, dependent: :destroy
 
   enum :group_type, {
     multi_images: 'multi_images',           # 多张图片
