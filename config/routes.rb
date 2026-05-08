@@ -7,10 +7,9 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  get "register", to: "users#new"
-  post "register", to: "users#create"
-
-  get "dashboard", to: "pages#dashboard"
+  #get "register", to: "users#new"
+  #post "register", to: "users#create"
+  #get "dashboard", to: "pages#dashboard"
 
   resources :files, only: [:show] do
     collection do
@@ -49,7 +48,9 @@ Rails.application.routes.draw do
           post :upload_cover
         end
 
-        resources :content_groups
+        resources :content_groups do
+          resources :contents
+        end
       end
     end
 

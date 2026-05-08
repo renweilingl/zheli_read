@@ -13,7 +13,7 @@ module Admin
     end
 
     def show
-      authorize [:admin, @recommend], policy_class: Admin::RecommendPolicy
+      authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
     end
 
     def new

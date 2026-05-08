@@ -2,7 +2,7 @@
   <div class="x-nav">
     <span class="layui-breadcrumb">
       <a href="<%= admin_grades_path %>">年级管理</a>
-      <a><cite><%= @grade.name %></cite></a>
+      <%= link_to @grade.name, admin_grade_recommends_path(@grade) %>
       <a><cite>推荐内容管理</cite></a>
     </span>
     <%= render 'common/user_info' %>
