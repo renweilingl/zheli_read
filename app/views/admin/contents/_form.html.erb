@@ -8,6 +8,20 @@
     </div>
   </div>
 
+  <div class="layui-form-item">
+    <%= f.label :supplier_id, class: "layui-form-label" do %>
+      <span class="required">*</span> 选择合辑 
+    <% end %>
+    <div class="layui-input-block">
+      <select name="content[compilation_id]" lay-search="">
+        <option value="">所有类别</option>
+        <% Compilation.all.each do |x| %>
+          <option value="<%= x.id %>"><%= x.name %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
   <% if @content_group.group_type == "multi_images" %>
     <div class="layui-form-item">
       <label class="layui-form-label">图标</label>
