@@ -1,10 +1,10 @@
 <div class="layui-tab">
   <div class="x-nav">
     <span class="layui-breadcrumb">
-      <a href="<%= admin_grades_path %>">年级管理</a>
-      <a><cite><%= @grade.name %></cite></a>
-      <a><cite>推荐管理</cite></a>
-      <a><cite>推荐内容分组管理</cite></a>
+      <%= link_to "年级管理", :admin_grades %>
+      <%= link_to @grade.name, admin_grade_recommends_path(@grade) %>
+      <a><cite><%= @recommend.name %></cite></a>
+      <a><cite>分组管理</cite></a>
     </span>
     <%= render 'common/user_info' %>
   </div>
@@ -43,6 +43,7 @@
             <td><%= r.created_at.strftime('%Y-%m-%d') %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
+                <%= link_to '内容管理', admin_grade_recommend_content_group_path(@grade, @recommend, r), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '编辑', edit_admin_grade_recommend_content_group_path(@grade, @recommend, r), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', admin_grade_recommend_content_group_path(@grade, @recommend, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除分组吗？此操作不可恢复。" } %>
               </div>
