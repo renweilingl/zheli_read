@@ -1,35 +1,50 @@
 <%= form_for(@content, url: @content.new_record? ? :admin_grade_recommend_content_group_contents : :admin_grade_recommend_content_group_content,method: @content.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
-  <div class="layui-form-item">
-    <label class="layui-form-label">链接类型</label>
-    <div class="layui-input-block">
-      <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
-      <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="book" title="单本" <%= 'checked' if @content.content_type== "book" %>>
+  <% if @content_group.group_type == "author_display" %>
+    <%= f.hidden_field :content_type  %>
+    <div class="layui-form-item">
+      <label class="layui-form-label">作者</label>
+      <div class="layui-input-block">
+        <select name="content[author_id]" lay-search="" lay-verify="required">
+          <option value="">请选择作者</option>
+          <% Author.all.each do |x| %>
+            <option value="<%= x.id %>" <%= "selected" if @content.author_id == x.id %>><%= x.name %></option>
+          <% end %>
+        </select>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <div class="layui-form-item">
+      <label class="layui-form-label">链接类型</label>
+      <div class="layui-input-block">
+        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
+        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="book" title="单本" <%= 'checked' if @content.content_type== "book" %>>
+      </div>
+    </div>
 
-  <div class="layui-form-item" id="option-wrap">
-    <% if @content.content_type == "compilation" %>
-      <label class="layui-form-label">选择合辑</label>
-      <div class="layui-input-block">
-        <select name="content[compilation_id]" lay-search="" lay-verify="required">
-          <option value="">选择链接内容</option>
-          <% Compilation.all.each do |x| %>
-            <option value="<%= x.id %>" <%= "selected" if @content.compilation_id == x.id %>><%= x.name %></option>
-          <% end %>
-        </select>
-      </div>
-    <% else %>
-      <label class="layui-form-label">选择单本</label>
-      <div class="layui-input-block">
-        <select name="content[book_id]" lay-search="" lay-verify="required">
-          <option value="">选择链接内容</option>
-          <% Book.all.each do |x| %>
-            <option value="<%= x.id %>" <%= "selected" if @content.book_id == x.id %>><%= x.name %></option>
-          <% end %>
-        </select>
-      </div>
-    <% end %>
-  </div>
+    <div class="layui-form-item" id="option-wrap">
+      <% if @content.content_type == "compilation" %>
+        <label class="layui-form-label">选择合辑</label>
+        <div class="layui-input-block">
+          <select name="content[compilation_id]" lay-search="" lay-verify="required">
+            <option value="">选择链接内容</option>
+            <% Compilation.all.each do |x| %>
+              <option value="<%= x.id %>" <%= "selected" if @content.compilation_id == x.id %>><%= x.name %></option>
+            <% end %>
+          </select>
+        </div>
+      <% else %>
+        <label class="layui-form-label">选择单本</label>
+        <div class="layui-input-block">
+          <select name="content[book_id]" lay-search="" lay-verify="required">
+            <option value="">选择链接内容</option>
+            <% Book.all.each do |x| %>
+              <option value="<%= x.id %>" <%= "selected" if @content.book_id == x.id %>><%= x.name %></option>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if @content_group.group_type == "multi_images" %>
     <div class="layui-form-item">

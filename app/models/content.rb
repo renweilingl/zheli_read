@@ -9,11 +9,13 @@ class Content < ApplicationRecord
   enum :content_type, {
     compilation: 'compilation',           # 合辑
     book: 'book', # 单本
+    author_display: 'author_display', # 作者显示
   }, prefix: true
 
   CONTENT_TYPES = {
     compilation: '合辑',
     book: '单本',
+    author_display: '作者显示'
   }.freeze
 
   def content_type_name
@@ -28,6 +30,8 @@ class Content < ApplicationRecord
         compilation.banner_image_url
       elsif content_type == "book"
         book.cover_image_url
+      elsif content_type == "author_display"
+        author.head_img
       end
     end
   end
@@ -37,6 +41,8 @@ class Content < ApplicationRecord
       compilation.name
     elsif content_type == "book"
       book.name
+    elsif content_type == "author_display"
+      author.name
     end
   end
 end

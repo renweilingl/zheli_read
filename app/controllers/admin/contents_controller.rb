@@ -10,7 +10,11 @@ module Admin
 
     def new
       @content = @content_group.contents.new
-      @content.content_type = "compilation"
+      if @content_group.group_type == "author_display"
+        @content.content_type = "author_display"
+      else
+        @content.content_type = "compilation"
+      end
       authorize [:admin, @content], policy_class: Admin::ContentPolicy
     end
 
