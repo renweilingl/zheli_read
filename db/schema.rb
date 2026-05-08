@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_07_071914) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_08_075455) do
+  create_table "authors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", null: false, comment: "作者名"
+    t.string "head_img", null: false, comment: "头像"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.bigint "grade_id", null: false
@@ -37,6 +44,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_07_071914) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "book_level_id"
+    t.bigint "author_id"
+    t.bigint "compilations"
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["name"], name: "index_books_on_name"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
