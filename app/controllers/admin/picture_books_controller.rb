@@ -96,12 +96,12 @@ class Admin::PictureBooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(
-      # 核心基础信息
       :name,
       :cover_image_url,
       :supplier_id,
       :category_id,
       :book_level_id,
+      :author_id,
       :grade_ids => [],
       :category_sub_ids => []
     )

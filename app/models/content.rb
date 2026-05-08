@@ -2,6 +2,7 @@ class Content < ApplicationRecord
   belongs_to :content_group
   belongs_to :compilation, optional: true
   belongs_to :book, optional: true
+  belongs_to :author, optional: true
 
   scope :sorted, -> { order(sn: :asc, id: :desc) }
 
