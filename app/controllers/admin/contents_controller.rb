@@ -6,6 +6,7 @@ module Admin
     before_action :set_grade
     before_action :set_recommend
     before_action :set_group
+    before_action :set_content, only: [:edit, :update, :destroy]
 
     def new
       @content = @content_group.contents.new
@@ -56,6 +57,10 @@ module Admin
 
     def set_group      #分组
       @content_group = ContentGroup.find(params[:content_group_id])
+    end
+
+    def set_content
+      @content = Content.find(params[:id])
     end
 
     def content_params

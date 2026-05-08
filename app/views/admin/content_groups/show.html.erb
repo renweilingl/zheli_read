@@ -49,6 +49,10 @@
             <td><%= r.content_name %></td>
             <td><%= r.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
+              <div class="layui-btn-group">
+                <%= link_to '编辑', edit_admin_grade_recommend_content_group_content_path(@grade, @recommend, @content_group, r), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '删除', admin_grade_recommend_content_group_content_path(@grade, @recommend, @content_group, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除分组吗？此操作不可恢复。" } %>
+              </div>
             </td>
           </tr>
         <% end %>
