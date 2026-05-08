@@ -2,6 +2,8 @@
 
 module Admin
   class ContentGroupsController < ApplicationController
+    before_action :require_login
+
     before_action :set_grade
     before_action :set_recommend
     before_action :set_group, only: [:show, :edit, :update, :destroy]

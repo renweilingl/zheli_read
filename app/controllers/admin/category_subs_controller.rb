@@ -2,6 +2,7 @@
 
 module Admin
   class CategorySubsController < ApplicationController
+    before_action :require_login
     before_action :set_category
     before_action :set_sub, only: [:edit, :update, :destroy]
 

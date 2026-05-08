@@ -8,13 +8,11 @@
     </div>
   </div>
 
-  <div class="layui-form-item">
-    <%= f.label :supplier_id, class: "layui-form-label" do %>
-      <span class="required">*</span> 选择合辑 
-    <% end %>
+  <div class="layui-form-item" id="option-wrap">
+    <label class="layui-form-label">选择合辑</label>
     <div class="layui-input-block">
-      <select name="content[compilation_id]" lay-search="">
-        <option value="">所有类别</option>
+      <select name="content[compilation_id]" lay-search="" lay-verify="required">
+        <option value="">选择链接合辑</option>
         <% Compilation.all.each do |x| %>
           <option value="<%= x.id %>"><%= x.name %></option>
         <% end %>
@@ -60,6 +58,22 @@
       var form = layui.form;
       var layer = layui.layer;
       var upload = layui.upload;
+
+      form.on('radio(levelFilter)', function(data) {
+        var content_type = data.value;
+        $.ajax({
+            url: "/admin/options/",
+            type: 'get',
+            dataType: 'json',
+            data: {content_type: content_type},
+            success: function (json) {
+                $("#option-wrap").html(json.opts);
+                form.render();
+            },
+            error: function (e) {
+            }
+        });
+      });
 
       upload.render({
         elem: '#uploadBtn',

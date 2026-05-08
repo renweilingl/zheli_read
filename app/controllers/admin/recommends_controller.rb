@@ -2,6 +2,7 @@
 
 module Admin
   class RecommendsController < ApplicationController
+    before_action :require_login
     before_action :set_grade
     before_action :set_recommend, only: [:show, :edit, :update, :destroy, :toggle_status]
 

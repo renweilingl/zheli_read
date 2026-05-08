@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::CompilationsController < ApplicationController
+  before_action :require_login
   before_action :set_compilation, only: [:show, :edit, :update, :destroy, :books, :update_books]
 
   def index

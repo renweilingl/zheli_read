@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   # Admin routes
   namespace :admin do
+    resources :options, only: [:index]
+
     resources :accounts, only: [:index, :new, :create, :edit, :update, :show, :destroy] do
       member do
         post :reset_password

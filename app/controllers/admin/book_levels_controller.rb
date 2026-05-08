@@ -1,4 +1,5 @@
 class Admin::BookLevelsController < ApplicationController
+  before_action :require_login
   before_action :set_book_level, only: [:show, :edit, :update, :destroy]
   
   def index
