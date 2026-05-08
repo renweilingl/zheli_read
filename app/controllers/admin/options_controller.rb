@@ -20,7 +20,7 @@ class Admin::OptionsController < ApplicationController
     #  @opts = Recommend.all
     end
 
-    render json: { opts: render_to_string(partial: 'opts', layout: false) }
+    render json: { opts: render_to_string(partial: 'opts', layout: false), name: @name }
   end
 
 end

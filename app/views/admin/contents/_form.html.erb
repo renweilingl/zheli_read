@@ -8,15 +8,27 @@
   </div>
 
   <div class="layui-form-item" id="option-wrap">
-    <label class="layui-form-label">选择合辑</label>
-    <div class="layui-input-block">
-      <select name="content[compilation_id]" lay-search="" lay-verify="required">
-        <option value="">选择链接合辑</option>
-        <% Compilation.all.each do |x| %>
-          <option value="<%= x.id %>"><%= x.name %></option>
-        <% end %>
-      </select>
-    </div>
+    <% if @content.content_type == "compilation" %>
+      <label class="layui-form-label">选择合辑</label>
+      <div class="layui-input-block">
+        <select name="content[compilation_id]" lay-search="" lay-verify="required">
+          <option value="">选择链接内容</option>
+          <% Compilation.all.each do |x| %>
+            <option value="<%= x.id %>" <%= "selected" if @content.compilation_id == x.id %>><%= x.name %></option>
+          <% end %>
+        </select>
+      </div>
+    <% else %>
+      <label class="layui-form-label">选择单本</label>
+      <div class="layui-input-block">
+        <select name="content[book_id]" lay-search="" lay-verify="required">
+          <option value="">选择链接内容</option>
+          <% Book.all.each do |x| %>
+            <option value="<%= x.id %>" <%= "selected" if @content.book_id == x.id %>><%= x.name %></option>
+          <% end %>
+        </select>
+      </div>
+    <% end %>
   </div>
 
   <% if @content_group.group_type == "multi_images" %>
@@ -74,24 +86,27 @@
         });
       });
 
-      upload.render({
-        elem: '#uploadBtn',
-        url: '<%= upload_img_files_path %>',
-        size: 2048, // 2MB
-        accept: 'images',
-        exts: 'jpg|jpeg|png|gif|webp|svg',
-        done: function(res){
-          if (res.success) {
-            $('#iconInput').val(res.url);
-            $('#previewImg').attr('src', res.preivew_url).show();
-            layer.msg('上传成功', {icon: 1});
-          } else {
-            layer.msg(res.error || '上传失败', {icon: 2});
+      <% if @content_group.group_type == "multi_images" %>
+        var upload = layui.upload;
+        upload.render({
+          elem: '#uploadBtn',
+          url: '<%= upload_img_files_path %>',
+          size: 2048, // 2MB
+          accept: 'images',
+          exts: 'jpg|jpeg|png|gif|webp|svg',
+          done: function(res){
+            if (res.success) {
+              $('#iconInput').val(res.url);
+              $('#previewImg').attr('src', res.preivew_url).show();
+              layer.msg('上传成功', {icon: 1});
+            } else {
+              layer.msg(res.error || '上传失败', {icon: 2});
+            }
+          },
+          error: function(){
+            layer.msg('上传失败', {icon: 2});
           }
-        },
-        error: function(){
-          layer.msg('上传失败', {icon: 2});
-        }
-      });
+        });
+      <% end %>
     });
 </script>
