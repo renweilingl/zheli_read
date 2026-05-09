@@ -1,41 +1,32 @@
 namespace :reports do
-  def extract_pdf_text(pdf_path)
-    reader = PDF::Reader.new(pdf_path)
-    full_text = ""
-
-    reader.pages.each do |page|
-      text = page.text
-
-      if text.strip.empty?
-        puts "⚠️ 页面 #{page.number} 无文本，检查原始内容..."
-
-        # 检查是否有文本操作符
-        if page.raw_content =~ /Tj|TJ|'|"/
-          puts "   → 发现文本操作符，但提取失败（可能是字体问题）"
-          # 可以尝试备用方法或记录页面编号
-        else
-          puts "   → 没有文本操作符，此页为图片型 PDF"
-        end
-      else
-        full_text << text << "\n"
-      end
-    end
-    full_text
-  end
-
   desc "任务测试"
   task :job_test => :environment do
-    #text = extract_pdf_text("1.pdf")
-    #puts text if text.length > 0
-    reader = PDF::Reader.new("1.pdf")
-    puts reader.info
-    #puts "PDF 版本: #{reader.pdf_version}"
-    #puts "页数: #{reader.page_count}"
-
-    reader.pages.each_with_index do |page, i|
-      puts "=== 第 #{i+1} 页 ==="
-    #  puts page.text
-      puts page.raw_content
+    recommends = []
+    grade = Grade.find_by_id 1
+    grade.recommends.sorted.each do |x|
+      recommends << {recommend_id: x.id, name: x.name}
     end
+    p recommends.as_json
+
+    unless recommends.blank?
+      recommend = Recommend.find recommends[0][:recommend_id]
+      content_groups = []
+      recommend.content_groups.sorted.each do |content_group|
+        contents = []
+        content_group.contents.sorted.each do |content|
+          contents << {content_type: content.content_type,
+                       content_name: content.content_name,
+                       display_img_url: content.display_img_url,
+                       compilation_id: content.compilation_id,
+                       book_id: content.book_id,
+                       author_id: content.author_id}
+        end
+        content_groups << {name: content_group.name, group_type: content_group.group_type, contents: contents}
+      end
+      recommend_info = {recommend_id: recommend.id, content_groups: content_groups}
+
+      p recommend_info.as_json
+    end
+
   end
 end
