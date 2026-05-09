@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Health check for kamal-proxy
+  get "up" => "rails/health#show", as: :rails_health_check
+
   # Root route
   root "pages#home"
 
