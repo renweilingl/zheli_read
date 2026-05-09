@@ -2,7 +2,7 @@
 # 用于将 ZheliRead 部署到阿里云服务器
 
 service: zheli_read
-image: zheli_read/zheli_read
+image: voicebook/zheli_read
 
 # ==================== 服务器配置 ====================
 servers:
@@ -30,13 +30,19 @@ env:
     RAILS_MAX_THREADS: 5
     TZ: Asia/Shanghai
   secret:
-    - SECRET_KEY_BASE
+    # 生产环境数据库
     - DATABASE_PRD_USERNAME
     - DATABASE_PRD_PASSWORD
     - DATABASE_PRD_HOST
     - DATABASE_PRD_PORT
     - DATABASE_PRD_DATABASE
-    - ALIYUN_ACCESS_KEY_ID
+    # 测试环境数据库
+    - DATABASE_DEV_USERNAME
+    - DATABASE_DEV_PASSWORD
+    - DATABASE_DEV_HOST
+    - DATABASE_DEV_PORT
+    - DATABASE_DEV_DATABASE
+    - SECRET_KEY_BASE
     - ALIYUN_ACCESS_KEY_SECRET
     - REDIS_URL
     - REDIS_PASSWORD
