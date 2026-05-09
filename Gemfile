@@ -9,7 +9,6 @@ gem 'psych', '< 4'
 gem "sprockets-rails"
 
 gem 'mysql2'
-gem 'yettings'
 
 gem "puma", ">= 5.0"
 

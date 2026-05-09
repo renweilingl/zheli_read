@@ -491,7 +491,6 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (3.1.8)
-    yettings (0.1.1)
     zeitwerk (2.7.5)
 
 PLATFORMS
@@ -562,7 +561,6 @@ DEPENDENCIES
   turbolinks (~> 5)
   unicorn
   will_paginate (~> 3.1.0)
-  yettings
 
 RUBY VERSION
    ruby 3.3.3p89
