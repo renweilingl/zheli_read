@@ -1,6 +1,5 @@
 # Kamal secrets
-.kamal/secrets
-.kamal/secrets.*
+.kamal
 
 config/yetting.yml
 config/credentials.yml.enc

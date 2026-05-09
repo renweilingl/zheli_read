@@ -12,6 +12,6 @@ class CreateRecommends < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :recommends, [:grade_id, :sn]
+    add_index :recommends, [:grade_id, :sn], if_not_exists: true
   end
 end

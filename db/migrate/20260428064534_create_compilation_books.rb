@@ -7,6 +7,6 @@ class CreateCompilationBooks < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :compilation_books, [:compilation_id, :book_id], unique: true
+    add_index :compilation_books, [:compilation_id, :book_id], unique: true, if_not_exists: true
   end
 end

@@ -9,6 +9,6 @@ class CreateCategories < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :categories, :level
+    add_index :categories, :level, if_not_exists: true
   end
 end
