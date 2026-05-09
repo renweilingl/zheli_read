@@ -2,7 +2,6 @@
 .kamal/secrets
 .kamal/secrets.*
 
-config/database.yml
 config/yetting.yml
 config/credentials.yml.enc
 shared
