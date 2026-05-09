@@ -39,14 +39,12 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # 安装与 Gemfile.lock 匹配的 Bundler 版本（使用阿里云镜像源加速）
-RUN gem install bundler -v 4.0.10 --source https://mirrors.aliyun.com/rubygems/ --no-document
+RUN gem install bundler -v 4.0.10 --no-document
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 
-# 使用阿里云镜像源加速 bundle install
 RUN bundle config set frozen false && \
-    bundle config set mirror.https://rubygems.org https://mirrors.aliyun.com/rubygems/ && \
     bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile -j 1 --gemfile
