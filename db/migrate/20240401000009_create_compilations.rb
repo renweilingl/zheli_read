@@ -43,7 +43,7 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :compilations, :name, unique: true
+    add_index :compilations, :name, unique: true, if_not_exists: true
 
     # 创建合辑与年级的关联表
     create_table :compilation_grades, id: false, if_not_exists: true do |t|
@@ -53,6 +53,6 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
     end
 
     # 添加复合索引
-    add_index :compilation_grades, [:compilation_id, :grade_id], unique: true
+    add_index :compilation_grades, [:compilation_id, :grade_id], unique: true, if_not_exists: true
   end
 end

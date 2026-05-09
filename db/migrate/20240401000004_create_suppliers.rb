@@ -5,6 +5,6 @@ class CreateSuppliers < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :suppliers, :name
+    add_index :suppliers, :name, if_not_exists: true
   end
 end

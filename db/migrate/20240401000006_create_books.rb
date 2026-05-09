@@ -52,7 +52,7 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :books, :name
+    add_index :books, :name, if_not_exists: true
 
     # 创建合辑与年级的关联表
     create_table :book_grades, id: false, if_not_exists: true do |t|
@@ -61,6 +61,6 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :book_grades, [:book_id, :grade_id], unique: true
+    add_index :book_grades, [:book_id, :grade_id], unique: true, if_not_exists: true
   end
 end
