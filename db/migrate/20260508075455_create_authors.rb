@@ -7,7 +7,7 @@ class CreateAuthors < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_column :books, :author_id, :bigint
-    add_column :books, :compilations, :bigint
+    add_column :books, :author_id, :bigint unless column_exists?(:books, :author_id)
+    add_column :books, :compilations, :bigint unless column_exists?(:books, :compilations)
   end
 end
