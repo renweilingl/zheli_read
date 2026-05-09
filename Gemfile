@@ -21,6 +21,7 @@ gem 'unicorn'
 gem 'oauth2'
 gem 'sorcery'
 gem 'pundit'
+gem 'audited'
 
 gem 'mina'
 #gem 'mina-sidekiq', require: false

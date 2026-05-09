@@ -1,4 +1,6 @@
 class Author < ApplicationRecord
+  audited
+
   has_many :books
   has_many :contents
 
