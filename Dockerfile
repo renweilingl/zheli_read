@@ -55,6 +55,9 @@ RUN bundle config set frozen false && \
 # Copy application code
 COPY . .
 
+# Precompile assets for production
+RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
+
 # Precompile bootsnap code for faster boot times.
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
 

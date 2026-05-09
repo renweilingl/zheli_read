@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   #get "register", to: "users#new"
   #post "register", to: "users#create"
-  #get "dashboard", to: "pages#dashboard"
+  get "dashboard", to: "pages#dashboard"
 
   resources :files, only: [:show] do
     collection do

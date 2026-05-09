@@ -10,18 +10,14 @@
           <p class="hero-subtitle">基于 Ruby on Rails 和 Layui 构建的现代化管理平台</p>
           <div class="hero-buttons">
             <% if current_user %>
-              <%= link_to "进入系统", dashboard_path, class: "layui-btn layui-btn-lg layui-btn-green" do %>
+              <%= link_to dashboard_path, class: "layui-btn layui-btn-lg layui-btn-green" do %>
                 <i class="layui-icon layui-icon-release"></i>
                 进入系统
               <% end %>
             <% else %>
-              <%= link_to "立即登录", login_path, class: "layui-btn layui-btn-lg layui-btn-green" do %>
+              <%= link_to login_path, class: "layui-btn layui-btn-lg layui-btn-green" do %>
                 <i class="layui-icon layui-icon-username"></i>
                 立即登录
-              <% end %>
-              <%= link_to "注册账号", register_path, class: "layui-btn layui-btn-lg layui-btn-primary" do %>
-                <i class="layui-icon layui-icon-add-1"></i>
-                注册账号
               <% end %>
             <% end %>
           </div>
