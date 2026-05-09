@@ -9,7 +9,7 @@
 
 class CreateCompilations < ActiveRecord::Migration[7.1] 
   def change
-    create_table :compilations do |t|
+    create_table :compilations, if_not_exists: true do |t|
       t.string :name, null: false, comment: '合辑名称'
       t.string :banner_image_url, comment: '合辑banner图片URL (1500×932, ≤500KB)'
       t.string :banner_image_name, comment: '合辑banner图片文件名'
@@ -46,7 +46,7 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
     add_index :compilations, :name, unique: true
 
     # 创建合辑与年级的关联表
-    create_table :compilation_grades, id: false do |t|
+    create_table :compilation_grades, id: false, if_not_exists: true do |t|
       t.references :compilation, null: false, foreign_key: true
       t.references :grade, null: false, foreign_key: true
       t.timestamps

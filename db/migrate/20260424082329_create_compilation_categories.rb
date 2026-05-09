@@ -1,6 +1,6 @@
 class CreateCompilationCategories < ActiveRecord::Migration[7.1]
   def change
-    create_table :compilation_categories, id: false do |t|
+    create_table :compilation_categories, id: false, if_not_exists: true do |t|
       t.references :compilation, null: false, foreign_key: true
       t.references :category, null: false, foreign_key: true
       t.timestamps

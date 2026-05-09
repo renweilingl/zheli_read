@@ -1,6 +1,6 @@
 class CreateContents < ActiveRecord::Migration[7.1]
   def change
-    create_table :contents do |t|
+    create_table :contents, if_not_exists: true do |t|
       t.references :content_group, null: false, foreign_key: true, comment: '关联内容分组'
       t.string :content_type, null: false, comment: '类型'
 

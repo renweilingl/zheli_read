@@ -1,6 +1,6 @@
 class CreateChapters < ActiveRecord::Migration[7.1]
   def change
-    create_table :chapters do |t|
+    create_table :chapters, if_not_exists: true do |t|
       # 基本信息                                                                 
       t.references :book, null: false, foreign_key: true, comment: '所属绘本'    
       t.string :name, null: false, comment: '章节名称'                           

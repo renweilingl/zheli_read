@@ -3,7 +3,7 @@
 # 创建分类子类表
 class CreateCategorySubs < ActiveRecord::Migration[7.1]
   def change
-    create_table :category_subs do |t|
+    create_table :category_subs, if_not_exists: true do |t|
       t.references :category, null: false, foreign_key: true, comment: '关联分类'
       t.string :name, null: false, comment: '子类名称'
       t.string :icon, comment: '图标URL'

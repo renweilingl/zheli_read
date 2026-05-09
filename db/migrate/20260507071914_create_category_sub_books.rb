@@ -1,6 +1,6 @@
 class CreateCategorySubBooks < ActiveRecord::Migration[7.1]
   def change
-    create_table :category_sub_books do |t|
+    create_table :category_sub_books, if_not_exists: true do |t|
       t.references :category_sub, null: false, foreign_key: true
       t.references :book, null: false, foreign_key: true
 

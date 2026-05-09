@@ -1,6 +1,6 @@
 class CreateBooks < ActiveRecord::Migration[7.1]
   def change
-    create_table :books do |t|
+    create_table :books, if_not_exists: true do |t|
       # 核心基础信息
       t.string :name, null: false, comment: '绘本名称'
       t.string :cover_image_url, comment: '绘本封面URL'
@@ -55,7 +55,7 @@ class CreateBooks < ActiveRecord::Migration[7.1]
     add_index :books, :name
 
     # 创建合辑与年级的关联表
-    create_table :book_grades, id: false do |t|
+    create_table :book_grades, id: false, if_not_exists: true do |t|
       t.references :book, null: false, foreign_key: true
       t.references :grade, null: false, foreign_key: true
       t.timestamps
