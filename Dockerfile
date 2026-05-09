@@ -55,8 +55,9 @@ RUN bundle config set frozen false && \
 # Copy application code
 COPY . .
 
-# Precompile assets for production
-RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
+# Copy static assets to public directory for direct serving
+RUN mkdir -p public/assets/v1 && cp app/assets/stylesheets/v1/layui.css public/assets/v1/layui.css && \
+    cp app/assets/javascripts/layui.js public/assets/layui.js 2>/dev/null || true
 
 # Precompile bootsnap code for faster boot times.
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
