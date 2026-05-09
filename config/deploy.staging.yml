@@ -2,7 +2,7 @@
 # 部署到测试服务器 8.136.142.85
 
 service: zheli_read-staging
-image: zheli_read/zheli_read-staging
+image: voicebook/zheli_read-staging
 
 # ==================== 服务器配置 ====================
 servers:
