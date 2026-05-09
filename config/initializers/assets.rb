@@ -6,7 +6,7 @@ Rails.application.config.assets.version = "1.0"
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 
-Rails.application.config.assets.precompile += %w[application.css wangeditor.css]
+Rails.application.config.assets.precompile += %w[application.css wangeditor.css v1/layui.css]
 Rails.application.config.assets.precompile += %w[application.js wangeditor.js]
 
 # Precompile additional assets.
