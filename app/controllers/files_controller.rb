@@ -37,7 +37,7 @@ class FilesController < ApplicationController
         code: 0,
         msg: '上传成功',
         data: {
-          file_url: "http://#{Yetting.aliyun_oss['aliyun_bucket']}.oss-cn-beijing.aliyuncs.com/#{new_filename}",
+          file_url: "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-cn-beijing.aliyuncs.com/#{new_filename}",
           #file_url: oss_path,
           file_type: extension,
           file_name: file.original_filename,

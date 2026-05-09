@@ -21,7 +21,7 @@ class FileMap
   end
 
   def secrity_src
-    @src + "?" + "OSSAccessKeyId=#{Yetting.aliyun_oss['aliyun_access_id']}" + "&Expires=#{@date}" + "&Signature=#{get_signature}" 
+    @src + "?" + "OSSAccessKeyId=#{ENV["ALIYUN_ACCESS_KEY_ID"]}" + "&Expires=#{@date}" + "&Signature=#{get_signature}" 
   end
 
   def get_signature
@@ -47,7 +47,7 @@ class FileMap
   end
 
   def sign(string_to_sign)
-    key = Yetting.aliyun_oss["aliyun_access_key"]
+    key = ENV["ALIYUN_ACCESS_KEY_SECRET"]
     Base64.strict_encode64(
     OpenSSL::HMAC.digest('sha1', key, string_to_sign))
   end
