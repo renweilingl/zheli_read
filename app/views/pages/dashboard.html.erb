@@ -26,7 +26,7 @@
     <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
       <div class="stat-icon"><i class="layui-icon layui-icon-read"></i></div>
       <div class="stat-content">
-        <div class="stat-value"><%= Category.grade_levels.count %></div>
+        <div class="stat-value"><%= Category.by_level(1).count %></div>
         <div class="stat-label">年级分类</div>
       </div>
     </div>
