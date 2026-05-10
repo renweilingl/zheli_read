@@ -48,8 +48,8 @@ Rails.application.configure do
   config.assume_ssl = true
   config.force_ssl = false
 
-  # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
+  # Log to file instead of STDOUT
+  config.logger = ActiveSupport::Logger.new(Rails.root.join("log", "production.log"), 1, 100.megabytes)
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 

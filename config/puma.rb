@@ -47,7 +47,4 @@ pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 # 将 Puma 日志输出到文件（生产环境）
 if ENV["RAILS_ENV"] == "production"
   stdout_redirect "log/puma.log", "log/puma_error.log", true
-  log_formatter do |*args|
-    Time.now.iso8601 + " " + args.join(" ") + "\n"
-  end
 end
