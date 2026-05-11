@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:notice] = "登录成功！"
-          redirect_to dashboard_path
+          redirect_to :admin_grades
         end
         format.json { render json: { success: true, message: "登录成功", user: user_json(user) } }
       end
