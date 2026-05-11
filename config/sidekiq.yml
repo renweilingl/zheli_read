@@ -1,6 +1,4 @@
 ---
-:logfile: log/sidekiq.log
-:pidfile: tmp/pids/sidekiq.pid
 :verbose: false
 :concurrency: 1
 :tag: zheli
@@ -14,4 +12,3 @@ development:
   :concurrency: 1
 production:
   :concurrency: 2
-
