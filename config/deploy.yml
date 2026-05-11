@@ -76,3 +76,4 @@ builder:
 # ==================== 数据卷挂载 ====================
 volumes:
   - /zheli_read/log:/rails/log
+  - /zheli_read/tmp:/rails/tmp
