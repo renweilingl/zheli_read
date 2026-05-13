@@ -1,4 +1,6 @@
 class Content < ApplicationRecord
+  audited
+
   belongs_to :content_group
   belongs_to :compilation, optional: true
   belongs_to :book, optional: true

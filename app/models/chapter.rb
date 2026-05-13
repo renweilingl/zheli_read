@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Chapter < ApplicationRecord
+  audited
   belongs_to :book
 
   # 内容文件类型

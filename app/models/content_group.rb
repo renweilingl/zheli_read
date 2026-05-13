@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ContentGroup < ApplicationRecord
+  audited
+
   belongs_to :recommend
   has_many :contents, dependent: :destroy
 

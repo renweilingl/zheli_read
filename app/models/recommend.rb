@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Recommend < ApplicationRecord
+  audited
   belongs_to :grade
   has_many :content_groups, dependent: :destroy
 

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  audited
   authenticates_with_sorcery!
 
   # 角色枚举

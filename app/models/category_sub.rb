@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CategorySub < ApplicationRecord
+  audited
   belongs_to :category
   has_and_belongs_to_many :books, join_table: :category_sub_books
 

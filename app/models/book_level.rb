@@ -10,6 +10,7 @@
 #  deleted_at :datetime         # 软删除
 #
 class BookLevel < ApplicationRecord
+  audited
   validates :name, presence: true, length: { maximum: 50 }
   validates :sn, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   

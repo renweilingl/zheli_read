@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Book < ApplicationRecord
+  audited
   belongs_to :supplier, optional: true
   belongs_to :category
   belongs_to :author, optional: true

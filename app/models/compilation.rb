@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Compilation < ApplicationRecord
+  audited
   has_and_belongs_to_many :grades, join_table: :compilation_grades
   has_and_belongs_to_many :categories, join_table: :compilation_categories
   has_and_belongs_to_many :books, join_table: :compilation_books
