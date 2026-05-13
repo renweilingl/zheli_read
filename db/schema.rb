@@ -206,6 +206,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_13_075540) do
     t.float "price", comment: "实际原价"
     t.integer "sn", default: 0, comment: "排序"
     t.integer "effective_days", comment: "有效天数"
+    t.boolean "is_delete", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
