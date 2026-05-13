@@ -34,4 +34,12 @@ class ContentGroup < ApplicationRecord
     GROUP_TYPE_NAMES[group_type.to_sym] || group_type
   end
 
+  def content_names
+    res = []
+    contents.each do |x|
+      res << x.content_name
+    end
+    res.join(" | ")
+  end
+
 end
