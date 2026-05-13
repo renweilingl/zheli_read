@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_09_071207) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_13_075540) do
   create_table "audits", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
@@ -196,6 +196,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_09_071207) do
     t.string "group_name", limit: 8
     t.string "name", limit: 16
     t.string "description", limit: 32
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "packages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", limit: 16, comment: "套餐名字"
+    t.float "origin_price", comment: "原价"
+    t.float "price", comment: "实际原价"
+    t.integer "effective_days", comment: "有效天数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
