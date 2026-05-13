@@ -27,7 +27,7 @@
           <th width="220">名称</th>
           <th width="80" style="text-align:center;">状态</th>
           <th width="60">排序</th>
-          <th>内容分组</th>
+          <th>分组内容</th>
           <th width="160">创建时间</th>
           <th width="220" style="text-align:center;">操作</th>
         </tr>
@@ -44,7 +44,7 @@
               <% end %>
             </td>
             <td><%= r.sn %></td>
-            <td></td>
+            <td><%= r.content_groups.pluck(:name).join(" | ") %></td>
             <td><%= r.created_at.strftime('%Y-%m-%d') %></td>
             <td>
               <div class="layui-btn-group">
