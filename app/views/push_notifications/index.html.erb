@@ -3,7 +3,7 @@
 <div class="page-header">
   <h1 class="page-title">推送管理</h1>
   <div class="page-actions">
-    <%= link_to new_admin_push_notification_path, class: "layui-btn" do %>
+    <%= link_to new_push_notification_path, class: "layui-btn" do %>
       <i class="layui-icon layui-icon-add-1"></i>
       新建推送
     <% end %>
@@ -67,7 +67,7 @@
 <!-- 搜索/筛选 -->
 <div class="layui-card" style="margin-bottom: 15px;">
   <div class="layui-card-body">
-    <form class="layui-form" method="GET" action="<%= admin_push_notifications_path %>" lay-filter="search-form">
+    <form class="layui-form" method="GET" action="<%= push_notifications_path %>" lay-filter="search-form">
       <div class="layui-row layui-col-space10">
         <div class="layui-col-md3">
           <select name="push_type" lay-filter="push_type">
@@ -102,105 +102,93 @@
 <!-- 推送列表 -->
 <div class="layui-card">
   <div class="layui-card-body">
-    <% if @push_notifications.any? %>
-      <table class="layui-table" lay-skin="line" lay-size="lg">
-        <thead>
+    <table class="layui-table" lay-skin="line" lay-size="lg">
+      <thead>
+        <tr>
+          <th style="width: 60px;">ID</th>
+          <th style="width: 80px;">类型</th>
+          <th>标题</th>
+          <th style="width: 120px;">推送范围</th>
+          <th style="width: 80px;">状态</th>
+          <th style="width: 70px;">发送数</th>
+          <th style="width: 70px;">点击数</th>
+          <th style="width: 80px;">送达率</th>
+          <th style="width: 160px;">创建时间</th>
+          <th style="width: 200px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @push_notifications.each do |push| %>
           <tr>
-            <th style="width: 60px;">ID</th>
-            <th style="width: 80px;">类型</th>
-            <th>标题</th>
-            <th style="width: 120px;">推送范围</th>
-            <th style="width: 80px;">状态</th>
-            <th style="width: 70px;">发送数</th>
-            <th style="width: 70px;">点击数</th>
-            <th style="width: 80px;">送达率</th>
-            <th style="width: 160px;">创建时间</th>
-            <th style="width: 200px;">操作</th>
+            <td><%= push.id %></td>
+            <td>
+              <% if push.push_type_system_notification? %>
+                <span class="layui-badge layui-bg-blue">系统</span>
+              <% else %>
+                <span class="layui-badge layui-bg-orange">活动</span>
+              <% end %>
+            </td>
+            <td>
+              <a href="<%= push_notification_path(push) %>" class="link-primary"><%= truncate(push.title, length: 20) %></a>
+            </td>
+            <td><%= push.scope_display %></td>
+            <td>
+              <% case push.status %>
+              <% when 'draft' %>
+                <span class="layui-badge layui-bg-gray">草稿</span>
+              <% when 'scheduled' %>
+                <span class="layui-badge layui-bg-cyan">定时</span>
+              <% when 'sending' %>
+                <span class="layui-badge">发送中</span>
+              <% when 'sent' %>
+                <span class="layui-badge layui-bg-green">已发送</span>
+              <% when 'partial' %>
+                <span class="layui-badge layui-bg-yellow">部分</span>
+              <% when 'failed' %>
+                <span class="layui-badge layui-bg-red">失败</span>
+              <% end %>
+            </td>
+            <td><%= push.send_count %></td>
+            <td><%= push.click_count %></td>
+            <td><%= number_to_percentage(push.delivery_rate || 0, precision: 1) %></td>
+            <td><%= push.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+            <td>
+              <div class="layui-btn-group">
+                <%= link_to push_notification_path(push), class: "layui-btn layui-btn-xs" do %>
+                  <i class="layui-icon layui-icon-about"></i> 详情
+                <% end %>
+                <% if push.draft? || push.scheduled? %>
+                  <%= link_to edit_push_notification_path(push), class: "layui-btn layui-btn-xs layui-btn-normal" do %>
+                    <i class="layui-icon layui-icon-edit"></i> 编辑
+                  <% end %>
+                  <%= link_to send_push_push_notification_path(push), 
+                      method: :post,
+                      data: { confirm: push.scheduled? ? '确认发送此推送？' : '确认立即推送？' },
+                      class: "layui-btn layui-btn-xs layui-btn-warm" do %>
+                    <i class="layui-icon layui-icon-about"></i> 发送
+                  <% end %>
+                  <%= link_to push_notification_path(push), 
+                      method: :delete,
+                      data: { confirm: '确定删除？' },
+                      class: "layui-btn layui-btn-xs layui-btn-danger" do %>
+                    <i class="layui-icon layui-icon-delete"></i> 删除
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @push_notifications.each do |push| %>
-            <tr>
-              <td><%= push.id %></td>
-              <td>
-                <% if push.push_type_system_notification? %>
-                  <span class="layui-badge layui-bg-blue">系统</span>
-                <% else %>
-                  <span class="layui-badge layui-bg-orange">活动</span>
-                <% end %>
-              </td>
-              <td>
-                <a href="<%= admin_push_notification_path(push) %>" class="link-primary"><%= truncate(push.title, length: 20) %></a>
-              </td>
-              <td><%= push.scope_display %></td>
-              <td>
-                <% case push.status %>
-                <% when 'draft' %>
-                  <span class="layui-badge layui-bg-gray">草稿</span>
-                <% when 'scheduled' %>
-                  <span class="layui-badge layui-bg-cyan">定时</span>
-                <% when 'sending' %>
-                  <span class="layui-badge">发送中</span>
-                <% when 'sent' %>
-                  <span class="layui-badge layui-bg-green">已发送</span>
-                <% when 'partial' %>
-                  <span class="layui-badge layui-bg-yellow">部分</span>
-                <% when 'failed' %>
-                  <span class="layui-badge layui-bg-red">失败</span>
-                <% end %>
-              </td>
-              <td><%= push.send_count %></td>
-              <td><%= push.click_count %></td>
-              <td><%= number_to_percentage(push.delivery_rate || 0, precision: 1) %></td>
-              <td><%= push.created_at.strftime('%Y-%m-%d %H:%M') %></td>
-              <td>
-                <div class="layui-btn-group">
-                  <%= link_to admin_push_notification_path(push), class: "layui-btn layui-btn-xs" do %>
-                    <i class="layui-icon layui-icon-about"></i> 详情
-                  <% end %>
-                  <% if push.draft? || push.scheduled? %>
-                    <%= link_to edit_admin_push_notification_path(push), class: "layui-btn layui-btn-xs layui-btn-normal" do %>
-                      <i class="layui-icon layui-icon-edit"></i> 编辑
-                    <% end %>
-                    <%= link_to send_push_admin_push_notification_path(push), 
-                        method: :post,
-                        data: { confirm: push.scheduled? ? '确认发送此推送？' : '确认立即推送？' },
-                        class: "layui-btn layui-btn-xs layui-btn-warm" do %>
-                      <i class="layui-icon layui-icon-about"></i> 发送
-                    <% end %>
-                    <%= link_to admin_push_notification_path(push), 
-                        method: :delete,
-                        data: { confirm: '确定删除？' },
-                        class: "layui-btn layui-btn-xs layui-btn-danger" do %>
-                      <i class="layui-icon layui-icon-delete"></i> 删除
-                    <% end %>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      
-      <!-- 分页 -->
-      <div class="layui-row" style="margin-top: 15px;">
-        <div class="layui-col-md12" style="text-align: center;">
-          <%= will_paginate @push_notifications, renderer: WillPaginate::ActionView::LinkRenderer, 
-              previous_label: '上一页', next_label: '下一页', 
-              class: 'layui-laypage', inner_window: 2, outer_window: 1 %>
-        </div>
-      </div>
-    <% else %>
-      <div class="layui-row" style="padding: 60px 0; text-align: center;">
-        <div style="font-size: 48px; color: #d2d6dc; margin-bottom: 15px;">
-          <i class="layui-icon layui-icon-face-smile"></i>
-        </div>
-        <div style="color: #9ca3af; font-size: 16px;">暂无推送记录</div>
-        <%= link_to new_admin_push_notification_path, class: "layui-btn layui-btn-primary", style: "margin-top: 15px;" do %>
-          <i class="layui-icon layui-icon-add-1"></i> 新建推送
         <% end %>
+      </tbody>
+    </table>
+      
+    <!-- 分页 -->
+    <div class="layui-row" style="margin-top: 15px;">
+      <div class="layui-col-md12" style="text-align: center;">
+        <%= will_paginate @push_notifications, renderer: WillPaginate::ActionView::LinkRenderer, 
+            previous_label: '上一页', next_label: '下一页', 
+            class: 'layui-laypage', inner_window: 2, outer_window: 1 %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>
 
