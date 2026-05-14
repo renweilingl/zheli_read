@@ -84,4 +84,10 @@ Rails.application.routes.draw do
   namespace :operator do
     resources :packages
   end
+
+  resources :push_notifications, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    member do
+      post :send_push
+    end
+  end
 end

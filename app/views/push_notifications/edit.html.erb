@@ -1,0 +1,186 @@
+<% content_for :title, '编辑推送' %>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-header">
+      <span class="layui-breadcrumb">
+        <a href="<%= admin_home_path %>">首页</a>
+        <a href="<%= admin_push_notifications_path %>">推送管理</a>
+        <a><cite>编辑推送</cite></a>
+      </span>
+    </div>
+    <div class="layui-card-body" style="padding: 20px 40px;">
+      <div class="layui-form" lay-filter="push-notification-form">
+        <%= form_with model: @push_notification, url: admin_push_notification_path(@push_notification), 
+                      method: :patch, local: true, html: { class: 'layui-form' } do |f| %>
+          
+          <!-- 推送类型 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required">*</span>推送类型</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.select :push_type, 
+                  options_for_select([['系统通知', 'system_notification'], ['活动通知', 'activity_notification']], @push_notification.push_type),
+                  { prompt: '请选择推送类型' }, 
+                  { class: 'layui-input', lay_verify: 'required' } %>
+            </div>
+          </div>
+          
+          <!-- 标题 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required">*</span>标题</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.text_field :title, 
+                  placeholder: '请输入推送标题', 
+                  maxlength: 20,
+                  class: 'layui-input',
+                  lay_verify: 'required',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid layui-word-aux"><span id="title-count"><%= @push_notification.title.length %></span>/20</div>
+          </div>
+          
+          <!-- 正文 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required">*</span>正文</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.text_area :body, 
+                  placeholder: '请输入推送正文内容',
+                  maxlength: 50,
+                  style: 'height: 80px;',
+                  class: 'layui-textarea',
+                  lay_verify: 'required',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid layui-word-aux"><span id="body-count"><%= @push_notification.body.length %></span>/50</div>
+          </div>
+          
+          <!-- 跳转链接 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label">跳转链接</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.url_field :link_url,
+                  placeholder: 'https://...',
+                  class: 'layui-input',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid layui-word-aux">选填，点击推送后的跳转地址</div>
+          </div>
+          
+          <hr class="layui-border-green" style="margin: 16px 0; opacity: 0.3;">
+          <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">推送范围</div>
+          
+          <!-- 推送范围 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required">*</span>推送范围</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.select :push_scope, 
+                  options_for_select([['全部用户', 'all_users'], ['指定年龄段', 'age_range'], ['指定用户群体', 'specific_users']], @push_notification.push_scope),
+                  { prompt: '请选择推送范围' }, 
+                  { class: 'layui-input', lay_verify: 'required', id: 'push-scope-select' } %>
+            </div>
+          </div>
+          
+          <!-- 年龄段设置 -->
+          <div class="layui-form-item age-range-fields" style="display: <%= @push_notification.age_range? ? '' : 'none' %>;">
+            <label class="layui-form-label">年龄段</label>
+            <div class="layui-input-inline" style="width: 180px;">
+              <%= f.number_field :min_age,
+                  placeholder: '最小年龄',
+                  min: 0,
+                  class: 'layui-input',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid">~</div>
+            <div class="layui-input-inline" style="width: 180px;">
+              <%= f.number_field :max_age,
+                  placeholder: '最大年龄',
+                  min: 0,
+                  class: 'layui-input',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid layui-word-aux">岁</div>
+          </div>
+          
+          <!-- 指定用户群体 -->
+          <div class="layui-form-item specific-user-fields" style="display: <%= @push_notification.specific_users? ? '' : 'none' %>;">
+            <label class="layui-form-label">用户群体</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.text_area :user_group,
+                  placeholder: '请输入用户ID，多个用逗号分隔',
+                  style: 'height: 60px;',
+                  class: 'layui-textarea',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid layui-word-aux">输入用户ID，多个用英文逗号分隔</div>
+          </div>
+          
+          <hr class="layui-border-green" style="margin: 16px 0; opacity: 0.3;">
+          <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">推送时间</div>
+          
+          <!-- 推送方式 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label">推送方式</label>
+            <div class="layui-input-block">
+              <input type="radio" name="push_mode" value="immediate" title="立即推送" lay-filter="push-mode"
+                     <%= 'checked' unless @push_notification.scheduled? %>>
+              <input type="radio" name="push_mode" value="scheduled" title="定时推送" lay-filter="push-mode"
+                     <%= 'checked' if @push_notification.scheduled? %>>
+            </div>
+          </div>
+          
+          <!-- 定时推送时间 -->
+          <div class="layui-form-item scheduled-time-fields" style="display: <%= @push_notification.scheduled? ? '' : 'none' %>;">
+            <label class="layui-form-label">定时时间</label>
+            <div class="layui-input-inline" style="width: 400px;">
+              <%= f.datetime_local_field :scheduled_at,
+                  class: 'layui-input',
+                  autocomplete: 'off' %>
+            </div>
+            <div class="layui-form-mid layui-word-aux">选择定时推送的时间</div>
+          </div>
+          
+          <hr class="layui-border-green" style="margin: 16px 0; opacity: 0.3;">
+          
+          <!-- 提交按钮 -->
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <%= f.submit '保存草稿', class: 'layui-btn', name: 'commit_type', value: 'draft' %>
+              <%= f.submit '保存并发送', class: 'layui-btn layui-btn-warm', name: 'commit_type', value: 'send' %>
+              <%= link_to '取消', admin_push_notifications_path, class: 'layui-btn layui-btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .required { color: #ff5722; margin-right: 3px; }
+</style>
+
+<%= javascript_tag do %>
+  // 字数统计
+  document.querySelector('input[name="push_notification[title]"]')?.addEventListener('input', function() {
+    document.getElementById('title-count').textContent = this.value.length;
+  });
+  
+  document.querySelector('textarea[name="push_notification[body]"]')?.addEventListener('input', function() {
+    document.getElementById('body-count').textContent = this.value.length;
+  });
+  
+  // 推送范围切换
+  document.getElementById('push-scope-select')?.addEventListener('change', function() {
+    var val = this.value;
+    document.querySelector('.age-range-fields').style.display = val === 'age_range' ? '' : 'none';
+    document.querySelector('.specific-user-fields').style.display = val === 'specific_users' ? '' : 'none';
+  });
+  
+  // 推送方式切换
+  document.querySelectorAll('input[name="push_mode"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      document.querySelector('.scheduled-time-fields').style.display = 
+        this.value === 'scheduled' ? '' : 'none';
+    });
+  });
+<% end %>
