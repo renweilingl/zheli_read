@@ -28,6 +28,8 @@ class CreatePushNotifications < ActiveRecord::Migration[7.1]
       t.integer :click_count, default: 0
       t.decimal :delivery_rate, precision: 5, scale: 2, default: 0.0
 
+      t.boolean :is_delete, default: false
+
       t.timestamps
     end
 

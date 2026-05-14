@@ -226,6 +226,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_13_075540) do
     t.integer "send_count", default: 0
     t.integer "click_count", default: 0
     t.decimal "delivery_rate", precision: 5, scale: 2, default: "0.0"
+    t.boolean "is_delete", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["push_type"], name: "index_push_notifications_on_push_type"
