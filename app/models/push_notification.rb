@@ -20,8 +20,7 @@ class PushNotification < ApplicationRecord
     scheduled: 1,
     sending: 2,
     sent: 3,
-    partial: 4,
-    failed: 5
+    failed: 4
   }, prefix: true
 
   # 验证
@@ -68,7 +67,6 @@ class PushNotification < ApplicationRecord
     when 'scheduled' then '待发送'
     when 'sending' then '发送中'
     when 'sent' then '已发送'
-    when 'partial' then '部分送达'
     when 'failed' then '发送失败'
     end
   end
@@ -82,5 +80,9 @@ class PushNotification < ApplicationRecord
 
   def set_status_defaults
     self.status ||= :draft
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["body", "click_count", "created_at", "delivery_rate", "id", "id_value", "is_delete", "link_url", "max_age", "min_age", "push_scope", "push_type", "scheduled_at", "send_count", "sent_at", "status", "title", "updated_at", "user_group"]
   end
 end

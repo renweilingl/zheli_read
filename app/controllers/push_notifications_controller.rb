@@ -6,9 +6,10 @@ class PushNotificationsController < ApplicationController
 
   def index
     authorize PushNotification
-    @push_notifications = PushNotification
-                          .sorted
-                          .paginate(page: params[:page], per_page: params[:per_page] || 15)
+    @per_page = params[:per_page] || 20
+
+    @q = PushNotification.ransack(params[:q])
+    @push_notifications = @q.result.sorted.paginate(page: params[:page], per_page: @per_page)
   end
 
   def show

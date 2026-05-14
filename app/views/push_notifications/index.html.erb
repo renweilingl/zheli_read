@@ -1,108 +1,37 @@
-<% content_for :title, "推送管理" %>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">运营工具</a>
+      <a><cite>推送管理</cite></a>
+    </span>                                                                      
+    <%= render 'common/user_info' %>
+  </div>
+  <div class="x-body">
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :push_notifications, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline" style="width: 180px;">
+            <%= f.select :push_type_eq, options_for_select([['系统通知', 'system_notification'], ['活动通知', 'activity_notification']], @q.push_type_eq), { include_blank: "全部通知类型" } %>
+          </div>
+          <div class="layui-input-inline" style="width: 180px;">
+             <%= f.select :status_eq, options_for_select([['草稿', 'draft'], ['待发送', 'scheduled'],['发送中', 'sending'],['已发送', 'sent'], ['发送失败', 'failed']], @q.status_eq), { include_blank: "全部状态" } %>
+          </div>
+          <div class="layui-input-inline" style="width: 160px;">
+            <%= f.text_field :title_cont, class: :'layui-input', placeholder: "搜索标题" %>
+          </div>
+          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :push_notifications, class: "layui-btn layui-btn-primary" %>
+        <% end %>
+      </div>
 
-<div class="page-header">
-  <h1 class="page-title">推送管理</h1>
-  <div class="page-actions">
-    <%= link_to new_push_notification_path, class: "layui-btn" do %>
-      <i class="layui-icon layui-icon-add-1"></i>
-      新建推送
-    <% end %>
-  </div>
-</div>
+      <div class="layui-col-xs3 text-right">
+        <%= link_to :new_push_notification, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增推送
+        <% end %>
+      </div>
+    </div>
 
-<!-- 统计卡片 -->
-<div class="layui-row layui-col-space15" style="margin-bottom: 15px;">
-  <div class="layui-col-md2">
-    <div class="layui-card">
-      <div class="layui-card-body" style="background: linear-gradient(135deg, #6b7280, #4b5563); border-radius: 4px; color: white;">
-        <div style="font-size: 24px; font-weight: bold;"><%= PushNotification.count %></div>
-        <div style="opacity: 0.9; font-size: 12px;">推送总数</div>
-      </div>
-    </div>
-  </div>
-  <div class="layui-col-md2">
-    <div class="layui-card">
-      <div class="layui-card-body" style="background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 4px; color: white;">
-        <div style="font-size: 24px; font-weight: bold;"><%= PushNotification.where(status: :sent).count %></div>
-        <div style="opacity: 0.9; font-size: 12px;">已发送</div>
-      </div>
-    </div>
-  </div>
-  <div class="layui-col-md2">
-    <div class="layui-card">
-      <div class="layui-card-body" style="background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 4px; color: white;">
-        <div style="font-size: 24px; font-weight: bold;"><%= PushNotification.where(status: :scheduled).count %></div>
-        <div style="opacity: 0.9; font-size: 12px;">定时推送</div>
-      </div>
-    </div>
-  </div>
-  <div class="layui-col-md2">
-    <div class="layui-card">
-      <div class="layui-card-body" style="background: linear-gradient(135deg, #10b981, #059669); border-radius: 4px; color: white;">
-        <div style="font-size: 24px; font-weight: bold;"><%= PushNotification.sum(:send_count) %></div>
-        <div style="opacity: 0.9; font-size: 12px;">总发送数</div>
-      </div>
-    </div>
-  </div>
-  <div class="layui-col-md2">
-    <div class="layui-card">
-      <div class="layui-card-body" style="background: linear-gradient(135deg, #ec4899, #db2777); border-radius: 4px; color: white;">
-        <div style="font-size: 24px; font-weight: bold;"><%= PushNotification.sum(:click_count) %></div>
-        <div style="opacity: 0.9; font-size: 12px;">总点击数</div>
-      </div>
-    </div>
-  </div>
-  <div class="layui-col-md2">
-    <div class="layui-card">
-      <div class="layui-card-body" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 4px; color: white;">
-        <div style="font-size: 24px; font-weight: bold;">
-          <%= number_to_percentage(PushNotification.where(status: :sent).sum(:delivery_rate), precision: 1) %>
-        </div>
-        <div style="opacity: 0.9; font-size: 12px;">平均送达率</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 搜索/筛选 -->
-<div class="layui-card" style="margin-bottom: 15px;">
-  <div class="layui-card-body">
-    <form class="layui-form" method="GET" action="<%= push_notifications_path %>" lay-filter="search-form">
-      <div class="layui-row layui-col-space10">
-        <div class="layui-col-md3">
-          <select name="push_type" lay-filter="push_type">
-            <option value="">全部推送类型</option>
-            <option value="system_notification" <%= 'selected' if params[:push_type] == 'system_notification' %>>系统通知</option>
-            <option value="activity_notification" <%= 'selected' if params[:push_type] == 'activity_notification' %>>活动通知</option>
-          </select>
-        </div>
-        <div class="layui-col-md2">
-          <select name="status" lay-filter="status">
-            <option value="">全部状态</option>
-            <option value="draft" <%= 'selected' if params[:status] == 'draft' %>>草稿</option>
-            <option value="scheduled" <%= 'selected' if params[:status] == 'scheduled' %>>定时发送</option>
-            <option value="sent" <%= 'selected' if params[:status] == 'sent' %>>已发送</option>
-            <option value="failed" <%= 'selected' if params[:status] == 'failed' %>>发送失败</option>
-          </select>
-        </div>
-        <div class="layui-col-md3">
-          <input type="text" name="search" placeholder="搜索标题" value="<%= params[:search] %>" 
-                 autocomplete="off" class="layui-input">
-        </div>
-        <div class="layui-col-md2">
-          <button class="layui-btn layui-btn-primary" lay-submit lay-filter="search">
-            <i class="layui-icon layui-icon-search"></i> 搜索
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- 推送列表 -->
-<div class="layui-card">
-  <div class="layui-card-body">
-    <table class="layui-table" lay-skin="line" lay-size="lg">
+    <table class="layui-table" lay-size="lg">
       <thead>
         <tr>
           <th style="width: 60px;">ID</th>
@@ -181,14 +110,9 @@
       </tbody>
     </table>
       
-    <!-- 分页 -->
-    <div class="layui-row" style="margin-top: 15px;">
-      <div class="layui-col-md12" style="text-align: center;">
-        <%= will_paginate @push_notifications, renderer: WillPaginate::ActionView::LinkRenderer, 
-            previous_label: '上一页', next_label: '下一页', 
-            class: 'layui-laypage', inner_window: 2, outer_window: 1 %>
-      </div>
-    </div>
+    <% if @push_notifications.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px;"></div>
+    <% end %>
   </div>
 </div>
 
@@ -215,3 +139,29 @@
     gap: 8px;
   }
 </style>
+
+<script>
+  layui.use(['laypage', 'form'], function(){
+    var laypage = layui.laypage,
+        form = layui.form;
+
+    // 分页
+    <% if @push_notifications.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @push_notifications.total_entries %>,
+      limit: <%= @push_notifications.per_page %>,
+      curr: <%= @push_notifications.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>
