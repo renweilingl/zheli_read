@@ -27,6 +27,7 @@
           <th width="220">名称</th>
           <th width="80" style="text-align:center;">状态</th>
           <th width="60">排序</th>
+          <th width="文字">排序</th>
           <th>分组内容</th>
           <th width="160">创建时间</th>
           <th width="220" style="text-align:center;">操作</th>
@@ -44,6 +45,9 @@
               <% end %>
             </td>
             <td><%= r.sn %></td>
+            <td>
+              <div style="background: <%= r.color %>; width: 32px; height: 24px; margin-right: 10px;"></div>
+            </td>
             <td><%= r.content_groups.pluck(:name).join(" | ") %></td>
             <td><%= r.created_at.strftime('%Y-%m-%d') %></td>
             <td>
