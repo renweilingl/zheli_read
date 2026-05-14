@@ -211,6 +211,27 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_13_075540) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "push_notifications", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "push_type", default: 0, null: false
+    t.string "title", limit: 20, null: false
+    t.string "body", limit: 50, null: false
+    t.string "link_url", limit: 500
+    t.integer "push_scope", default: 0, null: false
+    t.integer "min_age"
+    t.integer "max_age"
+    t.text "user_group"
+    t.integer "status", default: 0, null: false
+    t.datetime "scheduled_at"
+    t.datetime "sent_at"
+    t.integer "send_count", default: 0
+    t.integer "click_count", default: 0
+    t.decimal "delivery_rate", precision: 5, scale: 2, default: "0.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["push_type"], name: "index_push_notifications_on_push_type"
+    t.index ["status"], name: "index_push_notifications_on_status"
+  end
+
   create_table "recommends", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "grade_id", null: false, comment: "关联年级"
     t.string "name", null: false, comment: "推荐内容名称"
