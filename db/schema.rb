@@ -267,19 +267,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_14_074222) do
     t.index ["role"], name: "index_users_on_role"
   end
 
-  add_foreign_key "book_grades", "books"
-  add_foreign_key "book_grades", "grades"
+  add_foreign_key "book_grades", "books", on_delete: :cascade
+  add_foreign_key "book_grades", "grades", on_delete: :cascade
   add_foreign_key "books", "suppliers"
-  add_foreign_key "category_sub_books", "books"
-  add_foreign_key "category_sub_books", "category_subs"
+  add_foreign_key "category_sub_books", "books", on_delete: :cascade
+  add_foreign_key "category_sub_books", "category_subs", on_delete: :cascade
   add_foreign_key "category_subs", "categories"
-  add_foreign_key "chapters", "books"
-  add_foreign_key "compilation_books", "books"
-  add_foreign_key "compilation_books", "compilations"
+  add_foreign_key "chapters", "books", on_delete: :cascade
+  add_foreign_key "compilation_books", "books", on_delete: :cascade
+  add_foreign_key "compilation_books", "compilations", on_delete: :cascade
   add_foreign_key "compilation_categories", "categories"
   add_foreign_key "compilation_categories", "compilations"
-  add_foreign_key "compilation_grades", "compilations"
-  add_foreign_key "compilation_grades", "grades"
+  add_foreign_key "compilation_grades", "compilations", on_delete: :cascade
+  add_foreign_key "compilation_grades", "grades", on_delete: :cascade
   add_foreign_key "content_groups", "recommends"
   add_foreign_key "contents", "content_groups"
   add_foreign_key "recommends", "grades"
