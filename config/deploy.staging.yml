@@ -59,6 +59,7 @@ builder:
 # ==================== 数据卷挂载 ====================
 volumes:
   - /zheli_read-staging/log:/rails/log
+  - /zheli_read-staging/tmp:/rails/tmp
 
 # ==================== kamal-proxy 代理 ====================
 proxy:

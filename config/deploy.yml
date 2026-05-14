@@ -8,10 +8,10 @@ image: voicebook/zheli_read
 servers:
   web:
     hosts:
-      - 114.215.208.190
+      - 8.136.142.85
   worker:
     hosts:
-      - 114.215.208.190
+      - 8.136.142.85
     cmd: "bundle exec sidekiq -C config/sidekiq.yml"
 
 # ==================== Docker Registry 配置 ====================
@@ -36,12 +36,6 @@ env:
     - DATABASE_PRD_HOST
     - DATABASE_PRD_PORT
     - DATABASE_PRD_DATABASE
-    # 测试环境数据库
-    - DATABASE_DEV_USERNAME
-    - DATABASE_DEV_PASSWORD
-    - DATABASE_DEV_HOST
-    - DATABASE_DEV_PORT
-    - DATABASE_DEV_DATABASE
     - SECRET_KEY_BASE
     - ALIYUN_ACCESS_KEY_ID
     - ALIYUN_ACCESS_KEY_SECRET
@@ -76,3 +70,7 @@ builder:
 # ==================== 数据卷挂载 ====================
 volumes:
   - /zheli_read/log:/rails/log
+  - /zheli_read/tmp:/rails/tmp
+
+# ==================== Hooks 输出 ====================
+hooks_output: verbose

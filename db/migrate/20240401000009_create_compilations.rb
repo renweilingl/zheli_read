@@ -48,7 +48,7 @@ class CreateCompilations < ActiveRecord::Migration[7.1]
     # 创建合辑与年级的关联表
     create_table :compilation_grades, id: false, if_not_exists: true do |t|
       t.references :compilation, null: false, foreign_key: true
-      t.references :grade, null: false, foreign_key: true
+      t.references :grade, null: false
       t.timestamps
     end
 
