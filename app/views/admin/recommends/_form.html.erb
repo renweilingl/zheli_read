@@ -4,14 +4,26 @@
       <span class="required">*</span> 推荐名称
     <% end %>
     <div class="layui-input-block">
-      <%= f.text_field :name, class: "layui-input", placeholder: "请输入推荐名称", maxlength: 10, required: true, style: "width: 400px;" %>
+      <%= f.text_field :name, class: "layui-input", placeholder: "请输入推荐名称", maxlength: 10, required: true  %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <%= f.label :name, class: "layui-form-label" do %>
+      <span class="required">*</span> 文字颜色 
+    <% end %>
+    <div class="layui-input-block">
+      <% ["#FF7300 ", "#FFBB00", "#318ACE", "#F53790", "#A337F5", "#5CC77A"].each_with_index do |c, idx| %>
+        <input type="radio" name="recommend[color]" value="<%= c  %>" title="" <%= 'checked' if c == @recommend.color  %>>
+        <div lay-radio style="background: <%= c %>; width: 20px; height: 20px; margin-right: 10px;"></div>
+      <% end %>
     </div>
   </div>
 
   <div class="layui-form-item layui-col-md6">
     <label class="layui-form-label">序号</label>
     <div class="layui-input-block">
-      <%= f.number_field :sn, class: "layui-input", min: 0, step: 1, required: true, style: "width: 400px;" %>
+      <%= f.number_field :sn, class: "layui-input", min: 0, step: 1, required: true %>
     </div>
   </div>
 
