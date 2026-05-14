@@ -282,7 +282,7 @@ GEM
       date
       net-protocol
     net-pop (0.1.2)
-      net-protocol (>= 0)
+      net-protocol
     net-protocol (0.2.2)
       timeout
     net-smtp (0.5.1)
@@ -513,6 +513,7 @@ DEPENDENCIES
   carrierwave-aliyun (~> 0.7.0)
   coderay
   coffee-rails (~> 5.0.0)
+  connection_pool (~> 2.4)
   dotenv
   execjs
   grape
