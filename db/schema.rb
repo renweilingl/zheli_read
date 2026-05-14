@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_13_075540) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_14_074222) do
   create_table "audits", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
@@ -240,6 +240,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_13_075540) do
     t.boolean "status", default: true, comment: "状态: true发布/false草稿"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "color", limit: 16, default: ""
     t.index ["grade_id", "sn"], name: "index_recommends_on_grade_id_and_sn"
     t.index ["grade_id"], name: "index_recommends_on_grade_id"
   end
