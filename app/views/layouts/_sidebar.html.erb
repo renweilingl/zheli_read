@@ -20,6 +20,17 @@
       </li>
 
       <li>
+        <a href="javascript:;">
+          <i class="layui-icon layui-icon-set"></i>
+          <cite>运营管理</cite>
+          <i class="iconfont nav_right">&#xe602;</i>
+        </a>
+        <ul class="sub-menu">
+          <li><%= link_to "套餐管理", :operator_packages, class: "sub-link" %></li>
+        </ul>
+      </li>
+
+      <li>
         <%= link_to :admin_authors, class: "main-link" do %>
           <i class="layui-icon layui-icon-friends"></i>作者管理
         <% end %>

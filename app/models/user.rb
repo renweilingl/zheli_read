@@ -29,6 +29,10 @@ class User < ApplicationRecord
     role == 'super_admin'
   end
 
+  def operator?
+    role == 'operator'
+  end
+
   # 获取角色显示名称
   def role_name
     ROLE_NAMES[role.to_sym] || role

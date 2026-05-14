@@ -80,4 +80,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :operator do
+    resources :packages
+  end
 end
