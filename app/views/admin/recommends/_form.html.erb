@@ -13,7 +13,7 @@
       <span class="required">*</span> 文字颜色 
     <% end %>
     <div class="layui-input-block">
-      <% ["#FF7300 ", "#FFBB00", "#318ACE", "#F53790", "#A337F5", "#5CC77A"].each_with_index do |c, idx| %>
+      <% ["#FF7300", "#FFBB00", "#318ACE", "#F53790", "#A337F5", "#5CC77A"].each_with_index do |c, idx| %>
         <input type="radio" name="recommend[color]" value="<%= c  %>" title="" <%= 'checked' if c == @recommend.color  %>>
         <div lay-radio style="background: <%= c %>; width: 42px; height: 24px; margin-right: 10px;"></div>
       <% end %>
