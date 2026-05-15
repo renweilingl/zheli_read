@@ -70,7 +70,7 @@ class Book < ApplicationRecord
   private
 
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "id", "name", "supplier_id", "themes"]
+    ["author", "id", "name", "supplier_id", "themes", "is_free"]
   end
 
   def self.ransackable_associations(auth_object = nil)

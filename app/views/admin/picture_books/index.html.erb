@@ -10,8 +10,14 @@
     <div class="layui-row">
       <div class="layui-col-xs9">
         <%= search_form_for(@q, url: :admin_picture_books, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline" style="width: 140px;">
+            <%= f.select :category_id_eq, options_for_select(Category.all.map { |x| [x.name, x.id] }, @q.category_id_eq), { include_blank: "图书分类" } %>
+          </div>
+          <div class="layui-input-inline" style="width: 120px;">
+            <%= f.select :is_free_eq, options_for_select([['免费', true], ['付费', false]], @q.is_free_eq), { include_blank: "付费状态" } %>
+          </div>
           <div class="layui-input-inline">
-            <%= f.text_field :name_cont, class: :'layui-input', placeholder: "名称" %>
+            <%= f.text_field :name_cont, class: :'layui-input', placeholder: "图书名称" %>
           </div>
           <button class="layui-btn layui-bg-blue" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
           <%= link_to "重置", :admin_picture_books, class: "layui-btn layui-btn-primary" %>
@@ -31,6 +37,7 @@
           <th>图书信息</th>
           <th>年级范围</th>
           <th width="80">类型</th>
+          <th width="80">付费类型</th>
           <th width="130">创建时间</th>
           <th width="140" style="text-align:center;">操作</th>
         </tr>
@@ -62,6 +69,7 @@
             </td>
             <td><%= book.grades.pluck(:name).join(" | ") %></td>
             <td><%= book.category.name %></td>
+            <td><%= book.is_free? ? "免费" : "付费" %></td>
             <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
