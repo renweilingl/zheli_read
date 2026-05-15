@@ -117,8 +117,10 @@
           <i class="layui-icon <%= @book.file_type_icon %>" style="color: <%= @book.file_type_color %>; font-size: 20px;"></i>
         </div>                                                               
         <div>                                                                
-          <div id="file-name" style="font-weight: bold;"></div>              
-          <div id="file-type-badge" style="font-weight: bold;"><%= @book.file_name %></div>  
+          <div id="file-name" style="font-weight: bold;"><%= @book.file_name %></div>
+          <div style="display: flex; gap: 10px;">
+            <span id="file-type-badge" class="layui-badge"><%= @book.file_type %></span>
+          </div>  
         </div>                                                               
         <div style="margin-left: auto;">                                     
           <button type="button" class="layui-btn layui-btn-xs layui-btn-danger" id="remove-file">移除</button>
