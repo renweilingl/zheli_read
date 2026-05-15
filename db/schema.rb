@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_15_065117) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_15_071514) do
   create_table "audits", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_15_065117) do
     t.string "file_url"
     t.string "file_name"
     t.string "file_type"
+    t.boolean "is_free", default: false
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["name"], name: "index_books_on_name"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
