@@ -13,6 +13,15 @@ servers:
     hosts:
       - 8.136.142.85
     cmd: "bundle exec sidekiq -C config/sidekiq.yml"
+  migrate:
+    hosts:
+      - 8.136.142.85
+    cmd: "bin/rails db:migrate"
+
+# ==================== 部署超时 ====================
+# 数据库迁移时间较长，增加超时
+deploy_timeout: 90
+drain_timeout: 30
 
 # ==================== Docker Registry 配置 ====================
 registry:
