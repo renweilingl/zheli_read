@@ -4,7 +4,9 @@ require "fileutils"
 
 def build_sidekiq_redis_url
   if Rails.env.development? || Rails.env.test?
-    return "redis://localhost:6379/0"
+    password = ENV.fetch("REDIS_PASSWORD", nil)
+    return "redis://#{password}@localhost:6379/0"
+    #return "redis://localhost:6379/0"
   end
 
   host = ENV.fetch("REDIS_URL", nil)
