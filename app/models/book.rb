@@ -8,7 +8,7 @@ class Book < ApplicationRecord
   has_and_belongs_to_many :grades, join_table: :book_grades
   has_and_belongs_to_many :compilations, join_table: :compilation_books
   has_and_belongs_to_many :category_subs, join_table: :category_sub_books
-  has_many :chapters
+  #has_many :chapters
   has_many :contents
 
   # 验证
