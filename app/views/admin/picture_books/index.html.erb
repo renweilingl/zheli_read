@@ -32,54 +32,44 @@
           <th>年级范围</th>
           <th width="80">类型</th>
           <th width="130">创建时间</th>
-          <th width="200" style="text-align:center;">操作</th>
+          <th width="140" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
-        <% if @picture_books.empty? %>
+        <% @picture_books.each do |book| %>
           <tr>
-            <td colspan="10" style="text-align: center; padding: 40px 0; color: #9ca3af;">
-              <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
-              <div style="margin-top: 10px;">暂无图书数据</div>
-            </td>
-          </tr>
-        <% else %>
-          <% @picture_books.each do |book| %>
-            <tr>
-              <td><%= book.id %></td>
-              <td>
-                <div style="display: flex; align-items: flex-start; gap: 10px;">
-                  <% if book.cover_image_url.present? %>
-                    <img src="<%= FileMap.new(book.cover_image_url, "img").secrity_src %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
-                  <% else %>
-                    <div style="width: 48px; height: 64px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                      <i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i>
-                    </div>
-                  <% end %>
-                  <div>
-                    <div style="font-weight: 500; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                      <%= book.name %>
-                    </div>
-                    <div style="font-size: 12px; color: #9ca3af;">
-                      <% if book.supplier %>
-                        <span><i class="layui-icon layui-icon-group"></i> <%= book.supplier.name %></span>
-                      <% end %>
-                    </div>
+            <td><%= book.id %></td>
+            <td>
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <% if book.cover_image_url.present? %>
+                  <img src="<%= FileMap.new(book.cover_image_url, "img").secrity_src %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
+                <% else %>
+                  <div style="width: 48px; height: 64px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i>
+                  </div>
+                <% end %>
+                <div>
+                  <div style="font-weight: 500; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <%= book.name %>
+                  </div>
+                  <div style="font-size: 12px; color: #9ca3af;">
+                    <% if book.supplier %>
+                      <span><i class="layui-icon layui-icon-group"></i> <%= book.supplier.name %></span>
+                    <% end %>
                   </div>
                 </div>
-              </td>
-              <td><%= book.grades.pluck(:name).join(" | ") %></td>
-              <td><%= book.category.name %></td>
-              <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
-              <td style="text-align:center;">
-                <div class="layui-btn-group">
-                  <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
-                  <%= link_to "章节管理", chapters_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
-                  <%= link_to '删除', admin_picture_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除绘本吗？此操作不可恢复。" } %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
+              </div>
+            </td>
+            <td><%= book.grades.pluck(:name).join(" | ") %></td>
+            <td><%= book.category.name %></td>
+            <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
+            <td style="text-align:center;">
+              <div class="layui-btn-group">
+                <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '删除', admin_picture_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除绘本吗？此操作不可恢复。" } %>
+              </div>
+            </td>
+          </tr>
         <% end %>
       </tbody>
     </table>
