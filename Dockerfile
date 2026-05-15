@@ -44,10 +44,9 @@ RUN gem install bundler -v 4.0.10 --source https://mirrors.aliyun.com/rubygems/ 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 
-# 使用阿里云镜像源加速 bundle install，rubygems.org 作为 fallback
+# 使用 Ruby China 镜像源加速 bundle install
 RUN bundle config set frozen false && \
-    bundle config set mirror.https://rubygems.org https://mirrors.aliyun.com/rubygems/ && \
-    bundle config set mirror.https://mirrors.aliyun.com/rubygems/ https://gems.ruby-china.com/ && \
+    bundle config set mirror.https://rubygems.org https://gems.ruby-china.com/ && \
     bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile -j 1 --gemfile
