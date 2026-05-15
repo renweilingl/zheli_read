@@ -102,6 +102,9 @@ class Admin::PictureBooksController < ApplicationController
       :category_id,
       :book_level_id,
       :author_id,
+      :file_url,
+      :file_name,
+      :file_type,
       :grade_ids => [],
       :category_sub_ids => []
     )
