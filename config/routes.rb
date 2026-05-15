@@ -70,15 +70,16 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :picture_books do
-      member do
-        get 'chapters'
-        get 'new_chapter'
-        post 'add_chapter'
-        get 'edit_chapter'
-        post 'update_chapter'
-      end
-    end
+    resources :picture_books
+    #resources :picture_books do
+      #member do
+      #  get 'chapters'
+      #  get 'new_chapter'
+      #  post 'add_chapter'
+      #  get 'edit_chapter'
+      #  post 'update_chapter'
+      #end
+    #end
   end
 
   namespace :operator do
