@@ -130,6 +130,13 @@
     </div>
   </div>
 
+  <div class="layui-form-item">
+    <%= f.label :serialize_state, "连载状态", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <%= f.select :serialize_state, Compilation::SERIAL_STATE_NAMES.map { |k, v| [v, k] }, { prompt: '请选择连载状态' }, { class: 'layui-input', required: true } %>
+    </div>
+  </div>
+
   <fieldset class="layui-elem-field layui-field-title">
     <legend>
       <i class="layui-icon layui-icon-picture-fine"></i> 图片与介绍

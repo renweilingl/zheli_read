@@ -90,6 +90,7 @@ class Admin::CompilationsController < ApplicationController
       :total_count,
       :author,
       :tags,
+      :serialize_state,
 
       :intro_image_url,
       :intro_image_name,

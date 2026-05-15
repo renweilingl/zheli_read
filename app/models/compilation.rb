@@ -10,13 +10,24 @@ class Compilation < ApplicationRecord
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }
   validates :editor_recommendation, length: { maximum: 15 }, allow_blank: true
 
+  enum :serialize_state, {
+    serializing: 'serializing',          
+    completed: 'completed',
+  }, prefix: true
+
+  SERIAL_STATE_NAMES = {
+    serializing: '连载中',
+    completed: '已完结'
+  }.freeze
+
+
+  def serialize_state_name
+    SERIAL_STATE_NAMES[serialize_state.to_sym] || serialize_state
+  end
+
   def tags_array
     tags || []
   end
-
-  #def themes_array
-  #  themes || []
-  #end
 
   # 封面完整性检查
   def covers_complete?
