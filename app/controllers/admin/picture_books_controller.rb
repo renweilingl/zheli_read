@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Admin::PictureBooksController < ApplicationController
   before_action :require_login
-  before_action :set_book, only: [:show, :edit, :update, :destroy, :chapters, :new_chapter]
+  before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize Book
