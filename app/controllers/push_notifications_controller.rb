@@ -23,11 +23,10 @@ class PushNotificationsController < ApplicationController
 
   def create
     @push_notification = PushNotification.new(push_params)
-    @push_notification.user = current_user
     authorize @push_notification
 
     if @push_notification.save
-      redirect_to admin_push_notifications_path, notice: '推送创建成功'
+      redirect_to push_notifications_path, notice: '推送创建成功'
     else
       render :new, status: :unprocessable_entity
     end
@@ -42,7 +41,7 @@ class PushNotificationsController < ApplicationController
     authorize @push_notification
 
     if @push_notification.update(push_params)
-      redirect_to admin_push_notifications_path, notice: '推送更新成功'
+      redirect_to push_notifications_path, notice: '推送更新成功'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -52,7 +51,7 @@ class PushNotificationsController < ApplicationController
   def destroy
     authorize @push_notification
     @push_notification.destroy
-    redirect_to admin_push_notifications_path, notice: '推送已删除'
+    redirect_to push_notifications_path, notice: '推送已删除'
   end
 
   # 发送推送（立即或定时）
@@ -60,13 +59,12 @@ class PushNotificationsController < ApplicationController
     authorize @push_notification
 
     if @push_notification.scheduled? && @push_notification.scheduled_at > Time.current
-      # 定时发送：更新状态为待发送
       @push_notification.update(status: :scheduled)
-      redirect_to admin_push_notifications_path, notice: '推送已设为定时发送'
+      redirect_to push_notifications_path, notice: '推送已设为定时发送'
     else
       # 立即发送：模拟推送发送
       @push_notification.update(status: :sent, sent_at: Time.current, send_count: 1000, click_count: rand(200..800))
-      redirect_to admin_push_notifications_path, notice: '推送已发送'
+      redirect_to push_notifications_path, notice: '推送已发送'
     end
   end
 
