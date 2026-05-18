@@ -89,8 +89,9 @@
   <hr class="layui-border-green" style="margin: 16px 0; opacity: 0.3;">
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <%= f.submit '保存草稿', class: 'layui-btn', name: 'commit_type', value: 'draft' %>
-      <%= f.submit '保存并发送', class: 'layui-btn layui-btn-warm', name: 'commit_type', value: 'send' %>
+      <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="submit-content">
+        <i class="layui-icon layui-icon-release"></i>提交保存
+      </button>
       <%= link_to '取消', push_notifications_path, class: 'layui-btn layui-btn-primary' %>
     </div>
   </div>
@@ -100,7 +101,7 @@
   .required { color: #ff5722; margin-right: 3px; }
 </style>
 
-<%= javascript_tag do %>
+<script>
   // 字数统计
   document.querySelector('input[name="push_notification[title]"]')?.addEventListener('input', function() {
     document.getElementById('title-count').textContent = this.value.length;
@@ -132,4 +133,4 @@
     if (titleInput) document.getElementById('title-count').textContent = titleInput.value.length;
     if (bodyInput) document.getElementById('body-count').textContent = bodyInput.value.length;
   }, 100);
-<% end %>
+</script>
