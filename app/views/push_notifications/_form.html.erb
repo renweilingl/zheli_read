@@ -73,8 +73,8 @@
   <div class="layui-form-item">
     <label class="layui-form-label">推送方式</label>
     <div class="layui-input-block">
-      <input type="radio" name="push_mode" value="immediate" title="立即推送" checked lay-filter="push-mode">
-      <input type="radio" name="push_mode" value="scheduled" title="定时推送" lay-filter="push-mode">
+      <input type="radio" name="push_mode" value="immediate" title="立即推送" checked lay-filter="pushMode">
+      <input type="radio" name="push_mode" value="scheduled" title="定时推送" lay-filter="pushMode">
     </div>
   </div>
           
@@ -112,22 +112,19 @@
       document.querySelector('.age-range-fields').style.display = val === 'age_range' ? '' : 'none';
       document.querySelector('.specific-user-fields').style.display = val === 'specific_users' ? '' : 'none';
     })
+
+    form.on('radio(pushMode)', function(data) {
+      var val = data.value;
+      document.querySelector('.scheduled-time-fields').style.display = data.value === 'scheduled' ? '' : 'none';
+    });
   })
-  // 字数统计
+
   document.querySelector('input[name="push_notification[title]"]')?.addEventListener('input', function() {
     document.getElementById('title-count').textContent = this.value.length;
   });
   
   document.querySelector('textarea[name="push_notification[body]"]')?.addEventListener('input', function() {
     document.getElementById('body-count').textContent = this.value.length;
-  });
-  
-  // 推送方式切换
-  document.querySelectorAll('input[name="push_mode"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-      document.querySelector('.scheduled-time-fields').style.display = 
-        this.value === 'scheduled' ? '' : 'none';
-    });
   });
   
   // 初始化统计
