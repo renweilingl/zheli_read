@@ -44,7 +44,7 @@
       <%= f.select :push_scope, 
           options_for_select([['全部用户', 'all_users'], ['指定年龄段', 'age_range'], ['指定用户群体', 'specific_users']], @push_notification.push_scope),
           { prompt: '请选择推送范围' }, 
-          { class: 'layui-input', lay_verify: 'required', id: 'push-scope-select' } %>
+          { class: 'layui-input', lay_verify: 'required', "lay-filter": "scopeFilter", id: 'push-scope-select' } %>
     </div>
   </div>
           
@@ -102,6 +102,17 @@
 </style>
 
 <script>
+  layui.use(['form'], function(){
+    var form = layui.form,
+      $ = layui.$;
+
+    form.on('select(scopeFilter)', function(data) {
+      var val = data.value;
+  
+      document.querySelector('.age-range-fields').style.display = val === 'age_range' ? '' : 'none';
+      document.querySelector('.specific-user-fields').style.display = val === 'specific_users' ? '' : 'none';
+    })
+  })
   // 字数统计
   document.querySelector('input[name="push_notification[title]"]')?.addEventListener('input', function() {
     document.getElementById('title-count').textContent = this.value.length;
@@ -109,13 +120,6 @@
   
   document.querySelector('textarea[name="push_notification[body]"]')?.addEventListener('input', function() {
     document.getElementById('body-count').textContent = this.value.length;
-  });
-  
-  // 推送范围切换
-  document.getElementById('push-scope-select')?.addEventListener('change', function() {
-    var val = this.value;
-    document.querySelector('.age-range-fields').style.display = val === 'age_range' ? '' : 'none';
-    document.querySelector('.specific-user-fields').style.display = val === 'specific_users' ? '' : 'none';
   });
   
   // 推送方式切换
