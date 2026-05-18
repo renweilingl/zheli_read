@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_15_071514) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_16_000000) do
   create_table "audits", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
@@ -38,6 +38,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_15_071514) do
     t.string "head_img", null: false, comment: "头像"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "book_chapters", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "book_id", null: false, comment: "图书ID"
+    t.integer "chapter_number", null: false, comment: "章节序号"
+    t.string "chapter_name", null: false, comment: "章节名称"
+    t.integer "start_page_number", null: false, comment: "起始页码"
+    t.boolean "is_free", default: false, null: false, comment: "是否免费"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_chapters_on_book_id"
   end
 
   create_table "book_grades", id: false, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -272,6 +283,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_15_071514) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "book_chapters", "books"
   add_foreign_key "book_grades", "books", on_delete: :cascade
   add_foreign_key "book_grades", "grades", on_delete: :cascade
   add_foreign_key "books", "suppliers"
