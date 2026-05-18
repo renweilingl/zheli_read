@@ -7,6 +7,7 @@ class Admin::BookChaptersController < ApplicationController
       resource = 
       items = @book.book_chapters.order("chapter_number asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
         {id: r.id,
+         book_id: r.book_id,
          chapter_name: r.chapter_name,
          start_page_number: r.start_page_number,
          chapter_number: r.chapter_number,
