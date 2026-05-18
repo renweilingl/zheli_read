@@ -75,6 +75,10 @@ class PushNotification < ApplicationRecord
     status == "scheduled"
   end
 
+  def draft?
+    status == "draft"
+  end
+
   private
 
   def scheduled_at_cannot_be_in_past
