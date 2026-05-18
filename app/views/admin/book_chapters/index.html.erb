@@ -29,7 +29,7 @@
           next: '<em>→</em>',
         },
         cols: [[
-          {field: 'id', title: 'ID', width: 20},
+          {field: 'id', title: 'ID', hide: true},
           {field: 'chapter_number', title: '序号', sort: true, edit: "number", width: 80},
           {field: 'chapter_name', title: '章节名'},
           {field: 'is_free', title: '是否免费'},
@@ -37,5 +37,28 @@
           {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
         ]],
       });
+
+      table.on('edit(main-table)', function(obj){
+      var value = obj.value // 得到修改后的值
+      var data = obj.data // 得到所在行所有键值
+      var field = obj.field; // 得到字段
+
+      $.ajax({
+        url: '<%= update_sn_admin_picture_book_book_chapters_path(@book) %>',
+        dataType: 'json',
+        type: 'post',
+        data: {id: data.id, sn: data.chapter_number},
+        success: function(res) {
+          if(res.code == 0){
+            var update = {};
+            update[field] = value;
+            obj.update(update);
+            layer.msg('修改成功');
+          } else {
+            layer.msg('修改失败');
+          }
+        }
+      })
+    });
     })
 </script>

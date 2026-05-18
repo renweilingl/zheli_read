@@ -70,7 +70,9 @@ Rails.application.routes.draw do
     end
 
     resources :picture_books do
-      resources :book_chapters
+      resources :book_chapters do
+        post 'update_sn', on: :collection
+      end
     end
 
     #resources :picture_books do

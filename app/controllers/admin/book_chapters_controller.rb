@@ -24,6 +24,12 @@ class Admin::BookChaptersController < ApplicationController
   def update
   end
 
+  def update_sn
+    @book.book_chapters.find(params[:id]).update(chapter_number: params[:sn])
+
+    render json: {code: 0}
+  end
+
   private
 
   def set_book
