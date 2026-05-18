@@ -34,16 +34,16 @@
     <table class="layui-table" lay-size="lg">
       <thead>
         <tr>
-          <th style="width: 60px;">ID</th>
-          <th style="width: 80px;">类型</th>
+          <th>ID</th>
+          <th>类型</th>
           <th>标题</th>
-          <th style="width: 120px;">推送范围</th>
-          <th style="width: 80px;">状态</th>
-          <th style="width: 70px;">发送数</th>
-          <th style="width: 70px;">点击数</th>
-          <th style="width: 80px;">送达率</th>
-          <th style="width: 160px;">创建时间</th>
-          <th style="width: 200px;">操作</th>
+          <th>推送范围</th>
+          <th>状态</th>
+          <th>发送数</th>
+          <th>点击数</th>
+          <th>送达率</th>
+          <th>创建时间</th>
+          <th width="140" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -81,7 +81,7 @@
             <td><%= push.click_count %></td>
             <td><%= number_to_percentage(push.delivery_rate || 0, precision: 1) %></td>
             <td><%= push.created_at.strftime('%Y-%m-%d %H:%M') %></td>
-            <td>
+            <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to push_notification_path(push), class: "layui-btn layui-btn-xs" do %>
                   <i class="layui-icon layui-icon-about"></i> 详情

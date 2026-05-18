@@ -1,17 +1,16 @@
-<% content_for :title, '推送详情' %>
-
-<div class="layui-fluid">
-  <div class="layui-card">
-    <div class="layui-card-header">
-      <span class="layui-breadcrumb">
-        <a href="<%= admin_home_path %>">首页</a>
-        <a href="<%= admin_push_notifications_path %>">推送管理</a>
-        <a><cite>推送详情 #<%= @push_notification.id %></cite></a>
-      </span>
-    </div>
+<div class="layui-tab">                                                          
+  <div class="x-nav">                                                            
+    <span class="layui-breadcrumb">                                              
+      <a href="">运营工具</a>                                                    
+      <a href="/push_notifications"><cite>推送管理</cite></a>                                                              
+      <a><cite>推送详情 #<%= @push_notification.id %></cite></a>
+    </span>                                                                      
+    <%= render 'common/user_info' %>                                             
+  </div>                                                                         
+                                                                                 
+  <div class="x-body">                                                           
     <div class="layui-card-body" style="padding: 20px;">
       <div class="layui-row layui-col-space20">
-        <!-- 基本信息 -->
         <div class="layui-col-md8">
           <div class="layui-card" style="border: 1px solid #e5e7eb;">
             <div class="layui-card-header" style="background: #f9fafb; font-weight: 600;">
@@ -142,10 +141,10 @@
           <!-- 操作按钮 -->
           <div style="margin-top: 15px;">
             <% if @push_notification.draft? || @push_notification.scheduled? %>
-              <%= link_to edit_admin_push_notification_path(@push_notification), class: 'layui-btn layui-btn-lg layui-btn-normal', style: 'width: 100%;' do %>
+              <%= link_to edit_push_notification_path(@push_notification), class: 'layui-btn layui-btn-lg layui-btn-normal', style: 'width: 100%;' do %>
                 <i class="layui-icon layui-icon-edit"></i> 编辑推送
               <% end %>
-              <%= link_to send_push_admin_push_notification_path(@push_notification), 
+              <%= link_to send_push_push_notification_path(@push_notification), 
                   method: :post,
                   data: { confirm: '确认发送此推送？' },
                   class: 'layui-btn layui-btn-lg layui-btn-warm', 
@@ -153,7 +152,7 @@
                 <i class="layui-icon layui-icon-about"></i> 发送推送
               <% end %>
             <% end %>
-            <%= link_to admin_push_notifications_path, class: 'layui-btn layui-btn-lg layui-btn-primary', style: 'width: 100%; margin-top: 10px;' do %>
+            <%= link_to push_notifications_path, class: 'layui-btn layui-btn-lg layui-btn-primary', style: 'width: 100%; margin-top: 10px;' do %>
               <i class="layui-icon layui-icon-return"></i> 返回列表
             <% end %>
           </div>
