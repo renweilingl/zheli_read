@@ -1,0 +1,41 @@
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <%= link_to "图书管理", :admin_picture_books %>
+      <a><cite><%= @book.name %></cite></a>
+      <a><cite>章节管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+  <div class="x-body">
+    <table class="layui-table" id="main-table"></table>
+  </div>
+</div>
+
+<script>
+    layui.use(['table'],function(){
+      var table = layui.table;
+      table.render({
+        elem: '#main-table',
+        url: '<%= admin_picture_book_book_chapters_path(@book) %>',
+        page: {
+          layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+          groups: 10,
+          limit: 50,
+          theme: '#1E9FFF',
+          first: '首页',
+          last: '尾页',
+          prev: '<em>←</em>',
+          next: '<em>→</em>',
+        },
+        cols: [[
+          {field: 'id', title: 'ID', width: 20},
+          {field: 'chapter_number', title: '序号', sort: true, edit: "number", width: 80},
+          {field: 'chapter_name', title: '章节名'},
+          {field: 'is_free', title: '是否免费'},
+          {field: 'created_at', title: '上线时间', width: 120},
+          {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
+        ]],
+      });
+    })
+</script>

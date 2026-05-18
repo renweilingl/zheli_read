@@ -60,8 +60,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :chapters
-
+    #resources :chapters
     # Collections management (绘本合辑)
     resources :compilations, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       member do
@@ -70,7 +69,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :picture_books
+    resources :picture_books do
+      resources :book_chapters
+    end
+
     #resources :picture_books do
       #member do
       #  get 'chapters'
