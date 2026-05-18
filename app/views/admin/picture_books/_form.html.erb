@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag 'wangeditor', media: 'all' %>                                                                      
+<%= javascript_include_tag 'wangeditor', 'data-turbolinks-track': 'reload' %>
 <%= form_for(@book, url: @book.new_record? ? :admin_picture_books : :admin_picture_book,method: @book.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %> 
   <fieldset class="layui-elem-field layui-field-title">
     <legend><i class="layui-icon layui-icon-note"></i> 基本信息</legend>
@@ -167,6 +169,16 @@
     </div>
   </div>
 
+  <div class="layui-form-item">
+    <%= f.label :content_description, "内容简介", class: "layui-form-label" %>
+    <div class="layui-input-block">
+      <div id="richtext-editor" class="description-editor" style="min-height: 200px;">
+        <div id="wang-editor-toolbar" style="border-bottom: 1px solid #e6e6e6;"></div>
+        <div name="content_description" id="wang-editor-content" style="height: 320px; overflow-y: auto;border: 1px solid #e6e6e6;"></div>
+        <%= f.hidden_field :content_description, id: "content-description-hidden" %>
+      </div>
+    </div>
+  </div>
 
   <div class="layui-form-item">
     <div class="layui-input-block">
@@ -291,6 +303,63 @@
           $('#file-name-hidden').val('');
           layer.msg('已移除文件', {icon: 6});
       });
+
+      var wangEditor = window.wangEditor;
+      var E = wangEditor;
+      var editor = E.createEditor({
+        selector: '#wang-editor-content',
+        html: '',
+        onChange: (editor) => {
+          const html = editor.getHtml()
+          this.textareaTarget.value = html
+        },
+        config: {
+          placeholder: '请输入内容简介...',
+          MENU_CONF: {
+            uploadImage: {
+              server: '<%= upload_open_img_files_path %>',
+              fieldName: 'file',
+              maxFileSize: 5 * 1024 * 1024,
+              headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+              },
+              customInsert(res, insertFn) {
+                if (res.errno === 0 || res.success) {
+                  var url = res.url || (res.data && res.data[0] && res.data[0].url);
+                  if (url) {
+                    insertFn(url, res.name || '', url);
+                  }
+                } else {
+                  layer.msg(res.message || '上传失败', { icon: 2 });
+                }
+              }
+            }
+          }
+        }
+    });                                                                          
+    editor.setHtml('<%= j @book.content_description.to_s %>');  
+
+    var toolbar = E.createToolbar({                                              
+      editor: editor,                                                            
+      selector: '#wang-editor-toolbar',                                          
+      config: {                                                                  
+        excludeKeys: [                                                           
+          'group-video',                                                         
+          'todo',                                                                
+          'emotion',                                                             
+          'codeBlock',                                                           
+          'insertTable',                                                         
+          'undo',                                                                
+          'redo'                                                                 
+        ]                                                                        
+      }                                                                          
+    }); 
+
+    form.on('submit(submit-content)', function(data){
+      $('#content-description-hidden').val(editor.getHtml());
+
+      return true;
+    });
 
   })
 </script>
