@@ -308,7 +308,7 @@
       var E = wangEditor;
       var editor = E.createEditor({
         selector: '#wang-editor-content',
-        html: '',
+        html: '<%= @book.content_description.blank? ? "" : @book.content_description.html_safe %>',
         onChange: (editor) => {
           const html = editor.getHtml()
           this.textareaTarget.value = html
@@ -337,7 +337,7 @@
           }
         }
     });                                                                          
-    editor.setHtml('<%= j @book.content_description.to_s %>');  
+    //editor.setHtml('<%= j @book.content_description.to_s %>');  
 
     var toolbar = E.createToolbar({                                              
       editor: editor,                                                            
