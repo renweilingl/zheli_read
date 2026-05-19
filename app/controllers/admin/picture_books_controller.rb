@@ -60,6 +60,9 @@ class Admin::PictureBooksController < ApplicationController
     @suppliers = Supplier.all
 
     if @book.save
+      if ["epub", "pdf"].include? @book.file_type
+        BookImportJob.perform_later(@book.id)
+      end
       redirect_to :admin_picture_books, notice: '绘本创建成功'
     else
       render :new
