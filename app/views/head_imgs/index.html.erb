@@ -10,7 +10,7 @@
       <div class="layui-col-xs9">
         <%= search_form_for(@q, url: :head_imgs, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
           <div class="layui-input-inline" style="width: 120px;">
-            <%= f.select :is_vip, options_for_select([['vip头像', true], ['普通用户', false]], @q.is_vip), { include_blank: "头像类型" } %>
+            <%= f.select :is_vip_eq, options_for_select([['vip头像', true], ['普通用户', false]], @q.is_vip_eq), { include_blank: "头像类型" } %>
           </div>
           <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
           <%= link_to "重置", :head_imgs, class: "layui-btn layui-btn-primary" %>
@@ -37,7 +37,7 @@
           <tr>
             <td><%= r.id %></td>
             <td>
-              <div style="font-weight: 500;"><%= r.is_vip %></div>
+              <%= r.is_vip? ? "vip头像" : "普通用户头像" %>
             </td>
             <td>
              <% unless r.img_url.blank? %>
