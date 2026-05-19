@@ -18,7 +18,7 @@
 
 <script type="text/html" id="tool-wrapper">
   <div class="layui-btn-group">
-    <a href="/admin/picture_books/{{d.book_id}}/book_chapters/{{d.id}}/edit" class="layui-btn layui-btn-sm">编辑</a>
+    <a href="/admin/picture_books/<%= @book.id %>/book_chapters/{{d.id}}/edit" class="layui-btn layui-btn-sm">编辑</a>
   </div>
 </script>
 
@@ -41,7 +41,6 @@
         cols: [[
           {type: 'checkbox', data: 'id'},
           {field: 'id', title: 'ID', hide: true},
-          {field: 'book_id', title: 'book_id', hide: true},
           {field: 'chapter_number', title: '序号', sort: true, edit: "number", width: 80},
           {field: 'chapter_name', title: '章节名'},
           {field: 'is_free', title: '付费类型', align: "center", width: 100, templet: function(d){

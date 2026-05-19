@@ -9,8 +9,9 @@ class Admin::ChaptersController < ApplicationController
       items = @book.chapters.order("sn asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
         {id: r.id,
          book_id: r.book_id,
+         name: r.name,
          content_file_name: r.content_file_name,
-         sn: r.is_free,
+         sn: r.sn,
          is_free: r.is_free,
          is_published: r.is_published,
          created_at: r.created_at.strftime('%Y-%m-%d'),
