@@ -8,6 +8,19 @@ class FileUploadJob < ApplicationJob
 
     file.close
     cleanup_temp_file(file_path)
+
+    book = Book.find_by(file_url: "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-cn-beijing.aliyuncs.com/#{oss_key}")
+    return if book.nil?
+
+    return unless ["epub", "pdf"].include? book.file_type
+
+    if Rails.env.production?
+      url = "https://voicebook.haoqiniu.com/api/books/import"
+
+      data = {uuid: AppUser.first.uuid, id: book.id}
+      res = HTTParty.post(url, body: data.to_json, headers: {'Content-Type' => 'application/json'}).body
+      logger.info "FileUploadJob import book res: #{res}"
+    end
   end
 
   def cleanup_temp_file(file_path)
