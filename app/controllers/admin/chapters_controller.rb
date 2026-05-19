@@ -30,24 +30,35 @@ class Admin::ChaptersController < ApplicationController
   end
 
   def create
-    @chapter = Chapter.new(book_id: @book.id, is_published: true)
+    authorize @book
+
+    chapter = @book.chapters.create(params[:chapter].permit!)
+
+    redirect_to admin_media_book_chapters_path(@book), notice: '内容创建成功'
   end
 
   def edit
+    authorize @book
   end
 
   def update
+    authorize @book
+
+    chapter = @book.chapters.find(params[:id])
+    chapter.update(params[:chapter].permit!)
+
+    redirect_to admin_media_book_chapters_path(@book), notice: '内容修改成功'
   end
 
   def destroy
+    authorize @book
+
     @chapter  = Chapter.find(params[:id])
-    authorize @chapter
-    book_id = @chapter.book_id
 
     @chapter.destroy
     flash[:notice] = "内容删除成功！"
 
-    redirect_to chapters_admin_picture_book_path(book_id)
+    redirect_to chapters_admin_picture_book_path(@book)
   end
 
   private

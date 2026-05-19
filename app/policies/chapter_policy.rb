@@ -6,6 +6,22 @@ class ChapterPolicy < ApplicationPolicy
     @chapter = chapter
   end
 
+  def index?
+    user.super_admin? || user.editor?
+  end
+
+  def edit?
+    user.super_admin? || user.editor?
+  end
+
+  def update?
+    user.super_admin? || user.editor?
+  end
+
+  def create?
+    user.super_admin? || user.editor?
+  end
+
   def destroy?
     return false unless user.super_admin? || user.editor?
     true

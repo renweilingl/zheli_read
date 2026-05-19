@@ -18,28 +18,6 @@ class Admin::PictureBooksController < ApplicationController
     authorize @book
   end
 
-  #def chapters
-  #  authorize @book
-
-  #  @chapters = @book.chapters.paginate(page: params[:page], per_page: @per_page)
-  #end
-
-  #def new_chapter
-  #  authorize @book
-  #  @chapter = Chapter.new(book_id: @book.id, is_published: true)
-  #end
-
-  #def add_chapter
-  #  rd = Chapter.where(book_id: params[:chapter][:book_id]).order("sn desc").first
-  #  sn = rd.nil? ? 1 : rd.sn + 1
-
-  #  chapter = Chapter.create(params[:chapter].permit!.merge!(sn: sn))
-  #  redirect_to chapters_admin_picture_book_path(chapter.book_id)
-  #end
-
-  #def edit_chapter
-  #  @chapter = Chapter.find_by_id params[:id]
-  #end
 
   #def update_chapter
   #  chapter = Chapter.find_by_id params[:id]
