@@ -76,6 +76,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :media_books do
+    end
     #resources :picture_books do
       #member do
       #  get 'chapters'
