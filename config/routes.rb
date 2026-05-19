@@ -60,7 +60,6 @@ Rails.application.routes.draw do
       end
     end
 
-    #resources :chapters
     # Collections management (绘本合辑)
     resources :compilations, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       member do
@@ -77,16 +76,9 @@ Rails.application.routes.draw do
     end
 
     resources :media_books do
+      resources :chapters do
+      end
     end
-    #resources :picture_books do
-      #member do
-      #  get 'chapters'
-      #  get 'new_chapter'
-      #  post 'add_chapter'
-      #  get 'edit_chapter'
-      #  post 'update_chapter'
-      #end
-    #end
   end
 
   namespace :operator do

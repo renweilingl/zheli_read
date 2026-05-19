@@ -6,7 +6,6 @@ class Admin::BookChaptersController < ApplicationController
     authorize Book
 
     if request.xhr?
-      resource = 
       items = @book.book_chapters.order("chapter_number asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
         {id: r.id,
          book_id: r.book_id,

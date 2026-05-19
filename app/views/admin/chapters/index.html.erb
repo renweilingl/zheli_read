@@ -1,0 +1,62 @@
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a>有声视频</a>
+      <a><cite><%= @book.name %></cite></a>
+      <a><cite>内容管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+
+  <div class="x-body">
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+      </div>
+      <div class="layui-col-3 text-right">
+        <%= link_to new_admin_media_book_chapter_path(@book), class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增单本
+        <% end %>
+      </div>
+    </div>
+
+    <table class="layui-table" id="main-table"></table>
+  </div>
+</div>
+
+<script>
+    layui.use(['table'],function(){
+      var table = layui.table;
+      table.render({
+        elem: '#main-table',
+        url: '<%= admin_media_book_chapters_path(@book) %>',
+        page: {
+          layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+          groups: 10,
+          limit: 50,
+          theme: '#1E9FFF',
+          first: '首页',
+          last: '尾页',
+          prev: '<em>←</em>',
+          next: '<em>→</em>',
+        },
+        cols: [[
+          {type: 'checkbox', data: 'id'},
+          {field: 'id', title: 'ID', hide: true},
+          {field: 'book_id', title: 'book_id', hide: true},
+          {field: 'sn', title: '序号', sort: true, edit: "number", width: 80},
+          {field: 'name', title: '单本名'},
+          {field: 'content_file_name', title: '文件'},
+          {field: 'is_free', title: '付费类型', align: "center", width: 100, templet: function(d){
+              if(d.is_free == true){
+                return '<span class="layui-badge layui-bg-green">免费</span>';
+              } else {
+                return '<span class="layui-badge layui-bg-gray">付费</span>';
+              }
+            }
+          },
+          {field: 'created_at', title: '上线时间'},
+          {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
+        ]],
+      });
+    })
+</script>
