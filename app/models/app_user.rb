@@ -40,8 +40,8 @@ class AppUser < ApplicationRecord
 
   validates :uuid, uniqueness: true
 
-  # 用户角色枚举
-  enum :role, { child: 0, parent: 1, admin: 2 }, default: :child
+  # 用户角色枚举 (使用 prefix 避免 parent 与 ActiveRecord 方法冲突)
+  enum :role, { child: 0, parent: 1, admin: 2 }, default: :child, _prefix: true
 
   # 验证规则
   validates :phone, uniqueness: true,
