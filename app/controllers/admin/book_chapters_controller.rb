@@ -20,13 +20,23 @@ class Admin::BookChaptersController < ApplicationController
   end
 
   def edit
+    @chapter = @book.book_chapters.find(params[:id])
   end
 
   def update
+    @chapter = @book.book_chapters.find(params[:id])
+
+    if @chapter.update(chapter_params)
+      redirect_to admin_picture_book_book_chapters_path(@book), notice: '绘本更新成功'
+    else
+      render :edit
+    end
   end
 
   def update_sn
     @book.book_chapters.find(params[:id]).update(chapter_number: params[:sn])
+
+    chapter_params
 
     render json: {code: 0}
   end
@@ -37,5 +47,13 @@ class Admin::BookChaptersController < ApplicationController
     @book = Book.find(params[:picture_book_id])
   end
 
+  def chapter_params
+    params.require(:book_chapter).permit(
+      :chapter_name,
+      :chapter_number,
+      :start_page_number,
+      :is_free
+    )
+  end
 
 end
