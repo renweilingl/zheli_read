@@ -11,7 +11,7 @@ class Admin::BookChaptersController < ApplicationController
          chapter_name: r.chapter_name,
          start_page_number: r.start_page_number,
          chapter_number: r.chapter_number,
-         is_free: r.is_free? ? "是" : "否",
+         is_free: r.is_free,
          created_at: r.created_at.strftime('%Y-%m-%d'),
         }
       }

@@ -39,7 +39,14 @@
           {field: 'book_id', title: 'book_id', hide: true},
           {field: 'chapter_number', title: '序号', sort: true, edit: "number", width: 80},
           {field: 'chapter_name', title: '章节名'},
-          {field: 'is_free', title: '是否免费'},
+          {field: 'is_free', title: '是否免费', align: "center", width: 100, templet: function(d){
+              if(d.is_free == true){
+                return '<span class="layui-badge layui-bg-green">是</span>';
+              } else {
+                return '<span class="layui-badge layui-bg-gray">否</span>';
+              }
+            }
+          },
           {field: 'created_at', title: '上线时间'},
           {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
         ]],
