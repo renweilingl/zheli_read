@@ -7,7 +7,8 @@ class Admin::PictureBooksController < ApplicationController
     authorize Book
     @per_page = params[:per_page] || 20
 
-    @q = Book.ransack(params[:q])
+    category_ids = Category.where(name: ["图书", "绘本"]).pluck(:id)
+    @q = Book.where(category_id: category_ids).ransack(params[:q])
     @picture_books = @q.result.paginate(page: params[:page], per_page: @per_page)
 
     @suppliers = Supplier.all
