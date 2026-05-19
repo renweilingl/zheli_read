@@ -23,7 +23,10 @@ class Admin::ChaptersController < ApplicationController
   def new
     authorize @book
 
-    @chapter = @book.chapters.new(is_published: true)
+    chapter = @book.chapters.order("sn desc").first
+    sn = chapter.nil? ? 1 : chapter.sn + 1
+
+    @chapter = @book.chapters.new(is_published: true, sn: sn)
   end
 
   def create
