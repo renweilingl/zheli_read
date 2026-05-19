@@ -8,6 +8,10 @@
     <%= render 'common/user_info' %>
   </div>
   <div class="x-body">
+    <div class="xblock">
+      <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchFree();">批量免费 </button>
+    </div>
+
     <table class="layui-table" id="main-table"></table>
   </div>
 </div>
@@ -35,6 +39,7 @@
           next: '<em>→</em>',
         },
         cols: [[
+          {type: 'checkbox', data: 'id'},
           {field: 'id', title: 'ID', hide: true},
           {field: 'book_id', title: 'book_id', hide: true},
           {field: 'chapter_number', title: '序号', sort: true, edit: "number", width: 80},
@@ -53,26 +58,56 @@
       });
 
       table.on('edit(main-table)', function(obj){
-      var value = obj.value // 得到修改后的值
-      var data = obj.data // 得到所在行所有键值
-      var field = obj.field; // 得到字段
+        var value = obj.value // 得到修改后的值
+        var data = obj.data // 得到所在行所有键值
+        var field = obj.field; // 得到字段
 
-      $.ajax({
-        url: '<%= update_sn_admin_picture_book_book_chapters_path(@book) %>',
-        dataType: 'json',
-        type: 'post',
-        data: {id: data.id, sn: data.chapter_number},
-        success: function(res) {
-          if(res.code == 0){
-            var update = {};
-            update[field] = value;
-            obj.update(update);
-            layer.msg('修改成功');
-          } else {
-            layer.msg('修改失败');
+        $.ajax({
+          url: '<%= update_sn_admin_picture_book_book_chapters_path(@book) %>',
+          dataType: 'json',
+          type: 'post',
+          data: {id: data.id, sn: data.chapter_number},
+          success: function(res) {
+            if(res.code == 0){
+              var update = {};
+              update[field] = value;
+              obj.update(update);
+              layer.msg('修改成功');
+            } else {
+              layer.msg('修改失败');
+            }
           }
-        }
-      })
-    });
+        })
+      });
     })
+
+    function get_ids() {
+        var table = layui.table;
+        let ctrCheckArr = [];
+        ctrCheckArr.length = 0;
+        let checkStatus = table.checkStatus('main-table'),
+            data = checkStatus.data; //获取选中的数据
+        for (let i = 0; i < data.length; i++) {
+            ctrCheckArr.push(data[i].id)
+        }
+        return ctrCheckArr;
+    }
+
+    function batchFree() {
+        var ids = get_ids();
+
+        $.ajax({
+          url: '<%= batch_free_admin_picture_book_book_chapters_path(@book) %>',
+          dataType: 'json',
+          type: 'post',
+          data: {ids: ids},
+          success: function(res) {
+            if(res.code == 0){
+              window.location.reload();
+            } else {
+              layer.msg('修改失败');
+            }
+          }
+        })
+    }
 </script>

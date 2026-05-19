@@ -36,8 +36,11 @@ class Admin::BookChaptersController < ApplicationController
   def update_sn
     @book.book_chapters.find(params[:id]).update(chapter_number: params[:sn])
 
-    chapter_params
+    render json: {code: 0}
+  end
 
+  def batch_free
+    @book.book_chapters.where(id: params[:ids]).update_all(is_free: true)
     render json: {code: 0}
   end
 
