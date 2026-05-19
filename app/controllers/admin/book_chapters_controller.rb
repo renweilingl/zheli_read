@@ -3,6 +3,8 @@ class Admin::BookChaptersController < ApplicationController
   before_action :set_book
 
   def index
+    authorize Book
+
     if request.xhr?
       resource = 
       items = @book.book_chapters.order("chapter_number asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
@@ -21,9 +23,13 @@ class Admin::BookChaptersController < ApplicationController
 
   def edit
     @chapter = @book.book_chapters.find(params[:id])
+
+    authorize @book
   end
 
   def update
+    authorize @book
+
     @chapter = @book.book_chapters.find(params[:id])
 
     if @chapter.update(chapter_params)
