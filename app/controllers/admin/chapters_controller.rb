@@ -6,17 +6,28 @@ class Admin::ChaptersController < ApplicationController
     authorize Book
 
     if request.xhr?
-      items = @book.book_chapters.order("chapter_number asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
+      items = @book.chapters.order("sn asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
         {id: r.id,
          book_id: r.book_id,
          content_file_name: r.content_file_name,
          sn: r.is_free,
          is_free: r.is_free,
+         is_published: r.is_published,
          created_at: r.created_at.strftime('%Y-%m-%d'),
         }
       }
       render json: {data: items, code: 0, count: @book.book_chapters.size}
     end
+  end
+
+  def new
+    authorize @book
+
+    @chapter = @book.chapters.new(is_published: true)
+  end
+
+  def create
+    @chapter = Chapter.new(book_id: @book.id, is_published: true)
   end
 
   def edit

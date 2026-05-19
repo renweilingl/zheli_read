@@ -54,6 +54,14 @@
               }
             }
           },
+          {field: 'is_published', title: '单本状态', align: "center", width: 100, templet: function(d){
+              if(d.is_published == true){
+                return '<span class="layui-badge layui-bg-green">在线</span>';
+              } else {
+                return '<span class="layui-badge layui-bg-gray">未发布</span>';
+              }
+            }
+          },
           {field: 'created_at', title: '上线时间'},
           {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
         ]],
