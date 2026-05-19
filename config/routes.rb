@@ -10,9 +10,8 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  #get "register", to: "users#new"
-  #post "register", to: "users#create"
-  get "dashboard", to: "pages#dashboard"
+  #get "dashboard", to: "pages#dashboard"
+  resources :head_imgs
 
   resources :files, only: [:show] do
     collection do
