@@ -27,9 +27,8 @@
       <thead>
         <tr>
           <th width="60">ID</th>
-          <th>是否vip</th>
+          <th>类型</th>
           <th>头像</th>
-          <th width="150">创建时间</th>
           <th width="200" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -38,17 +37,17 @@
           <tr>
             <td><%= r.id %></td>
             <td>
-              <div style="font-weight: 500;"><%= r.name %></div>
+              <div style="font-weight: 500;"><%= r.is_vip %></div>
             </td>
             <td>
-             <% unless r.head_img.blank? %>
-                <img src="<%= FileMap.new(r.head_img, "img").secrity_src %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
+             <% unless r.img_url.blank? %>
+                <img src="<%= FileMap.new(r.img_url, "img").secrity_src %>" style="width: 48px; object-fit: cover;" />
               <% end %>
             </td>
-            <td><%= r.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to "编辑", edit_admin_author_path(r), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '删除', head_img_path(r), method: :delete, class: "layui-btn layui-btn-sm layui-bg-red", title: "删除", data: { confirm: "确定要删除此头像吗？此操作不可恢复。" } %>
               </div>
             </td>
           </tr>
