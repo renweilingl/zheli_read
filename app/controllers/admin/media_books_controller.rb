@@ -22,6 +22,15 @@ class Admin::MediaBooksController < ApplicationController
   end
 
   def create
+    @book = Book.new(book_params)
+    authorize @book
+    @suppliers = Supplier.all
+
+    if @book.save
+      redirect_to :admin_media_books, notice: '图书创建成功'
+    else
+      render :new
+    end
   end
 
   def show
@@ -41,5 +50,23 @@ class Admin::MediaBooksController < ApplicationController
   private
   def set_book
     @book = Book.find(params[:id])
+  end
+
+  def book_params
+    params.require(:book).permit(
+      :name,
+      :cover_image_url,
+      :supplier_id,
+      :category_id,
+      :book_level_id,
+      :author_id,
+      :file_url,
+      :file_name,
+      :file_type,
+      :is_free,
+      :content_description,
+      :grade_ids => [],
+      :category_sub_ids => []
+    )
   end
 end

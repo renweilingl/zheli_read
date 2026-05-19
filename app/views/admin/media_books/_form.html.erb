@@ -26,15 +26,6 @@
     </div>
   </div>
 
-  <div class="layui-form-item" style="display:  <%= @book.category_id == 1 ? 'block' : 'none' %>;" id="level-wrap">
-    <label class="layui-form-label">图书分级</label>
-    <div class="layui-input-block">
-      <% BookLevel.all.sorted.each do |x| %>
-        <input type="radio" name="book[book_level_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.book_level_id == x.id %>>
-      <% end %>
-    </div>
-  </div>
-
   <div class="layui-form-item">
     <label class="layui-form-label">年龄范围</label>
     <div class="layui-input-block">
@@ -150,11 +141,6 @@
             data: {},
             success: function (json) {
                 $("#category-sub-wrap").html(json.sub_opts);
-                if(1 === parseInt(cat_id)){
-                    $("#level-wrap").show();
-                } else {
-                    $("#level-wrap").hide();
-                }
                 form.render();
             },
             error: function (e) {
