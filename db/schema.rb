@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_18_062757) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_19_023333) do
+  create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "nickname"
+    t.string "avatar"
+    t.string "phone"
+    t.string "password_digest"
+    t.string "uuid", null: false
+    t.integer "role", default: 0, null: false
+    t.boolean "is_vip", default: false, null: false
+    t.datetime "vip_expires_at"
+    t.integer "reading_words", default: 0, null: false
+    t.integer "reading_minutes", default: 0, null: false
+    t.integer "books_read", default: 0, null: false
+    t.string "device_id", limit: 64
+    t.bigint "grade_id"
+    t.string "wechat_openid"
+    t.string "qq_openid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_app_users_on_device_id", unique: true
+    t.index ["grade_id"], name: "index_app_users_on_grade_id"
+    t.index ["phone"], name: "index_app_users_on_phone", unique: true
+    t.index ["qq_openid"], name: "index_app_users_on_qq_openid", unique: true
+    t.index ["uuid"], name: "index_app_users_on_uuid", unique: true
+    t.index ["wechat_openid"], name: "index_app_users_on_wechat_openid", unique: true
+  end
+
   create_table "audits", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
