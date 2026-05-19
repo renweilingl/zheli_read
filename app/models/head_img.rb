@@ -1,0 +1,2 @@
+class HeadImg < ApplicationRecord
+end
