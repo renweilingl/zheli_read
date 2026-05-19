@@ -43,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @picture_books.each do |book| %>
+        <% @books.each do |book| %>
           <tr>
             <td><%= book.id %></td>
             <td>
@@ -74,8 +74,8 @@
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to "章节管理", admin_picture_book_book_chapters_path(book), class: "layui-btn layui-btn-sm" %>
-                <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
-                <%= link_to '删除', admin_picture_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除绘本吗？此操作不可恢复。" } %>
+                <%= link_to "编辑", edit_admin_media_book_path(book), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '删除', admin_media_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除绘本吗？此操作不可恢复。" } %>
               </div>
             </td>
           </tr>
@@ -83,7 +83,7 @@
       </tbody>
     </table>
 
-    <% if @picture_books.total_pages > 1 %>
+    <% if @books.total_pages > 1 %>
       <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
     <% end %>
   </div>
@@ -96,12 +96,12 @@
         layer = layui.layer;
 
     // 分页
-    <% if @picture_books.total_pages > 1 %>
+    <% if @books.total_pages > 1 %>
     laypage.render({
       elem: 'pagination',
-      count: <%= @picture_books.total_entries %>,
-      limit: <%= @picture_books.per_page %>,
-      curr: <%= @picture_books.current_page %>,
+      count: <%= @books.total_entries %>,
+      limit: <%= @books.per_page %>,
+      curr: <%= @books.current_page %>,
       layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
       jump: function(obj, first){
         if(!first){
