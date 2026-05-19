@@ -2,7 +2,7 @@
 
 class Chapter < ApplicationRecord
   audited
-  #belongs_to :book
+  belongs_to :book
 
   # 内容文件类型
   FILE_TYPES = {
