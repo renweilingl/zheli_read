@@ -13,6 +13,17 @@ class Admin::MediaBooksController < ApplicationController
     @suppliers = Supplier.all 
   end
 
+  def new
+    @book = Book.new
+    cat = Category.find_by(name: "有声")
+    @book.category_id = cat.id
+    authorize @book
+    @suppliers = Supplier.all
+  end
+
+  def create
+  end
+
   def show
   end
 
