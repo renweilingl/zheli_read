@@ -40,6 +40,8 @@ class Admin::ChaptersController < ApplicationController
 
   def edit
     authorize @book
+
+    @chapter = @book.chapters.find(params[:id])
   end
 
   def update

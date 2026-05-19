@@ -89,13 +89,12 @@
       <% else %> 
         <div id="upload-result" class="layui-card" style="display: inline-block; padding: 15px;"> 
           <div style="display: flex; align-items: center; gap: 15px;">           
-            <div style="width: 40px; height: 40px; background-color: <%= @content.file_type_color %>20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                  <i class="layui-icon <%= @content.file_type_icon %>" style="color: <%= @content.file_type_color %>; font-size: 20px;"></i>
+            <div style="width: 40px; height: 40px; background-color: <%= @chapter.file_type_color %>20; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                  <i class="layui-icon <%= @chapter.file_type_icon %>" style="color: <%= @chapter.file_type_color %>; font-size: 20px;"></i>
             </div>                                                               
             <div>                                                                
               <div id="file-name" style="font-weight: bold;"></div>              
-              <div id="file-type-badge" style="font-weight: bold;"><%= @content.file_name %></div>  
-              <div id="file-size" class="layui-word-aux"><%= @content.file_size_desc %></div> 
+              <div id="file-type-badge" style="font-weight: bold;"><%= @chapter.name %></div>  
             </div>                                                               
             <div style="margin-left: auto;">                                     
               <button type="button" class="layui-btn layui-btn-xs layui-btn-danger" id="remove-file">移除</button>
@@ -202,5 +201,13 @@
             $('#upload-progress').hide();                                            
           }                                                                          
         }); 
+
+        $('#remove-file').on('click', function(){
+          $('#upload-result').hide();
+          $('#file-url-hidden').val('');
+          $('#file-name-hidden').val('');
+          //$('#file-size-hidden').val('');
+          layer.msg('已移除文件', {icon: 6});
+        });
   })
 </script>
