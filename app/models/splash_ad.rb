@@ -62,39 +62,6 @@ class SplashAd < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
   
   
-  def self.link_type_options
-    LINK_TYPES.keys.map { |k| [I18n.t("splash_ad.link_type.#{k}", default: k.to_s.humanize), k] }
-  end
-  
-  def self.push_scope_options
-    PUSH_SCOPES.keys.map { |k| [I18n.t("splash_ad.push_scope.#{k}", default: k.to_s.humanize), k] }
-  end
-  
-  def self.push_mode_options
-    PUSH_MODES.keys.map { |k| [I18n.t("splash_ad.push_mode.#{k}", default: k.to_s.humanize), k] }
-  end
-  
-  def self.status_options
-    STATUSES.keys.map { |k| [I18n.t("splash_ad.status.#{k}", default: k.to_s.humanize), k] }
-  end
-  
-  
-  def link_type_text
-    I18n.t("splash_ad.link_type.#{link_type}", default: link_type.humanize)
-  end
-  
-  def push_scope_text
-    I18n.t("splash_ad.push_scope.#{push_scope}", default: push_scope.humanize)
-  end
-  
-  def push_mode_text
-    I18n.t("splash_ad.push_mode.#{push_mode}", default: push_mode.humanize)
-  end
-  
-  def status_text
-    I18n.t("splash_ad.status.#{status}", default: status.humanize)
-  end
-  
   def age_range_display
     return nil unless push_scope == 'age_range'
     "#{min_age || 0} ~ #{max_age || 18} 岁"

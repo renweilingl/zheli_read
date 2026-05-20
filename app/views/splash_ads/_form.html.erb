@@ -28,8 +28,8 @@
         <div class="layui-input-block">
           <select name="splash_ad[link_type]" id="link-type-select" lay-verify="required" lay-filter="link-type-filter">
             <option value="">请选择</option>
-            <% @link_type_options.each do |text, value| %>
-              <option value="<%= value %>" <%= @splash_ad.link_type == value ? 'selected' : '' %>><%= text %></option>
+            <% [["single_book", "图书单本"],["category", "分类"]].each do |x| %>
+              <option value="<%= x[0] %>" <%= @splash_ad.link_type == x[0] ? 'selected' : '' %>><%= x[1] %></option>
              <% end %>
           </select>
         </div>
@@ -69,8 +69,8 @@
         <label class="layui-form-label">推送范围<span style="color: red;">*</span></label>
         <div class="layui-input-block">
           <select name="splash_ad[push_scope]" id="push-scope-select" lay-verify="required" lay-filter="push-scope-filter">
-            <% @push_scope_options.each do |text, value| %>
-              <option value="<%= value %>" <%= @splash_ad.push_scope == value ? 'selected' : '' %>><%= text %></option>
+            <% [["all_users", "所有用户"],["age_range", "指定年龄段"], ["specific_users", "指定用户群体"]].each do |x| %>
+              <option value="<%= x[0] %>" <%= @splash_ad.push_scope == x[0] ? 'selected' : '' %>><%= x[1] %></option>
             <% end %>
           </select>
         </div>
@@ -99,8 +99,8 @@
         <label class="layui-form-label">推送方式<span style="color: red;">*</span></label>
         <div class="layui-input-block">
           <select name="splash_ad[push_mode]" id="push-mode-select" lay-verify="required" lay-filter="push-mode-filter">
-            <% @push_mode_options.each do |text, value| %>
-              <option value="<%= value %>" <%= @splash_ad.push_mode == value ? 'selected' : '' %>><%= text %></option>
+            <% [["immediate", "定时推送"],["first_open_daily", "首次打开app推送"]].each do |x| %>
+              <option value="<%= x[0] %>" <%= @splash_ad.push_mode == x[0] ? 'selected' : '' %>><%= x[1] %></option>
             <% end %>
           </select>
         </div>
@@ -138,7 +138,7 @@
   <!-- 操作按钮 -->
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="form-submit">保存</button>
+      <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="form-submit">提交保存</button>
       <%= link_to '取消', splash_ads_path, class: 'layui-btn layui-btn-primary' %>
     </div>
   </div>
@@ -174,7 +174,7 @@ layui.use(['form', 'upload', 'laydate', 'layer'], function() {
   // 图片上传
   var uploadInst = upload.render({
     elem: '#upload-image-btn',
-    url: '/admin/splash_ads/upload_image',
+    url: '<%= upload_img_files_path %>',
     accept: 'images',
     size: 5120,
     before: function(obj) {

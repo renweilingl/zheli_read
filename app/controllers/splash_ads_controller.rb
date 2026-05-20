@@ -41,6 +41,7 @@ class SplashAdsController < ApplicationController
     @splash_ad = SplashAd.new(
       push_scope: :all_users,
       push_mode: :immediate,
+      link_type: :single_book,
       status: :draft
     )
     authorize @splash_ad
@@ -170,12 +171,8 @@ class SplashAdsController < ApplicationController
   end
   
   def load_associations
-    @books = Book.all.order(:name).limit(100)
+    @books = Book.all.order(:name)
     @categories = Category.all.order(:name)
-    @link_type_options = SplashAd.link_type_options
-    @push_scope_options = SplashAd.push_scope_options
-    @push_mode_options = SplashAd.push_mode_options
-    @status_options = SplashAd.status_options
   end
   
   def calculate_avg_delivery_rate
