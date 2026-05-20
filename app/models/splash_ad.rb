@@ -111,14 +111,6 @@ class SplashAd < ApplicationRecord
     update!(status: :active)
   end
   
-  def image_url_with_host
-    return nil if image_url.blank?
-    return image_url if image_url.start_with?('http')
-    
-    host = ENV.fetch('ASSET_HOST', ENV.fetch('COZE_PROJECT_DOMAIN_DEFAULT', ''))
-    host.start_with?('http') ? "#{host}#{image_url}" : "https://#{host}#{image_url}"
-  end
-  
   private
   
   def end_time_after_start_time

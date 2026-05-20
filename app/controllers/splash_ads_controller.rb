@@ -1,3 +1,4 @@
+require 'active_support/time_with_zone'
 class SplashAdsController < ApplicationController
   before_action :require_login
   before_action :set_splash_ad, only: [:show, :edit, :update, :destroy, :publish, :disable, :enable]
@@ -52,16 +53,14 @@ class SplashAdsController < ApplicationController
   def create
     @splash_ad = SplashAd.new(splash_ad_params)
     authorize @splash_ad
-    
-    respond_to do |format|
-      if @splash_ad.save
-        format.html { redirect_to admin_splash_ad_path(@splash_ad), notice: '开屏广告创建成功。' }
-        format.json { render json: { success: true, splash_ad: @splash_ad } }
-      else
-        load_associations
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: { success: false, errors: @splash_ad.errors.full_messages }, status: :unprocessable_entity }
-      end
+
+    if @splash_ad.save
+      flash[:notice] = "开屏广告创建成功！"
+      redirect_to :operator_packages
+    else
+      load_associations
+      flash.now[:alert] = "开屏广告创建失败：#{@splash_ad.errors.full_messages.join(', ')}"
+      render :new, status: :unprocessable_entity
     end
   end
   
@@ -162,8 +161,8 @@ class SplashAdsController < ApplicationController
     params.require(:splash_ad).permit(
       :ad_type, :image_url,
       :link_type, :link_url, :book_id, :category_id,
-      :push_scope, :min_age, :max_age, :user_group,
-      :push_mode, :scheduled_at,
+      :push_scope, :min_age, :max_age, #:user_group,
+      :push_mode, #:scheduled_at,
       :start_time, :end_time,
       :status
     )
