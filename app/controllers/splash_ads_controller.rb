@@ -39,12 +39,12 @@ class SplashAdsController < ApplicationController
   
   def new
     @splash_ad = SplashAd.new(
-      ad_type: :app_open_popup,
       push_scope: :all_users,
       push_mode: :immediate,
       status: :draft
     )
     authorize @splash_ad
+
     load_associations
   end
   
@@ -174,7 +174,7 @@ class SplashAdsController < ApplicationController
     authorize :splash_ad, :index?
     
     query = params[:q].to_s.strip
-    books = Book.where.not(deleted_at: nil)
+    books = Book.where
                 .where('name LIKE ?', "%#{query}%")
                 .limit(20)
                 .select(:id, :name)
@@ -185,7 +185,7 @@ class SplashAdsController < ApplicationController
   def categories_options
     authorize :splash_ad, :index?
     
-    categories = Category.where.not(deleted_at: nil)
+    categories = Category.where
                          .select(:id, :name)
     
     render json: categories.map { |c| { id: c.id, name: c.name } }
@@ -209,8 +209,8 @@ class SplashAdsController < ApplicationController
   end
   
   def load_associations
-    @books = Book.where.not(deleted_at: nil).order(:name).limit(100)
-    @categories = Category.where.not(deleted_at: nil).order(:name)
+    @books = Book.all.order(:name).limit(100)
+    @categories = Category.all.order(:name)
     @link_type_options = SplashAd.link_type_options
     @push_scope_options = SplashAd.push_scope_options
     @push_mode_options = SplashAd.push_mode_options

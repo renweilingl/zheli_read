@@ -3,21 +3,11 @@
     <h3>新建开屏广告</h3>
   </div>
   <div class="layui-card-body">
-    <%= form_with model: @splash_ad, url: admin_splash_ads_path, local: true, html: { class: 'layui-form', id: 'splash-ad-form' } do |f| %>
+    <%= form_with model: @splash_ad, url: splash_ads_path, local: true, html: { class: 'layui-form', id: 'splash-ad-form' } do |f| %>
       
-      <!-- 基本信息 -->
       <fieldset class="layui-elem-field" style="margin-top: 20px;">
         <legend>基本信息</legend>
         <div class="layui-field-box">
-          <div class="layui-form-item">
-            <label class="layui-form-label">广告类型<span style="color: red;">*</span></label>
-            <div class="layui-input-block">
-              <select name="splash_ad[ad_type]" lay-verify="required">
-                <option value="app_open_popup" <%= @splash_ad.ad_type == 'app_open_popup' ? 'selected' : '' %>>APP打开弹窗广告</option>
-              </select>
-            </div>
-          </div>
-
           <div class="layui-form-item">
             <label class="layui-form-label">广告图片<span style="color: red;">*</span></label>
             <div class="layui-input-block">
@@ -31,13 +21,11 @@
                 <% end %>
               </div>
               <input type="hidden" name="splash_ad[image_url]" id="image-url" value="<%= @splash_ad.image_url %>">
-              <input type="hidden" name="splash_ad[image_name]" id="image-name" value="<%= @splash_ad.image_name %>">
             </div>
           </div>
         </div>
       </fieldset>
 
-      <!-- 链接设置 -->
       <fieldset class="layui-elem-field">
         <legend>链接设置</legend>
         <div class="layui-field-box">
@@ -157,7 +145,7 @@
       <div class="layui-form-item">
         <div class="layui-input-block">
           <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="form-submit">保存</button>
-          <%= link_to '取消', admin_splash_ads_path, class: 'layui-btn layui-btn-primary' %>
+          <%= link_to '取消', splash_ads_path, class: 'layui-btn layui-btn-primary' %>
         </div>
       </div>
     <% end %>
