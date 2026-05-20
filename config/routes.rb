@@ -76,6 +76,7 @@ Rails.application.routes.draw do
 
     resources :media_books do
       resources :chapters do
+        post 'update_sn', on: :collection
       end
     end
   end

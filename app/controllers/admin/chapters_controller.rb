@@ -53,6 +53,12 @@ class Admin::ChaptersController < ApplicationController
     redirect_to admin_media_book_chapters_path(@book), notice: '内容修改成功'
   end
 
+  def update_sn
+    @book.chapters.find(params[:id]).update(sn: params[:sn])
+
+    render json: {code: 0}
+  end
+
   def destroy
     authorize @book
 

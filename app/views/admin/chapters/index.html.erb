@@ -74,5 +74,29 @@
           {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
         ]],
       });
+
+      table.on('edit(main-table)', function(obj){                                
+        var value = obj.value // 得到修改后的值                                  
+        var data = obj.data // 得到所在行所有键值                                
+        var field = obj.field; // 得到字段                                       
+                                                                                 
+        $.ajax({                                                                 
+          url: '<%= update_sn_admin_media_book_chapters_path(@book) %>',  
+          dataType: 'json',                                                      
+          type: 'post',                                                          
+          data: {id: data.id, sn: data.sn},                          
+          success: function(res) {                                               
+            if(res.code == 0){                                                   
+              var update = {};                                                   
+              update[field] = value;                                             
+              obj.update(update);                                                
+              layer.msg('修改成功');                                             
+            } else {                                                             
+              layer.msg('修改失败');                                             
+            }                                                                    
+          }                                                                      
+        })                                                                       
+      });                                                                        
+
     })
 </script>
