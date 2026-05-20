@@ -185,7 +185,7 @@ layui.use(['form', 'upload', 'laydate', 'layer'], function() {
       if (res.success) {
         $('#image-url').val(res.url);
         $('#image-name').val(res.filename);
-        $('#image-preview').html('<img src="' + res.url + '" style="max-width: 300px; max-height: 200px; border-radius: 4px;">');
+        $('#image-preview').html('<img src="' + res.preivew_url + '" style="max-width: 300px; max-height: 200px; border-radius: 4px;">');
         layer.msg('上传成功', { icon: 1 });
       } else {
         layer.msg(res.message || '上传失败', { icon: 2 });

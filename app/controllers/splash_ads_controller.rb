@@ -51,7 +51,6 @@ class SplashAdsController < ApplicationController
   
   def create
     @splash_ad = SplashAd.new(splash_ad_params)
-    @splash_ad.user = current_user
     authorize @splash_ad
     
     respond_to do |format|
@@ -161,7 +160,7 @@ class SplashAdsController < ApplicationController
   
   def splash_ad_params
     params.require(:splash_ad).permit(
-      :ad_type, :image_url, :image_name,
+      :ad_type, :image_url,
       :link_type, :link_url, :book_id, :category_id,
       :push_scope, :min_age, :max_age, :user_group,
       :push_mode, :scheduled_at,
