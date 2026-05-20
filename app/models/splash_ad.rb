@@ -1,13 +1,8 @@
 class SplashAd < ApplicationRecord
-  acts_as_paranoid
+  audited
   
   belongs_to :book, optional: true
   belongs_to :category, optional: true
-  
-  # 广告类型
-  AD_TYPES = {
-    app_open_popup: 'app_open_popup'
-  }.freeze
   
   # 链接类型
   LINK_TYPES = {
@@ -37,22 +32,17 @@ class SplashAd < ApplicationRecord
     disabled: 'disabled'
   }.freeze
   
-  enum :ad_type, AD_TYPES
   enum :link_type, LINK_TYPES
   enum :push_scope, PUSH_SCOPES
   enum :push_mode, PUSH_MODES
   enum :status, STATUSES
   
   # 验证
-  validates :ad_type, presence: true
   validates :image_url, presence: true
   validates :link_type, presence: true
   validates :push_scope, presence: true
   validates :push_mode, presence: true
-  validates :start_time, presence: true
-  validates :end_time, presence: true
   
-  validate :end_time_after_start_time
   validate :link_type_consistency
   
   # 年龄段验证
@@ -66,15 +56,11 @@ class SplashAd < ApplicationRecord
   scope :by_push_scope, ->(push_scope) { where(push_scope: push_scope) if push_scope.present? }
   scope :active_now, -> { 
     where(status: :active)
-    .where('start_time <= ?', Time.current)
-    .where('end_time >= ?', Time.current)
+#    .where('start_time <= ?', Time.current)
+#    .where('end_time >= ?', Time.current)
   }
   scope :ordered, -> { order(created_at: :desc) }
   
-  # 类方法
-  def self.ad_type_options
-    AD_TYPES.keys.map { |k| [I18n.t("splash_ad.ad_type.#{k}", default: k.to_s.humanize), k] }
-  end
   
   def self.link_type_options
     LINK_TYPES.keys.map { |k| [I18n.t("splash_ad.link_type.#{k}", default: k.to_s.humanize), k] }
@@ -92,10 +78,6 @@ class SplashAd < ApplicationRecord
     STATUSES.keys.map { |k| [I18n.t("splash_ad.status.#{k}", default: k.to_s.humanize), k] }
   end
   
-  # 实例方法
-  def ad_type_text
-    I18n.t("splash_ad.ad_type.#{ad_type}", default: ad_type.humanize)
-  end
   
   def link_type_text
     I18n.t("splash_ad.link_type.#{link_type}", default: link_type.humanize)

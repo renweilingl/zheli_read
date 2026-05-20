@@ -1,0 +1,188 @@
+<div class="layui-card">
+  <div class="layui-card-header">
+    <h3>开屏广告管理</h3>
+  </div>
+  <div class="layui-card-body">
+    <!-- 统计卡片 -->
+    <div class="layui-row layui-col-space15" style="margin-bottom: 20px;">
+      <div class="layui-col-md3">
+        <div class="layui-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+          <div class="layui-card-body" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:total] %></div>
+            <div style="font-size: 14px; opacity: 0.8;">广告总数</div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md3">
+        <div class="layui-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+          <div class="layui-card-body" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:active] %></div>
+            <div style="font-size: 14px; opacity: 0.8;">投放中</div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md3">
+        <div class="layui-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+          <div class="layui-card-body" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:today_sends] %></div>
+            <div style="font-size: 14px; opacity: 0.8;">今日发送</div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md3">
+        <div class="layui-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
+          <div class="layui-card-body" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:avg_delivery_rate] %>%</div>
+            <div style="font-size: 14px; opacity: 0.8;">平均送达率</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 操作栏 -->
+    <div class="layui-form" style="margin-bottom: 15px;">
+      <div class="layui-inline">
+        <%= link_to '新建广告', new_splash_ad_path, class: 'layui-btn layui-btn-normal' %>
+      </div>
+      <div class="layui-inline">
+        <label class="layui-form-label" style="width: 80px;">状态：</label>
+        <div class="layui-input-inline" style="width: 120px;">
+          <select name="status" lay-filter="status-filter">
+            <option value="">全部</option>
+            <option value="draft" <%= params[:status] == 'draft' ? 'selected' : '' %>>草稿</option>
+            <option value="scheduled" <%= params[:status] == 'scheduled' ? 'selected' : '' %>>已定时</option>
+            <option value="active" <%= params[:status] == 'active' ? 'selected' : '' %>>投放中</option>
+            <option value="expired" <%= params[:status] == 'expired' ? 'selected' : '' %>>已过期</option>
+            <option value="disabled" <%= params[:status] == 'disabled' ? 'selected' : '' %>>已停用</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-inline">
+        <label class="layui-form-label" style="width: 80px;">链接类型：</label>
+        <div class="layui-input-inline" style="width: 120px;">
+          <select name="link_type" lay-filter="link-type-filter">
+            <option value="">全部</option>
+            <option value="single_book" <%= params[:link_type] == 'single_book' ? 'selected' : '' %>>单本书</option>
+            <option value="category" <%= params[:link_type] == 'category' ? 'selected' : '' %>>分类目录</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据表格 -->
+    <table class="layui-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th style="width: 50px;">ID</th>
+          <th style="width: 100px;">广告图片</th>
+          <th>链接类型</th>
+          <th>推送范围</th>
+          <th>推送方式</th>
+          <th>投放时间</th>
+          <th>状态</th>
+          <th>发送数</th>
+          <th>点击数</th>
+          <th>送达率</th>
+          <th style="width: 180px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @splash_ads.each do |ad| %>
+        <tr>
+          <td><%= ad.id %></td>
+          <td>
+            <% if ad.image_url.present? %>
+              <img src="<%= ad.image_url %>" alt="广告图" style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
+            <% end %>
+          </td>
+          <td><%= ad.link_type_text %></td>
+          <td><%= ad.push_scope_text %></td>
+          <td><%= ad.push_mode_text %></td>
+          <td style="font-size: 12px;"><%= ad.time_range_display %></td>
+          <td>
+            <%
+              status_class = case ad.status
+              when 'draft' then 'layui-bg-gray'
+              when 'scheduled' then 'layui-bg-blue'
+              when 'active' then 'layui-bg-green'
+              when 'expired' then 'layui-bg-orange'
+              when 'disabled' then 'layui-bg-red'
+              end
+            %>
+            <span class="layui-badge <%= status_class %>"><%= ad.status_text %></span>
+          </td>
+          <td><%= ad.send_count %></td>
+          <td><%= ad.click_count %></td>
+          <td><%= ad.delivery_rate_display %></td>
+          <td>
+            <div class="layui-btn-container">
+              <%= link_to '查看', splash_ad_path(ad), class: 'layui-btn layui-btn-xs layui-btn-normal' %>
+              <% if policy(ad).edit? %>
+                <%= link_to '编辑', edit_splash_ad_path(ad), class: 'layui-btn layui-btn-xs' %>
+              <% end %>
+              <% if ad.can_publish? && policy(ad).publish? %>
+                <button class="layui-btn layui-btn-xs layui-btn-warm" onclick="publishAd(<%= ad.id %>)">发布</button>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<script>
+layui.use(['form', 'layer'], function() {
+  var form = layui.form;
+  var layer = layui.layer;
+
+  // 状态筛选
+  form.on('select(status-filter)', function(data) {
+    var value = data.value;
+    var url = new URL(window.location.href);
+    if (value) {
+      url.searchParams.set('status', value);
+    } else {
+      url.searchParams.delete('status');
+    }
+    window.location.href = url.toString();
+  });
+
+  // 链接类型筛选
+  form.on('select(link-type-filter)', function(data) {
+    var value = data.value;
+    var url = new URL(window.location.href);
+    if (value) {
+      url.searchParams.set('link_type', value);
+    } else {
+      url.searchParams.delete('link_type');
+    }
+    window.location.href = url.toString();
+  });
+});
+
+// 发布广告
+function publishAd(id) {
+  layui.layer.confirm('确定要发布该广告吗？', function(index) {
+    $.ajax({
+      url: '/admin/splash_ads/' + id + '/publish',
+      type: 'POST',
+      success: function(res) {
+        if (res.success) {
+          layui.layer.msg('发布成功', { icon: 1 }, function() {
+            location.reload();
+          });
+        } else {
+          layui.layer.msg(res.errors ? res.errors.join(', ') : '发布失败', { icon: 2 });
+        }
+      },
+      error: function() {
+        layui.layer.msg('发布失败', { icon: 2 });
+      }
+    });
+    layui.layer.close(index);
+  });
+}
+</script>

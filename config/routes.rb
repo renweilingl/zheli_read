@@ -92,4 +92,6 @@ Rails.application.routes.draw do
       post :send_push
     end
   end
+
+  resources :splash_ads
 end
