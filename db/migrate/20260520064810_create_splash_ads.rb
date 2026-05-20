@@ -17,6 +17,10 @@ class CreateSplashAds < ActiveRecord::Migration[7.1]
 
       t.string :status, null: false, default: 'draft', comment: '状态: draft/scheduled/active/expired/disabled'
 
+      # 时间范围
+      t.datetime :start_time, null: false, comment: '开始时间'
+      t.datetime :end_time, null: false, comment: '结束时间'
+
       # 统计数据                                                                 
       t.integer :send_count, default: 0, comment: '发送数'                       
       t.integer :click_count, default: 0, comment: '点击数'                      

@@ -307,6 +307,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_20_064810) do
     t.string "push_mode", default: "immediate", null: false, comment: "推送方式: immediate/first_open_daily"
     t.datetime "scheduled_at", comment: "定时推送时间"
     t.string "status", default: "draft", null: false, comment: "状态: draft/scheduled/active/expired/disabled"
+    t.datetime "start_time", null: false, comment: "开始时间"
+    t.datetime "end_time", null: false, comment: "结束时间"
     t.integer "send_count", default: 0, comment: "发送数"
     t.integer "click_count", default: 0, comment: "点击数"
     t.decimal "delivery_rate", precision: 5, scale: 4, default: "0.0", comment: "送达率"
