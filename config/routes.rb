@@ -77,6 +77,8 @@ Rails.application.routes.draw do
     resources :media_books do
       resources :chapters do
         post 'update_sn', on: :collection
+        post 'batch_free', on: :collection
+        post 'batch_unfree', on: :collection
       end
     end
   end

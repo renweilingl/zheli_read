@@ -10,12 +10,16 @@
 
   <div class="x-body">
     <div class="layui-row">
-      <div class="layui-col-xs9">
-      </div>
-      <div class="layui-col-3 text-right">
-        <%= link_to new_admin_media_book_chapter_path(@book), class: 'layui-btn layui-bg-blue' do %>
-          <i class="layui-icon"></i>新增单本
-        <% end %>
+      <div class="xblock">
+        <div class="layui-col-xs9">
+          <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchFree();">批量免费</button>
+          <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchUnfree();">批量收费</button>
+        </div>
+        <div class="layui-col-3 text-right">
+          <%= link_to new_admin_media_book_chapter_path(@book), class: 'layui-btn layui-bg-blue' do %>
+            <i class="layui-icon"></i>新增单本
+          <% end %>
+        </div>
       </div>
     </div>
 
@@ -76,27 +80,74 @@
       });
 
       table.on('edit(main-table)', function(obj){                                
-        var value = obj.value // 得到修改后的值                                  
-        var data = obj.data // 得到所在行所有键值                                
-        var field = obj.field; // 得到字段                                       
-                                                                                 
-        $.ajax({                                                                 
-          url: '<%= update_sn_admin_media_book_chapters_path(@book) %>',  
-          dataType: 'json',                                                      
-          type: 'post',                                                          
-          data: {id: data.id, sn: data.sn},                          
-          success: function(res) {                                               
-            if(res.code == 0){                                                   
-              var update = {};                                                   
-              update[field] = value;                                             
-              obj.update(update);                                                
-              layer.msg('修改成功');                                             
-            } else {                                                             
-              layer.msg('修改失败');                                             
-            }                                                                    
-          }                                                                      
-        })                                                                       
-      });                                                                        
+        var value = obj.value // 得到修改后的值
+        var data = obj.data // 得到所在行所有键值
+        var field = obj.field; // 得到字段
 
+        $.ajax({
+          url: '<%= update_sn_admin_media_book_chapters_path(@book) %>',
+          dataType: 'json',
+          type: 'post',
+          data: {id: data.id, sn: data.sn},
+          success: function(res) {
+            if(res.code == 0){
+              var update = {};
+              update[field] = value;
+              obj.update(update);
+              layer.msg('修改成功');
+            } else {
+              layer.msg('修改失败');
+            }
+          }
+        })
+      });
     })
+
+    function get_ids() {
+        var table = layui.table;
+        let ctrCheckArr = [];
+        ctrCheckArr.length = 0;
+        let checkStatus = table.checkStatus('main-table'),
+            data = checkStatus.data; //获取选中的数据
+        for (let i = 0; i < data.length; i++) {
+            ctrCheckArr.push(data[i].id)
+        }
+        return ctrCheckArr;
+    }
+
+    function batchFree() {
+        var ids = get_ids();
+
+        $.ajax({
+          url: '<%= batch_free_admin_media_book_chapters_path(@book) %>',
+          dataType: 'json',
+          type: 'post',
+          data: {ids: ids},
+          success: function(res) {
+            if(res.code == 0){
+              window.location.reload();
+            } else {
+              layer.msg('修改失败');
+            }
+          }
+        })
+    }
+
+    function batchUnfree() {
+        var ids = get_ids();
+
+        $.ajax({
+          url: '<%= batch_unfree_admin_media_book_chapters_path(@book) %>',
+          dataType: 'json',
+          type: 'post',
+          data: {ids: ids},
+          success: function(res) {
+            if(res.code == 0){
+              window.location.reload();
+            } else {
+              layer.msg('修改失败');
+            }
+          }
+        })
+    }
 </script>

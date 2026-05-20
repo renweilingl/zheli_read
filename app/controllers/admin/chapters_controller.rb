@@ -70,6 +70,16 @@ class Admin::ChaptersController < ApplicationController
     redirect_to chapters_admin_picture_book_path(@book)
   end
 
+  def batch_free
+    @book.chapters.where(id: params[:ids]).update_all(is_free: true)
+    render json: {code: 0}
+  end
+
+  def batch_unfree
+    @book.chapters.where(id: params[:ids]).update_all(is_free: false)
+    render json: {code: 0}
+  end
+
   private
   def set_book
     @book = Book.find(params[:media_book_id])
