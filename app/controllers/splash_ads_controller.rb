@@ -13,7 +13,6 @@ class SplashAdsController < ApplicationController
     @splash_ads = @splash_ads.ordered
     @splash_ads = @splash_ads.paginate(page: params[:page], per_page: 20)
     
-    # 统计数据
     @stats = {
       total: SplashAd.count,
       active: SplashAd.active_now.count,
@@ -21,11 +20,6 @@ class SplashAdsController < ApplicationController
       today_sends: SplashAd.where(status: [:active, :expired]).sum(:send_count),
       avg_delivery_rate: calculate_avg_delivery_rate
     }
-    
-    respond_to do |format|
-      format.html
-      format.json { render json: @splash_ads }
-    end
   end
   
   def show

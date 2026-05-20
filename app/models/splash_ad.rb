@@ -6,8 +6,8 @@ class SplashAd < ApplicationRecord
   
   # 链接类型
   LINK_TYPES = {
-    single_book: 'single_book',
-    category: 'category'
+    single_book: '单本图书',
+    category: '图书分类'
   }.freeze
   
   # 推送范围
@@ -32,7 +32,11 @@ class SplashAd < ApplicationRecord
     disabled: 'disabled'
   }.freeze
   
-  enum :link_type, LINK_TYPES
+  enum :link_type, {
+    single_book: 'single_book',
+    category: 'category',
+  }, prefix: true
+
   enum :push_scope, PUSH_SCOPES
   enum :push_mode, PUSH_MODES
   enum :status, STATUSES
@@ -61,6 +65,10 @@ class SplashAd < ApplicationRecord
   }
   scope :ordered, -> { order(created_at: :desc) }
   
+
+  def link_type_name
+    LINK_TYPES[link_type.to_sym] || link_type
+  end
   
   def age_range_display
     return nil unless push_scope == 'age_range'

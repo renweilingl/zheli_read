@@ -27,6 +27,18 @@ class SplashAdPolicy < ApplicationPolicy
     true
   end
 
+  def publish?
+    user.super_admin? || user.editor?
+  end
+
+  def disable?
+    user.super_admin? || user.editor?
+  end
+
+  def enable?
+    user.super_admin? || user.editor?
+  end
+
   class Scope < Scope
     def resolve
       if user.super_admin?

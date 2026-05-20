@@ -95,9 +95,9 @@
               <img src="<%= ad.image_url %>" alt="广告图" style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
             <% end %>
           </td>
-          <td><%= ad.link_type_text %></td>
-          <td><%= ad.push_scope_text %></td>
-          <td><%= ad.push_mode_text %></td>
+          <td><%= ad.link_type_name %></td>
+          <td><%= ad.link_type_name %></td>
+          <td><%= ad.link_type_name %></td>
           <td style="font-size: 12px;"><%= ad.time_range_display %></td>
           <td>
             <%
@@ -109,7 +109,7 @@
               when 'disabled' then 'layui-bg-red'
               end
             %>
-            <span class="layui-badge <%= status_class %>"><%= ad.status_text %></span>
+            <span class="layui-badge <%= status_class %>"><%= ad.status %></span>
           </td>
           <td><%= ad.send_count %></td>
           <td><%= ad.click_count %></td>
