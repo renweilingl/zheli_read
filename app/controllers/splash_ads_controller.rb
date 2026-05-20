@@ -131,45 +131,6 @@ class SplashAdsController < ApplicationController
     end
   end
   
-  def upload_image
-    authorize :splash_ad, :create?
-    
-    file = params[:file]
-    if file.blank?
-      render json: { success: false, message: '请选择文件' }
-      return
-    end
-    
-    # 验证文件类型
-    allowed_types = %w[image/jpeg image/png image/gif image/webp]
-    unless allowed_types.include?(file.content_type)
-      render json: { success: false, message: '只支持 JPG、PNG、GIF、WebP 格式的图片' }
-      return
-    end
-    
-    # 验证文件大小 (最大 5MB)
-    if file.size > 5.megabytes
-      render json: { success: false, message: '图片大小不能超过 5MB' }
-      return
-    end
-    
-    # 上传到 OSS
-    begin
-      oss_service = AliyunOssService.new
-      url, filename = oss_service.upload(file, 'splash_ads')
-      
-      render json: {
-        success: true,
-        url: url,
-        filename: filename,
-        message: '上传成功'
-      }
-    rescue StandardError => e
-      Rails.logger.error "Splash ad image upload failed: #{e.message}"
-      render json: { success: false, message: '上传失败，请稍后重试' }
-    end
-  end
-  
   def books_options
     authorize :splash_ad, :index?
     
