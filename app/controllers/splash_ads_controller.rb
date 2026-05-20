@@ -56,7 +56,7 @@ class SplashAdsController < ApplicationController
 
     if @splash_ad.save
       flash[:notice] = "开屏广告创建成功！"
-      redirect_to :operator_packages
+      redirect_to :splash_ads
     else
       load_associations
       flash.now[:alert] = "开屏广告创建失败：#{@splash_ad.errors.full_messages.join(', ')}"
