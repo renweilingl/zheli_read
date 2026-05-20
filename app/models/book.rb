@@ -11,6 +11,7 @@ class Book < ApplicationRecord
   has_many :chapters
   has_many :book_chapters
   has_many :contents
+  has_many :splash_ads
 
   # 验证
   validates :name, presence: true, length: { maximum: 100 }

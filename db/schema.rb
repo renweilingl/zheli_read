@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_19_075221) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_20_064810) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -295,6 +295,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_19_075221) do
     t.index ["grade_id"], name: "index_recommends_on_grade_id"
   end
 
+  create_table "splash_ads", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "image_url", null: false, comment: "图片URL"
+    t.string "link_type", null: false, comment: "链接类型: single_book/category"
+    t.bigint "book_id", comment: "关联图书ID"
+    t.bigint "category_id", comment: "关联分类ID"
+    t.string "push_scope", default: "all_users", null: false, comment: "推送范围: all_users/age_range/specific_users"
+    t.integer "min_age", comment: "最小年龄"
+    t.integer "max_age", comment: "最大年龄"
+    t.json "user_group", comment: "指定用户群体"
+    t.string "push_mode", default: "immediate", null: false, comment: "推送方式: immediate/first_open_daily"
+    t.datetime "scheduled_at", comment: "定时推送时间"
+    t.string "status", default: "draft", null: false, comment: "状态: draft/scheduled/active/expired/disabled"
+    t.integer "send_count", default: 0, comment: "发送数"
+    t.integer "click_count", default: 0, comment: "点击数"
+    t.decimal "delivery_rate", precision: 5, scale: 4, default: "0.0", comment: "送达率"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_splash_ads_on_book_id"
+    t.index ["category_id"], name: "index_splash_ads_on_category_id"
+    t.index ["deleted_at"], name: "index_splash_ads_on_deleted_at"
+  end
+
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "供应商名称"
     t.datetime "created_at", null: false
@@ -334,4 +357,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_19_075221) do
   add_foreign_key "content_groups", "recommends"
   add_foreign_key "contents", "content_groups"
   add_foreign_key "recommends", "grades"
+  add_foreign_key "splash_ads", "books"
+  add_foreign_key "splash_ads", "categories"
 end

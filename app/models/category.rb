@@ -3,6 +3,7 @@ class Category < ApplicationRecord
   has_and_belongs_to_many :compilations, join_table: :compilation_categories
   has_many :books
   has_many :category_subs, dependent: :destroy
+  has_many :splash_ads
 
   validates :name, presence: true, length: { maximum: 100 }
 
