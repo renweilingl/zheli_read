@@ -155,8 +155,8 @@ class SplashAdsController < ApplicationController
     params.require(:splash_ad).permit(
       :ad_type, :image_url,
       :link_type, :link_url, :book_id, :category_id,
-      :push_scope, :min_age, :max_age, #:user_group,
-      :push_mode, #:scheduled_at,
+      :push_scope, :min_age, :max_age, :user_group,
+      :push_mode, :scheduled_at,
       :start_time, :end_time,
       :status
     )
