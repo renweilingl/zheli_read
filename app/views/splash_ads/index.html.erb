@@ -11,36 +11,16 @@
     <div class="layui-row">
       <div class="layui-col-xs9">
         <%= search_form_for(@q, url: :splash_ads, :html => {class: :'layui-form layui-col-md12', style: "margin-bottom: 10px;"}) do |f| %>
+          <div class="layui-input-inline" style="width: 180px;">
+            <%= f.select :status_eq, options_for_select([['草稿', 'draft'], ['投放中', 'active'], ['已过期', 'expired'], ['已停用', 'disabled']], @q.link_type_eq), { include_blank: "所有状态" } %>
+          </div>
+
+          <div class="layui-input-inline" style="width: 180px;">
+            <%= f.select :link_type_eq, options_for_select([['单本书', 'single_book'], ['图书分类', 'category']], @q.link_type_eq), { include_blank: "链接类型" } %>
+          </div>
           <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
           <%= link_to "重置", :splash_ads, class: "layui-btn layui-btn-primary" %>
         <% end %>
-
-        <% if false %>
-      <div class="layui-form" style="margin-bottom: 15px;">
-      <div class="layui-inline">
-        <label class="layui-form-label" style="width: 80px;">状态：</label>
-        <div class="layui-input-inline" style="width: 120px;">
-          <select name="status" lay-filter="status-filter">
-            <option value="">全部</option>
-            <option value="draft" <%= params[:status] == 'draft' ? 'selected' : '' %>>草稿</option>
-            <option value="active" <%= params[:status] == 'active' ? 'selected' : '' %>>投放中</option>
-            <option value="expired" <%= params[:status] == 'expired' ? 'selected' : '' %>>已过期</option>
-            <option value="disabled" <%= params[:status] == 'disabled' ? 'selected' : '' %>>已停用</option>
-          </select>
-        </div>
-      </div>
-      <div class="layui-inline">
-        <label class="layui-form-label" style="width: 80px;">链接类型：</label>
-          <select name="link_type" lay-filter="link-type-filter">
-            <option value="">全部</option>
-            <option value="single_book" <%= params[:link_type] == 'single_book' ? 'selected' : '' %>>单本书</option>
-            <option value="category" <%= params[:link_type] == 'category' ? 'selected' : '' %>>分类目录</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
       </div>
 
       <div class="layui-col-xs3 text-right">

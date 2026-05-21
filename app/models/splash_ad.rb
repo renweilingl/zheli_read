@@ -169,4 +169,8 @@ class SplashAd < ApplicationRecord
       errors.add(:min_age, '不能大于最大年龄')
     end
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["book_id", "category_id", "click_count", "created_at", "deleted_at", "delivery_rate", "end_time", "id", "id_value", "image_url", "link_type", "max_age", "min_age", "push_mode", "push_scope", "scheduled_at", "send_count", "start_time", "status", "updated_at", "user_group"]
+  end
 end
