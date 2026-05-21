@@ -13,7 +13,10 @@ module Admin
     end
 
     def new
-      @sub = @category.category_subs.new
+      sub = @category.category_subs.order("sn desc").first
+      sn = sub.nil? ? 1 : sub.sn + 1
+
+      @sub = @category.category_subs.new(sn: sn)
       authorize [:admin, @sub], policy_class: Admin::CategorySubPolicy
     end
 
