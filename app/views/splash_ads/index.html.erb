@@ -44,7 +44,7 @@
           <th>发送数</th>
           <th>点击数</th>
           <th>送达率</th>
-          <th style="width: 180px;">操作</th>
+          <th width="200" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -75,14 +75,14 @@
           <td><%= ad.send_count %></td>
           <td><%= ad.click_count %></td>
           <td><%= ad.delivery_rate_display %></td>
-          <td>
-            <div class="layui-btn-container">
-              <%= link_to '查看', splash_ad_path(ad), class: 'layui-btn layui-btn-xs layui-btn-normal' %>
+          <td style="text-align:center;">
+            <div class="layui-btn-group">
+              <%= link_to '查看', splash_ad_path(ad), class: 'layui-btn layui-btn-sm layui-btn-normal' %>
               <% if policy(ad).edit? %>
-                <%= link_to '编辑', edit_splash_ad_path(ad), class: 'layui-btn layui-btn-xs' %>
+                <%= link_to '编辑', edit_splash_ad_path(ad), class: 'layui-btn layui-btn-sm' %>
               <% end %>
               <% if ad.can_publish? && policy(ad).publish? %>
-                <button class="layui-btn layui-btn-xs layui-btn-warm" onclick="publishAd(<%= ad.id %>)">发布</button>
+                <button class="layui-btn layui-btn-sm layui-btn-warm" onclick="publishAd(<%= ad.id %>)">发布</button>
               <% end %>
             </div>
           </td>
