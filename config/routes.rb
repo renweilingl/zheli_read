@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       post :upload
       post :upload_img
       post :upload_open_img
+      post :upload_media
     end
   end
 
