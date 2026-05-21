@@ -45,6 +45,8 @@ class Admin::MediaBooksController < ApplicationController
   end
 
   def destroy
+    @book.destroy
+    redirect_to :admin_media_books, notice: '图书删除成功'
   end
 
   private
