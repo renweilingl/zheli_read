@@ -3,6 +3,7 @@
     <span class="layui-breadcrumb">
       <a href="">内容管理</a>
       <%= link_to "分类管理", :admin_categories %>
+      <a><cite><%= @category.name %></cite></a>
       <a><cite>新增二级分类</cite></a>
     </span>
     <%= render 'common/user_info' %>
