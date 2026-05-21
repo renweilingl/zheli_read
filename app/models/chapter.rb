@@ -11,6 +11,7 @@ class Chapter < ApplicationRecord
     mp3: 'mp3',
     mp4: 'mp4',
     wav: 'wav',
+    mov: 'mp4',
   }.freeze
 
   FILE_TYPE_NAMES = {
@@ -18,7 +19,8 @@ class Chapter < ApplicationRecord
     pdf: 'PDF文档',
     mp3: '有声',
     mp4: '视频',
-    wav: '有声'
+    wav: '有声',
+    mov: '视频',
   }.freeze
 
   FILE_TYPE_ICONS = {
@@ -34,7 +36,8 @@ class Chapter < ApplicationRecord
     pdf: '#ef4444',
     mp3: '#8b5cf6',
     mp4: '#3b82f6',
-    wav: '#8b5cf6'
+    wav: '#8b5cf6',
+    mov: '#3b82f6',
   }.freeze
 
   # 验证

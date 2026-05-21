@@ -10,10 +10,10 @@ class FilesController < ApplicationController
     end
 
     extension = File.extname(file.original_filename).downcase.delete('.')
-    allowed_extensions = %w[wav mp3 mp4]
+    allowed_extensions = %w[wav mp3 mp4 mov]
 
     unless allowed_extensions.include?(extension)
-      render json: { code: 1, msg: '不支持的文件格式，请上传 wav、mp3、mp4格式的文件' }
+      render json: { code: 1, msg: '不支持的文件格式，请上传 wav、mp3、mp4、mov格式的文件' }
       return
     end
 
