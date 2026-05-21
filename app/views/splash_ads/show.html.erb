@@ -1,12 +1,18 @@
-<div class="layui-card">
-  <div class="layui-card-header">
-    <h3>开屏广告详情</h3>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">运营工具</a>
+      <a href="/splash_ads"><cite>开屏广告</cite></a>
+      <a><cite>开屏广告详情</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
   </div>
-  <div class="layui-card-body">
+
+  <div class="x-body">
     <!-- 广告图片 -->
     <div style="text-align: center; margin-bottom: 30px;">
       <% if @splash_ad.image_url.present? %>
-        <img src="<%= @splash_ad.image_url %>" style="max-width: 100%; max-height: 400px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <img src="<%= FileMap.new(@splash_ad.image_url, "img").secrity_src  %>" style="max-width: 100%; max-height: 400px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
       <% else %>
         <div style="padding: 60px; background: #f5f5f5; border-radius: 8px; color: #999;">暂无图片</div>
       <% end %>
