@@ -4,7 +4,7 @@ module Admin
   class CategorySubsController < ApplicationController
     before_action :require_login
     before_action :set_category
-    before_action :set_sub, only: [:edit, :update, :destroy]
+    before_action :set_sub, only: [:edit, :update, :destroy, :update_sn]
 
     def index
       authorize [:admin, CategorySub], policy_class: Admin::CategorySubPolicy
@@ -55,6 +55,12 @@ module Admin
       else
         render :new, status: :unprocessable_entity
       end
+    end
+
+    def update_sn
+      @sub.update(sn: params[:sn])
+
+      render json: {code: 0}
     end
 
     def destroy
