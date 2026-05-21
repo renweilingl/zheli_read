@@ -52,12 +52,8 @@
           <td><%= @splash_ad.id %></td>
         </tr>
         <tr>
-          <td><strong>广告类型</strong></td>
-          <td><%= @splash_ad.ad_type_text %></td>
-        </tr>
-        <tr>
           <td><strong>链接类型</strong></td>
-          <td><%= @splash_ad.link_type_text %></td>
+          <td><%= @splash_ad.link_type_name %></td>
         </tr>
         <tr>
           <td><strong>链接目标</strong></td>
@@ -72,7 +68,7 @@
         <tr>
           <td><strong>推送范围</strong></td>
           <td>
-            <%= @splash_ad.push_scope_text %>
+            <%= @splash_ad.push_scope_name %>
             <% if @splash_ad.push_scope == 'age_range' %>
               (<%= @splash_ad.age_range_display %>)
             <% end %>
@@ -81,7 +77,7 @@
         <tr>
           <td><strong>推送方式</strong></td>
           <td>
-            <%= @splash_ad.push_mode_text %>
+            <%= @splash_ad.push_mode_name %>
             <% if @splash_ad.scheduled_at.present? %>
               (<%= @splash_ad.scheduled_at.strftime('%Y-%m-%d %H:%M') %>)
             <% end %>
@@ -103,7 +99,7 @@
               when 'disabled' then 'layui-bg-red'
               end
             %>
-            <span class="layui-badge <%= status_class %>"><%= @splash_ad.status_text %></span>
+            <span class="layui-badge <%= status_class %>"><%= @splash_ad.status_name %></span>
           </td>
         </tr>
         <tr>
@@ -123,9 +119,9 @@
 
     <!-- 操作按钮 -->
     <div style="margin-top: 20px;">
-      <%= link_to '返回列表', admin_splash_ads_path, class: 'layui-btn layui-btn-primary' %>
+      <%= link_to '返回列表', splash_ads_path, class: 'layui-btn layui-btn-primary' %>
       <% if policy(@splash_ad).edit? %>
-        <%= link_to '编辑', edit_admin_splash_ad_path(@splash_ad), class: 'layui-btn layui-btn-normal' %>
+        <%= link_to '编辑', edit_splash_ad_path(@splash_ad), class: 'layui-btn layui-btn-normal' %>
       <% end %>
       <% if @splash_ad.can_publish? && policy(@splash_ad).publish? %>
         <button class="layui-btn layui-btn-warm" onclick="publishAd(<%= @splash_ad.id %>)">发布</button>
