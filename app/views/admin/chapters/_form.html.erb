@@ -29,6 +29,7 @@
     </div>
   </div>
 
+  <% if false %>
   <div class="layui-form-item">                                                  
     <%= f.label :cover_image_url, class: "layui-form-label" do %>                
       <span class="required">*</span> 内容封面
@@ -49,6 +50,7 @@
       <%= f.hidden_field :cover_image_url, id: "cover_image_url" %>              
     </div>                                                                       
   </div> 
+  <% end %>
 
   <div class="layui-form-item">                                                  
     <label class="layui-form-label">内容文件</label>                             
@@ -56,7 +58,7 @@
       <div class="layui-upload-drag" id="file-upload" style="width: 100%; padding: 30px; text-align: center;">
         <i class="layui-icon layui-icon-upload" style="font-size: 48px; color: #9ca3af;"></i>
         <p style="margin-top: 15px; color: #6b7280;">点击上传，或将文件拖拽到此处</p>
-        <p class="layui-word-aux" id="file-restriction" style="margin-top: 5px;">支持格式：epub、pdf、mp3、mp4</p>
+        <p class="layui-word-aux" id="file-restriction" style="margin-top: 5px;">支持格式：mp3、mp4</p>
       </div>                                                                     
       <div id="upload-progress" style="display: none; margin-top: 15px;">
         <div class="layui-progress" lay-filter="upload-progress">
@@ -154,7 +156,7 @@
           elem: '#file-upload',
           url: '<%= upload_files_path %>',
           auto: true,
-          accept: 'file',
+          accept: 'mp3|mp4|wav',
           size: 204800, // 200MB
           before: function(obj){
           // 显示进度条
