@@ -37,7 +37,9 @@ Rails.application.routes.draw do
     resources :suppliers
 
     resources :categories do
-      resources :category_subs
+      resources :category_subs do
+        post 'update_sn', on: :collection
+      end
       member do
         get :subs
       end
