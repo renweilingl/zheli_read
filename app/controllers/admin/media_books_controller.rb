@@ -42,6 +42,14 @@ class Admin::MediaBooksController < ApplicationController
   end
 
   def update
+    authorize @book
+    @suppliers = Supplier.all
+
+    if @book.update(book_params)
+      redirect_to admin_media_books_path, notice: '图书更新成功'
+    else
+      render :edit
+    end
   end
 
   def destroy
