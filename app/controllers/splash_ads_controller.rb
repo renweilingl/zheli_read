@@ -56,15 +56,11 @@ class SplashAdsController < ApplicationController
   def update
     authorize @splash_ad
     
-    respond_to do |format|
-      if @splash_ad.update(splash_ad_params)
-        format.html { redirect_to admin_splash_ad_path(@splash_ad), notice: '开屏广告更新成功。' }
-        format.json { render json: { success: true, splash_ad: @splash_ad } }
-      else
-        load_associations
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: { success: false, errors: @splash_ad.errors.full_messages }, status: :unprocessable_entity }
-      end
+    if @splash_ad.update(splash_ad_params)
+      redirect_to splash_ad_path(@splash_ad), notice: '开屏广告更新成功。'
+    else
+      load_associations
+      format.html { render :edit, status: :unprocessable_entity }
     end
   end
   

@@ -11,7 +11,7 @@
           <span class="layui-form-mid layui-word-aux">支持 JPG、PNG、GIF、WebP 格式，不超过 5MB</span>
           <div id="image-preview" style="margin-top: 10px;">
             <% if @splash_ad.image_url.present? %>
-              <img src="<%= @splash_ad.image_url %>" style="max-width: 300px; max-height: 200px; border-radius: 4px;">
+              <img src="<%= FileMap.new(@splash_ad.image_url, "img").secrity_src  %>" style="max-width: 300px; max-height: 200px; border-radius: 4px;">
             <% end %>
           </div>
           <input type="hidden" name="splash_ad[image_url]" id="image-url" value="<%= @splash_ad.image_url %>">
