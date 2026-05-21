@@ -9,7 +9,19 @@ module Admin
     def index
       authorize [:admin, CategorySub], policy_class: Admin::CategorySubPolicy
 
-      @subs = @category.category_subs.sorted.paginate(page: params[:page], per_page: @per_page) 
+      if request.xhr?
+        items = @category.category_subs.sorted.paginate(page: params[:page], per_page: @per_page).collect {|r|
+          {id: r.id,
+           name: r.name,
+           sn: r.sn,
+           icon_state: r.icon.present?,
+           icon_url: r.icon.present? ? FileMap.new(r.icon, "img").secrity_src : '',
+           created_at: r.created_at.strftime('%Y-%m-%d'),
+          }
+        }
+        render json: {data: items, code: 0, count: @category.category_subs.size}
+      end
+      #@subs = @category.category_subs.sorted.paginate(page: params[:page], per_page: @per_page) 
     end
 
     def new
