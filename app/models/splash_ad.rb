@@ -9,27 +9,23 @@ class SplashAd < ApplicationRecord
     single_book: '单本图书',
     category: '图书分类'
   }.freeze
-  
-  # 推送范围
+
   PUSH_SCOPES = {
-    all_users: 'all_users',
-    age_range: 'age_range',
-    specific_users: 'specific_users'
+    all_users: '所有用户',
+    age_range: '按年龄段',
+    specific_users: '指定用户'
   }.freeze
   
-  # 推送方式
   PUSH_MODES = {
-    immediate: 'immediate',
-    first_open_daily: 'first_open_daily'
+    immediate: '定时推送',
+    first_open_daily: '首次打开APP推送'
   }.freeze
   
-  # 状态
   STATUSES = {
-    draft: 'draft',
-    scheduled: 'scheduled',
-    active: 'active',
-    expired: 'expired',
-    disabled: 'disabled'
+    draft: '草稿',
+    active: '投放中',
+    expired: '已过期',
+    disabled: '已停用'
   }.freeze
   
   enum :link_type, {
@@ -37,9 +33,23 @@ class SplashAd < ApplicationRecord
     category: 'category',
   }, prefix: true
 
-  enum :push_scope, PUSH_SCOPES
-  enum :push_mode, PUSH_MODES
-  enum :status, STATUSES
+  enum :push_scope, {
+    all_users: 'all_users',
+    age_range: 'age_range',
+    specific_users: 'specific_users'
+  }, prefix: true
+
+  enum :push_mode, {
+    immediate: 'immediate',
+    first_open_daily: 'first_open_daily'
+  }, prefix: true
+
+  enum :status, {
+    draft: 'draft',
+    active: 'active',
+    expired: 'expired',
+    disabled: 'disabled'
+  }, prefix: true 
   
   # 验证
   validates :image_url, presence: true
@@ -68,6 +78,18 @@ class SplashAd < ApplicationRecord
 
   def link_type_name
     LINK_TYPES[link_type.to_sym] || link_type
+  end
+
+  def push_scope_name
+    PUSH_SCOPES[push_scope.to_sym] || push_scope
+  end
+
+  def push_mode_name
+    PUSH_MODES[push_mode.to_sym] || push_mode
+  end
+
+  def status_name
+    STATUSES[status.to_sym] || status
   end
   
   def age_range_display

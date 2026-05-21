@@ -3,43 +3,6 @@
     <h3>开屏广告管理</h3>
   </div>
   <div class="layui-card-body">
-    <!-- 统计卡片 -->
-    <div class="layui-row layui-col-space15" style="margin-bottom: 20px;">
-      <div class="layui-col-md3">
-        <div class="layui-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-          <div class="layui-card-body" style="text-align: center; padding: 20px;">
-            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:total] %></div>
-            <div style="font-size: 14px; opacity: 0.8;">广告总数</div>
-          </div>
-        </div>
-      </div>
-      <div class="layui-col-md3">
-        <div class="layui-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
-          <div class="layui-card-body" style="text-align: center; padding: 20px;">
-            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:active] %></div>
-            <div style="font-size: 14px; opacity: 0.8;">投放中</div>
-          </div>
-        </div>
-      </div>
-      <div class="layui-col-md3">
-        <div class="layui-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
-          <div class="layui-card-body" style="text-align: center; padding: 20px;">
-            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:today_sends] %></div>
-            <div style="font-size: 14px; opacity: 0.8;">今日发送</div>
-          </div>
-        </div>
-      </div>
-      <div class="layui-col-md3">
-        <div class="layui-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
-          <div class="layui-card-body" style="text-align: center; padding: 20px;">
-            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:avg_delivery_rate] %>%</div>
-            <div style="font-size: 14px; opacity: 0.8;">平均送达率</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 操作栏 -->
     <div class="layui-form" style="margin-bottom: 15px;">
       <div class="layui-inline">
         <%= link_to '新建广告', new_splash_ad_path, class: 'layui-btn layui-btn-normal' %>
@@ -50,7 +13,6 @@
           <select name="status" lay-filter="status-filter">
             <option value="">全部</option>
             <option value="draft" <%= params[:status] == 'draft' ? 'selected' : '' %>>草稿</option>
-            <option value="scheduled" <%= params[:status] == 'scheduled' ? 'selected' : '' %>>已定时</option>
             <option value="active" <%= params[:status] == 'active' ? 'selected' : '' %>>投放中</option>
             <option value="expired" <%= params[:status] == 'expired' ? 'selected' : '' %>>已过期</option>
             <option value="disabled" <%= params[:status] == 'disabled' ? 'selected' : '' %>>已停用</option>
@@ -69,7 +31,8 @@
       </div>
     </div>
 
-    <table class="layui-table" lay-size="sm">
+    <!--table class="layui-table" lay-size="sm"-->
+    <table class="layui-table">
       <thead>
         <tr>
           <th style="width: 50px;">ID</th>
@@ -95,8 +58,8 @@
             <% end %>
           </td>
           <td><%= ad.link_type_name %></td>
-          <td><%= ad.link_type_name %></td>
-          <td><%= ad.link_type_name %></td>
+          <td><%= ad.push_scope_name %></td>
+          <td><%= ad.push_mode_name %></td>
           <td style="font-size: 12px;"><%= ad.time_range_display %></td>
           <td>
             <%
@@ -108,7 +71,7 @@
               when 'disabled' then 'layui-bg-red'
               end
             %>
-            <span class="layui-badge <%= status_class %>"><%= ad.status %></span>
+            <span class="layui-badge <%= status_class %>"><%= ad.status_name %></span>
           </td>
           <td><%= ad.send_count %></td>
           <td><%= ad.click_count %></td>
@@ -136,30 +99,6 @@
 layui.use(['form', 'layer'], function() {
   var form = layui.form;
   var layer = layui.layer;
-
-  // 状态筛选
-  form.on('select(status-filter)', function(data) {
-    var value = data.value;
-    var url = new URL(window.location.href);
-    if (value) {
-      url.searchParams.set('status', value);
-    } else {
-      url.searchParams.delete('status');
-    }
-    window.location.href = url.toString();
-  });
-
-  // 链接类型筛选
-  form.on('select(link-type-filter)', function(data) {
-    var value = data.value;
-    var url = new URL(window.location.href);
-    if (value) {
-      url.searchParams.set('link_type', value);
-    } else {
-      url.searchParams.delete('link_type');
-    }
-    window.location.href = url.toString();
-  });
 });
 
 // 发布广告
