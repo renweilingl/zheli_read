@@ -1,12 +1,22 @@
-<div class="layui-card">
-  <div class="layui-card-header">
-    <h3>开屏广告管理</h3>
+<div class="layui-tab">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">运营工具</a>
+      <a><cite>开屏广告管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
   </div>
-  <div class="layui-card-body">
-    <div class="layui-form" style="margin-bottom: 15px;">
-      <div class="layui-inline">
-        <%= link_to '新建广告', new_splash_ad_path, class: 'layui-btn layui-btn-normal' %>
-      </div>
+
+  <div class="x-body">
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :splash_ads, :html => {class: :'layui-form layui-col-md12', style: "margin-bottom: 10px;"}) do |f| %>
+          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :splash_ads, class: "layui-btn layui-btn-primary" %>
+        <% end %>
+
+        <% if false %>
+      <div class="layui-form" style="margin-bottom: 15px;">
       <div class="layui-inline">
         <label class="layui-form-label" style="width: 80px;">状态：</label>
         <div class="layui-input-inline" style="width: 120px;">
@@ -21,13 +31,22 @@
       </div>
       <div class="layui-inline">
         <label class="layui-form-label" style="width: 80px;">链接类型：</label>
-        <div class="layui-input-inline" style="width: 120px;">
           <select name="link_type" lay-filter="link-type-filter">
             <option value="">全部</option>
             <option value="single_book" <%= params[:link_type] == 'single_book' ? 'selected' : '' %>>单本书</option>
             <option value="category" <%= params[:link_type] == 'category' ? 'selected' : '' %>>分类目录</option>
           </select>
         </div>
+      </div>
+    </div>
+  <% end %>
+
+      </div>
+
+      <div class="layui-col-xs3 text-right">
+        <%= link_to :new_splash_ad, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon"></i>新增广告
+        <% end %>
       </div>
     </div>
 

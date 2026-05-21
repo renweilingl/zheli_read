@@ -6,20 +6,10 @@ class SplashAdsController < ApplicationController
   def index
     authorize :splash_ad, :index?
     
-    @splash_ads = SplashAd.all
-    @splash_ads = @splash_ads.by_status(params[:status]) if params[:status].present?
-    @splash_ads = @splash_ads.by_link_type(params[:link_type]) if params[:link_type].present?
-    @splash_ads = @splash_ads.by_push_scope(params[:push_scope]) if params[:push_scope].present?
-    @splash_ads = @splash_ads.ordered
-    @splash_ads = @splash_ads.paginate(page: params[:page], per_page: 20)
-    
-    @stats = {
-      total: SplashAd.count,
-      active: SplashAd.active_now.count,
-      scheduled: SplashAd.where(status: :scheduled).count,
-      today_sends: SplashAd.where(status: [:active, :expired]).sum(:send_count),
-      avg_delivery_rate: calculate_avg_delivery_rate
-    }
+    @per_page = params[:per_page] || 20
+
+    @q = SplashAd.ransack(params[:q])
+    @splash_ads = @q.result.ordered.paginate(page: params[:page], per_page: @per_page)
   end
   
   def show
