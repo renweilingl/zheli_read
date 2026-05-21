@@ -53,7 +53,7 @@
           <td><%= ad.id %></td>
           <td>
             <% if ad.image_url.present? %>
-              <img src="<%= ad.image_url %>" alt="广告图" style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
+              <img src="<%= FileMap.new(ad.image_url, "img").secrity_src %>" alt="广告图" style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
             <% end %>
           </td>
           <td><%= ad.link_type_name %></td>
