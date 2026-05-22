@@ -3,14 +3,14 @@
   <div class="x-nav">
     <span class="layui-breadcrumb">
       <%= link_to "图书绘本", :admin_picture_books %>
-      <%= link_to @book.name, admin_picture_book_book_chapters_path(@book) %>
+      <%= link_to @book.name, admin_picture_book_catalogues_path(@book) %>
       <a><cite>修改章节</cite></a>
     </span>
     <%= render 'common/user_info' %>
   </div>
 
   <div class="x-body">
-    <%= form_for(@chapter, url: admin_picture_book_book_chapter_path(@book), method: :put, :html => {:class => "layui-form"}) do |f| %>
+    <%= form_for(@chapter, url: admin_picture_book_catalogue_path(@book), method: :put, :html => {:class => "layui-form"}) do |f| %>
       <div class="layui-form-item">
         <label class="layui-form-label">章节名称</label>
         <div class="layui-input-block">
@@ -43,7 +43,7 @@
       <div class="layui-form-item" style="padding-bottom: 100px;">
         <div class="layui-input-block">
           <button class="layui-btn layui-bg-wgreen" lay-submit lay-filter="component-form-element">提交保存</button>
-          <%= link_to "取消", admin_picture_book_book_chapters_path(@book), class: "layui-btn layui-btn-primary" %>
+          <%= link_to "取消", admin_picture_book_catalogues_path(@book), class: "layui-btn layui-btn-primary" %>
         </div>
       </div>
     <% end %>

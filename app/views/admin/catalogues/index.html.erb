@@ -18,7 +18,7 @@
 
 <script type="text/html" id="tool-wrapper">
   <div class="layui-btn-group">
-    <a href="/admin/picture_books/<%= @book.id %>/book_chapters/{{d.id}}/edit" class="layui-btn layui-btn-sm">编辑</a>
+    <a href="/admin/picture_books/<%= @book.id %>/catalogues/{{d.id}}/edit" class="layui-btn layui-btn-sm">编辑</a>
   </div>
 </script>
 
@@ -27,7 +27,7 @@
       var table = layui.table;
       table.render({
         elem: '#main-table',
-        url: '<%= admin_picture_book_book_chapters_path(@book) %>',
+        url: '<%= admin_picture_book_catalogues_path(@book) %>',
         page: {
           layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
           groups: 10,
@@ -62,7 +62,7 @@
         var field = obj.field; // 得到字段
 
         $.ajax({
-          url: '<%= update_sn_admin_picture_book_book_chapters_path(@book) %>',
+          url: '<%= update_sn_admin_picture_book_catalogues_path(@book) %>',
           dataType: 'json',
           type: 'post',
           data: {id: data.id, sn: data.chapter_number},
@@ -96,7 +96,7 @@
         var ids = get_ids();
 
         $.ajax({
-          url: '<%= batch_free_admin_picture_book_book_chapters_path(@book) %>',
+          url: '<%= batch_free_admin_picture_book_catalogues_path(@book) %>',
           dataType: 'json',
           type: 'post',
           data: {ids: ids},

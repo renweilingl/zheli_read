@@ -1,4 +1,4 @@
-class Admin::BookChaptersController < ApplicationController
+class Admin::CataloguesController < ApplicationController
   before_action :require_login
   before_action :set_book
 
@@ -6,7 +6,7 @@ class Admin::BookChaptersController < ApplicationController
     authorize Book
 
     if request.xhr?
-      items = @book.book_chapters.order("chapter_number asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
+      items = @book.catalogues.order("chapter_number asc").paginate(page: params[:page], per_page: params[:limit]).collect {|r|
         {id: r.id,
          book_id: r.book_id,
          chapter_name: r.chapter_name,
@@ -16,12 +16,12 @@ class Admin::BookChaptersController < ApplicationController
          created_at: r.created_at.strftime('%Y-%m-%d'),
         }
       }
-      render json: {data: items, code: 0, count: @book.book_chapters.size}
+      render json: {data: items, code: 0, count: @book.catalogues.size}
     end
   end
 
   def edit
-    @chapter = @book.book_chapters.find(params[:id])
+    @chapter = @book.catalogues.find(params[:id])
 
     authorize @book
   end
@@ -29,23 +29,23 @@ class Admin::BookChaptersController < ApplicationController
   def update
     authorize @book
 
-    @chapter = @book.book_chapters.find(params[:id])
+    @chapter = @book.catalogues.find(params[:id])
 
     if @chapter.update(chapter_params)
-      redirect_to admin_picture_book_book_chapters_path(@book), notice: '绘本更新成功'
+      redirect_to admin_picture_book_catalogues_path(@book), notice: '绘本更新成功'
     else
       render :edit
     end
   end
 
   def update_sn
-    @book.book_chapters.find(params[:id]).update(chapter_number: params[:sn])
+    @book.catalogues.find(params[:id]).update(chapter_number: params[:sn])
 
     render json: {code: 0}
   end
 
   def batch_free
-    @book.book_chapters.where(id: params[:ids]).update_all(is_free: true)
+    @book.catalogues.where(id: params[:ids]).update_all(is_free: true)
     render json: {code: 0}
   end
 
@@ -56,7 +56,7 @@ class Admin::BookChaptersController < ApplicationController
   end
 
   def chapter_params
-    params.require(:book_chapter).permit(
+    params.require(:catalogue).permit(
       :chapter_name,
       :chapter_number,
       :start_page_number,

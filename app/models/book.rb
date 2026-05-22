@@ -9,7 +9,7 @@ class Book < ApplicationRecord
   has_and_belongs_to_many :compilations, join_table: :compilation_books
   has_and_belongs_to_many :category_subs, join_table: :category_sub_books
   has_many :chapters
-  has_many :book_chapters
+  has_many :catalogues
   has_many :contents
   has_many :splash_ads
 
@@ -76,6 +76,6 @@ class Book < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["book_chapters", "category", "chapters", "compilations", "grades", "supplier"]
+    ["catalogues", "category", "chapters", "compilations", "grades", "supplier"]
   end
 end
