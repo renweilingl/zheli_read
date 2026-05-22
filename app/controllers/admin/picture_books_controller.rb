@@ -18,13 +18,6 @@ class Admin::PictureBooksController < ApplicationController
     authorize @book
   end
 
-
-  #def update_chapter
-  #  chapter = Chapter.find_by_id params[:id]
-  #  chapter.update(params[:chapter].permit!)
-  #  redirect_to chapters_admin_picture_book_path(chapter.book_id)
-  #end
-
   def new
     @book = Book.new
     cat = Category.find_by(name: "图书")
