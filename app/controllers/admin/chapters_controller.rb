@@ -33,9 +33,14 @@ class Admin::ChaptersController < ApplicationController
   def create
     authorize @book
 
-    chapter = @book.chapters.create(params[:chapter].permit!)
+    @chapter = @book.chapters.new(params[:chapter].permit!)
 
-    redirect_to admin_media_book_chapters_path(@book), notice: '内容创建成功'
+    if @chapter.save
+      redirect_to admin_media_book_chapters_path(@book), notice: '内容创建成功'
+    else
+      flash[:error] = @chapter.errors.full_messages.join(', ')
+      render :new
+    end
   end
 
   def edit
