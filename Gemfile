@@ -29,7 +29,7 @@ gem 'mina'
 gem "jbuilder"
 
 gem "bootsnap", require: false
-# gem 'sass-rails', '~> 5.0' # removed: project has no scss files, sass-rails was intercepting plain css
+gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'jquery-turbolinks'
 
