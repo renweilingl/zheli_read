@@ -33,7 +33,7 @@ class Admin::ChaptersController < ApplicationController
   def create
     authorize @book
 
-    @chapter = @book.chapters.new(params[:chapter].permit!)
+    @chapter = @book.chapters.new(chapter_params)
 
     if @chapter.save
       redirect_to admin_media_book_chapters_path(@book), notice: '内容创建成功'
@@ -53,7 +53,7 @@ class Admin::ChaptersController < ApplicationController
     authorize @book
 
     chapter = @book.chapters.find(params[:id])
-    chapter.update(params[:chapter].permit!)
+    chapter.update(chapter_params)
 
     redirect_to admin_media_book_chapters_path(@book), notice: '内容修改成功'
   end
@@ -86,7 +86,30 @@ class Admin::ChaptersController < ApplicationController
   end
 
   private
+
   def set_book
     @book = Book.find(params[:media_book_id])
+  end
+
+  def chapter_params
+    params.require(:chapter).permit(
+      :name, :sn, :is_published, :is_free, :duration, :publish_date,
+      :content_file_url, :content_file_name, :content_file_type
+    ).tap do |whitelisted|
+      # Auto-extract duration from media file if not manually provided
+      if whitelisted[:content_file_url].present? && whitelisted[:duration].blank?
+        local_path = find_local_media_path(whitelisted[:content_file_url])
+        if local_path
+          whitelisted[:duration] = MediaDurationService.extract_duration(local_path)
+        end
+      end
+    end
+  end
+
+  # Find the local temp file path from the OSS URL
+  def find_local_media_path(file_url)
+    filename = File.basename(URI.parse(file_url).path)
+    temp_path = Rails.root.join('tmp', 'uploads', filename).to_s
+    File.exist?(temp_path) ? temp_path : nil
   end
 end
