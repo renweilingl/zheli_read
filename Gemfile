@@ -79,15 +79,9 @@ gem 'open-uri'
 gem 'openssl'
 
 gem 'dotenv'
-gem 'mailgun-ruby'
-
-# 苹果in app purchase 支付相关
-gem 'monza'
 
 gem 'jwt'
 
 gem 'annotate'
 gem "carrierwave", "0.8.0"
 gem 'carrierwave-aliyun', '~> 0.7.0'
-
-gem 'pdf-reader'
