@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_22_080000) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_25_035620) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_22_080000) do
     t.string "file_type"
     t.boolean "is_free", default: false
     t.text "content_description"
+    t.string "broadcaster", default: ""
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["name"], name: "index_books_on_name"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
