@@ -147,16 +147,22 @@
             element.progress('upload-progress', n + '%');
             $('#upload-percent').text(n + '%');
           },
-          done: function(res){                                                       
-            if (res.code === 0) {                                                    
-              $('#upload-progress').hide();                                          
-              $('#upload-result').show();                                            
-              $('#file-name').text(res.data.file_name);                              
-              $('#file-size').text(res.data.file_size);                              
+          done: function(res){
+            if (res.code === 0) {
+              $('#upload-progress').hide();
+              $('#upload-result').show();
+              $('#file-name').text(res.data.file_name);
+              $('#file-size').text(res.data.file_size);
               $('#file-url-hidden').val(res.data.file_url);
               $('#file-name-hidden').val(res.data.file_name);
               //$('#file-size-hidden').val(res.data.file_size);
               $('#file-type-hidden').val(res.data.file_type);
+
+              // Auto-fill duration from upload response
+              if (res.data.duration && res.data.duration > 0) {
+                $('input[name="chapter[duration]"]').val(res.data.duration);
+              }
+
               var fileTypeColors = {                                                 
                 'epub': '#10b981',                                                   
                 'pdf': '#ef4444',                                                    

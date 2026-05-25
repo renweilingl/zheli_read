@@ -26,6 +26,7 @@ class FilesController < ApplicationController
       mime = `file --brief --mime-type "#{tmp_file_path}"`.strip
 
       temp_path = save_temp_file(file, new_filename)
+      duration = MediaDurationService.extract_duration(temp_path)
       FileUploadJob.perform_later(new_filename, temp_path, mime)
 
       render json: {
@@ -36,6 +37,7 @@ class FilesController < ApplicationController
           file_type: extension,
           file_name: file.original_filename,
           file_size: file.size,
+          duration: duration,
           file_size_desc: ActiveSupport::NumberHelper.number_to_human_size(file.size)
         }
       }
