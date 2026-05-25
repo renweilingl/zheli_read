@@ -1,4 +1,4 @@
-class RenameBookChaptersToCatalogues < ActiveRecord::Migration[8.0]
+class RenameBookChaptersToCatalogues < ActiveRecord::Migration[7.1]
   def up
     return unless table_exists?(:book_chapters)
 
