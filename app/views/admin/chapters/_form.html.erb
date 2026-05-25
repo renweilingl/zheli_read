@@ -93,6 +93,7 @@
     <%= f.hidden_field :content_file_url, id: "file-url-hidden" %>
     <%= f.hidden_field :content_file_name, id: "file-name-hidden" %>
     <%= f.hidden_field :content_file_type, id: "file-type-hidden" %>
+    <%= f.hidden_field :duration, id: "duration-hidden" %>
   </div>
 
   <div class="layui-form-item">
@@ -150,6 +151,11 @@
               //$('#file-size-hidden').val(res.data.file_size);
               $('#file-type-hidden').val(res.data.file_type);
 
+              // Auto-fill duration from upload response
+              if (res.data.duration && res.data.duration > 0) {
+                $('#duration-hidden').val(res.data.duration);
+              }
+
               var fileTypeColors = {                                                 
                 'epub': '#10b981',                                                   
                 'pdf': '#ef4444',                                                    
@@ -178,6 +184,7 @@
           $('#upload-result').hide();
           $('#file-url-hidden').val('');
           $('#file-name-hidden').val('');
+          $('#duration-hidden').val('');
           //$('#file-size-hidden').val('');
           layer.msg('已移除文件', {icon: 6});
         });
