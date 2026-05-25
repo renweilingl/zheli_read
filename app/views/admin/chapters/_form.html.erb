@@ -22,6 +22,21 @@
   </div>
 
   <div class="layui-form-item">
+    <label class="layui-form-label">播放时长</label>
+    <div class="layui-input-inline layui-input-wrap">
+      <%= f.number_field :duration, class: "layui-input", min: 1, step: 1, required: true %>
+    </div>
+    <div class="layui-form-mid layui-text-em">秒</div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">发布日期</label>
+    <div class="layui-input-inline">
+      <%= f.text_field :publish_date, class: "layui-input", id: "ID-laydate-demo", placeholder: "yyyy-MM-dd" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <label class="layui-form-label">是否免费</label>
     <div class="layui-input-block">
       <%= f.radio_button :is_free, true, title: "免费" %>
@@ -103,7 +118,12 @@
         laydate = layui.laydate,
         upload = layui.upload,
         layer = layui.layer,
+
         $ = layui.$;
+
+        laydate.render({
+            elem: '#ID-laydate-demo'
+        });
 
         form.render();
 
