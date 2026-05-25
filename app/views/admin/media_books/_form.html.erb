@@ -56,7 +56,7 @@
 
   <div class="layui-form-item">
     <%= f.label :cover_image_url, class: "layui-form-label" do %>
-      <span class="required">*</span> 绘本封面
+      <span class="required">*</span> 作品封面
     <% end %>
     <div class="layui-input-block">
       <div class="layui-upload">
@@ -99,6 +99,13 @@
       </select>
     </div>
   </div>
+
+  <div class="layui-form-item">                                                  
+    <label class="layui-form-label">播者</label>
+    <div class="layui-input-block">                                              
+      <%= f.text_field :broadcaster, class: "layui-input", placeholder: "请输音频播者信息", maxlength: 32  %>
+    </div>                                                                       
+  </div> 
 
   <div class="layui-form-item">
     <%= f.label :content_description, "内容简介", class: "layui-form-label" %>
