@@ -22,14 +22,6 @@
   </div>
 
   <div class="layui-form-item">
-    <label class="layui-form-label">播放时长</label>
-    <div class="layui-input-inline layui-input-wrap">
-      <%= f.number_field :duration, class: "layui-input", min: 1, step: 1, required: true %>
-    </div>
-    <div class="layui-form-mid layui-text-em">秒</div>
-  </div>
-
-  <div class="layui-form-item">
     <label class="layui-form-label">发布日期</label>
     <div class="layui-input-inline">
       <%= f.text_field :publish_date, class: "layui-input", id: "ID-laydate-demo", placeholder: "yyyy-MM-dd" %>
@@ -157,11 +149,6 @@
               $('#file-name-hidden').val(res.data.file_name);
               //$('#file-size-hidden').val(res.data.file_size);
               $('#file-type-hidden').val(res.data.file_type);
-
-              // Auto-fill duration from upload response
-              if (res.data.duration && res.data.duration > 0) {
-                $('input[name="chapter[duration]"]').val(res.data.duration);
-              }
 
               var fileTypeColors = {                                                 
                 'epub': '#10b981',                                                   
