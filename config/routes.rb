@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Root route
-  root "pages#home"
+  root "admin/grades#index"
 
   # Login routes
   get "login", to: "sessions#new"
