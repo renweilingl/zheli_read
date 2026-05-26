@@ -2,7 +2,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">标题</label>
     <div class="layui-input-block">
-      <%= f.text_field :name, class: "layui-input" %>
+      <%= f.text_field :name, class: "layui-input", id: "chapter-name" %>
     </div>
   </div>
 
@@ -148,6 +148,7 @@
               $('#file-size').text(res.data.file_size);
               $('#file-url-hidden').val(res.data.file_url);
               $('#file-name-hidden').val(res.data.file_name);
+              $('#chapter-name').val(res.data.file_name);
               //$('#file-size-hidden').val(res.data.file_size);
               $('#file-type-hidden').val(res.data.file_type);
 
