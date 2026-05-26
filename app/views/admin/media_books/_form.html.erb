@@ -55,6 +55,14 @@
   </div>
 
   <div class="layui-form-item">
+    <label class="layui-form-label">发布状态</label>
+    <div class="layui-input-block">
+      <%= f.radio_button :is_published, true, title: "发布" %>
+      <%= f.radio_button :is_published, false, title: "下线" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <%= f.label :cover_image_url, class: "layui-form-label" do %>
       <span class="required">*</span> 作品封面
     <% end %>

@@ -81,6 +81,7 @@ class Admin::PictureBooksController < ApplicationController
       :file_name,
       :file_type,
       :is_free,
+      :is_published,
       :content_description,
       :grade_ids => [],
       :category_sub_ids => []

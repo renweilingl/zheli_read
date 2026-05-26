@@ -75,6 +75,7 @@ class Admin::MediaBooksController < ApplicationController
       :file_type,
       :is_free,
       :broadcaster,
+      :is_published,
       :content_description,
       :grade_ids => [],
       :category_sub_ids => []
