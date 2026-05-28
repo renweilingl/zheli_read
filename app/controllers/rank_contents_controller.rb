@@ -4,12 +4,17 @@ class RankContentsController < ApplicationController
   before_action :set_rank
 
   def index
-    authorize Rank
+    authorize RankContent
 
     @rank_contents = @rank.rank_contents.order("sn asc")
   end
 
   def new
+    rank_content = @rank.rank_contents.order("sn desc").first
+    sn = rank_content.nil? ? 1 : rank_content.sn + 1
+    @rank_content = @rank.rank_contents.new(sn: sn)
+
+    authorize @rank_content
   end
 
   def create
