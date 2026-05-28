@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_28_030858) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_28_070718) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -286,6 +286,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_28_030858) do
     t.datetime "updated_at", null: false
     t.index ["push_type"], name: "index_push_notifications_on_push_type"
     t.index ["status"], name: "index_push_notifications_on_status"
+  end
+
+  create_table "rank_contents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "rank_id"
+    t.bigint "compilation_id", comment: "合辑信息"
+    t.bigint "book_id", comment: "单本信息"
+    t.integer "sn", comment: "排序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rank_id"], name: "index_rank_contents_on_rank_id"
   end
 
   create_table "ranks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
