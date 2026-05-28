@@ -57,7 +57,7 @@
       form.on('radio(levelFilter)', function(data) {
         var content_type = data.value;
         $.ajax({
-            url: "/admin/options/",
+            url: "/grades/options/",
             type: 'get',
             dataType: 'json',
             data: {content_type: content_type},

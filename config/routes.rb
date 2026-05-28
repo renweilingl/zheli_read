@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  get "dashboard", to: "pages#dashboard"
+  #get "dashboard", to: "pages#dashboard"
   resources :head_imgs
 
   resources :files, only: [:show] do
@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   end
 
   resources :grades, only: [:index] do
+    get 'options', on: :collection
+
     resources :ranks do
       resources :rank_contents
     end
