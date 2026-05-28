@@ -6,7 +6,9 @@ class RanksController < ApplicationController
   def index
     authorize Rank
 
-    @ranks = @grade.ranks.order("sn asc")
+    @per_page = params[:per_page] || 20
+    @q = Rank.where(grade_id: @grade.id).ransack(params[:q])
+    @ranks = @q.result.order("sn asc") #.paginate(page: params[:page], per_page: @per_page)
   end
 
   def new

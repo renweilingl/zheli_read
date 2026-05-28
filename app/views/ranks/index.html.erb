@@ -11,14 +11,23 @@
   <div class="x-body">
 
     <div class="layui-row">
-      <div class="layui-form layui-form-pane" style="margin-bottom: 10px;">
-        <div class="layui-form-item">
-          <div class="layui-inline">
-            <a href="<%= new_grade_rank_path(@grade) %>" class="layui-btn layui-btn-normal">
-              <i class="layui-icon layui-icon-add-1"></i> 添加排行榜
-            </a>
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: grade_ranks_path(@grade), :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline" style="width: 140px;">                                                           
+            <%= f.select :category_id_eq, options_for_select(Category.where(name: ["图书","有声", "漫画"]).map { |x| [x.name, x.id] }, @q.category_id_eq), { include_blank: "图书分类" } %>
+          </div> 
+          <div class="layui-input-inline">
+            <%= f.text_field :name_cont, class: :'layui-input', placeholder: "排行榜名称" %>
           </div>
-        </div>
+          <button class="layui-btn layui-bg-blue" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", grade_ranks_path(@grade), class: "layui-btn layui-btn-primary" %>
+        <% end %>
+      </div>
+
+      <div class="layui-col-3 text-right">
+        <a href="<%= new_grade_rank_path(@grade) %>" class="layui-btn layui-btn-normal">
+          <i class="layui-icon layui-icon-add-1"></i> 添加排行榜
+        </a>
       </div>
     </div>
 
