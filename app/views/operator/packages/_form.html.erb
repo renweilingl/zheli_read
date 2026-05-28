@@ -1,4 +1,4 @@
-<%= form_for(@package, url: @package.new_record? ? :operator_packages : :operator_packages,method: @package.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
+<%= form_for(@package, url: @package.new_record? ? :operator_packages : :operator_package,method: @package.new_record? ? :post : :put, :html => {:class => "layui-form"}) do |f| %>
   <div class="layui-form-item">
     <%= f.label :name, "名称", class: "layui-form-label" %>
     <div class="layui-input-block">
@@ -25,6 +25,14 @@
     <label class="layui-form-label">有效天数</label>
     <div class="layui-input-block">
       <%= f.number_field :effective_days, class: "layui-input", min: 1, step: 1 %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">限时折扣</label>
+    <div class="layui-input-block">
+      <%= f.radio_button :is_discount, true, title: "是" %>
+      <%= f.radio_button :is_discount, false, title: "否" %>
     </div>
   </div>
 

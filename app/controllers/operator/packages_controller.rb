@@ -59,7 +59,7 @@ class Operator::PackagesController < ApplicationController
   end
 
   def package_params
-    params.require(:package).permit(:name, :origin_price, :price, :sn, :effective_days)
+    params.require(:package).permit(:name, :origin_price, :price, :sn, :effective_days, :is_discount)
   end
 
 end
