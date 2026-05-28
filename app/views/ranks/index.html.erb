@@ -34,11 +34,11 @@
     <table class="layui-table">
       <thead>
         <tr>
-          <th width="120">分类</th>
-          <th width="120">名称</th>
+          <th width="100">分类</th>
+          <th width="100">名称</th>
           <th width="60">序号</th>
           <th>内容</th>
-          <th width="140">添加时间</th>
+          <th width="120">添加时间</th>
           <th width="180" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -49,7 +49,7 @@
             <td><%= r.category.name %></td>
             <td><%= r.name %></td>
             <td><%= r.sn %></td>
-            <td></td>
+            <td><%= r.content_names %></td>
             <td><%= r.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
