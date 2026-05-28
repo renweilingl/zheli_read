@@ -12,9 +12,9 @@ class RankContentsController < ApplicationController
   def new
     rank_content = @rank.rank_contents.order("sn desc").first
     sn = rank_content.nil? ? 1 : rank_content.sn + 1
-    @rank_content = @rank.rank_contents.new(sn: sn)
+    @content = @rank.rank_contents.new(sn: sn)
 
-    authorize @rank_content
+    authorize @content
   end
 
   def create
