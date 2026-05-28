@@ -4,6 +4,7 @@ class Category < ApplicationRecord
   has_many :books
   has_many :category_subs, dependent: :destroy
   has_many :splash_ads
+  has_many :ranks
 
   validates :name, presence: true, length: { maximum: 100 }
 

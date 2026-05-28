@@ -5,6 +5,8 @@ class RanksController < ApplicationController
 
   def index
     authorize Rank
+
+    @ranks = @grade.ranks.order("sn asc")
   end
 
   def new
