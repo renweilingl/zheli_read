@@ -39,7 +39,7 @@
           <th width="60">序号</th>
           <th>内容</th>
           <th width="140">添加时间</th>
-          <th width="140" style="text-align:center;">操作</th>
+          <th width="180" style="text-align:center;">操作</th>
         </tr>
       </thead>
 
@@ -53,6 +53,7 @@
             <td><%= r.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
+                <%= link_to "内容管理", grade_rank_rank_contents_path(@grade, r), class: "layui-btn layui-btn-sm" %>
                 <%= link_to "编辑", edit_grade_rank_path(@grade, r), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', grade_rank_path(@grade, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除该排行榜吗？此操作不可恢复。" } %>
               </div>

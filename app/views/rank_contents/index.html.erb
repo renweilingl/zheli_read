@@ -1,0 +1,41 @@
+<div class="layui-tab">                                                          
+  <div class="x-nav">
+    <span class="layui-breadcrumb">                                              
+      <a href="/grades">排行榜</a>
+      <%= link_to @grade.name, grade_ranks_path(@grade) %>
+      <a><cite><%= @rank.name %></cite></a>
+      <a><cite>排行榜内容</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+
+  <div class="x-body">
+
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+      </div>
+
+      <div class="layui-col-3 text-right">
+        <a href="<%= new_grade_rank_rank_content_path(@grade, @rank) %>" class="layui-btn layui-btn-normal">
+          <i class="layui-icon layui-icon-add-1"></i> 添加内容
+        </a>
+      </div>
+    </div>
+
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th width="120">类型</th>
+          <th width="120">内容</th>
+          <th width="60">序号</th>
+          <th width="140">添加时间</th>
+          <th width="180" style="text-align:center;">操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      </tbody>
+    </table>
+
+  </div>
+</div>

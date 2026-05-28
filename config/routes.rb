@@ -22,11 +22,11 @@ Rails.application.routes.draw do
     end
   end
 
-  #namespace :board do
-    resources :grades, only: [:index] do
-      resources :ranks
+  resources :grades, only: [:index] do
+    resources :ranks do
+      resources :rank_contents
     end
-  #end
+  end
 
   # Admin routes
   namespace :admin do
