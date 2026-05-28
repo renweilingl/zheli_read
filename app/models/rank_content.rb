@@ -18,4 +18,12 @@ class RankContent < ApplicationRecord
   def content_type_name
     CONTENT_TYPES[content_type.to_sym] || content_type
   end
+
+  def content_name
+    if content_type == "compilation"
+      compilation.name
+    elsif content_type == "book"
+      book.name
+    end
+  end
 end

@@ -2,11 +2,12 @@ class RankContentsController < ApplicationController
   before_action :require_login
   before_action :set_grade
   before_action :set_rank
+  before_action :set_content, only: [:edit, :update, :destroy]
 
   def index
     authorize RankContent
 
-    @rank_contents = @rank.rank_contents.order("sn asc")
+    @contents = @rank.rank_contents.order("sn asc")
   end
 
   def new
@@ -29,12 +30,25 @@ class RankContentsController < ApplicationController
   end
 
   def edit
+    authorize @content
   end
 
   def update
+    authorize @content
+
+    if @content.update(content_params)
+      redirect_to grade_rank_rank_contents_path(@grade, @rank), notice: '内容更新成功'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    authorize @content
+
+    @content.destroy
+
+    redirect_to grade_rank_rank_contents_path(@grade, @rank)
   end
 
   private
@@ -44,6 +58,10 @@ class RankContentsController < ApplicationController
 
   def set_rank
     @rank = Rank.find(params[:rank_id])
+  end
+
+  def set_content
+    @content = RankContent.find(params[:id])
   end
 
   def content_params
