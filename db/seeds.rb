@@ -72,7 +72,7 @@ puts "测试财务: finance@zheli.com / finance123456"
   end
 end
 
-["图书","绘本","有声", "视频"].each do |name|
+["图书","有声","漫画","视频"].each do |name|
   if Category.where(name: name).empty?
     Category.create(name: name)
   end
