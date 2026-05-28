@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_26_084331) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_28_025904) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -124,6 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_26_084331) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cat_code", limit: 16
     t.index ["level"], name: "index_categories_on_level"
   end
 
@@ -285,6 +286,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_26_084331) do
     t.datetime "updated_at", null: false
     t.index ["push_type"], name: "index_push_notifications_on_push_type"
     t.index ["status"], name: "index_push_notifications_on_status"
+  end
+
+  create_table "ranks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "grade_id"
+    t.string "name"
+    t.integer "sn", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grade_id"], name: "index_ranks_on_grade_id"
   end
 
   create_table "recommends", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

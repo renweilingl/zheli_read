@@ -72,8 +72,15 @@ puts "测试财务: finance@zheli.com / finance123456"
   end
 end
 
-["图书","有声","漫画","视频"].each do |name|
+[{name: "图书", code: "book"},
+ {name: "有声", code: "audio"},
+ {name: "漫画", code: "cartoon"},
+ {name: "视频", code: "video"}].each do |x|
+  name = x[:name]
+  code = x[:code]
   if Category.where(name: name).empty?
-    Category.create(name: name)
+    Category.create(name: name, code: code)
+  else
+    Category.where(name: name).update(code: code)
   end
 end
