@@ -6,4 +6,6 @@ class Grade < ApplicationRecord
 
   has_many :recommends, dependent: :destroy
 
+  has_many :ranks, dependent: :destroy
+
 end

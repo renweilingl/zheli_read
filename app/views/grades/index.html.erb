@@ -1,0 +1,33 @@
+<div class="layui-tab">                                                          
+  <div class="x-nav">
+    <span class="layui-breadcrumb">                                              
+      <a href="">内容管理</a>
+      <a><cite>排行榜</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+
+  <div class="x-body">
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th width="80">ID</th>
+          <th>年级</th>
+          <th width="220" style="text-align:center;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @grades.each do |grade| %>
+          <tr>
+            <td><%= grade.id %></td>
+            <td><%= grade.name %></td>
+            <td style="text-align:center;">
+              <div class="layui-btn-group">
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

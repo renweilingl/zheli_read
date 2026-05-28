@@ -22,6 +22,12 @@ Rails.application.routes.draw do
     end
   end
 
+  #namespace :board do
+    resources :grades, only: [:index] do
+      resources :ranks
+    end
+  #end
+
   # Admin routes
   namespace :admin do
     resources :options, only: [:index]
