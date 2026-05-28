@@ -50,9 +50,8 @@ class RankContentsController < ApplicationController
     params.require(:rank_content).permit(
         :content_type,
         :compilation_id,
+        :sn,
         :book_id,
-      ).merge(
-        sn: params.dig(:content, :sn).to_i
       )
   end
 end
