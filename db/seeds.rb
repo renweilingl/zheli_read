@@ -79,8 +79,8 @@ end
   name = x[:name]
   code = x[:code]
   if Category.where(name: name).empty?
-    Category.create(name: name, code: code)
+    Category.create(name: name, cat_code: code)
   else
-    Category.where(name: name).update(code: code)
+    Category.where(name: name).update(cat_code: code)
   end
 end
