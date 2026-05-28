@@ -8,10 +8,12 @@ class Book < ApplicationRecord
   has_and_belongs_to_many :grades, join_table: :book_grades
   has_and_belongs_to_many :compilations, join_table: :compilation_books
   has_and_belongs_to_many :category_subs, join_table: :category_sub_books
-  has_many :chapters
-  has_many :catalogues
-  has_many :contents
-  has_many :splash_ads
+
+  has_many :chapters, dependent: :destroy 
+  has_many :catalogues, dependent: :destroy 
+  has_many :contents, dependent: :destroy 
+  has_many :splash_ads, dependent: :destroy 
+  has_many :rank_contents, dependent: :destroy 
 
   # 验证
   validates :name, presence: true, length: { maximum: 100 }

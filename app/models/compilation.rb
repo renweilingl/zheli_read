@@ -5,7 +5,9 @@ class Compilation < ApplicationRecord
   has_and_belongs_to_many :grades, join_table: :compilation_grades
   has_and_belongs_to_many :categories, join_table: :compilation_categories
   has_and_belongs_to_many :books, join_table: :compilation_books
-  has_many :contents
+
+  has_many :contents, dependent: :destroy
+  has_many :rank_contents, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }
   validates :editor_recommendation, length: { maximum: 15 }, allow_blank: true
