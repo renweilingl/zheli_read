@@ -13,7 +13,8 @@ class ContentGroup < ApplicationRecord
     two_rows_three_columns: 'two_rows_three_columns', # 双排3列展示
     one_row_two_columns: 'one_row_two_columns', # 一排双列
     single_column: 'single_column',         # 单列展示
-    author_display: 'author_display'        # 作者展示
+    author_display: 'author_display',        # 作者展示
+    sub_recommend: 'sub_recommend',
   }, prefix: true
 
   GROUP_TYPE_NAMES = {
@@ -23,7 +24,8 @@ class ContentGroup < ApplicationRecord
     two_rows_three_columns: '双排3列展示',
     one_row_two_columns: '一排双列',
     single_column: '单列展示',
-    author_display: '作者展示'
+    author_display: '作者展示',
+    sub_recommend: '二级推荐',
   }.freeze
 
   validates :name, presence: true, length: { maximum: 100 }
