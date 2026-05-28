@@ -1,0 +1,26 @@
+<div class="layui-tab">                                                          
+  <div class="x-nav">
+    <span class="layui-breadcrumb">                                              
+      <a href="">内容管理</a>
+      <a><cite><%= @grade.name %></cite></a>
+      <a><cite>排行榜</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+
+  <div class="x-body">
+
+    <div class="layui-row">
+      <div class="layui-form layui-form-pane" style="margin-bottom: 10px;">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <a href="<%= new_grade_rank_path(@grade) %>" class="layui-btn layui-btn-normal">
+              <i class="layui-icon layui-icon-add-1"></i> 添加排行榜
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

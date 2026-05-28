@@ -13,6 +13,9 @@
         <tr>
           <th width="80">ID</th>
           <th>年级</th>
+          <th>图书</th>
+          <th>有声</th>
+          <th>漫画</th>
           <th width="220" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -21,6 +24,9 @@
           <tr>
             <td><%= grade.id %></td>
             <td><%= grade.name %></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to '排行榜管理', grade_ranks_path(grade), class: "layui-btn layui-btn-sm" %>
