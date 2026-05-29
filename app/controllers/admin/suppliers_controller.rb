@@ -33,7 +33,7 @@ class Admin::SuppliersController < ApplicationController
     @supplier = Supplier.new(supplier_params)
 
     if @supplier.save
-      redirect_to admin_suppliers_path, notice: '供应商创建成功'
+      redirect_to admin_suppliers_path, notice: '出版社创建成功'
     else
       render :new
     end
@@ -47,7 +47,7 @@ class Admin::SuppliersController < ApplicationController
 
   def update
     if @supplier.update(supplier_params)
-      redirect_to admin_supplier_path(@supplier), notice: '供应商更新成功'
+      redirect_to admin_supplier_path(@supplier), notice: '出版社更新成功'
     else
       render :edit
     end
@@ -55,7 +55,7 @@ class Admin::SuppliersController < ApplicationController
 
   def destroy
     if @supplier.destroy
-      redirect_to admin_suppliers_path, notice: '供应商删除成功'
+      redirect_to admin_suppliers_path, notice: '出版社删除成功'
     else
       redirect_to admin_suppliers_path, alert: '删除失败'
     end
