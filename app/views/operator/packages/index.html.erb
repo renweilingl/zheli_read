@@ -24,6 +24,7 @@
           <th>原价</th>
           <th>实际价格</th>
           <th>限时折扣</th>
+          <th>折扣标签</th>
           <th>有效天数</th>
           <th>创建时间</th>
           <th width="120" style="text-align:center;">操作</th>
@@ -37,6 +38,7 @@
             <td><%= r.origin_price.round(2) %></td>
             <td><%= r.price.round(2) %></td>
             <td><%= r.is_discount? ? "是" : "否" %></td>
+            <td><%= r.discount_tag %></td>
             <td><%= r.effective_days %></td>
             <td><%= r.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
