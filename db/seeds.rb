@@ -48,6 +48,7 @@ if User.where(email: 'finance@zheli.com').empty?
   puts "✅ 创建测试财务: #{finance.email}"
 end
 
+
 puts "\n🎉 种子数据创建完成！"
 puts "\n默认账号信息："
 puts "超级管理员: admin@zheli.com / admin123456"

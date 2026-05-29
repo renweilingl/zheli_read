@@ -65,7 +65,7 @@ ssh:
 # ==================== kamal-proxy 代理 ====================
 proxy:
   ssl: true
-  host: bookweb.haoqiniu.com
+  host: web.zheliyuedu.cn
   healthcheck:
     path: /up
     interval: 5
