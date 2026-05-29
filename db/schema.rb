@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_29_015755) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_29_024503) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -237,6 +237,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_29_015755) do
     t.integer "sn", default: 0, comment: "排序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rank_id"
     t.index ["content_group_id"], name: "index_contents_on_content_group_id"
   end
 
