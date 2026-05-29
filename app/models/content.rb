@@ -31,7 +31,7 @@ class Content < ApplicationRecord
   end
 
   def display_img_url
-    if content_group.group_type == "multi_images"
+    if content_group.group_type == "multi_images" || content_group.group_type == "sub_recommend"
       img_url
     else
       if content_type == "compilation"
@@ -51,6 +51,10 @@ class Content < ApplicationRecord
       book.name
     elsif content_type == "author_display"
       author.name
+    elsif content_type == "recommend"
+      recommend.name
+    elsif content_type == "rank"
+      rank.name
     end
   end
 end
