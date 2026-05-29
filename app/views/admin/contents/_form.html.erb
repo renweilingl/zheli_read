@@ -12,6 +12,38 @@
         </select>
       </div>
     </div>
+  <% elsif @content_group.group_type == "sub_recommend" %>
+    <div class="layui-form-item">
+      <label class="layui-form-label">链接类型</label>
+      <div class="layui-input-block">
+        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="recommend" title="推荐" <%= 'checked' if @content.content_type== "recommend" %>>
+        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="rank" title="排行榜" <%= 'checked' if @content.content_type== "rank" %>>
+      </div>
+    </div>
+
+    <div class="layui-form-item" id="option-wrap">
+      <% if @content.content_type == "recommend" %>
+        <label class="layui-form-label">选择推荐</label>
+        <div class="layui-input-block">
+          <select name="content[recommend_id]" lay-search="" lay-verify="required">
+            <option value="">选择链接内容</option>
+            <% Recommend.where(grade_id: @grade.id).each do |x| %>
+              <option value="<%= x.id %>" <%= "selected" if @content.recommend_id == x.id %>><%= x.name %></option>
+            <% end %>
+          </select>
+        </div>
+      <% else %>
+        <label class="layui-form-label">选择排行榜</label>
+        <div class="layui-input-block">
+          <select name="content[recommend_id]" lay-search="" lay-verify="required">
+            <option value="">选择链接内容</option>
+            <% Rank.where(grade_id: @grade.id).each do |x| %>
+              <option value="<%= x.id %>" <%= "selected" if @content.rank_id == x.id %>><%= x.name %></option>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+    </div>
   <% else %>
     <div class="layui-form-item">
       <label class="layui-form-label">链接类型</label>
@@ -46,7 +78,7 @@
     </div>
   <% end %>
 
-  <% if @content_group.group_type == "multi_images" %>
+  <% if @content_group.group_type == "multi_images" || @content_group.group_type == "sub_recommend" %>
     <div class="layui-form-item">
       <label class="layui-form-label">图标</label>
       <div class="layui-input-block">
@@ -91,7 +123,7 @@
             url: "/admin/options/",
             type: 'get',
             dataType: 'json',
-            data: {content_type: content_type},
+            data: {content_type: content_type, grade_id: <%= @grade.id %>},
             success: function (json) {
                 $("#option-wrap").html(json.opts);
                 form.render();
@@ -101,7 +133,7 @@
         });
       });
 
-      <% if @content_group.group_type == "multi_images" %>
+      <% if ["multi_images", "sub_recommend"].include? @content_group.group_type %>
         var upload = layui.upload;
         upload.render({
           elem: '#uploadBtn',

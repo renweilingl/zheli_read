@@ -8,6 +8,8 @@ class Recommend < ApplicationRecord
   validates :name, presence: true, length: { maximum: 10 }
   validates :grade_id, presence: true
 
+  has_many :contents, dependent: :destroy
+
   default_scope { order(sn: :asc, id: :desc) }
   scope :sorted, -> { order(sn: :asc, id: :desc) }
 

@@ -12,6 +12,8 @@ module Admin
       @content = @content_group.contents.new
       if @content_group.group_type == "author_display"
         @content.content_type = "author_display"
+      elsif @content_group.group_type == "sub_recommend"
+        @content.content_type = "recommend"
       else
         @content.content_type = "compilation"
       end
@@ -74,7 +76,9 @@ module Admin
         :compilation_id,
         :book_id,
         :recommend_id,
-        :author_id
+        :author_id,
+        :recommend_id,
+        :rank_id
       ).merge(
         sn: params.dig(:content, :sn).to_i
       )

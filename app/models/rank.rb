@@ -3,6 +3,7 @@ class Rank < ApplicationRecord
   belongs_to :grade
   belongs_to :category
   has_many :rank_contents, dependent: :destroy
+  has_many :contents, dependent: :destroy
 
   def content_names
     res = []
