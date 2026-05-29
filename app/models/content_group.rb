@@ -31,7 +31,7 @@ class ContentGroup < ApplicationRecord
   validates :name, presence: true, length: { maximum: 100 }
   validates :group_type, presence: true
 
-  default_scope { order(sn: :asc, id: :desc) }
+  #default_scope { order(sn: :asc, id: :desc) }
   scope :sorted, -> { order(sn: :asc, id: :desc) }
 
   def group_type_name

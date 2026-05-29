@@ -22,7 +22,7 @@ class RankContentsController < ApplicationController
     @content = @rank.rank_contents.new(content_params)
     authorize @content
 
-    if @content.save
+    if @content.save!
       redirect_to grade_rank_rank_contents_path(@grade, @rank), notice: '内容创建成功'
     else
       render :new, status: :unprocessable_entity

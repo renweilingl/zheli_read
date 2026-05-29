@@ -19,7 +19,13 @@ module Admin
     end
 
     def new
-      @content_group = @recommend.content_groups.new
+      content_group = @recommend.content_groups.order("sn desc").first
+
+      sn = content_group.nil? ? 1 : content_group.sn + 1
+
+      logger.info "renweilin: #{@recommend.content_groups.count}, #{sn}, #{content_group.as_json}"
+
+      @content_group = @recommend.content_groups.new(sn: sn)
       authorize [:admin, @content_group], policy_class: Admin::ContentGroupPolicy
     end
 
