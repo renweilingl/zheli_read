@@ -1,9 +1,8 @@
 <div class="layui-tab">
   <div class="x-nav">
     <span class="layui-breadcrumb">
-      <a href="">内容管理</a>
-      <%= link_to "供应商管理", :admin_suppliers %>
-      <a><cite>新增供应商</cite></a>
+      <%= link_to "出版社管理", :admin_suppliers %>
+      <a><cite>新增出版社</cite></a>
     </span>
     <%= render 'common/user_info' %>
   </div>
@@ -12,33 +11,3 @@
     <%= render 'form' %>
   </div>
 </div>
-
-<% if false %>
-<div class="layui-card">
-  <div class="layui-card-body" style="padding: 30px;">
-    <%= form_with(model: [:admin, @supplier], local: true, class: "layui-form", id: "supplier-form") do |f| %>
-      <fieldset class="layui-elem-field layui-field-title">
-        <legend>基本信息</legend>
-      </fieldset>
-
-      <div class="layui-form-item">
-        <%= f.label :name, "供应商名称", class: "layui-form-label" %>
-        <div class="layui-input-block">
-          <%= f.text_field :name, class: "layui-input", placeholder: "请输入供应商名称", maxlength: 100, lay_verify: "required", style: "width: 400px;" %>
-        </div>
-      </div>
-
-      <div class="layui-form-item">
-        <div class="layui-input-block">
-          <button type="submit" class="layui-btn" lay-submit lay-filter="submit-supplier">
-            <i class="layui-icon layui-icon-release"></i>
-            创建供应商
-          </button>
-          <%= link_to "取消", admin_suppliers_path, class: "layui-btn layui-btn-primary" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-<% end %>
-

@@ -1,8 +1,7 @@
 <div class="layui-tab">
   <div class="x-nav">
     <span class="layui-breadcrumb">
-      <a href="">内容管理</a>
-      <a><cite>供应商管理</cite></a>
+      <a><cite>出版社管理</cite></a>
     </span>
     <%= render 'common/user_info' %>
   </div>
@@ -10,7 +9,7 @@
     <div class="layui-row">
       <div class="layui-col-3 text-right">
         <%= link_to :new_admin_supplier, class: 'layui-btn layui-bg-blue' do %>
-          <i class="layui-icon"></i>新增供应商
+          <i class="layui-icon"></i>新增出版社
         <% end %>
       </div>
     </div>
@@ -25,29 +24,20 @@
         </tr>
       </thead>
       <tbody>
-        <% if @suppliers.empty? %>
+        <% @suppliers.each do |supplier| %>
           <tr>
-            <td colspan="8" style="text-align: center; padding: 40px 0; color: #9ca3af;">
-              <i class="layui-icon layui-icon-face-cry" style="font-size: 48px;"></i>
-              <div style="margin-top: 10px;">暂无供应商数据</div>
+            <td><%= supplier.id %></td>
+            <td>
+              <div style="font-weight: 500;"><%= supplier.name %></div>
+            </td>
+            <td><%= supplier.created_at.strftime("%Y-%m-%d") %></td>
+            <td style="text-align:center;">
+              <div class="layui-btn-group">
+                <%= link_to "详情", admin_supplier_path(supplier), class: "layui-btn layui-btn-sm" %>
+                <%= link_to "编辑", edit_admin_supplier_path(supplier), class: "layui-btn layui-btn-sm" %>
+              </div>
             </td>
           </tr>
-        <% else %>
-          <% @suppliers.each do |supplier| %>
-            <tr>
-              <td><%= supplier.id %></td>
-              <td>
-                <div style="font-weight: 500;"><%= supplier.name %></div>
-              </td>
-              <td><%= supplier.created_at.strftime("%Y-%m-%d") %></td>
-              <td style="text-align:center;">
-                <div class="layui-btn-group">
-                  <%= link_to "详情", admin_supplier_path(supplier), class: "layui-btn layui-btn-sm" %>
-                  <%= link_to "编辑", edit_admin_supplier_path(supplier), class: "layui-btn layui-btn-sm" %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
         <% end %>
       </tbody>
     </table>
