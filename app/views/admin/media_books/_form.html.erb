@@ -85,12 +85,12 @@
 
   <div class="layui-form-item">
     <%= f.label :supplier_id, class: "layui-form-label" do %>
-      <span class="required">*</span> 归属供应商
+      <span class="required">*</span> 出版社
     <% end %>
     <div class="layui-input-block">
       <%= f.select :supplier_id,
             options_from_collection_for_select(@suppliers, :id, :name, @book.supplier_id),
-            { include_blank: '请选择供应商' },
+            { include_blank: '请选择出版社' },
             { class: "layui-input", style: "width: 250px;" } %>
     </div>
   </div>
