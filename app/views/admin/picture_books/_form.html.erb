@@ -11,7 +11,7 @@
       <span class="required">*</span> 类型
     <% end %>
     <div class="layui-input-block">
-      <% Category.where(name: ["图书", "绘本"]).each do |x| %>
+      <% Category.where(name: ["图书", "漫画"]).each do |x| %>
         <input type="radio" lay-filter="levelFilter" name="book[category_id]" value=<%= x.id %> title="<%= x.name %>" <%= 'checked' if @book.category_id == x.id %> <%= 'disabled' unless @book.new_record? %>>
       <% end %>
     </div>
