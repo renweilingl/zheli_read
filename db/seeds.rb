@@ -73,8 +73,8 @@ puts "测试财务: finance@zheli.com / finance123456"
 end
 
 [{name: "图书", code: "book"},
- {name: "有声", code: "audio"},
  {name: "漫画", code: "cartoon"},
+ {name: "有声", code: "audio"},
  {name: "视频", code: "video"}].each do |x|
   name = x[:name]
   code = x[:code]
