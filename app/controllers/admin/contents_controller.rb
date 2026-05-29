@@ -9,7 +9,10 @@ module Admin
     before_action :set_content, only: [:edit, :update, :destroy]
 
     def new
-      @content = @content_group.contents.new
+      content = @content_group.contents.order("sn desc").first
+      sn = content.nil? ? 1 : content.sn + 1
+      @content = @content_group.contents.new(sn: sn)
+
       if @content_group.group_type == "author_display"
         @content.content_type = "author_display"
       elsif @content_group.group_type == "sub_recommend"
@@ -17,6 +20,7 @@ module Admin
       else
         @content.content_type = "compilation"
       end
+
       authorize [:admin, @content], policy_class: Admin::ContentPolicy
     end
 
