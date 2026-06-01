@@ -32,7 +32,7 @@ class Admin::CataloguesController < ApplicationController
     @chapter = @book.catalogues.find(params[:id])
 
     if @chapter.update(chapter_params)
-      redirect_to admin_picture_book_catalogues_path(@book), notice: '绘本更新成功'
+      redirect_to admin_picture_book_catalogues_path(@book), notice: '图书更新成功'
     else
       render :edit
     end

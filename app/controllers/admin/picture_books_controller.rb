@@ -7,7 +7,7 @@ class Admin::PictureBooksController < ApplicationController
     authorize Book
     @per_page = params[:per_page] || 20
 
-    category_ids = Category.where(name: ["图书", "绘本"]).pluck(:id)
+    category_ids = Category.where(name: ["图书", "漫画"]).pluck(:id)
     @q = Book.where(category_id: category_ids).ransack(params[:q])
     @picture_books = @q.result.paginate(page: params[:page], per_page: @per_page)
 
@@ -35,7 +35,7 @@ class Admin::PictureBooksController < ApplicationController
       if ["epub", "pdf"].include? @book.file_type
         BookImportJob.perform_later(@book.id)
       end
-      redirect_to :admin_picture_books, notice: '绘本创建成功'
+      redirect_to :admin_picture_books, notice: '图书创建成功'
     else
       render :new
     end
@@ -51,7 +51,7 @@ class Admin::PictureBooksController < ApplicationController
     @suppliers = Supplier.all
 
     if @book.update(book_params)
-      redirect_to admin_picture_books_path, notice: '绘本更新成功'
+      redirect_to admin_picture_books_path, notice: '图书更新成功'
     else
       render :edit
     end
@@ -60,7 +60,7 @@ class Admin::PictureBooksController < ApplicationController
   def destroy
     authorize @book
     @book.destroy
-    redirect_to admin_picture_books_path, notice: '绘本删除成功'
+    redirect_to admin_picture_books_path, notice: '图书删除成功'
   end
 
   private
