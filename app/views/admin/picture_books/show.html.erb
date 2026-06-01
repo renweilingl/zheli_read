@@ -1,7 +1,7 @@
-<% content_for :title, "绘本详情" %>
+<% content_for :title, "图书详情" %>
 
 <div class="page-header">
-  <h1 class="page-title">绘本详情</h1>
+  <h1 class="page-title">图书详情</h1>
   <div class="page-actions">
     <%= link_to admin_picture_books_path, class: "layui-btn layui-btn-primary" do %>
       <i class="layui-icon layui-icon-return"></i> 返回列表
@@ -10,7 +10,7 @@
       <i class="layui-icon layui-icon-password"></i> <%= @book.locked? ? '解锁' : '锁定' %>
     <% end %>
     <% unless @book.locked? %>
-      <%= link_to admin_book_path(@book), method: :delete, class: "layui-btn layui-btn-danger", data: { confirm: '确定要删除此绘本吗？' } do %>
+      <%= link_to admin_book_path(@book), method: :delete, class: "layui-btn layui-btn-danger", data: { confirm: '确定要删除此图书吗？' } do %>
         <i class="layui-icon layui-icon-delete"></i> 删除
       <% end %>
     <% end %>
@@ -20,7 +20,7 @@
 <!-- 锁定提示 -->
 <% if @book.locked? %>
 <div class="layui-alert" style="background: #fff2e8; border: 1px solid #ffbb76; margin-bottom: 15px;">
-  <i class="layui-icon layui-icon-tips"></i> 此绘本已锁定，无法进行编辑、删除操作。如需修改，请先解锁。
+  <i class="layui-icon layui-icon-tips"></i> 此图书已锁定，无法进行编辑、删除操作。如需修改，请先解锁。
 </div>
 <% end %>
 
@@ -83,15 +83,15 @@
       <div class="layui-card-body">
         <table class="layui-table layui-table-view" style="margin: 0;">
           <tr>
-            <td class="info-label" style="width: 100px;">绘本ID</td>
+            <td class="info-label" style="width: 100px;">图书ID</td>
             <td><%= @book.id %></td>
           </tr>
           <tr>
-            <td class="info-label">绘本名称</td>
+            <td class="info-label">图书名称</td>
             <td><strong style="font-size: 16px;"><%= @book.name %></strong></td>
           </tr>
           <tr>
-            <td class="info-label">绘本类型</td>
+            <td class="info-label">图书类型</td>
             <td>
               <span class="layui-badge layui-bg-gray"><%= @book.book_type_name %></span>
             </td>
@@ -426,13 +426,13 @@
         <tr>
           <td><%= @book.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
           <td><span class="layui-badge layui-bg-green">创建</span></td>
-          <td>创建绘本 "<%= @book.name %>"</td>
+          <td>创建图书 "<%= @book.name %>"</td>
         </tr>
         <% if @book.updated_at > @book.created_at %>
           <tr>
             <td><%= @book.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
             <td><span class="layui-badge layui-bg-orange">更新</span></td>
-            <td>更新绘本信息</td>
+            <td>更新图书信息</td>
           </tr>
         <% end %>
         <% if @book.approved_at.present? %>
