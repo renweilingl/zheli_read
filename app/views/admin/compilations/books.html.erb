@@ -14,49 +14,6 @@
       <% end %>
     </div>
     <div id="ID-transfer-demo-showSearch"></div>
-    <% if false %>
-    <div class="layui-row">
-      <div class="layui-col-xs9">
-        <%= search_form_for(@q, url: books_admin_compilation_path(@compilation), :html => {class: :'layui-form layui-col-md12'}) do |f| %>
-         <div class="layui-input-inline">
-            <select name="q[category_id_eq]" lay-search="">
-              <option value="">所有类别</option>
-              <% Category.all.each do |x| %>
-                <option value="<%= x.id %>"><%= x.name %></option>
-              <% end %>
-            </select>
-          </div>
-          <div class="layui-input-inline">
-            <%= f.text_field :name_cont, class: :'layui-input', placeholder: "名称" %>
-          </div>
-          <button class="layui-btn layui-bg-blue" lay-submit lay-filter="demo-table-search"><i class="layui-icon">&#xe615;</i>查询</button>
-          <%= link_to "重置", books_admin_compilation_path(@compilation), class: "layui-btn layui-btn-primary" %>
-        <% end %>
-      </div>
-    </div>
-
-    <table class="layui-table">
-      <thead>
-        <th width="60">ID</th>
-        <th>图书信息</th>
-        <th>年级范围</th>
-        <th width="80">类型</th>
-        <th width="100" style="text-align:center;">操作</th>
-      </thead>
-      <tbody>
-        <% @books.each do |book| %>
-          <tr>
-            <td><%= book.id %></td>
-            <td><%= book.name %></td>
-            <td><%= book.grades.pluck(:name).join(" | ")%></td>
-            <td><%= book.category.name %></td>
-            <td style="text-align:center;">
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <% end %>
   </div>
 </div>
 
