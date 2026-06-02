@@ -61,6 +61,7 @@
                layer.msg('请先选择发布日期');
                return false;
             }
+            $('#ID-upload-demo-files-action').addClass("layui-btn-disabled");
           },
           choose: function(obj){   
             var that = this;
@@ -109,7 +110,6 @@
           },
           allDone: function(obj){
             $('#myForm').submit();
-            //console.log(obj)
           },
           error: function(index, upload){ // 错误回调
             var that = this;
