@@ -46,13 +46,28 @@ class Admin::ChaptersController < ApplicationController
   def batch_new
     authorize @book
 
-    chapter = @book.chapters.order("sn desc").first
-    sn = chapter.nil? ? 1 : chapter.sn + 1
-
-    @chapter = @book.chapters.new(is_published: true, sn: sn)
+    @chapter = @book.chapters.new
   end
 
   def batch_add
+    authorize @book
+
+    chapter = @book.chapters.order("sn desc").first
+    sn = chapter.nil? ? 1 : chapter.sn + 1
+
+    publish_date = params[:chapter][:publish_date]
+    params[:content_file_url].each_with_index do |file_url, idx|
+      @book.chapters.create!(publish_date: publish_date,
+                            name: params[:content_file_name][idx],
+                            content_file_url: file_url,
+                            content_file_type: params[:content_file_type][idx],
+                            duration: params[:duration][idx],
+                            is_free: false,
+                            is_published: true,
+                            sn: sn + idx)
+    end
+
+    redirect_to admin_media_book_chapters_path(@book), notice: '内容创建成功'
   end
 
   def edit
@@ -84,7 +99,7 @@ class Admin::ChaptersController < ApplicationController
     @chapter.destroy
     flash[:notice] = "内容删除成功！"
 
-    redirect_to chapters_admin_picture_book_path(@book)
+    redirect_to admin_media_book_chapters_path(@book)
   end
 
   def batch_free
