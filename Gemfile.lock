@@ -425,6 +425,9 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
+    simple_xlsx_reader (5.1.0)
+      nokogiri
+      rubyzip
     snaky_hash (2.0.3)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
@@ -530,6 +533,7 @@ DEPENDENCIES
   roo (~> 2.8.0)
   sass-rails (~> 5.0)
   sidekiq (~> 7.0)
+  simple_xlsx_reader
   sorcery
   sprockets-rails
   terser

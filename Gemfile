@@ -85,3 +85,5 @@ gem 'jwt'
 gem 'annotate'
 gem "carrierwave", "0.8.0"
 gem 'carrierwave-aliyun', '~> 0.7.0'
+
+gem 'simple_xlsx_reader'
