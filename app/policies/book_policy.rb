@@ -26,6 +26,10 @@ class BookPolicy < ApplicationPolicy
     user.super_admin? || user.editor?
   end
 
+  def batch_new?
+    user.super_admin? || user.editor?
+  end
+
   def chapters?
     user.super_admin? || user.editor?
   end

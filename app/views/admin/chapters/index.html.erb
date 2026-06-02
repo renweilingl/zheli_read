@@ -16,6 +16,10 @@
           <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchUnfree();">批量收费</button>
         </div>
         <div class="layui-col-3 text-right">
+          <%= link_to batch_new_admin_media_book_chapters_path(@book), class: 'layui-btn layui-bg-blue' do %>
+            <i class="layui-icon layui-icon-upload"></i>批量上传
+          <% end %>
+
           <%= link_to new_admin_media_book_chapter_path(@book), class: 'layui-btn layui-bg-blue' do %>
             <i class="layui-icon"></i>新增单本
           <% end %>

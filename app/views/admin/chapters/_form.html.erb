@@ -146,10 +146,10 @@
               $('#upload-result').show();
               $('#file-name').text(res.data.file_name);
               $('#file-size').text(res.data.file_size);
+
               $('#file-url-hidden').val(res.data.file_url);
               $('#file-name-hidden').val(res.data.file_name);
               $('#chapter-name').val(res.data.file_name);
-              //$('#file-size-hidden').val(res.data.file_size);
               $('#file-type-hidden').val(res.data.file_type);
 
               // Auto-fill duration from upload response
@@ -186,7 +186,6 @@
           $('#file-url-hidden').val('');
           $('#file-name-hidden').val('');
           $('#duration-hidden').val('');
-          //$('#file-size-hidden').val('');
           layer.msg('已移除文件', {icon: 6});
         });
   })

@@ -43,6 +43,18 @@ class Admin::ChaptersController < ApplicationController
     end
   end
 
+  def batch_new
+    authorize @book
+
+    chapter = @book.chapters.order("sn desc").first
+    sn = chapter.nil? ? 1 : chapter.sn + 1
+
+    @chapter = @book.chapters.new(is_published: true, sn: sn)
+  end
+
+  def batch_add
+  end
+
   def edit
     authorize @book
 

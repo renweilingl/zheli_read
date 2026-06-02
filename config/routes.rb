@@ -90,6 +90,9 @@ Rails.application.routes.draw do
         post 'update_sn', on: :collection
         post 'batch_free', on: :collection
         post 'batch_unfree', on: :collection
+
+        get 'batch_new', on: :collection
+        post 'batch_add', on: :collection
       end
     end
   end
