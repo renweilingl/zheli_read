@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_29_024503) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_02_033732) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_29_024503) do
 
   create_table "authors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "作者名"
-    t.string "head_img", null: false, comment: "头像"
+    t.string "head_img", comment: "头像"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

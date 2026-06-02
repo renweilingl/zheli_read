@@ -25,6 +25,30 @@ class Admin::AuthorsController < ApplicationController
     end
   end
 
+  def batch_new
+    authorize Author
+  end
+
+  def batch_add
+    authorize Author
+
+    doc = SimpleXlsxReader.open(params[:file].tempfile.path)
+    doc.sheets.first.rows.each_with_index do |r, i|
+      begin
+        next if i == 0
+
+        next if r[0].blank?
+
+        name = r[0].strip
+        if Author.where(name: name).empty?
+          Author.create(name: name)
+        end
+      rescue StandardError => e
+        logger.info "batch import rooms err: #{e}"
+      end
+    end
+  end
+
   def edit
   end
 

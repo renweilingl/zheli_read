@@ -8,7 +8,7 @@
   </div>
   <div class="x-body">
     <div class="layui-row">
-      <div class="layui-col-xs9">
+      <div class="layui-col-xs8">
         <%= search_form_for(@q, url: :admin_authors, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
           <div class="layui-input-inline">
             <%= f.text_field :name_cont, class: :'layui-input', placeholder: "作者名" %>
@@ -18,7 +18,10 @@
         <% end %>
       </div>
 
-      <div class="layui-col-xs3 text-right">
+      <div class="layui-col-xs4 text-right">
+        <%= link_to :batch_new_admin_authors, class: 'layui-btn layui-bg-blue' do %>
+          <i class="layui-icon layui-icon-upload"></i>批量上传
+        <% end %>
         <%= link_to :new_admin_author, class: 'layui-btn layui-bg-blue' do %>
           <i class="layui-icon"></i>新增作者
         <% end %>

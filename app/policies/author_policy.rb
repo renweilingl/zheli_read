@@ -18,6 +18,14 @@ class AuthorPolicy < ApplicationPolicy
     user.super_admin? || user.editor?
   end
 
+  def batch_new?
+    user.super_admin? || user.editor?
+  end
+
+  def batch_add?
+    user.super_admin? || user.editor?
+  end
+
   def update?
     user.super_admin? || user.editor?
   end

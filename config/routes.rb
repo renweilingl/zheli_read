@@ -33,7 +33,10 @@ Rails.application.routes.draw do
   # Admin routes
   namespace :admin do
     resources :options, only: [:index]
-    resources :authors
+    resources :authors do
+      get 'batch_new', on: :collection
+      post 'batch_add', on: :collection
+    end
 
     resources :accounts, only: [:index, :new, :create, :edit, :update, :show, :destroy] do
       member do
