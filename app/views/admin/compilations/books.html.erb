@@ -18,9 +18,10 @@
 </div>
 
 <script>
-layui.use(function(){
-  var transfer = layui.transfer;
-  var util = layui.util;
+layui.use(['transfer','layer'], function(){
+  var transfer = layui.transfer,
+      layer = layui.layer,
+      util = layui.util;
   var data = [];
   <% @books.each do |x| %>
       data.push({"value": "<%= x.id %>", "title": '<%= "#{x.name} (#{x.category.name}) (#{x.grades.pluck('name').join(' | ')})" %>'});
@@ -43,6 +44,7 @@ layui.use(function(){
           type: 'post',
           data: {bood_ids: getData},
           success: function(res) {
+            layer.msg('更新成功');
           }
       })
     }
