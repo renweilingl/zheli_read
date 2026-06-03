@@ -75,10 +75,11 @@ Rails.application.routes.draw do
 
     # Collections management (绘本合辑)
     resources :compilations, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-      member do
-        get 'books'
-        post 'update_books'
-      end
+      resources :books
+      #member do
+      #  get 'books'
+      #  post 'update_books'
+      #end
     end
 
     resources :picture_books do

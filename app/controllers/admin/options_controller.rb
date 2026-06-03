@@ -6,19 +6,32 @@ class Admin::OptionsController < ApplicationController
   def index
     authorize Category
 
-    if params[:content_type] == "compilation"
+    case params[:content_type]
+    when "compilation"
       @title = "选择合辑"
       @name = "compilation_id"
       @opts = Compilation.all
-    elsif params[:content_type] == "book"
-      @title = "选择单本"
+    when "book"
+      @title = "选择图书"
       @name = "book_id"
       @opts = Book.all
-    elsif params[:content_type] == "recommend"
+    when "comic"
+      @title = "选择漫画"
+      @name = "book_id"
+      @opts = Book.all
+    when "audio"
+      @title = "选择有声"
+      @name = "book_id"
+      @opts = Book.all
+    when "video"
+      @title = "选择视频"
+      @name = "book_id"
+      @opts = Book.all
+    when "recommend"
       @title = "选择推荐"
       @name = "recommend_id"
       @opts = Recommend.where(grade_id: params[:grade_id])
-    elsif params[:content_type] == "rank"
+    when "rank"
       @title = "选择排行榜"
       @name = "rank_id"
       @opts = Rank.where(grade_id: params[:grade_id])

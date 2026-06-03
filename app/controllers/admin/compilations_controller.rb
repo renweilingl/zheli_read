@@ -56,14 +56,14 @@ class Admin::CompilationsController < ApplicationController
   def books
     authorize Compilation
 
-    book_ids = []
-    @compilation.grades.each do |grade|
-      book_ids  += grade.book_ids
-    end
-    book_ids.uniq!
-    #logger.info "renweilin: #{book_ids}"
+    @books = @compilation.books.includes(:category)
 
-    @books = Book.where(id: book_ids)
+    #book_ids = []
+    #@compilation.grades.each do |grade|
+    #  book_ids  += grade.book_ids
+    #end
+    #book_ids.uniq!
+    #@books = Book.where(id: book_ids)
   end
 
   def update_books

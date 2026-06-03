@@ -63,7 +63,7 @@
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to '编辑', edit_admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
-                <%= link_to '内容', books_admin_compilation_path(compilation), class: "layui-btn layui-btn-sm" %>
+                <%= link_to '内容', admin_compilation_books_path(compilation), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', admin_compilation_path(compilation), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此合辑吗？此操作不可恢复。" } %>
               </div>
             </td>
