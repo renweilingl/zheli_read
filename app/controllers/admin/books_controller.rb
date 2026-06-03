@@ -42,7 +42,6 @@ class Admin::BooksController < ApplicationController
         book_ids << book_id.to_i unless book_ids.include? book_id.to_i
       end
     end
-    logger.info "renweilin: #{book_ids}"
     @compilation.book_ids = book_ids
     @compilation.save!
 
@@ -50,6 +49,10 @@ class Admin::BooksController < ApplicationController
   end
 
   def destroy
+    @compilation.book_ids = @compilation.book_ids - [params[:id].to_i]
+    @compilation.save!
+
+    redirect_to admin_compilation_books_path(@compilation)
   end
 
   private
