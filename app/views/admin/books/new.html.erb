@@ -28,26 +28,6 @@
 
     <%= form_tag admin_compilation_books_path(@compilation), method: :post, class: "layui-form" do %>
       <table class="layui-table" id="main-table"></table>
-      <% if false %>
-      <table class="layui-table" id="tableBody">
-        <thead>
-          <tr>
-            <th>选择</th>
-            <th>分类</th>
-            <th>图书</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @books.each do |x| %>
-            <tr>
-              <td><input type="checkbox" data-id="<%= x.id %>" class="itemCheckbox" lay-skin="primary"></td>
-              <td><%= x.category.name %></td>
-              <td><%= x.name %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <% end %>
     <% end %>
   </div>
 </div>
@@ -65,6 +45,15 @@
         {field: 'category_name', title: '分类'},
         {field: 'name', title: '内容'},
       ]]
+    });
+
+    var form = layui.form;
+    form.on('submit(demo-table-search)', function(data){
+      var field = data.field; // 获得表单字段
+      table.reload('main-table', {
+        where: field
+      });
+      return false; // 阻止默认 form 跳转
     });
   })
 
