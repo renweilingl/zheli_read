@@ -1,5 +1,6 @@
 class Admin::OptionsController < ApplicationController
   before_action :require_login
+  before_action :set_grade
 
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
 
@@ -44,7 +45,12 @@ class Admin::OptionsController < ApplicationController
   private
   def get_cat_books(name)
     cat = Category.find_by_name(name)
-    Book.where(category_id: cat.id)
+    ids = @grade.book_ids
+    Book.where(id: ids, category_id: cat.id)
+  end
+
+  def set_grade
+    @grade = Grade.find_by_id params[:grade_id]
   end
 
 end

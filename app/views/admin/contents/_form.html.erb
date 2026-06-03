@@ -48,12 +48,12 @@
     <div class="layui-form-item">
       <label class="layui-form-label">链接类型</label>
       <div class="layui-input-block">
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
 
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="book" title="图书" <%= 'checked' if @content.content_type== "book" %>>
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="comic" title="漫画" <%= 'checked' if @content.content_type== "book" %>>
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="audio" title="有声" <%= 'checked' if @content.content_type== "book" %>>
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="video" title="视频" <%= 'checked' if @content.content_type== "book" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="book" title="图书" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "图书" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="comic" title="漫画" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "漫画" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="audio" title="有声" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "有声" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="video" title="视频" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "视频" %>>
       </div>
     </div>
 

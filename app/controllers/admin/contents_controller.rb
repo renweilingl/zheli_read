@@ -28,6 +28,14 @@ module Admin
       @content = @content_group.contents.new(content_params)
       authorize [:admin, @content], policy_class: Admin::ContentPolicy
 
+      if params[:content_type].present?
+        if "compilation" == params[:content_type]
+          @content.content_type = "compilation"
+        else
+          @content.content_type = "book"
+        end
+      end
+
       if @content.save
         redirect_to admin_grade_recommend_content_group_path(@grade, @recommend, @content_group), notice: '内容创建成功'
       else
