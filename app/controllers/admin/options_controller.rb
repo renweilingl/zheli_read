@@ -14,19 +14,20 @@ class Admin::OptionsController < ApplicationController
     when "book"
       @title = "选择图书"
       @name = "book_id"
-      @opts = Book.all
+
+      @opts = get_cat_books("图书")
     when "comic"
       @title = "选择漫画"
       @name = "book_id"
-      @opts = Book.all
+      @opts = get_cat_books("漫画")
     when "audio"
       @title = "选择有声"
       @name = "book_id"
-      @opts = Book.all
+      @opts = get_cat_books("有声")
     when "video"
       @title = "选择视频"
       @name = "book_id"
-      @opts = Book.all
+      @opts = get_cat_books("视频")
     when "recommend"
       @title = "选择推荐"
       @name = "recommend_id"
@@ -38,6 +39,12 @@ class Admin::OptionsController < ApplicationController
     end
 
     render json: { opts: render_to_string(partial: 'opts', layout: false), name: @name }
+  end
+
+  private
+  def get_cat_books(name)
+    cat = Category.find_by_name(name)
+    Book.where(category_id: cat.id)
   end
 
 end

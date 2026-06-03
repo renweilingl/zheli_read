@@ -2,7 +2,7 @@
   <div class="x-nav">
     <span class="layui-breadcrumb">
       <%= link_to "合辑管理", :admin_compilations %>
-      <a><cite><%= @compilation.name %></cite></a>
+      <a href="<%= admin_compilation_books_path(@compilation) %>"><cite><%= @compilation.name %></cite></a>
       <a><cite>添加内容</cite></a>
     </span>
     <%= render 'common/user_info' %>
