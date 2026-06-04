@@ -34,6 +34,10 @@ class BookPolicy < ApplicationPolicy
     user.super_admin? || user.editor?
   end
 
+  def auto_sort?
+    user.super_admin? || user.editor?
+  end
+
   def chapters?
     user.super_admin? || user.editor?
   end
