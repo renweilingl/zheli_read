@@ -1,5 +1,6 @@
 class FileUploadJob < ApplicationJob
   queue_as :zheli_high
+  sidekiq_options retry: false
 
   def perform(oss_key, file_path, mime)
     file = File.open(file_path)
