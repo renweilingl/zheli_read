@@ -11,7 +11,7 @@ class Admin::OptionsController < ApplicationController
     when "compilation"
       @title = "选择合辑"
       @name = "compilation_id"
-      @opts = Compilation.all
+      @opts = @grade.compilations
     when "book"
       @title = "选择图书"
       @name = "book_id"

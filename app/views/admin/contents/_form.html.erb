@@ -63,7 +63,7 @@
         <div class="layui-input-block">
           <select name="content[compilation_id]" lay-search="" lay-verify="required">
             <option value="">选择链接内容</option>
-            <% Compilation.all.each do |x| %>
+            <% @grade.compilations.each do |x| %>
               <option value="<%= x.id %>" <%= "selected" if @content.compilation_id == x.id %>><%= x.name %></option>
             <% end %>
           </select>
