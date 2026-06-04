@@ -50,7 +50,7 @@ class Admin::OptionsController < ApplicationController
     ids = @grade.book_ids
 
     book_ids = @content_group.contents.with_content_type("book").pluck(:book_id)
-    logger.info "renilin book_ids: #{book_ids}"
+#    logger.info "renilin book_ids: #{book_ids}"
     Book.where(id: ids, category_id: cat.id).where.not(id: book_ids)
   end
 
