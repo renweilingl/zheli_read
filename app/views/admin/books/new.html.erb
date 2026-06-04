@@ -9,10 +9,10 @@
   </div>
   <div class="x-body">
     <div class="layui-row">
-      <div class="layui-col-xs3">
+      <div class="layui-col-xs6">
         <button class="layui-btn layui-bg-blue" onclick="batchAdd();">批量添加</button>
       </div>
-      <div class="layui-col-xs9" style="float: right;">
+      <div class="layui-col-xs6" style="text-aligin: right;">
         <%= search_form_for(@q, url: new_admin_compilation_book_path(@compilation), :html => {class: :'layui-form layui-col-md12'}) do |f| %>
           <div class="layui-input-inline" style="width: 140px;">
             <%= f.select :category_id_eq, options_for_select(Category.all.map { |x| [x.name, x.id] }, @q.category_id_eq), { include_blank: "图书分类" } %>
