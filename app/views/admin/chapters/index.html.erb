@@ -11,11 +11,15 @@
   <div class="x-body">
     <div class="layui-row">
       <div class="xblock">
-        <div class="layui-col-xs9">
+        <div class="layui-col-xs6">
           <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchFree();">批量免费</button>
           <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchUnfree();">批量收费</button>
         </div>
-        <div class="layui-col-3 text-right">
+        <div class="layui-col-6 text-right">
+          <button class="layui-btn layui-bg-blue" id="submitBtn">
+            <i class="layui-icon layui-icon-refresh"></i>自动排序
+          </button>
+
           <%= link_to batch_new_admin_media_book_chapters_path(@book), class: 'layui-btn layui-bg-blue' do %>
             <i class="layui-icon layui-icon-upload"></i>批量上传
           <% end %>
@@ -40,8 +44,11 @@
 </script>
 
 <script>
-    layui.use(['table'],function(){
-      var table = layui.table;
+    layui.use(['form','table'],function(){
+      var table = layui.table,
+          form = layui.form,
+          $ = layui.$;
+
       table.render({
         elem: '#main-table',
         url: '<%= admin_media_book_chapters_path(@book) %>',
@@ -105,6 +112,27 @@
           }
         })
       });
+
+      $('#submitBtn').on('click', function() {
+          console.log("xx");
+          $.ajax({
+            url: '<%= auto_sort_admin_media_book_path(@book) %>',
+            type: 'POST',                
+            data: {},
+            dataType: 'json',
+            success: function(res) {
+              if (res.code === 0) {
+                layer.msg('自动排序成功', { icon: 1 });
+                window.location.reload();
+              } else {
+                layer.msg(res.msg || '提交失败', { icon: 2 });
+              }
+            },
+            error: function() {
+              layer.msg('网络错误，请稍后重试', { icon: 2 });
+            }
+          });
+      })
     })
 
     function get_ids() {

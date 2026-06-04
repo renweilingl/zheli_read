@@ -139,4 +139,5 @@ class Admin::ChaptersController < ApplicationController
     temp_path = Rails.root.join('tmp', 'uploads', filename).to_s
     File.exist?(temp_path) ? temp_path : nil
   end
+
 end

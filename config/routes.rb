@@ -97,7 +97,9 @@ Rails.application.routes.draw do
 
         get 'batch_new', on: :collection
         post 'batch_add', on: :collection
+
       end
+      post 'auto_sort', on: :member
     end
   end
 

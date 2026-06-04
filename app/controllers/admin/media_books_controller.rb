@@ -1,6 +1,6 @@
 class Admin::MediaBooksController < ApplicationController
   before_action :require_login
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:show, :edit, :update, :destroy, :auto_sort]
 
   def index
     authorize Book
@@ -52,7 +52,32 @@ class Admin::MediaBooksController < ApplicationController
     end
   end
 
+  def auto_sort
+    authorize @book
+
+    seqs = []
+    Chapter.where(book_id: @book.id).each do |chapter|
+      sn = chapter.name.scan(/\d/).join
+      if sn.blank?
+        sn = 0
+      else
+        sn = sn.to_i
+      end
+
+      seqs << {id: chapter.id, sn: sn}
+    end
+    seqs = seqs.sort{|x,y| x[:sn] <=> y[:sn]}
+    seqs.each_with_index do |x, idx|
+      chapter = Chapter.find_by_id x[:id]
+      chapter.update(sn: idx + 1)
+    end
+
+    render json: {code: 0}
+  end
+
   def destroy
+    authorize @book
+
     @book.destroy
     redirect_to :admin_media_books, notice: '图书删除成功'
   end
