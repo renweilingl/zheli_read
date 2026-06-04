@@ -16,8 +16,8 @@
     <div class="layui-form-item">
       <label class="layui-form-label">链接类型</label>
       <div class="layui-input-block">
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="recommend" title="推荐" <%= 'checked' if @content.content_type== "recommend" %>>
-        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="rank" title="排行榜" <%= 'checked' if @content.content_type== "rank" %>>
+        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="recommend" title="推荐" <%= 'checked' if @content.content_type== "recommend" %> <%= 'disabled' unless @content.new_record? %>>
+        <input type="radio" lay-filter="levelFilter" name="content[content_type]" value="rank" title="排行榜" <%= 'checked' if @content.content_type== "rank" %> <%= 'disabled' unless @content.new_record? %>>
       </div>
     </div>
 
