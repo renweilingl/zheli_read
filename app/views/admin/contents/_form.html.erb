@@ -48,12 +48,12 @@
     <div class="layui-form-item">
       <label class="layui-form-label">链接类型</label>
       <div class="layui-input-block">
-        <input type="radio" lay-filter="levelFilter" name="content_type" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="compilation" title="合辑" <%= 'checked' if @content.content_type== "compilation" %> <%= 'disabled' unless @content.new_record? %>>
 
-        <input type="radio" lay-filter="levelFilter" name="content_type" value="book" title="图书" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "图书" %>>
-        <input type="radio" lay-filter="levelFilter" name="content_type" value="comic" title="漫画" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "漫画" %>>
-        <input type="radio" lay-filter="levelFilter" name="content_type" value="audio" title="有声" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "有声" %>>
-        <input type="radio" lay-filter="levelFilter" name="content_type" value="video" title="视频" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "视频" %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="book" title="图书" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "图书" %> <%= 'disabled' unless @content.new_record? %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="comic" title="漫画" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "漫画" %> <%= 'disabled' unless @content.new_record? %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="audio" title="有声" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "有声" %> <%= 'disabled' unless @content.new_record? %>>
+        <input type="radio" lay-filter="levelFilter" name="content_type" value="video" title="视频" <%= 'checked' if @content.content_type== "book" && @content.book.category.name == "视频" %> <%= 'disabled' unless @content.new_record? %>>
       </div>
     </div>
 
@@ -73,7 +73,7 @@
         <div class="layui-input-block">
           <select name="content[book_id]" lay-search="" lay-verify="required">
             <option value="">选择链接内容</option>
-            <% Book.all.each do |x| %>
+            <% @books.each do |x| %>
               <option value="<%= x.id %>" <%= "selected" if @content.book_id == x.id %>><%= x.name %></option>
             <% end %>
           </select>
