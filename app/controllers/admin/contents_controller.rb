@@ -19,6 +19,8 @@ module Admin
         @content.content_type = "recommend"
       else
         @content.content_type = "compilation"
+        compilation_ids = @content_group.contents.with_content_type("compilation").pluck(:compilation_id)
+        @compilations = @grade.compilations.where.not(id: compilation_ids)
       end
 
       authorize [:admin, @content], policy_class: Admin::ContentPolicy

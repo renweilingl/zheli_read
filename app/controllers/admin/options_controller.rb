@@ -1,6 +1,7 @@
 class Admin::OptionsController < ApplicationController
   before_action :require_login
   before_action :set_grade
+  before_action :set_group
 
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
 
@@ -51,6 +52,10 @@ class Admin::OptionsController < ApplicationController
 
   def set_grade
     @grade = Grade.find_by_id params[:grade_id]
+  end
+
+  def set_group      #分组
+    @content_group = ContentGroup.find(params[:content_group_id])
   end
 
 end

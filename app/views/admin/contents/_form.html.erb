@@ -63,7 +63,7 @@
         <div class="layui-input-block">
           <select name="content[compilation_id]" lay-search="" lay-verify="required">
             <option value="">选择链接内容</option>
-            <% @grade.compilations.each do |x| %>
+            <% @compilations.each do |x| %>
               <option value="<%= x.id %>" <%= "selected" if @content.compilation_id == x.id %>><%= x.name %></option>
             <% end %>
           </select>
@@ -127,7 +127,7 @@
             url: "/admin/options/",
             type: 'get',
             dataType: 'json',
-            data: {content_type: content_type, grade_id: <%= @grade.id %>},
+            data: {content_type: content_type, grade_id: <%= @grade.id %>, content_group_id: <%= @content_group.id %>},
             success: function (json) {
                 $("#option-wrap").html(json.opts);
                 form.render();

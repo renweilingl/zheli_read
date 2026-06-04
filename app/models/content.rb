@@ -9,6 +9,7 @@ class Content < ApplicationRecord
   belongs_to :rank, optional: true
 
   scope :sorted, -> { order(sn: :asc, id: :desc) }
+  scope :with_content_type, ->(content_type) { where(content_type: content_type) }
 
   enum :content_type, {
     compilation: 'compilation',           # 合辑
@@ -29,6 +30,7 @@ class Content < ApplicationRecord
   def content_type_name
     CONTENT_TYPES[content_type.to_sym] || content_type
   end
+
 
   def display_img_url
     if content_group.group_type == "multi_images" || content_group.group_type == "sub_recommend"
