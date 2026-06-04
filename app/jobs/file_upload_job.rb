@@ -15,7 +15,7 @@ class FileUploadJob < ApplicationJob
     return unless ["epub", "pdf"].include? book.file_type
 
     if Rails.env.production?
-      url = "https://voicebook.haoqiniu.com/api/books/import"
+      url = "https://api.zheliyuedu.cn/api/books/import"
 
       data = {uuid: AppUser.first.uuid, id: book.id}
       res = HTTParty.post(url, body: data.to_json, headers: {'Content-Type' => 'application/json'}).body
