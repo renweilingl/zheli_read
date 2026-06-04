@@ -12,7 +12,8 @@ class Admin::OptionsController < ApplicationController
     when "compilation"
       @title = "选择合辑"
       @name = "compilation_id"
-      @opts = @grade.compilations
+      compilation_ids = @content_group.contents.with_content_type("compilation").pluck(:compilation_id)
+      @opts = @grade.compilations.where.not(id: compilation_ids)
     when "book"
       @title = "选择图书"
       @name = "book_id"
