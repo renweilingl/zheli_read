@@ -48,7 +48,10 @@ class Admin::OptionsController < ApplicationController
   def get_cat_books(name)
     cat = Category.find_by_name(name)
     ids = @grade.book_ids
-    Book.where(id: ids, category_id: cat.id)
+
+    book_ids = @content_group.contents.with_content_type("book").pluck(:book_id)
+    logger.info "renilin book_ids: #{book_ids}"
+    Book.where(id: ids, category_id: cat.id).where.not(id: book_ids)
   end
 
   def set_grade
