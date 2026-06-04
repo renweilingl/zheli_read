@@ -27,7 +27,7 @@
         <div class="layui-input-block">
           <select name="content[recommend_id]" lay-search="" lay-verify="required">
             <option value="">选择链接内容</option>
-            <% Recommend.where(grade_id: @grade.id).each do |x| %>
+            <% @recommends.each do |x| %>
               <option value="<%= x.id %>" <%= "selected" if @content.recommend_id == x.id %>><%= x.name %></option>
             <% end %>
           </select>

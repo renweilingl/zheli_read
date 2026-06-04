@@ -15,9 +15,11 @@ module Admin
 
       if @content_group.group_type == "author_display"
         @content.content_type = "author_display"
-      elsif @content_group.group_type == "sub_recommend"
+      elsif @content_group.group_type == "sub_recommend"  #默认选择推荐
         @content.content_type = "recommend"
-      else
+        recommend_ids = @content_group.contents.with_content_type("recommend").pluck(:recommend_id)
+        @recommends = Recommend.where(grade_id: @grade.id).where.not(id: recommend_ids)
+      else  #默认选择合辑
         @content.content_type = "compilation"
         compilation_ids = @content_group.contents.with_content_type("compilation").pluck(:compilation_id)
         @compilations = @grade.compilations.where.not(id: compilation_ids)
@@ -51,6 +53,8 @@ module Admin
       if @content.content_type == "compilation"
         compilation_ids = @content_group.contents.with_content_type("compilation").pluck(:compilation_id)
         @compilations = @grade.compilations.where.not(id: compilation_ids)
+      elsif @content.content_type = "recommend"
+        @recommends = Recommend.where(grade_id: @grade.id)
       elsif @content.content_type == "book"
         book_ids = @content_group.contents.with_content_type("book").pluck(:book_id) - [@content.book_id]
         @books = Book.where(id: @grade.book_ids, category_id: @content.book.category_id).where.not(id: book_ids)
