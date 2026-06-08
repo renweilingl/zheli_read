@@ -26,6 +26,7 @@
     </div>
   </div>
 
+  <% if false %>
   <div class="layui-form-item" style="display:  <%= @book.category_id == 1 ? 'block' : 'none' %>;" id="level-wrap">
     <label class="layui-form-label">图书分级</label>
     <div class="layui-input-block">
@@ -34,6 +35,7 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 
   <div class="layui-form-item">
     <label class="layui-form-label">年龄范围</label>
