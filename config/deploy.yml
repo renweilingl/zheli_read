@@ -68,13 +68,11 @@ proxy:
     timeout: 5
 
 # ==================== 构建配置 ====================
-# 本地构建（Mac ARM → Linux AMD64），使用本地缓存加速
+# 本地构建（Mac ARM → Linux AMD64），使用 registry 缓存加速
 builder:
   arch: amd64
   cache:
-    type: local
-    options:
-      dest: /tmp/kamal-build-cache
+    type: registry
 
 # ==================== 数据卷挂载 ====================
 volumes:
