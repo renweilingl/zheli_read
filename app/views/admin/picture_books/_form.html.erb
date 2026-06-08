@@ -665,9 +665,7 @@
       })
       .then(function(response) { return response.json(); })
       .then(function(res) {
-        //console.log(res);
         if (res.success) {
-          //console.log("success");
           $('#cover_image_url').val(res.url);
           $('#cover-img').attr('src', res.preivew_url);
           $('#cover-preview').show();
