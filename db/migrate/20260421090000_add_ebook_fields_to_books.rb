@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddEbookFieldsToBooks < ActiveRecord::Migration[8.0]
+class AddEbookFieldsToBooks < ActiveRecord::Migration[7.1]
   def change
     change_table :books, bulk: true do |t|
       t.integer :page_count, default: 0, null: false, comment: "电子书总页数"

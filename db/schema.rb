@@ -101,8 +101,34 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
     t.text "content_description"
     t.string "broadcaster", default: ""
     t.boolean "is_published", default: false
+    t.integer "page_count", default: 0, null: false, comment: "电子书总页数"
+    t.integer "import_status", default: 0, null: false, comment: "电子书导入状态"
+    t.string "source_pdf_filename", comment: "源 PDF 文件名"
+    t.string "source_pdf_path", comment: "源 PDF 存储路径"
+    t.string "ebook_checksum", comment: "源 PDF 校验值"
+    t.datetime "imported_at", comment: "导入完成时间"
+    t.text "import_error_message", comment: "导入失败信息"
+    t.integer "content_type", default: 0, null: false, comment: "类型：0-电子书 1-有声 2-视频 3-绘本"
+    t.boolean "is_vip", default: false, null: false, comment: "是否VIP"
+    t.bigint "grade_id", comment: "年级ID"
+    t.integer "play_count", default: 0, null: false, comment: "播放/阅读次数"
+    t.integer "word_count", default: 0, null: false, comment: "字数"
+    t.decimal "rating", precision: 3, scale: 1, default: "0.0", comment: "评分"
+    t.integer "status", default: 0, null: false, comment: "状态：0-草稿 1-已发布 2-已下架"
+    t.string "isbn", comment: "ISBN"
+    t.string "epub_oss_key", comment: "EPUB 文件 OSS 路径"
+    t.string "epub_oss_url", comment: "EPUB 文件公网 URL"
+    t.integer "epub_export_status", default: 0, comment: "EPUB 导出状态：0-未导出 1-导出中 2-已完成 3-失败"
+    t.text "epub_export_error", comment: "EPUB 导出失败原因"
+    t.string "styles_oss_url", comment: "book.css 的 OSS URL"
+    t.string "nav_oss_url", comment: "nav.xhtml 的 OSS URL"
+    t.string "content_file_url", comment: "电子书内容文件URL"
+    t.string "content_file_type", comment: "内容文件类型 (epub/pdf)"
+    t.string "content_file_name", comment: "内容文件名"
     t.index ["category_id"], name: "index_books_on_category_id"
+    t.index ["import_status"], name: "index_books_on_import_status"
     t.index ["name"], name: "index_books_on_name"
+    t.index ["status"], name: "index_books_on_status"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
   end
 
@@ -160,8 +186,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
     t.integer "sn", default: 0, comment: "排序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "duration", default: 0
-    t.date "publish_date"
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
 
@@ -239,6 +263,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
     t.datetime "updated_at", null: false
     t.bigint "rank_id"
     t.index ["content_group_id"], name: "index_contents_on_content_group_id"
+  end
+
+  create_table "ebook_pages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", comment: "电子书页面表", force: :cascade do |t|
+    t.bigint "book_id", null: false, comment: "图书ID"
+    t.integer "page_number", null: false, comment: "页码"
+    t.integer "word_count", default: 0, null: false, comment: "字数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_url", comment: "页面图片URL（PDF导入）"
+    t.index ["book_id", "page_number"], name: "index_ebook_pages_on_book_id_and_page_number", unique: true
+    t.index ["book_id"], name: "index_ebook_pages_on_book_id"
   end
 
   create_table "grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -378,7 +413,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
   add_foreign_key "category_sub_books", "books", on_delete: :cascade
   add_foreign_key "category_sub_books", "category_subs", on_delete: :cascade
   add_foreign_key "category_subs", "categories"
-  add_foreign_key "chapters", "books", on_delete: :cascade
+  add_foreign_key "chapters", "books"
   add_foreign_key "compilation_books", "books", on_delete: :cascade
   add_foreign_key "compilation_books", "compilations", on_delete: :cascade
   add_foreign_key "compilation_categories", "categories"
@@ -387,6 +422,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
   add_foreign_key "compilation_grades", "grades", on_delete: :cascade
   add_foreign_key "content_groups", "recommends"
   add_foreign_key "contents", "content_groups"
+  add_foreign_key "ebook_pages", "books"
   add_foreign_key "recommends", "grades"
   add_foreign_key "splash_ads", "books"
   add_foreign_key "splash_ads", "categories"

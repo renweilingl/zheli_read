@@ -1,4 +1,4 @@
-class AddVoicebookFieldsToBooksAndRecreateEbookPages < ActiveRecord::Migration[8.0]
+class AddVoicebookFieldsToBooksAndRecreateEbookPages < ActiveRecord::Migration[7.1]
   def up
     # ---- Add voicebook-specific columns to books ----
     unless column_exists?(:books, :content_type)

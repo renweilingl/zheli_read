@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateEbookPages < ActiveRecord::Migration[8.0]
+class CreateEbookPages < ActiveRecord::Migration[7.1]
   def change
     create_table :ebook_pages, comment: "电子书页面表" do |t|
       t.references :book, null: false, foreign_key: true, comment: "图书ID"

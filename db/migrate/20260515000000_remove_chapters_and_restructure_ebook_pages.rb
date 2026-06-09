@@ -44,7 +44,7 @@ class RemoveChaptersAndRestructureEbookPages < ActiveRecord::Migration[7.1]
     remove_column :ebook_pages, :page_height if column_exists?(:ebook_pages, :page_height)
 
     # 5. 删除 chapters 表
-    drop_table :chapters, if_exists: true
+    #drop_table :chapters, if_exists: true
   end
 
   def down
