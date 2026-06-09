@@ -216,12 +216,14 @@
     var ratioH = parseInt(bannerCropRatio.split(':')[1]);
     var targetRatio = ratioW / ratioH;
 
-    if (canvasWidth / canvasHeight > targetRatio) {
-      cropHeight = canvasHeight * 0.8;
-      cropWidth = cropHeight * targetRatio;
-    } else {
-      cropWidth = canvasWidth * 0.8;
-      cropHeight = cropWidth / targetRatio;
+    // 默认裁剪框宽度等于图片宽度（canvas宽度）                                  
+    cropWidth = canvasWidth;                                                     
+    cropHeight = cropWidth / targetRatio;                                        
+                                                                                 
+    //如果计算出的高度超过canvas高度，则按高度来调整                             
+    if (cropHeight > canvasHeight) {                                                                                        
+      cropHeight = canvasHeight;                                                 
+      cropWidth = cropHeight * targetRatio;                                      
     }
 
     bannerCropState.x = (canvasWidth - cropWidth) / 2;
