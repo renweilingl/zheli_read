@@ -68,9 +68,11 @@ proxy:
     timeout: 5
 
 # ==================== 构建配置 ====================
-# 远端构建：在阿里云服务器上 build，解决国内拉取 Docker Hub 镜像慢的问题
+# 本地构建（Mac ARM → Linux AMD64），使用 registry 缓存加速
 builder:
   arch: amd64
+  cache:
+    type: registry
 
 # ==================== 数据卷挂载 ====================
 volumes:
