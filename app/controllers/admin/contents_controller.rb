@@ -50,14 +50,14 @@ module Admin
     def edit
       authorize [:admin, @content], policy_class: Admin::ContentPolicy
 
-      if @content.content_type == "compilation"
+      if @content.content_type == "compilation"  #合辑
         compilation_ids = @content_group.contents.with_content_type("compilation").pluck(:compilation_id)
         @compilations = @grade.compilations.where.not(id: compilation_ids)
-      elsif @content.content_type = "recommend"
+      elsif @content.content_type == "recommend"  #推荐
         @recommends = Recommend.where(grade_id: @grade.id)
       elsif @content.content_type == "book"
         book_ids = @content_group.contents.with_content_type("book").pluck(:book_id) - [@content.book_id]
-        @books = Book.where(id: @grade.book_ids, category_id: @content.book.category_id).where.not(id: book_ids)
+        @books = Book.where(id: @grade.book_ids, category_id: @content.book.category_id).where.not(id: book_ids) || []
       end
     end
 
