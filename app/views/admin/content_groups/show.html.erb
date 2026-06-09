@@ -42,7 +42,7 @@
             <td><%= r.content_type_name %></td>
             <td>
               <% unless img_url.blank? %>
-                <img src="<%= FileMap.new(img_url, "img").secrity_src %>" style="width: 48px; height: 64px; object-fit: cover; border-radius: 4px;" />
+                <img src="<%= FileMap.new(img_url, "img").secrity_src %>" style="width: 48px; object-fit: cover; border-radius: 4px;" />
               <% end %>
             </td>
             <td><%= r.sn %></td>
