@@ -8,6 +8,7 @@
   </div>
 
   <div class="x-body">
+    <% if false %>
     <div class="layui-row">
       <div class="layui-col-3 text-right">
         <%= link_to :new_admin_grade, class: 'layui-btn layui-bg-blue' do %>
@@ -15,6 +16,7 @@
         <% end %>
       </div>
     </div>
+    <% end %>
 
     <table class="layui-table">
       <thead>
@@ -23,7 +25,7 @@
           <th>组名</th>
           <th>名称</th>
           <th>年龄段</th>
-          <th width="220" style="text-align:center;">操作</th>
+          <th width="180" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +39,7 @@
               <div class="layui-btn-group">
                 <%= link_to '编辑', edit_admin_grade_path(grade), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '推荐内容 ', admin_grade_recommends_path(grade), class: "layui-btn layui-btn-sm" %>
-                <%= link_to '删除', admin_grade_path(grade), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此分类吗？此操作不可恢复。" } %>
+                <%#= link_to '删除', admin_grade_path(grade), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除此分类吗？此操作不可恢复。" } %>
               </div>
             </td>
           </tr>
