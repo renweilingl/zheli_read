@@ -52,14 +52,14 @@
           {field: 'id', title: 'ID', hide: true},                                
           {field: 'name', title: '名称'},                      
           {field: 'sn', title: '序号', sort: true, edit: "number", width: 80},   
-          {field: 'icon_url', title: '图标', align: "center", width: 100, templet: function(d){
-              if(d.icon_state == true){
-                return '<img style="height: 100%;" src="' + d.icon_url + '">';
-              } else {
-                return '<div style="width: 48px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;"><i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i></div>';
-              }
-            }
-          },
+          //{field: 'icon_url', title: '图标', align: "center", width: 100, templet: function(d){
+          //    if(d.icon_state == true){
+          //      return '<img style="height: 100%;" src="' + d.icon_url + '">';
+          //    } else {
+          //      return '<div style="width: 48px; background-color: #52c41a20; border-radius: 4px; display: flex; align-items: center; justify-content: center;"><i class="layui-icon layui-icon-picture" style="color: #52c41a; font-size: 20px;"></i></div>';
+          //    }
+          //  }
+          //},
           {field: 'created_at', title: '上线时间'},                              
           {title: '操作', templet: '#tool-wrapper', align: "center", width: 170},
         ]],                                                                      

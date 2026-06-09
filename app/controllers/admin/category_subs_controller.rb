@@ -14,8 +14,8 @@ module Admin
           {id: r.id,
            name: r.name,
            sn: r.sn,
-           icon_state: r.icon.present?,
-           icon_url: r.icon.present? ? FileMap.new(r.icon, "img").secrity_src : '',
+#           icon_state: r.icon.present?,
+#           icon_url: r.icon.present? ? FileMap.new(r.icon, "img").secrity_src : '',
            created_at: r.created_at.strftime('%Y-%m-%d'),
           }
         }
