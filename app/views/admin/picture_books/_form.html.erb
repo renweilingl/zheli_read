@@ -285,15 +285,12 @@
 
     var canvas = document.getElementById('cropCanvas');
 
-    // 计算缩放比例
     var scaleX = bannerOriginalImage.naturalWidth / canvas.width;
     var scaleY = bannerOriginalImage.naturalHeight / canvas.height;
 
-    // 计算实际像素大小
     var actualWidth = Math.round(bannerCropState.width * scaleX);
     var actualHeight = Math.round(bannerCropState.height * scaleY);
 
-    // 更新显示
     var sizeDisplay = document.getElementById('cropPixelSize');
     if (sizeDisplay) {
       sizeDisplay.textContent = actualWidth + ' x ' + actualHeight;
