@@ -81,7 +81,7 @@ end
 
 [{ name: '图书', code: 'book' },
  { name: '漫画', code: 'cartoon' },
- { name: '音频', code: 'audio' },
+ { name: '有声', code: 'audio' },
  { name: '视频', code: 'video' }].each do |x|
   name = x[:name]
   code = x[:code]
