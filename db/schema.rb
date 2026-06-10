@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_10_031130) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -361,6 +361,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
     t.index ["grade_id"], name: "index_recommends_on_grade_id"
   end
 
+  create_table "splash_ad_grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "splash_ad_id", null: false
+    t.bigint "grade_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grade_id"], name: "index_splash_ad_grades_on_grade_id"
+    t.index ["splash_ad_id", "grade_id"], name: "index_splash_ad_grades_on_splash_ad_id_and_grade_id", unique: true
+    t.index ["splash_ad_id"], name: "index_splash_ad_grades_on_splash_ad_id"
+  end
+
   create_table "splash_ads", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "image_url", null: false, comment: "图片URL"
     t.string "link_type", null: false, comment: "链接类型: single_book/category"
@@ -426,6 +436,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
   add_foreign_key "contents", "content_groups"
   add_foreign_key "ebook_pages", "books"
   add_foreign_key "recommends", "grades"
+  add_foreign_key "splash_ad_grades", "splash_ads"
   add_foreign_key "splash_ads", "books"
   add_foreign_key "splash_ads", "categories"
 end

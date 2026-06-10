@@ -56,11 +56,11 @@ class SplashAdsController < ApplicationController
   def update
     authorize @splash_ad
     
-    if @splash_ad.update(splash_ad_params)
+    if @splash_ad.update!(splash_ad_params)
       redirect_to splash_ads_path, notice: '开屏广告更新成功。'
     else
       load_associations
-      format.html { render :edit, status: :unprocessable_entity }
+      render :edit, status: :unprocessable_entity
     end
   end
   
@@ -79,17 +79,6 @@ class SplashAdsController < ApplicationController
     
     @splash_ad.update!(status: :active)
     render json: {success: true, status: @splash_ad.status}
-    #if @splash_ad.publish!
-    #  respond_to do |format|
-    #    format.html { redirect_to splash_ad_path(@splash_ad), notice: '开屏广告已发布。' }
-    #    format.json { render json: { success: true, status: @splash_ad.status } }
-    #  end
-    #else
-    #  respond_to do |format|
-    #    format.html { redirect_to splash_ad_path(@splash_ad), alert: '无法发布该广告，请检查时间和内容。' }
-    #    format.json { render json: { success: false, errors: ['无法发布'] }, status: :unprocessable_entity }
-    #  end
-    #end
   end
   
   def disable
@@ -143,10 +132,12 @@ class SplashAdsController < ApplicationController
     params.require(:splash_ad).permit(
       :ad_type, :image_url,
       :link_type, :link_url, :book_id, :category_id,
-      :push_scope, :min_age, :max_age, :user_group,
+      :push_scope,
+      :user_group,
       :push_mode, :scheduled_at,
       :start_time, :end_time,
-      :status
+      :status,
+      :grade_ids => []
     )
   end
   

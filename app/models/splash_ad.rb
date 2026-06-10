@@ -3,6 +3,7 @@ class SplashAd < ApplicationRecord
   
   belongs_to :book, optional: true
   belongs_to :category, optional: true
+  has_and_belongs_to_many :grades, join_table: :splash_ad_grades
   
   # 链接类型
   LINK_TYPES = {
@@ -60,9 +61,9 @@ class SplashAd < ApplicationRecord
   validate :link_type_consistency
   
   # 年龄段验证
-  validates :min_age, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 18, allow_nil: true }
-  validates :max_age, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 18, allow_nil: true }
-  validate :age_range_validity
+  #validates :min_age, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 18, allow_nil: true }
+  #validates :max_age, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 18, allow_nil: true }
+  #validate :age_range_validity
   
   # 作用域
   scope :by_status, ->(status) { where(status: status) if status.present? }
