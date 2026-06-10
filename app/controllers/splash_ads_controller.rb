@@ -57,7 +57,7 @@ class SplashAdsController < ApplicationController
     authorize @splash_ad
     
     if @splash_ad.update(splash_ad_params)
-      redirect_to splash_ad_path(@splash_ad), notice: '开屏广告更新成功。'
+      redirect_to splash_ads_path, notice: '开屏广告更新成功。'
     else
       load_associations
       format.html { render :edit, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class SplashAdsController < ApplicationController
     @splash_ad.destroy
     
     respond_to do |format|
-      format.html { redirect_to admin_splash_ads_path, notice: '开屏广告已删除。' }
+      format.html { redirect_to splash_ads_path, notice: '开屏广告已删除。' }
       format.json { render json: { success: true } }
     end
   end
@@ -79,12 +79,12 @@ class SplashAdsController < ApplicationController
     
     if @splash_ad.publish!
       respond_to do |format|
-        format.html { redirect_to admin_splash_ad_path(@splash_ad), notice: '开屏广告已发布。' }
+        format.html { redirect_to splash_ad_path(@splash_ad), notice: '开屏广告已发布。' }
         format.json { render json: { success: true, status: @splash_ad.status } }
       end
     else
       respond_to do |format|
-        format.html { redirect_to admin_splash_ad_path(@splash_ad), alert: '无法发布该广告，请检查时间和内容。' }
+        format.html { redirect_to splash_ad_path(@splash_ad), alert: '无法发布该广告，请检查时间和内容。' }
         format.json { render json: { success: false, errors: ['无法发布'] }, status: :unprocessable_entity }
       end
     end
@@ -95,7 +95,7 @@ class SplashAdsController < ApplicationController
     @splash_ad.disable!
     
     respond_to do |format|
-      format.html { redirect_to admin_splash_ad_path(@splash_ad), notice: '开屏广告已停用。' }
+      format.html { redirect_to splash_ads_path, notice: '开屏广告已停用。' }
       format.json { render json: { success: true, status: @splash_ad.status } }
     end
   end
@@ -105,7 +105,7 @@ class SplashAdsController < ApplicationController
     @splash_ad.enable!
     
     respond_to do |format|
-      format.html { redirect_to admin_splash_ad_path(@splash_ad), notice: '开屏广告已启用。' }
+      format.html { redirect_to splash_ad_path, notice: '开屏广告已启用。' }
       format.json { render json: { success: true, status: @splash_ad.status } }
     end
   end

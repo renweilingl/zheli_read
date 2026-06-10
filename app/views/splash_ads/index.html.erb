@@ -104,7 +104,7 @@ layui.use(['form', 'layer'], function() {
 function publishAd(id) {
   layui.layer.confirm('确定要发布该广告吗？', function(index) {
     $.ajax({
-      url: '/admin/splash_ads/' + id + '/publish',
+      url: '/splash_ads/' + id + '/publish',
       type: 'POST',
       success: function(res) {
         if (res.success) {

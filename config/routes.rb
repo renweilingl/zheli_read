@@ -113,5 +113,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :splash_ads
+  resources :splash_ads do
+    member do
+      post :publish
+    end
+  end
 end
