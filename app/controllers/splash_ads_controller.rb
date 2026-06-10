@@ -25,7 +25,7 @@ class SplashAdsController < ApplicationController
   def new
     @splash_ad = SplashAd.new(
       push_scope: :all_users,
-      push_mode: :immediate,
+      push_mode: :first_open_daily,
       link_type: :single_book,
       status: :draft
     )
