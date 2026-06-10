@@ -14,7 +14,7 @@ class Admin::MediaBooksController < ApplicationController
   end
 
   def new
-    @book = Book.new
+    @book = Book.new(is_published: true)
     cat = Category.find_by(name: "有声")
     @book.category_id = cat.id
     authorize @book

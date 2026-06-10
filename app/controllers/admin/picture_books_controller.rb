@@ -19,7 +19,7 @@ class Admin::PictureBooksController < ApplicationController
   end
 
   def new
-    @book = Book.new
+    @book = Book.new(is_published: true)
     cat = Category.find_by(name: "图书")
     @book.category_id = cat.id
     authorize @book
