@@ -127,7 +127,8 @@
           auto: true,
           accept: 'file',
           exts: 'mp3|mp4|wav|mov',
-          size: 409600, // 400MB
+          //size: 409600, // 400MB
+          size: 1024 * 1024, // 1GB
           before: function(obj){
           // 显示进度条
             $('#upload-progress').show();
