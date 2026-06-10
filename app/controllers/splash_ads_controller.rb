@@ -77,17 +77,19 @@ class SplashAdsController < ApplicationController
   def publish
     authorize @splash_ad
     
-    if @splash_ad.publish!
-      respond_to do |format|
-        format.html { redirect_to splash_ad_path(@splash_ad), notice: '开屏广告已发布。' }
-        format.json { render json: { success: true, status: @splash_ad.status } }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to splash_ad_path(@splash_ad), alert: '无法发布该广告，请检查时间和内容。' }
-        format.json { render json: { success: false, errors: ['无法发布'] }, status: :unprocessable_entity }
-      end
-    end
+    @splash_ad.update!(status: :active)
+    render json: {success: true, status: @splash_ad.status}
+    #if @splash_ad.publish!
+    #  respond_to do |format|
+    #    format.html { redirect_to splash_ad_path(@splash_ad), notice: '开屏广告已发布。' }
+    #    format.json { render json: { success: true, status: @splash_ad.status } }
+    #  end
+    #else
+    #  respond_to do |format|
+    #    format.html { redirect_to splash_ad_path(@splash_ad), alert: '无法发布该广告，请检查时间和内容。' }
+    #    format.json { render json: { success: false, errors: ['无法发布'] }, status: :unprocessable_entity }
+    #  end
+    #end
   end
   
   def disable
