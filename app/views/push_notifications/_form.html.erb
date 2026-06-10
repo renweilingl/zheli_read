@@ -42,7 +42,7 @@
     <label class="layui-form-label"><span class="required">*</span>推送范围</label>
     <div class="layui-input-inline" style="width: 400px;">
       <select name="push_notification[push_scope]" id="push-scope-select" lay-verify="required" lay-filter="push-scope-filter">
-        <% [["all_users", "所有用户"],["age_range", "指定年级"], ["specific_users", "指定用户群体"]].each do |x| %>
+        <% [["all_users", "所有用户"],["age_range", "指定年级"]].each do |x| %>
           <option value="<%= x[0] %>" <%= @push_notification.push_scope == x[0] ? 'selected' : '' %>><%= x[1] %></option>
         <% end %>
       </select>
