@@ -18,11 +18,8 @@ class PushNotification < ApplicationRecord
 
   # 状态
   enum :status, {
-    draft: 0,
     scheduled: 1,
-    sending: 2,
-    sent: 3,
-    failed: 4
+    sent: 2,
   }, prefix: true
 
   # 验证
@@ -31,8 +28,8 @@ class PushNotification < ApplicationRecord
   validates :push_type, presence: true
   validates :push_scope, presence: true
   validates :link_url, format: { with: /\Ahttps?:\/\/.+\z/, message: '格式不正确，请以 http:// 或 https:// 开头' }, allow_blank: true
-  validates :min_age, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :max_age, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  #validates :min_age, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  #validates :max_age, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validate :scheduled_at_cannot_be_in_past, if: :scheduled?
 
   # 作用域
@@ -65,20 +62,13 @@ class PushNotification < ApplicationRecord
 
   def status_display
     case status
-    when 'draft' then '草稿'
     when 'scheduled' then '待发送'
-    when 'sending' then '发送中'
     when 'sent' then '已发送'
-    when 'failed' then '发送失败'
     end
   end
 
   def scheduled?
     status == "scheduled"
-  end
-
-  def draft?
-    status == "draft"
   end
 
   private
@@ -89,7 +79,7 @@ class PushNotification < ApplicationRecord
   end
 
   def set_status_defaults
-    self.status ||= :draft
+    self.status ||= :scheduled
   end
 
   def self.ransackable_attributes(auth_object = nil)
