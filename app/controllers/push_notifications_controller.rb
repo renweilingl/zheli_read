@@ -26,6 +26,7 @@ class PushNotificationsController < ApplicationController
     authorize @push_notification
 
     if @push_notification.save
+      PushJob.perform_later(@push_notification.id)
       redirect_to push_notifications_path, notice: '推送创建成功'
     else
       render :new, status: :unprocessable_entity
@@ -41,6 +42,7 @@ class PushNotificationsController < ApplicationController
     authorize @push_notification
 
     if @push_notification.update(push_params)
+      PushJob.perform_later(@push_notification.id)
       redirect_to push_notifications_path, notice: '推送更新成功'
     else
       render :edit, status: :unprocessable_entity

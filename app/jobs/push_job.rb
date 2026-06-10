@@ -31,6 +31,9 @@ class PushJob < ApplicationJob
       logger.info "PushJob push_notification_id: #{push_notification_id}, res: #{res}"
 
       pn.update(status: "sent")
+    else  #development 
+      pn = PushNotification.find push_notification_id
+      pn.update(status: "sent")
     end
   end
 
