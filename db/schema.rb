@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_10_031130) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_10_033325) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -306,6 +306,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_10_031130) do
     t.string "discount_tag", limit: 32, default: ""
   end
 
+  create_table "push_notification_grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "push_notification_id", null: false
+    t.bigint "grade_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grade_id"], name: "index_push_notification_grades_on_grade_id"
+    t.index ["push_notification_id", "grade_id"], name: "idx_on_push_notification_id_grade_id_5c250827f3", unique: true
+    t.index ["push_notification_id"], name: "index_push_notification_grades_on_push_notification_id"
+  end
+
   create_table "push_notifications", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "push_type", default: 0, null: false
     t.string "title", limit: 20, null: false
@@ -435,6 +445,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_10_031130) do
   add_foreign_key "content_groups", "recommends"
   add_foreign_key "contents", "content_groups"
   add_foreign_key "ebook_pages", "books"
+  add_foreign_key "push_notification_grades", "push_notifications"
   add_foreign_key "recommends", "grades"
   add_foreign_key "splash_ad_grades", "splash_ads"
   add_foreign_key "splash_ads", "books"
