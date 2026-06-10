@@ -11,6 +11,8 @@ class PushJob < ApplicationJob
       logger.info " PushJob: #{push_notification_id}"
       return if pn.nil?
 
+      return if pn.sent?   #已经推送过
+
       return if pn.push_scope  == 2  #先不针对特殊用户推送
 
       type = pn.push_type == 0 ? "system" : "activity"
@@ -27,6 +29,8 @@ class PushJob < ApplicationJob
 
       res = HTTParty.post(url, body: data.to_json, headers: {'Content-Type' => 'application/json'}).body
       logger.info "PushJob push_notification_id: #{push_notification_id}, res: #{res}"
+
+      pn.update(status: "sent")
     end
   end
 
