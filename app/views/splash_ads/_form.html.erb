@@ -3,18 +3,34 @@
     <legend>基本信息</legend>
     <div class="layui-field-box">
       <div class="layui-form-item">
-        <label class="layui-form-label">广告图片<span style="color: red;">*</span></label>
+        <label class="layui-form-label">手机图片<span style="color: red;">*</span></label>
         <div class="layui-input-block">
           <button type="button" class="layui-btn" id="upload-banner">
             <i class="layui-icon">&#xe67c;</i>上传图片
           </button>
-          <span class="layui-form-mid layui-word-aux">支持 JPG、PNG、WebP 格式</span>
+          <span class="layui-form-mid layui-word-aux">支持 JPG、PNG、WebP 格式9:16</span>
           <div id="image-preview" style="margin-top: 10px;">
             <% if @splash_ad.image_url.present? %>
               <img src="<%= FileMap.new(@splash_ad.image_url, "img").secrity_src  %>" style="max-width: 300px; max-height: 200px; border-radius: 4px;">
             <% end %>
           </div>
           <input type="hidden" name="splash_ad[image_url]" id="image-url" value="<%= @splash_ad.image_url %>">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">Pad图片<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+          <button type="button" class="layui-btn" id="upload-pad-banner">
+            <i class="layui-icon">&#xe67c;</i>上传图片
+          </button>
+          <span class="layui-form-mid layui-word-aux">支持 JPG、PNG、WebP 格式16:9</span>
+          <div id="image-pad-preview" style="margin-top: 10px;">
+            <% if @splash_ad.pad_image_url.present? %>
+              <img src="<%= FileMap.new(@splash_ad.pad_image_url, "img").secrity_src  %>" style="max-width: 300px; max-height: 200px; border-radius: 4px;">
+            <% end %>
+          </div>
+          <input type="hidden" name="splash_ad[pad_image_url]" id="pad-image-url" value="<%= @splash_ad.pad_image_url %>">
         </div>
       </div>
     </div>
@@ -379,9 +395,13 @@
       .then(function(response) { return response.json(); })
       .then(function(res) {
         if (res.success) {
-          $('#image-url').val(res.url);
-          $('#image-name').val(res.filename);
-          $('#image-preview').html('<img src="' + res.preivew_url + '" style="max-width: 300px; max-height: 200px; border-radius: 4px;">');
+          if(bannerCropRatio === "16:9"){
+            $('#pad-image-url').val(res.url);
+            $('#image-pad-preview').html('<img src="' + res.preivew_url + '" style="max-width: 300px; max-height: 200px; border-radius: 4px;">');
+          } else {
+            $('#image-url').val(res.url);
+            $('#image-preview').html('<img src="' + res.preivew_url + '" style="max-width: 300px; max-height: 200px; border-radius: 4px;">');
+          }
           layui.layer.msg('图片裁剪上传成功');
         } else {
           layui.layer.msg(res.message || '上传失败', {icon: 2});
@@ -422,6 +442,36 @@ layui.use(['form', 'upload', 'laydate', 'layer'], function() {
   });
 
   document.getElementById('upload-banner').addEventListener('click', function() {
+    bannerCropRatio = "9:16";
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+
+      var allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        layer.msg('仅支持 JPG、PNG、WebP 格式', {icon: 2});
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        layer.msg('文件大小不能超过 5MB', {icon: 2});
+        return;
+      }
+
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        openBannerCropModal(event.target.result, file.name);
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  });
+
+  document.getElementById('upload-pad-banner').addEventListener('click', function() {
+    bannerCropRatio = "16:9";
     var input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';

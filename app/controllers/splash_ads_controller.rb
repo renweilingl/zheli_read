@@ -130,7 +130,7 @@ class SplashAdsController < ApplicationController
   
   def splash_ad_params
     params.require(:splash_ad).permit(
-      :ad_type, :image_url,
+      :ad_type, :image_url, :pad_image_url,
       :link_type, :link_url, :book_id, :category_id,
       :push_scope,
       :user_group,
