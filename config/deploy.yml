@@ -68,8 +68,10 @@ proxy:
     timeout: 5
 
 # ==================== 构建配置 ====================
-# 本地构建（Mac ARM → Linux AMD64），使用 registry 缓存加速
+# 本地构建（Mac ARM → Linux AMD64），避免在生产服务器 build 导致 OOM
+# 生产服务器仅 1.5GB 内存，bundle install 需要 ~750MB，会触发 OOM Killer
 builder:
+  local: true
   arch: amd64
   cache:
     type: registry
@@ -78,6 +80,10 @@ builder:
 volumes:
   - /zheli_read/log:/rails/log
   - /zheli_read/tmp:/rails/tmp
+
+# ==================== 容器保留策略 ====================
+# 1.6GB 小内存服务器，减少旧版本保留数量，防止资源累积
+retain_containers: 2
 
 # ==================== Hooks 输出 ====================
 hooks_output: verbose
