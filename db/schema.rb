@@ -186,6 +186,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_08_120000) do
     t.integer "sn", default: 0, comment: "排序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "duration", default: 0
+    t.date "publish_date"
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
 
