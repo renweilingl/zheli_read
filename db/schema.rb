@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_10_033325) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_10_075740) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -401,6 +401,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_10_033325) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "pad_image_url"
     t.index ["book_id"], name: "index_splash_ads_on_book_id"
     t.index ["category_id"], name: "index_splash_ads_on_category_id"
     t.index ["deleted_at"], name: "index_splash_ads_on_deleted_at"
