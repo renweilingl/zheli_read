@@ -63,40 +63,29 @@
             <td><%= push.scope_display %></td>
             <td>
               <% case push.status %>
-              <% when 'draft' %>
-                <span class="layui-badge layui-bg-gray">草稿</span>
               <% when 'scheduled' %>
-                <span class="layui-badge layui-bg-cyan">定时</span>
-              <% when 'sending' %>
-                <span class="layui-badge">发送中</span>
+                <span class="layui-badge layui-bg-cyan">待发送</span>
               <% when 'sent' %>
                 <span class="layui-badge layui-bg-green">已发送</span>
-              <% when 'partial' %>
-                <span class="layui-badge layui-bg-yellow">部分</span>
-              <% when 'failed' %>
-                <span class="layui-badge layui-bg-red">失败</span>
               <% end %>
             </td>
-            <% if false %>
-            <td><%= push.send_count %></td>
-            <td><%= push.click_count %></td>
-            <td><%= number_to_percentage(push.delivery_rate || 0, precision: 1) %></td>
-            <% end %>
             <td><%= push.created_at.strftime('%Y-%m-%d %H:%M') %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
                 <%= link_to push_notification_path(push), class: "layui-btn layui-btn-xs" do %>
                   <i class="layui-icon layui-icon-about"></i> 详情
                 <% end %>
-                <% if push.draft? || push.scheduled? %>
+                <% if push.scheduled? %>
                   <%= link_to edit_push_notification_path(push), class: "layui-btn layui-btn-xs layui-btn-normal" do %>
                     <i class="layui-icon layui-icon-edit"></i> 编辑
                   <% end %>
+                  <% if false %>
                   <%= link_to send_push_push_notification_path(push), 
                       method: :post,
                       data: { confirm: push.scheduled? ? '确认发送此推送？' : '确认立即推送？' },
                       class: "layui-btn layui-btn-xs layui-btn-warm" do %>
                     <i class="layui-icon layui-icon-about"></i> 发送
+                  <% end %>
                   <% end %>
                   <%= link_to push_notification_path(push), 
                       method: :delete,
