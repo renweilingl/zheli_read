@@ -41,26 +41,26 @@
   <div class="layui-form-item">
     <label class="layui-form-label"><span class="required">*</span>推送范围</label>
     <div class="layui-input-inline" style="width: 400px;">
-      <%= f.select :push_scope, 
-          options_for_select([['全部用户', 'all_users'], ['指定年龄段', 'age_range'], ['指定用户群体', 'specific_users']], @push_notification.push_scope),
-          { prompt: '请选择推送范围' }, 
-          { class: 'layui-input', lay_verify: 'required', "lay-filter": "scopeFilter", id: 'push-scope-select' } %>
+      <select name="push_notification[push_scope]" id="push-scope-select" lay-verify="required" lay-filter="push-scope-filter">
+        <% [["all_users", "所有用户"],["age_range", "指定年级"], ["specific_users", "指定用户群体"]].each do |x| %>
+          <option value="<%= x[0] %>" <%= @push_notification.push_scope == x[0] ? 'selected' : '' %>><%= x[1] %></option>
+        <% end %>
+      </select>
     </div>
   </div>
           
-  <div class="layui-form-item age-range-fields" style="display: none;">
-    <label class="layui-form-label">年龄段</label>
-    <div class="layui-input-inline" style="width: 180px;">
-      <%= f.number_field :min_age, placeholder: '最小年龄', min: 0, class: 'layui-input', autocomplete: 'off' %>
+  <div class="layui-form-item age-range-fields" style="display: none;" id="age-range-wrapper">
+    <label class="layui-form-label">指定年级<span style="color: red;">*</span></label>
+    <div class="layui-input-block">
+      <div class="grade-checkbox" id="grade-checkbox">
+        <% Grade.all.each do |grade| %>
+          <input type="checkbox" name="push_notification[grade_ids][]" value=<%= grade.id %> title="<%= grade.name %>" <%= 'checked' if @push_notification.grade_ids.include?(grade.id) %> />
+        <% end %>
+      </div>
     </div>
-    <div class="layui-form-mid">~</div>
-    <div class="layui-input-inline" style="width: 180px;">
-      <%= f.number_field :max_age, placeholder: '最大年龄', min: 0, class: 'layui-input', autocomplete: 'off' %>
-    </div>
-    <div class="layui-form-mid layui-word-aux">岁</div>
   </div>
           
-  <div class="layui-form-item specific-user-fields" style="display: none;">
+  <div class="layui-form-item specific-user-fields" style="display: none;" id="user-group-wrapper">
     <label class="layui-form-label">用户群体</label>
     <div class="layui-input-inline" style="width: 400px;">
       <%= f.text_area :user_group, placeholder: '请输入用户ID，多个用逗号分隔', style: 'height: 60px;', class: 'layui-textarea', autocomplete: 'off' %>
@@ -117,6 +117,21 @@
       var val = data.value;
       document.querySelector('.scheduled-time-fields').style.display = data.value === 'scheduled' ? '' : 'none';
     });
+
+
+    // 推送范围切换
+    form.on('select(push-scope-filter)', function(data) {
+      var value = data.value;
+      $('#age-range-wrapper').hide();
+      $('#user-group-wrapper').hide();
+
+      if (value === 'age_range') {
+        $('#age-range-wrapper').show();
+      } else if (value === 'specific_users') {
+        $('#user-group-wrapper').show();
+      }
+      form.render();
+    });
   })
 
   document.querySelector('input[name="push_notification[title]"]')?.addEventListener('input', function() {
@@ -126,7 +141,14 @@
   document.querySelector('textarea[name="push_notification[body]"]')?.addEventListener('input', function() {
     document.getElementById('body-count').textContent = this.value.length;
   });
-  
+
+  var pushScope = $('#push-scope-select').val();
+  if (pushScope === 'age_range') {
+    $('#age-range-wrapper').show();
+  } else if (pushScope === 'specific_users') {
+    $('#user-group-wrapper').show();
+  }
+
   // 初始化统计
   setTimeout(function() {
     var titleInput = document.querySelector('input[name="push_notification[title]"]');

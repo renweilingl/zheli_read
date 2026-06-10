@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PushNotification < ApplicationRecord
+  has_and_belongs_to_many :grades, join_table: :push_notification_grades
+
   # 推送类型
   enum :push_type, {
     system_notification: 0,
@@ -49,7 +51,7 @@ class PushNotification < ApplicationRecord
   def scope_display
     case push_scope
     when 'all_users' then '全部用户'
-    when 'age_range' then "#{min_age}~#{max_age}岁"
+    when 'age_range' then grades.pluck(:name).join(' | ')
     when 'specific_users' then '指定用户群体'
     end
   end

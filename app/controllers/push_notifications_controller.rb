@@ -81,11 +81,10 @@ class PushNotificationsController < ApplicationController
       :body,
       :link_url,
       :push_scope,
-      :min_age,
-      :max_age,
       :user_group,
       :status,
-      :scheduled_at
+      :scheduled_at,
+      :grade_ids => []
     )
   end
 end

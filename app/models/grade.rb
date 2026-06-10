@@ -4,6 +4,7 @@ class Grade < ApplicationRecord
   has_and_belongs_to_many :compilations, join_table: :compilation_grades
   has_and_belongs_to_many :books, join_table: :book_grades
   has_and_belongs_to_many :splash_ads, join_table: :splash_ad_grades
+  has_and_belongs_to_many :push_notifications, join_table: :push_notification_grades
 
   has_many :recommends, dependent: :destroy
 
