@@ -9,6 +9,8 @@ class Compilation < ApplicationRecord
   has_many :contents, dependent: :destroy
   has_many :rank_contents, dependent: :destroy
 
+  has_many :splash_ads
+
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }
   validates :editor_recommendation, length: { maximum: 15 }, allow_blank: true
 

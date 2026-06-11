@@ -2,13 +2,13 @@ class SplashAd < ApplicationRecord
   audited
   
   belongs_to :book, optional: true
-  belongs_to :category, optional: true
+  belongs_to :compilation, optional: true
   has_and_belongs_to_many :grades, join_table: :splash_ad_grades
   
   # 链接类型
   LINK_TYPES = {
     single_book: '单本图书',
-    category: '图书分类'
+    compilation: '合辑'
   }.freeze
 
   PUSH_SCOPES = {
@@ -32,7 +32,7 @@ class SplashAd < ApplicationRecord
   
   enum :link_type, {
     single_book: 'single_book',
-    category: 'category',
+    compilation: 'compilation',
   }, prefix: true
 
   enum :push_scope, {
@@ -61,11 +61,6 @@ class SplashAd < ApplicationRecord
   validates :push_mode, presence: true
   
   validate :link_type_consistency
-  
-  # 年龄段验证
-  #validates :min_age, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 18, allow_nil: true }
-  #validates :max_age, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 18, allow_nil: true }
-  #validate :age_range_validity
   
   # 作用域
   scope :by_status, ->(status) { where(status: status) if status.present? }
@@ -153,21 +148,11 @@ class SplashAd < ApplicationRecord
     case link_type
     when 'single_book'
       errors.add(:book_id, '不能为空') if book_id.blank?
-    when 'category'
-      errors.add(:category_id, '不能为空') if category_id.blank?
+    when 'compilation'
+      errors.add(:compilation_id, '不能为空') if compilation_id.blank?
     end
   end
   
-  def age_range_validity
-    return unless push_scope == 'age_range'
-    
-    if min_age.blank? || max_age.blank?
-      errors.add(:base, '指定年龄段时，最小年龄和最大年龄都必须填写')
-    elsif min_age > max_age
-      errors.add(:min_age, '不能大于最大年龄')
-    end
-  end
-
   def self.ransackable_attributes(auth_object = nil)
     ["book_id", "category_id", "click_count", "created_at", "deleted_at", "delivery_rate", "end_time", "id", "id_value", "image_url", "link_type", "max_age", "min_age", "push_mode", "push_scope", "scheduled_at", "send_count", "start_time", "status", "updated_at", "user_group"]
   end
