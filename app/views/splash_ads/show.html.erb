@@ -66,8 +66,8 @@
           <td>
             <% if @splash_ad.link_type == 'single_book' && @splash_ad.book.present? %>
               <%= @splash_ad.book.name %>
-            <% elsif @splash_ad.link_type == 'category' && @splash_ad.category.present? %>
-              <%= @splash_ad.category.name %>
+            <% elsif @splash_ad.link_type == 'compilation' && @splash_ad.compilation.present? %>
+              <%= @splash_ad.compilation.name %>
             <% end %>
           </td>
         </tr>

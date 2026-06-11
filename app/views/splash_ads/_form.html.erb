@@ -44,7 +44,7 @@
         <div class="layui-input-block">
           <select name="splash_ad[link_type]" id="link-type-select" lay-verify="required" lay-filter="link-type-filter">
             <option value="">请选择</option>
-            <% [["single_book", "图书单本"],["category", "分类"]].each do |x| %>
+            <% [["single_book", "图书单本"],["compilation", "合辑"]].each do |x| %>
               <option value="<%= x[0] %>" <%= @splash_ad.link_type == x[0] ? 'selected' : '' %>><%= x[1] %></option>
              <% end %>
           </select>
@@ -66,10 +66,10 @@
       <div class="layui-form-item" id="category-select-wrapper" style="display: none;">
         <label class="layui-form-label">选择分类<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-          <select name="splash_ad[category_id]" id="category-select">
+          <select name="splash_ad[compilation_id]" id="category-select"  lay-search="">
             <option value="">请选择分类</option>
-            <% @categories.each do |category| %>
-              <option value="<%= category.id %>" <%= @splash_ad.category_id == category.id ? 'selected' : '' %>><%= category.name %></option>
+            <% Compilation.all.each do |compilation| %>
+              <option value="<%= compilation.id %>" <%= @splash_ad.compilation_id == compilation.id ? 'selected' : '' %>><%= compilation.name %></option>
             <% end %>
           </select>
         </div>
@@ -85,7 +85,7 @@
         <label class="layui-form-label">推送范围<span style="color: red;">*</span></label>
         <div class="layui-input-block">
           <select name="splash_ad[push_scope]" id="push-scope-select" lay-verify="required" lay-filter="push-scope-filter">
-            <% [["all_users", "所有用户"],["age_range", "指定年级"], ["specific_users", "指定用户群体"]].each do |x| %>
+            <% [["all_users", "所有用户"],["age_range", "指定年级"]].each do |x| %>
               <option value="<%= x[0] %>" <%= @splash_ad.push_scope == x[0] ? 'selected' : '' %>><%= x[1] %></option>
             <% end %>
           </select>
@@ -507,7 +507,7 @@ layui.use(['form', 'upload', 'laydate', 'layer'], function() {
     
     if (value === 'single_book') {
       $('#book-select-wrapper').show();
-    } else if (value === 'category') {
+    } else if (value === 'compilation') {
       $('#category-select-wrapper').show();
     }
     form.render('select');
