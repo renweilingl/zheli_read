@@ -76,7 +76,7 @@
           <td>
             <%= @splash_ad.push_scope_name %>
             <% if @splash_ad.push_scope == 'age_range' %>
-              (<%= @splash_ad.age_range_display %>)
+              (<%= @splash_ad.grades.pluck(:name).join("|") %>)
             <% end %>
           </td>
         </tr>
