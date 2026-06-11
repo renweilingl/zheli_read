@@ -39,8 +39,8 @@
       <div class="layui-col-md4">
         <div class="layui-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
           <div class="layui-card-body" style="text-align: center; padding: 20px;">
-            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:delivery_rate] %></div>
-            <div style="font-size: 14px; opacity: 0.8;">送达率</div>
+            <div style="font-size: 28px; font-weight: bold;"><%= @stats[:click_rate] %></div>
+            <div style="font-size: 14px; opacity: 0.8;">点击率</div>
           </div>
         </div>
       </div>
@@ -107,10 +107,6 @@
             %>
             <span class="layui-badge <%= status_class %>"><%= @splash_ad.status_name %></span>
           </td>
-        </tr>
-        <tr>
-          <td><strong>点击率</strong></td>
-          <td><%= @stats[:click_rate] %></td>
         </tr>
         <tr>
           <td><strong>创建时间</strong></td>

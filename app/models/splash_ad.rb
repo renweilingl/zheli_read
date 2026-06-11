@@ -93,18 +93,9 @@ class SplashAd < ApplicationRecord
     STATUSES[status.to_sym] || status
   end
   
-  def age_range_display
-    return nil unless push_scope == 'age_range'
-    "#{min_age || 0} ~ #{max_age || 18} 岁"
-  end
   
   def time_range_display
     "#{start_time&.strftime('%Y-%m-%d %H:%M')} ~ #{end_time&.strftime('%Y-%m-%d %H:%M')}"
-  end
-  
-  def delivery_rate_display
-    return '0%' if send_count.zero?
-    "#{(delivery_rate * 100).round(2)}%"
   end
   
   def click_rate_display

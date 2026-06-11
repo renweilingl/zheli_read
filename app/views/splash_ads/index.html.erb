@@ -43,8 +43,8 @@
           <th>状态</th>
           <th>发送数</th>
           <th>点击数</th>
-          <th>送达率</th>
-          <th width="200" style="text-align:center;">操作</th>
+          <th>点击率</th>
+          <th width="160" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -74,7 +74,7 @@
           </td>
           <td><%= ad.send_count %></td>
           <td><%= ad.click_count %></td>
-          <td><%= ad.delivery_rate_display %></td>
+          <td><%= ad.click_rate_display %></td>
           <td style="text-align:center;">
             <div class="layui-btn-group">
               <%= link_to '查看', splash_ad_path(ad), class: 'layui-btn layui-btn-sm layui-btn-normal' %>

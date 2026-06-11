@@ -17,7 +17,7 @@ class SplashAdsController < ApplicationController
     @stats = {
       send_count: @splash_ad.send_count,
       click_count: @splash_ad.click_count,
-      delivery_rate: @splash_ad.delivery_rate_display,
+      #delivery_rate: @splash_ad.delivery_rate_display,
       click_rate: @splash_ad.click_rate_display
     }
   end
