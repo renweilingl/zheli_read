@@ -35,7 +35,6 @@
       <thead>
         <tr>
           <th style="width: 50px;">ID</th>
-          <th style="width: 100px;">广告图片</th>
           <th>链接类型</th>
           <th>推送范围</th>
           <th>推送方式</th>
@@ -51,11 +50,6 @@
         <% @splash_ads.each do |ad| %>
         <tr>
           <td><%= ad.id %></td>
-          <td>
-            <% if ad.image_url.present? %>
-              <img src="<%= FileMap.new(ad.image_url, "img").secrity_src %>" alt="广告图" style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
-            <% end %>
-          </td>
           <td><%= ad.link_type_name %></td>
           <td><%= ad.push_scope_name %></td>
           <td><%= ad.push_mode_name %></td>
