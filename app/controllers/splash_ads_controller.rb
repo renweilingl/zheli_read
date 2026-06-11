@@ -66,9 +66,9 @@ class SplashAdsController < ApplicationController
   
   def destroy
     authorize @splash_ad
-    @splash_ad.destroy
+    @splash_ad.update(status: :deleted)
     
-    redirect_to splash_ads_path, notice: '开屏广告已删除。'
+    render json: {success: true, status: @splash_ad.status}
   end
   
   def publish

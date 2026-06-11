@@ -26,7 +26,8 @@ class SplashAd < ApplicationRecord
     draft: '草稿',
     active: '投放中',
     expired: '已过期',
-    disabled: '已停用'
+    disabled: '已停用',
+    deleted: '已删除'
   }.freeze
   
   enum :link_type, {
@@ -49,7 +50,8 @@ class SplashAd < ApplicationRecord
     draft: 'draft',
     active: 'active',
     expired: 'expired',
-    disabled: 'disabled'
+    disabled: 'disabled',
+    deleted: 'deleted'
   }, prefix: true 
   
   # 验证
@@ -131,6 +133,10 @@ class SplashAd < ApplicationRecord
   
   def enable!
     update!(status: :active)
+  end
+
+  def deleted?
+    status == 'deleted'
   end
   
   private

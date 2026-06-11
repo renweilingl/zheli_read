@@ -122,9 +122,11 @@
     <!-- 操作按钮 -->
     <div style="margin-top: 20px;">
       <%= link_to '返回列表', splash_ads_path, class: 'layui-btn layui-btn-primary' %>
-      <% if policy(@splash_ad).edit? %>
+
+      <% unless @splash_ad.deleted? %>
         <%= link_to '编辑', edit_splash_ad_path(@splash_ad), class: 'layui-btn layui-btn-normal' %>
       <% end %>
+
       <% if @splash_ad.can_publish? && policy(@splash_ad).publish? %>
         <button class="layui-btn layui-btn-warm" onclick="publishAd(<%= @splash_ad.id %>)">发布</button>
       <% end %>
@@ -134,7 +136,8 @@
       <% if @splash_ad.status == 'disabled' && policy(@splash_ad).enable? %>
         <button class="layui-btn layui-btn-normal" onclick="enableAd(<%= @splash_ad.id %>)">启用</button>
       <% end %>
-      <% if policy(@splash_ad).destroy? %>
+
+      <% unless @splash_ad.deleted? %>
         <button class="layui-btn layui-btn-danger" onclick="deleteAd(<%= @splash_ad.id %>)">删除</button>
       <% end %>
     </div>
@@ -150,7 +153,7 @@ layui.use(['layer'], function() {
   window.publishAd = function(id) {
     layer.confirm('确定要发布该广告吗？', function(index) {
       $.ajax({
-        url: '/admin/splash_ads/' + id + '/publish',
+        url: '/splash_ads/' + id + '/publish',
         type: 'POST',
         success: function(res) {
           if (res.success) {
@@ -219,13 +222,13 @@ layui.use(['layer'], function() {
   window.deleteAd = function(id) {
     layer.confirm('确定要删除该广告吗？此操作不可恢复！', { icon: 3, title: '警告' }, function(index) {
       $.ajax({
-        url: '/admin/splash_ads/' + id,
+        url: '/splash_ads/' + id,
         type: 'POST',
         data: { _method: 'delete' },
         success: function(res) {
           if (res.success) {
             layer.msg('已删除', { icon: 1 }, function() {
-              window.location.href = '/admin/splash_ads';
+              window.location.href = '/splash_ads';
             });
           } else {
             layer.msg('删除失败', { icon: 2 });
