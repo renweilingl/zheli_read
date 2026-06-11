@@ -68,11 +68,16 @@ class SplashAd < ApplicationRecord
   scope :by_push_scope, ->(push_scope) { where(push_scope: push_scope) if push_scope.present? }
   scope :active_now, -> { 
     where(status: :active)
-#    .where('start_time <= ?', Time.current)
-#    .where('end_time >= ?', Time.current)
   }
   scope :ordered, -> { order(created_at: :desc) }
-  
+
+  before_save do
+    if link_type == "single_book"
+      self.compilation_id = nil
+    else
+      self.book_id = nil
+    end
+  end
 
   def link_type_name
     LINK_TYPES[link_type.to_sym] || link_type
