@@ -116,6 +116,8 @@ Rails.application.routes.draw do
   resources :splash_ads do
     member do
       post :publish
+      post :disable
+      post :enable
     end
   end
 end

@@ -82,20 +82,14 @@ class SplashAdsController < ApplicationController
     authorize @splash_ad
     @splash_ad.disable!
     
-    respond_to do |format|
-      format.html { redirect_to splash_ads_path, notice: '开屏广告已停用。' }
-      format.json { render json: { success: true, status: @splash_ad.status } }
-    end
+    render json: {success: true, status: @splash_ad.status}
   end
   
   def enable
     authorize @splash_ad
     @splash_ad.enable!
     
-    respond_to do |format|
-      format.html { redirect_to splash_ad_path, notice: '开屏广告已启用。' }
-      format.json { render json: { success: true, status: @splash_ad.status } }
-    end
+    render json: {success: true, status: @splash_ad.status}
   end
   
   def books_options

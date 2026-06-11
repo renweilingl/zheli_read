@@ -176,7 +176,7 @@ layui.use(['layer'], function() {
   window.disableAd = function(id) {
     layer.confirm('确定要停用该广告吗？', function(index) {
       $.ajax({
-        url: '/admin/splash_ads/' + id + '/disable',
+        url: '/splash_ads/' + id + '/disable',
         type: 'POST',
         success: function(res) {
           if (res.success) {
@@ -199,7 +199,7 @@ layui.use(['layer'], function() {
   window.enableAd = function(id) {
     layer.confirm('确定要启用该广告吗？', function(index) {
       $.ajax({
-        url: '/admin/splash_ads/' + id + '/enable',
+        url: '/splash_ads/' + id + '/enable',
         type: 'POST',
         success: function(res) {
           if (res.success) {
