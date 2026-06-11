@@ -23,7 +23,7 @@ class PushJob < ApplicationJob
               grade_ids: grade_ids,
               title: pn.title,
               body: pn.body,
-              type: pn.type,
+              type: type,
               content: {url: pn.link_url}
       }
 
