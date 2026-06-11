@@ -18,7 +18,6 @@
 				padding: 0;
 				color: #333;
 				padding-bottom: 100px;
-				/* 为底部固定按钮留足空间 */
 			}
 
 			.container {
@@ -75,14 +74,114 @@
 			}
 
 			/* ========================================== */
-			/* 🎨 ✨ 新增：漫画专用二次元波普组件 (category_id: 2) */
+			/* 🔒 ✨ 新增：1001 安全验证/链接过期 完美兜底UI */
 			/* ========================================== */
+			.expired-wrapper {
+				padding: 40px 24px;
+				text-align: center;
+				background: #ffffff;
+			}
+
+			/* 纯CSS绘制的动态藏宝箱徽章 */
+			.expired-badge-box {
+				width: 80px;
+				height: 80px;
+				background-color: #FFF9E6;
+				border-radius: 50%;
+				margin: 0 auto 20px auto;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 40px;
+				box-shadow: 0 8px 20px rgba(255, 187, 0, 0.15);
+				animation: floating 3s ease-in-out infinite;
+			}
+
+			.expired-title {
+				font-size: 20px;
+				font-weight: bold;
+				color: #111111;
+				margin-bottom: 8px;
+			}
+
+			.expired-desc {
+				font-size: 14px;
+				color: #777777;
+				line-height: 1.5;
+				margin-bottom: 36px;
+			}
+
+			/* 引导进入APP的核心权益墙 */
+			.app-benefit-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-bottom: 40px;
+				text-align: left;
+			}
+
+			.benefit-card {
+				background: #FAFAFA;
+				border: 1px solid #F0F0F0;
+				border-radius: 12px;
+				padding: 14px;
+				display: flex;
+				align-items: center;
+			}
+
+			.benefit-icon {
+				font-size: 24px;
+				margin-right: 12px;
+			}
+
+			.benefit-info h4 {
+				margin: 0 0 2px 0;
+				font-size: 14px;
+				color: #222;
+				font-weight: bold;
+			}
+
+			.benefit-info p {
+				margin: 0;
+				font-size: 11px;
+				color: #999;
+			}
+
+			/* 呼吸灯按钮动画 */
+			@keyframes pulseBtn {
+				0% {
+					box-shadow: 0 4px 14px rgba(255, 187, 0, 0.4);
+				}
+
+				50% {
+					box-shadow: 0 4px 24px rgba(255, 187, 0, 0.7);
+				}
+
+				100% {
+					box-shadow: 0 4px 14px rgba(255, 187, 0, 0.4);
+				}
+			}
+
+			@keyframes floating {
+
+				0%,
+				100% {
+					transform: translateY(0);
+				}
+
+				50% {
+					transform: translateY(-6px);
+				}
+			}
+
+			/* ========================================== */
+			/* 🎨 皮肤组件库 (图书1/漫画2/音频3/视频4)       */
+			/* ========================================== */
+			/* 漫画 (categoryId: 2) */
 			.manga-display-mock {
 				width: 100%;
 				height: 200px;
 				background-color: #FFFDEB;
-				/* 轻松欢快的奶油黄 */
-				/* 经典美漫网格印刷波点效果 */
 				background-image: radial-gradient(#ffe082 15%, transparent 16%);
 				background-size: 14px 14px;
 				display: flex;
@@ -90,25 +189,19 @@
 				justify-content: center;
 				position: relative;
 				border-bottom: 3px dashed #222222;
-				/* 漫画风虚线断开 */
 				overflow: hidden;
 			}
 
-			/* 破格倾斜漫画框 */
 			.manga-cover-frame {
 				position: relative;
 				width: 102px;
 				height: 142px;
 				border: 3px solid #222222;
-				/* 标志性漫画粗描边 */
 				border-radius: 4px;
 				box-shadow: 6px 6px 0px #222222;
-				/* 核心：硬核美漫块状黑阴影 */
 				background: #fff;
 				transform: rotate(-3deg);
-				/* 故意微调倾斜，制造打破死板的趣味感 */
 				z-index: 2;
-				transition: transform 0.2s;
 			}
 
 			.manga-render-img {
@@ -117,13 +210,11 @@
 				object-fit: cover;
 			}
 
-			/* 漫画专属：爆炸对话框小贴纸 */
 			.manga-sticker {
 				position: absolute;
 				right: 45px;
 				top: 32px;
 				background: #ff453a;
-				/* 极具冲击力的红 */
 				color: #ffffff;
 				font-size: 11px;
 				font-weight: bold;
@@ -135,7 +226,6 @@
 				z-index: 3;
 			}
 
-			/* 对话框尖角小尾巴 */
 			.manga-sticker::before {
 				content: '';
 				position: absolute;
@@ -156,9 +246,7 @@
 				border-color: #ff453a transparent transparent transparent;
 			}
 
-			/* ========================================== */
-			/* 📚 图书/课外书专用拟真组件 (category_id: 1)  */
-			/* ========================================== */
+			/* 图书 (categoryId: 1) */
 			.book-display-mock {
 				width: 100%;
 				height: 210px;
@@ -195,9 +283,7 @@
 				z-index: 3;
 			}
 
-			/* ========================================== */
-			/* 🎧 音频专用播放组件 (category_id: 3)         */
-			/* ========================================== */
+			/* 音频 (categoryId: 3) */
 			.audio-player-mock {
 				position: relative;
 				width: 100%;
@@ -297,9 +383,7 @@
 				}
 			}
 
-			/* ========================================== */
-			/* 🎥 视频播放器组件 (category_id: 4)           */
-			/* ========================================== */
+			/* 视频 (categoryId: 4) */
 			.video-player-mock {
 				position: relative;
 				width: 100%;
@@ -383,7 +467,7 @@
 			}
 
 			/* ========================================== */
-			/* 📝 公共：标题与详情介绍区域                 */
+			/* 📝 公共：信息排版结构                       */
 			/* ========================================== */
 			.course-info-box {
 				padding: 20px 16px;
@@ -450,7 +534,7 @@
 			}
 
 			/* ========================================== */
-			/* 🎯 底部固定大圆弧按钮                       */
+			/* 🎯 底部固定控制大圆弧激活按键                */
 			/* ========================================== */
 			.fixed-bottom-bar {
 				position: fixed;
@@ -480,6 +564,10 @@
 				cursor: pointer;
 				box-shadow: 0 4px 14px rgba(255, 187, 0, 0.4);
 				transition: transform 0.1s;
+			}
+
+			.download-action-btn.pulse {
+				animation: pulseBtn 2s infinite;
 			}
 
 			.download-action-btn:active {
@@ -530,6 +618,17 @@
 					if (!response.ok) throw new Error(`HTTP 异常: ${response.status}`);
 					const resData = await response.json();
 
+					// ==========================================
+					// 🔒 新增分支：拦截 1001 账户过期/安全码失效异常
+					// ==========================================
+					if (resData.response && resData.response.code === 1001) {
+						renderExpiredSafetyUI();
+						return;
+					}
+
+					// ==========================================
+					// 🟢 正常状态数据渲染逻辑 (code: 0)
+					// ==========================================
 					if (resData.response && resData.response.code === 0) {
 						const book = resData.response.data.book;
 						const categoryId = Number(book.category_id) || 1;
@@ -539,11 +638,8 @@
 						let subText = '';
 						let actionBtnText = '';
 
-						// ==========================================
-						// 🧠 全能多模态分流调度中心
-						// ==========================================
 						if (categoryId === 1) {
-							// 📚 皮肤 1：图书 (纸质立体3D折脊效果)
+							// 📚 图书
 							badgeText = '课外书';
 							const words = book.word_count ? (book.word_count > 10000 ? (book.word_count / 10000).toFixed(1) +
 								'万字' : book.word_count + '字') : '精品必读';
@@ -557,7 +653,7 @@
                     </div>
                 `;
 						} else if (categoryId === 2) {
-							// 🎨 皮肤 2：漫画专属 (波普二次元、轻松解压拟声流)
+							// 🎨 漫画
 							badgeText = '漫画';
 							subText = `连载更新中 ｜ 释放压力，轻松快乐看漫`;
 							actionBtnText = '打开 APP 趣味追漫';
@@ -572,7 +668,7 @@
                     </div>
                 `;
 						} else if (categoryId === 3) {
-							// 🎧 皮肤 3：音频专属 (暗夜有声、律动声波)
+							// 🎧 音频
 							badgeText = '音频';
 							subText = `流媒体音频 ｜ 聆听精彩有声世界`;
 							actionBtnText = '打开 APP 聆听完整音频';
@@ -591,7 +687,7 @@
                     </div>
                 `;
 						} else if (categoryId === 4) {
-							// 🎬 皮肤 4：视频课专属 (16:9 仿真宽屏播放窗)
+							// 🎬 视频
 							badgeText = '视频';
 							subText = `更新至第 ${book.page_count || '1'} 讲 ｜ 精彩视频呈现`;
 							actionBtnText = '打开 APP 观看完整视频';
@@ -609,10 +705,9 @@
                 `;
 						}
 
-						// 组装无缝融合的公共底座
+						// 正常模板拼装
 						dynamicContent.innerHTML = `
                 ${playerHtml}
-
                 <div class="course-info-box">
                     <div>
                         <span class="badge-tag">${badgeText}</span>
@@ -621,17 +716,16 @@
                     <div class="course-sub">${subText}</div>
                     <div class="course-author">作者/团队：${book.author_name || '少年越读专家团'}</div>
                 </div>
-
                 <div class="intro-section">
                     <h2 class="section-title">内容简介</h2>
                     <div class="intro-content">${book.content_description || '暂无详细介绍'}</div>
                 </div>
-
                 <div class="fixed-bottom-bar">
                     <button class="download-action-btn" onclick="triggerAppWakeup()">${actionBtnText}</button>
                 </div>
             `;
 					} else {
+						// 其他未知code异常兜底
 						dynamicContent.innerHTML =
 							`<div class="status-loading" style="color:red;">❌ 数据加载失败: ${resData.response.msg}</div>`;
 					}
@@ -639,6 +733,55 @@
 					dynamicContent.innerHTML =
 						`<div class="status-loading" style="color:red;">❌ 请求异常: ${error.message}</div>`;
 				}
+			}
+
+			// ==========================================
+			// 🛡️ 高情商渲染：把受限页面转化为高质量全能引流墙
+			// ==========================================
+			function renderExpiredSafetyUI() {
+				const dynamicContent = document.getElementById('dynamicContent');
+				dynamicContent.innerHTML = `
+        <div class="expired-wrapper">
+            <div class="expired-badge-box">📦</div>
+            <h2 class="expired-title">该分享已移入宝藏库</h2>
+            <p class="expired-desc">由于安全验证或链接时效过期，当前单页已功成身退。<br>点击下方进入APP，即可解锁更全面、更丰富的正版内容！</p>
+            
+            <div class="app-benefit-grid">
+                <div class="benefit-card">
+                    <span class="benefit-icon">📚</span>
+                    <div class="benefit-info">
+                        <h4>名著课外书</h4>
+                        <p>10万+正版少年读物</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🔥</span>
+                    <div class="benefit-info">
+                        <h4>高能热血漫</h4>
+                        <p>解压放松超全连载</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🎧</span>
+                    <div class="benefit-info">
+                        <h4>名师有声课</h4>
+                        <p>随时随地随心聆听</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🎬</span>
+                    <div class="benefit-info">
+                        <h4>精彩大视频</h4>
+                        <p>沉浸体验名师精讲</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fixed-bottom-bar">
+            <button class="download-action-btn pulse" onclick="triggerAppWakeup()">打开少年越读 APP 解锁全部</button>
+        </div>
+    `;
 			}
 
 			// APP唤醒中枢
