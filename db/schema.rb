@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_10_075740) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_11_015117) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -385,7 +385,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_10_075740) do
     t.string "image_url", null: false, comment: "图片URL"
     t.string "link_type", null: false, comment: "链接类型: single_book/category"
     t.bigint "book_id", comment: "关联图书ID"
-    t.bigint "category_id", comment: "关联分类ID"
     t.string "push_scope", default: "all_users", null: false, comment: "推送范围: all_users/age_range/specific_users"
     t.integer "min_age", comment: "最小年龄"
     t.integer "max_age", comment: "最大年龄"
@@ -402,8 +401,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_10_075740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "pad_image_url"
+    t.bigint "compilation_id"
     t.index ["book_id"], name: "index_splash_ads_on_book_id"
-    t.index ["category_id"], name: "index_splash_ads_on_category_id"
     t.index ["deleted_at"], name: "index_splash_ads_on_deleted_at"
   end
 
@@ -450,5 +449,4 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_10_075740) do
   add_foreign_key "recommends", "grades"
   add_foreign_key "splash_ad_grades", "splash_ads"
   add_foreign_key "splash_ads", "books"
-  add_foreign_key "splash_ads", "categories"
 end
