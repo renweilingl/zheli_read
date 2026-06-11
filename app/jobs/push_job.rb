@@ -28,7 +28,7 @@ class PushJob < ApplicationJob
       }
 
       res = HTTParty.post(url, body: data.to_json, headers: {'Content-Type' => 'application/json'}).body
-      logger.info "PushJob push_notification_id: #{push_notification_id}, data: #{data.to_json}, res: #{res}"
+      logger.info "PushJob push_notification_id: #{push_notification_id}, res: #{res}"
 
       pn.update(status: "sent")
     else  #development 
