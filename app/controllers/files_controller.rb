@@ -20,20 +20,24 @@ class FilesController < ApplicationController
     begin
       timestamp = Time.now.strftime('%Y%m%d%H%M%S')
       random_str = SecureRandom.hex(8)
+
       new_filename = "#{timestamp}_#{random_str}.#{extension}"
+      oss_path  = "mp4MultibitrateIn36f860fc1279e41828398ffb29c2a7a8/#{new_filename}"
 
       tmp_file_path = file.tempfile.path
       mime = `file --brief --mime-type "#{tmp_file_path}"`.strip
 
       temp_path = save_temp_file(file, new_filename)
       duration = MediaDurationService.extract_duration(temp_path)
-      FileUploadJob.perform_later(new_filename, temp_path, mime)
+
+      #FileUploadJob.perform_later(new_filename, temp_path, mime)
+      FileUploadJob.perform_later(oss_path, temp_path, mime)
 
       render json: {
         code: 0,
         msg: '上传成功',
         data: {
-          file_url: "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{new_filename}",
+          file_url: "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{oss_path}",
           file_type: extension,
           file_name: file.original_filename,
           file_size: file.size,
@@ -63,10 +67,6 @@ class FilesController < ApplicationController
       return
     end
 
-    #if file.size > 200.megabytes
-    #  render json: { code: 1, msg: "文件大小超过限制（最大 #{200.megabytes / 1.megabyte}MB）" }
-    #  return
-    #end
     begin
       timestamp = Time.now.strftime('%Y%m%d%H%M%S')
       random_str = SecureRandom.hex(8)

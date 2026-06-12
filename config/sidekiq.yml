@@ -1,6 +1,6 @@
 ---
 :verbose: false
-:concurrency: 1
+:concurrency: 4
 :tag: zheli
 :queues:
   - zheli_high
@@ -9,6 +9,6 @@
 test:
   :concurrency: 1
 development:
-  :concurrency: 1
+  :concurrency: 4
 production:
   :concurrency: 4
