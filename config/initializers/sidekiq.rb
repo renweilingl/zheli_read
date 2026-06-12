@@ -3,9 +3,9 @@
 require "fileutils"
 
 # 确保在Sidekiq初始化前加载.env文件
-if defined?(Dotenv)
-  Dotenv.load(Rails.root.join('.env').to_s)
-end
+#if defined?(Dotenv)
+#  Dotenv.load(Rails.root.join('.env').to_s)
+#end
 
 def build_sidekiq_redis_url
   if Rails.env.development? || Rails.env.test?
