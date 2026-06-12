@@ -15,7 +15,8 @@ class PushJob < ApplicationJob
 
       return if pn.push_scope  == 2  #先不针对特殊用户推送
 
-      type = pn.push_type == 0 ? "system" : "activity"
+      #type = pn.push_type == 0 ? "system" : "activity"
+      type = "url"
 
       grade_ids = pn.push_scope == 0  ?  pn.grade_ids : Grade.all.pluck(:id)
 
