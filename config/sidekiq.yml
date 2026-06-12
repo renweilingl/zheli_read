@@ -11,4 +11,4 @@ test:
 development:
   :concurrency: 1
 production:
-  :concurrency: 2
+  :concurrency: 4
