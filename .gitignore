@@ -18,3 +18,5 @@ dump.rdb
 *.txt
 /config/master.key
 public/assets
+run_sidekiq.sh
+start_sidekiq.sh
