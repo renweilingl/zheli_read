@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_15_015524) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_15_135617) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -269,6 +269,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_15_015524) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "rank_id"
+    t.string "name", limit: 16, default: ""
+    t.string "color", limit: 16, default: ""
     t.index ["content_group_id"], name: "index_contents_on_content_group_id"
   end
 
