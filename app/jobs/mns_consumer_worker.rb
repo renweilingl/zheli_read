@@ -76,8 +76,10 @@ class MnsConsumerWorker
       handle_message(body, message)
       
       # 删除已处理的消息
-      client.delete_message(message[:receipt_handle])
-      #logger.info "消息已处理并删除: #{message[:message_id]}"
+      if Rails.env.production?
+        client.delete_message(message[:receipt_handle])
+        #logger.info "消息已处理并删除: #{message[:message_id]}"
+      end
       
     rescue => e
       logger.error "消息处理异常: #{e.message}"
