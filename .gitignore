@@ -16,6 +16,7 @@ config/*.pem
 dump.rdb
 *.pdf
 *.txt
+*.md
 /config/master.key
 public/assets
 run_sidekiq.sh
