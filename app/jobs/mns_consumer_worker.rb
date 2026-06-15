@@ -141,8 +141,6 @@ class MnsConsumerWorker
             chapter.hd_file_path = gen_file_path(x["Name"], run_id, filename)
           when "Act-ss-mp4-sd"
             chapter.sd_file_path  = gen_file_path(x["Name"], run_id, filename)
-          #when "Act-Snapshot"
-            #chapter.snap_file_path  = gen_file_path(x["Name"], run_id, filename)
           end
         end
 
