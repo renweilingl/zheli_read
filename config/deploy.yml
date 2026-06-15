@@ -50,6 +50,9 @@ env:
     - ALIYUN_OSS_ENDPOINT
     - REDIS_URL
     - REDIS_PASSWORD
+    - ALIYUN_MNS_ENDPOINT
+    - ALIYUN_MNS_QUEUE_NAME
+    - MNS_CONSUMER_ENABLED
 
 # ==================== SSH 配置 ====================
 ssh:
