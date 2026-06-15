@@ -109,6 +109,8 @@ module Admin
         :recommend_id,
         :author_id,
         :recommend_id,
+        :name,
+        :color,
         :rank_id
       ).merge(
         sn: params.dig(:content, :sn).to_i

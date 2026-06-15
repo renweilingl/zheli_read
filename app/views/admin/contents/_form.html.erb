@@ -82,7 +82,7 @@
     </div>
   <% end %>
 
-  <% if @content_group.group_type == "multi_images" || @content_group.group_type == "sub_recommend" %>
+  <% if ["multi_images", "sub_recommend", "one_row_two_columns"].include? @content_group.group_type %>
     <div class="layui-form-item">
       <label class="layui-form-label">图标</label>
       <div class="layui-input-block">
@@ -94,6 +94,27 @@
             <%= f.hidden_field :img_url, id: "iconInput" %>
           </div>
         </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if ["one_row_two_columns"].include? @content_group.group_type %>
+    <div class="layui-form-item layui-col-md6">
+      <label class="layui-form-label">展示名称</label>
+      <div class="layui-input-block">
+        <%= f.text_field :name, class: "layui-input", maxlength: 6, required: true, style: "width: 400px;" %>
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-col-md8">
+      <%= f.label :name, class: "layui-form-label" do %>
+        <span class="required">*</span> 文字颜色
+      <% end %>
+      <div class="layui-input-block">
+        <% ["#FF7300", "#FFBB00", "#318ACE", "#F53790", "#A337F5", "#5CC77A"].each_with_index do |c, idx| %>
+          <input type="radio" name="content[color]" value="<%= c  %>" title="" <%= 'checked' if c == @content.color  %>>
+          <div lay-radio style="background: <%= c %>; width: 42px; height: 24px; margin-right: 10px;"></div>
+        <% end %>
       </div>
     </div>
   <% end %>
@@ -120,6 +141,9 @@
 <script>
   var bannerOriginalImage = null;
   var bannerCropRatio = '2:1';
+  <% if "sub_recommend" == @content_group.group_type %>
+    var bannerCropRatio = '1:1';
+  <% end %>
   var bannerCropState = {
     x: 0, y: 0, width: 0, height: 0,
     isDragging: false, dragType: null,
@@ -381,7 +405,7 @@ document.addEventListener('mousemove', function(e) {
         });
       });
 
-      <% if ["multi_images", "sub_recommend"].include? @content_group.group_type %>
+      <% if ["multi_images", "sub_recommend", "one_row_two_columns"].include? @content_group.group_type %>
         var upload = layui.upload;
         document.getElementById('upload-banner').addEventListener('click', function() {
           var input = document.createElement('input');
