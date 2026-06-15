@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_11_015117) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_15_012029) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -188,6 +188,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_11_015117) do
     t.datetime "updated_at", null: false
     t.integer "duration", default: 0
     t.date "publish_date"
+    t.string "ld_file_path"
+    t.string "hd_file_path"
+    t.string "sd_file_"
+    t.string "snap_file_shot"
+    t.boolean "act_state", default: false
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
 
