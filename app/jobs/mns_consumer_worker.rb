@@ -20,18 +20,18 @@ class MnsConsumerWorker
       messages = receive_messages(client, MAX_MESSAGES_PER_RUN)
       
       if messages.empty?
-        logger.info "MNS队列为空,无消息需要处理"
+        #logger.info "MNS队列为空,无消息需要处理"
         return
       end
       
-      logger.info "接收到 #{messages.size} 条MNS消息"
+      #logger.info "接收到 #{messages.size} 条MNS消息"
       
       # 处理每条消息
       messages.each do |message|
         process_message(message, client)
       end
       
-      logger.info "成功处理 #{messages.size} 条MNS消息"
+      #logger.info "成功处理 #{messages.size} 条MNS消息"
       
     rescue => e
       logger.error "MNS消息处理失败: #{e.message}"
@@ -64,11 +64,10 @@ class MnsConsumerWorker
     logger.info "处理MNS消息 ID: #{message[:message_id]}"
     
     begin
-      # 尝试Base64解码消息体
       decoded_body = decode_message_body(message[:message_body])
       
-      logger.info "消息内容(原始): #{message[:message_body][0..200]}..." if message[:message_body].length > 200
-      logger.info "消息内容(解码后): #{decoded_body[0..200]}..." if decoded_body.length > 200
+      #logger.info "消息内容(原始): #{message[:message_body][0..200]}..." if message[:message_body].length > 200
+      #logger.info "消息内容(解码后): #{decoded_body[0..200]}..." if decoded_body.length > 200
       
       # 尝试解析为JSON
       body = parse_json_content(decoded_body)
@@ -78,7 +77,7 @@ class MnsConsumerWorker
       
       # 删除已处理的消息
       client.delete_message(message[:receipt_handle])
-      logger.info "消息已处理并删除: #{message[:message_id]}"
+      #logger.info "消息已处理并删除: #{message[:message_id]}"
       
     rescue => e
       logger.error "消息处理异常: #{e.message}"
@@ -119,36 +118,41 @@ class MnsConsumerWorker
 
   # 处理JSON格式消息
   def handle_message(data, message)
-    # TODO: 根据实际业务需求实现消息处理逻辑
-    # 示例:
-    # case data['type']
-    # when 'order_created'
-    #   handle_order_created(data)
-    # when 'user_registered'
-    #   handle_user_registered(data)
-    # end
-    
     logger.info "收到JSON消息: #{data.inspect}"
+
+    if data["Name"] == "Act-Report" && data["State"].downcase == "success"
+      if "completed" == data["MediaWorkflowExecution"]["State"].downcase
+        oss_object = data["MediaWorkflowExecution"]["Input"]["InputFile"]["Object"]
+        chapter = Chapter.find_by(content_file_url: "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{oss_object}")
+        return if chapter.nil?
+
+        run_id = data["RunId"]
+        filename = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
+
+        data["MediaWorkflowExecution"]["ActivityList"].each do |x|
+          next if x["State"] != "Success"
+
+          case x["Name"]
+          when "Act-ss-mp4-ld"
+            chapter.ld_file_path = gen_file_path(x["Name"], run_id, filename)
+          when "Act-ss-mp4-hd"
+            chapter.hd_file_path = gen_file_path(x["Name"], run_id, filename)
+          when "Act-ss-mp4-sd"
+            chapter.sd_file_path  = gen_file_path(x["Name"], run_id, filename)
+          when "Act-Snapshot"
+            chapter.snap_file_path  = gen_file_path(x["Name"], run_id, filename)
+          end
+        end
+
+        chapter.act_state = true
+        chapter.save
+      end
+    end
   end
 
-  # 处理纯文本消息
-  def handle_text_message(text, message)
-    # TODO: 根据实际业务需求实现文本消息处理逻辑
-    logger.info "收到文本消息: #{text}"
+  def gen_file_path(act_path, run_id, filename)
+    "https://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{act_path}/#{run_id}/#{filename}.mp4"
   end
 
-  # 示例: 处理订单创建消息
-  def handle_order_created(data)
-    # order_id = data['order_id']
-    # OrderService.process_new_order(order_id)
-    logger.info "处理订单创建: #{data.inspect}"
-  end
-
-  # 示例: 处理用户注册消息
-  def handle_user_registered(data)
-    # user_id = data['user_id']
-    # UserService.welcome_new_user(user_id)
-    logger.info "处理用户注册: #{data.inspect}"
-  end
 end
 
