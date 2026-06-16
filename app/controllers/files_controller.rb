@@ -30,7 +30,6 @@ class FilesController < ApplicationController
       temp_path = save_temp_file(file, new_filename)
       duration = MediaDurationService.extract_duration(temp_path)
 
-      #FileUploadJob.perform_later(new_filename, temp_path, mime)
       FileUploadJob.perform_later(oss_path, temp_path, mime)
 
       render json: {
