@@ -15,6 +15,7 @@ class ContentGroup < ApplicationRecord
     single_column: 'single_column',         # 单列展示
     author_display: 'author_display',        # 作者展示
     sub_recommend: 'sub_recommend',         #二级推荐
+    single_row_vertical_column: 'single_row_vertical_column',         #单排竖列
   }, prefix: true
 
   GROUP_TYPE_NAMES = {
@@ -26,6 +27,7 @@ class ContentGroup < ApplicationRecord
     single_column: '单列展示',
     author_display: '作者展示',
     sub_recommend: '二级推荐',
+    single_row_vertical_column: '单排竖列'
   }.freeze
 
   validates :name, presence: true, length: { maximum: 100 }
