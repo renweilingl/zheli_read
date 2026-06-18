@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_15_135617) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_18_010346) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -191,7 +191,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_15_135617) do
     t.string "ld_file_path"
     t.string "hd_file_path"
     t.string "sd_file_path"
-    t.string "snap_file_path"
     t.boolean "act_state", default: false
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
@@ -298,6 +297,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_15_135617) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_vip", default: false
+  end
+
+  create_table "mps_acts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "oss_object"
+    t.string "content_file_url"
+    t.string "run_id"
+    t.string "ld_file_path"
+    t.string "hd_file_path"
+    t.string "sd_file_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "packages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
