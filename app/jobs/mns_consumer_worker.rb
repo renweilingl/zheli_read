@@ -125,10 +125,15 @@ class MnsConsumerWorker
     if data["Name"] == "Act-Report" && data["State"].downcase == "success"
       if "completed" == data["MediaWorkflowExecution"]["State"].downcase
         oss_object = data["MediaWorkflowExecution"]["Input"]["InputFile"]["Object"]
-        chapter = Chapter.find_by(content_file_url: "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{oss_object}")
+        run_id = data["RunId"]
+
+        content_file_url = "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{oss_object}"
+        chapter = Chapter.find_by(content_file_url: content_file_url)
+
+        MpsAct.create(oss_object: oss_object, run_id: run_id, content_file_url: content_file_url)
+
         return if chapter.nil?
 
-        run_id = data["RunId"]
         filename = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
 
         data["MediaWorkflowExecution"]["ActivityList"].each do |x|
