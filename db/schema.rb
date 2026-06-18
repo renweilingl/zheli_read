@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_18_010346) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_18_011101) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -303,9 +303,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_010346) do
     t.string "oss_object"
     t.string "content_file_url"
     t.string "run_id"
-    t.string "ld_file_path"
-    t.string "hd_file_path"
-    t.string "sd_file_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
