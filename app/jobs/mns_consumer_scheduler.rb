@@ -5,7 +5,7 @@ class MnsConsumerScheduler
   sidekiq_options queue: :zheli_low, retry: false
 
   # 检查间隔(秒) - 每次处理完后等待多久再次检查
-  CHECK_INTERVAL = 10
+  CHECK_INTERVAL = 30
 
   def perform
     # 执行MNS消息消费
