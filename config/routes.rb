@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :head_imgs
 
   resources :mps
+  resources :feedbacks, only: [:index]
 
   resources :files, only: [:show] do
     collection do
