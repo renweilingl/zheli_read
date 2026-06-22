@@ -9,7 +9,7 @@ class Admin::PictureBooksController < ApplicationController
 
     category_ids = Category.where(name: ["图书", "漫画"]).pluck(:id)
     @q = Book.where(category_id: category_ids).ransack(params[:q])
-    @picture_books = @q.result.paginate(page: params[:page], per_page: @per_page)
+    @picture_books = @q.result.order("id asc").paginate(page: params[:page], per_page: @per_page)
 
     @suppliers = Supplier.all
   end
