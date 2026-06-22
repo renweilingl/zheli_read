@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_18_011101) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_22_000000) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -282,6 +282,18 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_011101) do
     t.string "image_url", comment: "页面图片URL（PDF导入）"
     t.index ["book_id", "page_number"], name: "index_ebook_pages_on_book_id_and_page_number", unique: true
     t.index ["book_id"], name: "index_ebook_pages_on_book_id"
+  end
+
+  create_table "feedbacks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "app_user_id", null: false, comment: "用户ID"
+    t.integer "feedback_type", default: 0, null: false, comment: "反馈类型：0-功能问题 1-内容建议 2-其他"
+    t.text "content", null: false, comment: "反馈内容"
+    t.text "images", comment: "图片URL列表（JSON数组）"
+    t.integer "status", default: 0, null: false, comment: "状态：0-待处理 1-处理中 2-已解决"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_user_id"], name: "index_feedbacks_on_app_user_id"
+    t.index ["status"], name: "index_feedbacks_on_status"
   end
 
   create_table "grades", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
