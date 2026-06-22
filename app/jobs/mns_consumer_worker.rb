@@ -128,10 +128,12 @@ class MnsConsumerWorker
         run_id = data["RunId"]
 
         content_file_url = "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{oss_object}"
+        mps_act = MpsAct.create(oss_object: oss_object, run_id: run_id, content_file_url: content_file_url)
+
+        #10分钟后检查一次
+        SupplementWorker.perform_in(600, mps_act.id)
+
         chapter = Chapter.find_by(content_file_url: content_file_url)
-
-        MpsAct.create(oss_object: oss_object, run_id: run_id, content_file_url: content_file_url)
-
         return if chapter.nil?
 
         filename = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
