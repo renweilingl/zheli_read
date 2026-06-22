@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateFeedbacks < ActiveRecord::Migration[8.0]
+class CreateFeedbacks < ActiveRecord::Migration[7.1]
   def change
     return if table_exists?(:feedbacks)
 
