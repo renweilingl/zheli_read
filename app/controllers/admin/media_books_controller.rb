@@ -8,7 +8,7 @@ class Admin::MediaBooksController < ApplicationController
 
     category_ids = Category.where(name: ["有声", "视频"]).pluck(:id)
     @q = Book.where(category_id: category_ids).ransack(params[:q])
-    @books = @q.result.paginate(page: params[:page], per_page: @per_page)
+    @books = @q.result.order("id asc").paginate(page: params[:page], per_page: @per_page)
 
     @suppliers = Supplier.all 
   end
