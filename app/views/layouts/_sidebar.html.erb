@@ -47,6 +47,17 @@
       </li>
 
       <li>
+        <a href="javascript:;">
+          <i class="layui-icon layui-icon-chart-screen"></i>
+          <cite>统计报表</cite>
+          <i class="iconfont nav_right">&#xe602;</i>
+        </a>
+        <ul class="sub-menu">
+          <li><%= link_to "年龄分析", :statistic_grade_reports, class: "sub-link" %></li>
+        </ul>
+      </li>
+
+      <li>
         <%= link_to :feedbacks, class: "main-link" do %>
           <i class="layui-icon layui-icon-face-smile-b"></i>用户反馈
         <% end %>

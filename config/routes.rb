@@ -32,6 +32,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :statistic do
+    resources :grade_reports, only: [:index]
+  end
+
   # Admin routes
   namespace :admin do
     resources :options, only: [:index]
