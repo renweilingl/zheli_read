@@ -6,7 +6,6 @@ class FeedbacksController < ApplicationController
 
     @per_page = params[:per_page] || 20
 
-    @q = Feedback.ransack(params[:q])
-    @feedbacks = @q.result.order("id desc").paginate(page: params[:page], per_page: @per_page)
+    @feedbacks = Feedback.all.order("id desc").paginate(page: params[:page], per_page: @per_page)
   end
 end

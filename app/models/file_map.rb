@@ -9,7 +9,7 @@ class FileMap
     @date = Time.now.to_i + ts
 
     p_bkt = src=~/.oss-cn-/
-    s_bkt = src[0..p_bkt-1].gsub("http://", '')
+    s_bkt = src[0..p_bkt-1].gsub("http://", '').gsub("https://", '')
 
     s_sub = src[p_bkt..-1]
     p_obj = s_sub=~/.com/
