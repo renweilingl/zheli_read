@@ -9,8 +9,8 @@ module Admin
     before_action :set_content, only: [:edit, :update, :destroy]
 
     def new
-      if @content_group.group_type == "sub_recommend" && @content_group.contents.count >= 5 
-        flash[:notice] = "当前类型只允许添加5内容"
+      if @content_group.group_type == "sub_recommend" && @content_group.contents.count >= 8 
+        flash[:notice] = "当前类型只允许添加8个内容"
         return redirect_to admin_grade_recommend_content_group_path(@grade, @recommend, @content_group)
       end
 
