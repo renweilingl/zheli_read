@@ -28,6 +28,14 @@
   </div>
 
   <div class="layui-form-item">
+    <label class="layui-form-label">首页显示</label>
+    <div class="layui-input-block">
+      <%= f.radio_button :status, true, title: "显示" %>
+      <%= f.radio_button :status, false, title: "隐藏" %>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
     <div class="layui-input-block">
       <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="submit-content">
         <i class="layui-icon layui-icon-release"></i>提交保存

@@ -72,7 +72,7 @@ module Admin
 
     def recommend_params
       params.require(:recommend).permit(
-        :name, :color
+        :name, :color, :status
       ).merge(
         sn: params.dig(:recommend, :sn).to_i
       )

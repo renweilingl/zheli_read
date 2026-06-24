@@ -39,9 +39,9 @@
             <td><%= r.name %></td>
             <td style="text-align:center;">
               <% if r.status? %>
-                <span class="layui-badge layui-bg-green">已发布</span>
+                <span class="layui-badge layui-bg-green">首页显示</span>
               <% else %>
-                <span class="layui-badge">未发布</span>
+                <span class="layui-badge">首页隐藏</span>
               <% end %>
             </td>
             <td><%= r.sn %></td>
@@ -55,7 +55,7 @@
                 <%= link_to '分组管理', admin_grade_recommend_content_groups_path(@grade, r), class: "layui-btn layui-btn-sm layui-bg-blue" %>
                 <%= link_to '编辑', edit_admin_grade_recommend_path(@grade, r), class: "layui-btn layui-btn-sm" %>
                 <a href="<%= toggle_status_admin_grade_recommend_path(@grade, r) %>" class="layui-btn layui-btn-sm <%= r.status? ? 'layui-btn-danger' : '' %>" data-method="post" style="margin-left: 0;">
-                  <%= r.status? ? '下架' : '上架' %>
+                  <%= r.status? ? '隐藏' : '显示' %>
                 </a>
                 <%= link_to '删除', admin_grade_recommend_path(@grade, r), method: :delete, class: "layui-btn layui-btn-sm layui-btn-danger", title: "删除", data: { confirm: "确定要删除此内容吗？此操作不可恢复。" } %>
               </div>
