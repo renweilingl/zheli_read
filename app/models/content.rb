@@ -7,6 +7,7 @@ class Content < ApplicationRecord
   belongs_to :author, optional: true
   belongs_to :recommend, optional: true
   belongs_to :rank, optional: true
+  belongs_to :category_sub, optional: true
 
   scope :sorted, -> { order(sn: :asc, id: :desc) }
   scope :with_content_type, ->(content_type) { where(content_type: content_type) }
@@ -17,6 +18,7 @@ class Content < ApplicationRecord
     author_display: 'author_display', # 作者显示
     recommend: 'recommend', # 推荐
     rank: 'rank', # 排行榜
+    category_sub: 'category_sub', # 二级分类
   }, prefix: true
 
   CONTENT_TYPES = {
@@ -25,6 +27,7 @@ class Content < ApplicationRecord
     author_display: '作者显示',
     recommend: '推荐',
     rank: '排行榜',
+    category_sub: '二级分类',
   }.freeze
 
   def content_type_name
@@ -47,16 +50,19 @@ class Content < ApplicationRecord
   end
 
   def content_name
-    if content_type == "compilation"
+    case content_type
+    when "compilation"
       compilation.name
-    elsif content_type == "book"
+    when "book"
       book.name
-    elsif content_type == "author_display"
+    when "author_display"
       author.name
-    elsif content_type == "recommend"
+    when "recommend" 
       recommend.name
-    elsif content_type == "rank"
+    when "rank"
       rank.name
+    when "category_sub"
+      category_sub.name
     end
   end
 end

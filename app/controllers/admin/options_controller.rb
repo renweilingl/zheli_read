@@ -39,6 +39,10 @@ class Admin::OptionsController < ApplicationController
       @title = "选择排行榜"
       @name = "rank_id"
       @opts = Rank.where(grade_id: params[:grade_id])
+    when "category_sub"
+      @title = "选择二级分类"
+      @name = "category_sub_id"
+      @opts = CategorySub.all
     end
 
     render json: { opts: render_to_string(partial: 'opts', layout: false), name: @name }

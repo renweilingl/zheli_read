@@ -3,6 +3,7 @@
 class CategorySub < ApplicationRecord
   audited
   belongs_to :category
+  has_many :contents, dependent: :destroy
   has_and_belongs_to_many :books, join_table: :category_sub_books
 
   validates :name, presence: true, length: { maximum: 100 }
