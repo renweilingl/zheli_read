@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   layout 'login'
 
   def new
-    redirect_to dashboard_path if logged_in?
+    redirect_to :admin_grades if logged_in?
   end
 
   def create
