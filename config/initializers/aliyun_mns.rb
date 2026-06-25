@@ -40,14 +40,14 @@ class AliyunMnsClient
     
     response = http_get(url, params)
     
-    logger.info "[MNS] Receive message response code: #{response.code}"
+    #logger.info "[MNS] Receive message response code: #{response.code}"
     
     if response.code == 200 && response.body.present?
-      logger.info "[MNS] Successfully received message"
+      #logger.info "[MNS] Successfully received message"
       parse_message(response.body)
     elsif response.code == 204 || response.code == 404
       # 204 No Content 或 404 MessageNotExist 表示队列为空
-      logger.info "[MNS] Queue is empty (#{response.code})"
+      #logger.info "[MNS] Queue is empty (#{response.code})"
       nil
     else
       logger.error "[MNS] Failed to receive message. Code: #{response.code}, Body: #{response.body[0..200]}"
