@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   namespace :statistic do
     resources :grade_reports, only: [:index]
+    resources :channel_reports, only: [:index]
   end
 
   # Admin routes
