@@ -34,7 +34,9 @@ Rails.application.routes.draw do
 
   namespace :statistic do
     resources :grade_reports, only: [:index]
-    resources :channel_reports, only: [:index]
+    resources :channel_reports, only: [:index] do
+      get 'export', on: :collection, :defaults => {:format => 'xls'}
+    end
   end
 
   # Admin routes
