@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_25_000000) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_30_032028) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -125,6 +125,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_25_000000) do
     t.string "content_file_url", comment: "电子书内容文件URL"
     t.string "content_file_type", comment: "内容文件类型 (epub/pdf)"
     t.string "content_file_name", comment: "内容文件名"
+    t.bigint "media_id"
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["import_status"], name: "index_books_on_import_status"
     t.index ["name"], name: "index_books_on_name"
