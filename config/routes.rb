@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     resources :channel_reports, only: [:index] do
       get 'export', on: :collection, :defaults => {:format => 'xls'}
     end
+
+    resources :user_analytics_daily_reports, only: [:index] do
+      get 'export', on: :collection, :defaults => {:format => 'xls'}
+    end
   end
 
   # Admin routes
