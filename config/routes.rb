@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   # Admin routes
   namespace :admin do
     resources :options, only: [:index]
+    resources :user_stats, only: [:index]
     resources :authors do
       get 'batch_new', on: :collection
       post 'batch_add', on: :collection
