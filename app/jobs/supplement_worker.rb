@@ -13,7 +13,8 @@ class SupplementWorker
     return unless chapter.ld_file_path.blank?
 
     run_id = mps.run_id
-    name = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
+    #name = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
+    name = File.basename(chapter.content_file_url)
     
     hd_file_path = "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/Act-ss-mp4-hd/#{run_id}/#{name}"
     ld_file_path = "http://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/Act-ss-mp4-ld/#{run_id}/#{name}"

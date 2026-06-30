@@ -136,7 +136,8 @@ class MnsConsumerWorker
         chapter = Chapter.find_by(content_file_url: content_file_url)
         return if chapter.nil?
 
-        filename = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
+        #filename = chapter.content_file_url[/[^\/]+(?=\.[^\.]+$)/]
+        filename = File.basename(chapter.content_file_url)
 
         data["MediaWorkflowExecution"]["ActivityList"].each do |x|
           next if x["State"] != "Success"
