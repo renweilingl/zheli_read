@@ -8,7 +8,7 @@ class CreateDailyStatsTables < ActiveRecord::Migration[7.1]
     unless table_exists?(:user_analytics_daily)
       create_table :user_analytics_daily do |t|
         t.string :stat_date, null: false, comment: '日期 YYYY-MM-DD'
-        t.string :channel, limit: 32, comment: '渠道（NULL=全部）'
+        t.string :channel, limit: 32, null: false, default: '', comment: '渠道（空字符串=全部）'
         t.integer :dau, default: 0, comment: '日活'
         t.integer :wau, default: 0, comment: '周活'
         t.integer :mau, default: 0, comment: '月活'
@@ -67,7 +67,7 @@ class CreateDailyStatsTables < ActiveRecord::Migration[7.1]
     unless table_exists?(:daily_channel_stats)
       create_table :daily_channel_stats do |t|
         t.string :stat_date, null: false, comment: '统计日期 YYYY-MM-DD'
-        t.string :channel, limit: 32, comment: '渠道（NULL=全部）'
+        t.string :channel, limit: 32, null: false, default: '', comment: '渠道（空字符串=全部）'
         t.integer :registrations, default: 0, comment: '当日注册量'
         t.integer :active_users, default: 0, comment: '当日活跃用户数'
         t.integer :paid_users, default: 0, comment: '当日付费用户数'
