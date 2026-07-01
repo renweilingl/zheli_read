@@ -49,6 +49,11 @@ class Admin::CataloguesController < ApplicationController
     render json: {code: 0}
   end
 
+  def batch_unfree
+    @book.catalogues.where(id: params[:ids]).update_all(is_free: false)
+    render json: {code: 0}
+  end
+
   private
 
   def set_book

@@ -10,6 +10,7 @@
   <div class="x-body">
     <div class="xblock">
       <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchFree();">批量免费 </button>
+      <button class="layui-btn layui-bg-blue layui-btn-sm" onclick="batchunFree();">批量付费 </button>
     </div>
 
     <table class="layui-table" id="main-table"></table>
@@ -97,6 +98,24 @@
 
         $.ajax({
           url: '<%= batch_free_admin_picture_book_catalogues_path(@book) %>',
+          dataType: 'json',
+          type: 'post',
+          data: {ids: ids},
+          success: function(res) {
+            if(res.code == 0){
+              window.location.reload();
+            } else {
+              layer.msg('修改失败');
+            }
+          }
+        })
+    }
+
+    function batchunFree() {
+        var ids = get_ids();
+
+        $.ajax({
+          url: '<%= batch_unfree_admin_picture_book_catalogues_path(@book) %>',
           dataType: 'json',
           type: 'post',
           data: {ids: ids},
