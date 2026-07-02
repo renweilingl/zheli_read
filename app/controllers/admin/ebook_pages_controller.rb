@@ -11,7 +11,7 @@ class Admin::EbookPagesController < ApplicationController
          book_id: r.book_id,
          is_free: r.is_free,
          page_number: r.page_number,
-         image_url: r.image_url
+    #     image_url: r.image_url
         }
       }
       render json: {data: items, code: 0, count: @book.ebook_pages.size}
