@@ -104,6 +104,10 @@ Rails.application.routes.draw do
         post 'batch_free', on: :collection
         post 'batch_unfree', on: :collection
       end
+      resources :ebook_pages do
+        post 'batch_free', on: :collection
+        post 'batch_unfree', on: :collection
+      end
     end
 
     resources :media_books do
