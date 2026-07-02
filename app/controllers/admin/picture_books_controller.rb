@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Admin::PictureBooksController < ApplicationController
   before_action :require_login
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:show, :edit, :update, :destroy, :media_link, :update_media_link]
 
   def index
     authorize Book
@@ -61,6 +61,30 @@ class Admin::PictureBooksController < ApplicationController
     authorize @book
     @book.destroy
     redirect_to admin_picture_books_path, notice: '图书删除成功'
+  end
+
+  def media_link
+    #authorize @book
+    audio_category = Category.find_by(name: "有声")
+    @audio_books = Book.where(category_id: audio_category.id).order(:name) if audio_category
+  end
+
+  def update_media_link
+    #authorize @book
+    media_id = params[:media_id]
+    
+    if media_id.blank?
+      @book.update(media_id: nil)
+      redirect_to admin_picture_books_path, notice: '已取消有声关联'
+    else
+      audio_book = Book.find_by(id: media_id)
+      if audio_book && audio_book.category.name == "有声"
+        @book.update(media_id: media_id)
+        redirect_to admin_picture_books_path, notice: '有声关联成功'
+      else
+        redirect_to admin_picture_books_path, alert: '关联失败:选择的不是有声图书'
+      end
+    end
   end
 
   private

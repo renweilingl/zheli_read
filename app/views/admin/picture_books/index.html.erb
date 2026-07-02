@@ -83,8 +83,10 @@
                 <% elsif book.file_type == "pdf" %>
                   <%= link_to "章节管理", admin_picture_book_ebook_pages_path(book), class: "layui-btn layui-btn-sm" %>
                 <% end %>
+                <% if book.category.name == "漫画" %>
+                  <%= link_to "音频关联", media_link_admin_picture_book_path(book), class: "layui-btn layui-btn-sm layui-btn-warm" %>
+                <% end %>
                 <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
-                <%#= link_to "关联", media_link_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', admin_picture_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除图书吗？此操作不可恢复。" } %>
               </div>
             </td>
