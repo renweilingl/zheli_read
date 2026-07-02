@@ -97,6 +97,8 @@ Rails.application.routes.draw do
     end
 
     resources :picture_books do
+      get 'media_link', on: :member
+      put 'bind_media', on: :member
       resources :catalogues do
         post 'update_sn', on: :collection
         post 'batch_free', on: :collection

@@ -36,12 +36,13 @@
           <th width="60">ID</th>
           <th>图书信息</th>
           <th>年级范围</th>
-          <th width="80">类型</th>
+          <th width="60">类型</th>
           <th>二级分类</th>
-          <th width="80">状态</th>
+          <th width="40">状态</th>
           <th width="80">付费类型</th>
-          <th width="130">创建时间</th>
-          <th width="200" style="text-align:center;">操作</th>
+          <th width="100">创建时间</th>
+          <!--th width="40">音频</th-->
+          <th width="240" style="text-align:center;">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -79,6 +80,7 @@
               <div class="layui-btn-group">
                 <%= link_to "章节管理", admin_picture_book_catalogues_path(book), class: "layui-btn layui-btn-sm" %>
                 <%= link_to "编辑", edit_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
+                <%#= link_to "关联", media_link_admin_picture_book_path(book), class: "layui-btn layui-btn-sm" %>
                 <%= link_to '删除', admin_picture_book_path(book), method: :delete, class: "layui-btn layui-btn-sm", title: "删除", data: { confirm: "确定要删除图书吗？此操作不可恢复。" } %>
               </div>
             </td>
