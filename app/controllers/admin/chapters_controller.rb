@@ -17,7 +17,7 @@ class Admin::ChaptersController < ApplicationController
          created_at: r.created_at.strftime('%Y-%m-%d'),
         }
       }
-      render json: {data: items, code: 0, count: @book.catalogues.size}
+      render json: {data: items, code: 0, count: @book.chapters.size}
     end
   end
 
