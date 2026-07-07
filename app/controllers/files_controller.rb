@@ -107,11 +107,6 @@ class FilesController < ApplicationController
       return
     end
 
-    #if file.size > 5.megabytes
-    #  render json: { success: false, message: '文件大小不能超过 5MB' }
-    #  return
-    #end
-
     extension = File.extname(file.original_filename).downcase.delete('.')
     timestamp = Time.now.strftime('%Y%m%d%H%M%S')
     random_str = SecureRandom.hex(8)
