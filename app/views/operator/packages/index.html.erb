@@ -21,6 +21,7 @@
         <tr>
           <th width="80">ID</th>
           <th>名称</th>
+          <th>序号</th>
           <th>原价</th>
           <th>实际价格</th>
           <th>限时折扣</th>
@@ -35,6 +36,7 @@
           <tr>
             <td><%= r.id %></td>
             <td><%= r.name %></td>
+            <td><%= r.sn %></td>
             <td><%= r.origin_price.round(2) %></td>
             <td><%= r.price.round(2) %></td>
             <td><%= r.is_discount? ? "是" : "否" %></td>

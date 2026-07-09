@@ -43,6 +43,14 @@
     </div>
   </div>
 
+  <div class="layui-form-item layui-col-md6">
+    <label class="layui-form-label">序号</label>
+    <div class="layui-input-block">
+      <%= f.number_field :sn, class: "layui-input", min: 0, step: 1 %>
+    </div>
+  </div>
+
+
   <div class="layui-form-item">
     <div class="layui-input-block">
       <button class="layui-btn layui-bg-blue" lay-submit lay-filter="component-form-element">立即提交</button>
