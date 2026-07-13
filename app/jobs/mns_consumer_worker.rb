@@ -159,7 +159,7 @@ class MnsConsumerWorker
   end
 
   def gen_file_path(act_path, run_id, filename)
-    "https://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{act_path}/#{run_id}/#{filename}.mp4"
+    "https://#{ENV["ALIYUN_OSS_BUCKET"]}.oss-#{ENV["ALIYUN_OSS_ENDPOINT"]}.aliyuncs.com/#{act_path}/#{run_id}/#{filename}"
   end
 
 end
