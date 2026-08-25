@@ -54,6 +54,10 @@ class AppUser < ApplicationRecord
   # 作用域
   scope :vip_users, -> { where(is_vip: true).where("vip_expires_at > ?", Time.current) }
 
+  # 关联关系
+  has_many :memberships, dependent: :destroy
+  has_many :orders, dependent: :destroy
+
   # 检查用户是否为有效 VIP
   def vip_active?
     is_vip? && vip_expires_at.present? && vip_expires_at > Time.current
