@@ -101,4 +101,8 @@ class Order < ApplicationRecord
   def generate_order_no
     self.order_no ||= "VB#{Time.current.strftime('%Y%m%d%H%M%S')}#{SecureRandom.hex(4).upcase}"
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["amount", "channel", "created_at", "id", "id_value", "membership_id", "order_no", "paid_at", "payment_method", "status", "updated_at", "user_id"]
+  end
 end

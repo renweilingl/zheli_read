@@ -1,0 +1,76 @@
+<div class="layui-tab">                                                                                                    
+  <div class="x-nav">                                                            
+    <span class="layui-breadcrumb">                                              
+      <a href="">会员管理</a>
+      <a><cite>订单管理</cite></a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+                                                                                 
+  <div class="x-body"> 
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :operator_orders, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline">
+            <%= f.text_field :order_no_eq, class: :'layui-input', placeholder: "订单编号" %>
+          </div>
+          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :operator_orders, class: "layui-btn layui-btn-primary" %> 
+        <% end %>
+      </div>
+    </div>
+
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th>用户ID</th>
+          <th>订单号</th>
+          <th>金额</th>
+          <th>支付方式</th>
+          <th>支付时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.app_user_id %></td>
+            <td><%= order.order_no %></td>
+            <td><%= order.amount.round(2) %></td>
+            <td><%= order.payment_method %></td>
+            <td><%= order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @orders.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  layui.use(['laypage', 'form', 'layer'], function(){
+    var laypage = layui.laypage,
+        form = layui.form,
+        layer = layui.layer;
+
+    <% if @orders.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @orders.total_entries %>,
+      limit: <%= @orders.per_page %>,
+      curr: <%= @orders.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>

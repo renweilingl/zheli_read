@@ -126,6 +126,7 @@ Rails.application.routes.draw do
 
   namespace :operator do
     resources :packages
+    resources :orders, only: [:index]
   end
 
   resources :push_notifications, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
