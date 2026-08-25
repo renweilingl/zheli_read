@@ -1,4 +1,4 @@
-class CreateOrders < ActiveRecord::Migration[8.0]
+class CreateOrders < ActiveRecord::Migration[7.1]
   def change
     create_table :orders, comment: "订单表" do |t|
       t.integer :user_id, null: false, comment: "用户ID"

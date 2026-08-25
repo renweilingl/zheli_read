@@ -29,6 +29,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_02_112112) do
     t.string "qq_openid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "channel", limit: 32, comment: "注册渠道：app_store/tablet/community/koc"
     t.index ["device_id"], name: "index_app_users_on_device_id", unique: true
     t.index ["grade_id"], name: "index_app_users_on_grade_id"
     t.index ["phone"], name: "index_app_users_on_phone", unique: true
@@ -363,12 +364,44 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_02_112112) do
     t.boolean "is_vip", default: false
   end
 
+  create_table "memberships", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", comment: "会员表", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "用户ID"
+    t.integer "plan_type", default: 0, null: false, comment: "套餐：0-月度 1-季度 2-年度"
+    t.decimal "price", precision: 10, scale: 2, null: false, comment: "实付价格"
+    t.decimal "original_price", precision: 10, scale: 2, comment: "原价"
+    t.date "start_date", null: false, comment: "开始日期"
+    t.date "end_date", null: false, comment: "结束日期"
+    t.integer "status", default: 0, null: false, comment: "状态：0-待支付 1-有效 2-已过期 3-已取消"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_date"], name: "index_memberships_on_end_date"
+    t.index ["status"], name: "index_memberships_on_status"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "mps_acts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "oss_object"
     t.string "content_file_url"
     t.string "run_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", comment: "订单表", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "用户ID"
+    t.string "order_no", null: false, comment: "订单号"
+    t.decimal "amount", precision: 10, scale: 2, null: false, comment: "金额"
+    t.integer "payment_method", default: 0, null: false, comment: "支付方式：0-支付宝 1-微信"
+    t.integer "status", default: 0, null: false, comment: "状态：0-待支付 1-已支付 2-失败 3-已退款"
+    t.datetime "paid_at", comment: "支付时间"
+    t.integer "membership_id", comment: "会员ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "channel", limit: 32, comment: "支付渠道（继承自用户）"
+    t.index ["membership_id"], name: "index_orders_on_membership_id"
+    t.index ["order_no"], name: "index_orders_on_order_no", unique: true
+    t.index ["status"], name: "index_orders_on_status"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "packages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

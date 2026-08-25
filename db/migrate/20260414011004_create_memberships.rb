@@ -1,4 +1,4 @@
-class CreateMemberships < ActiveRecord::Migration[8.0]
+class CreateMemberships < ActiveRecord::Migration[7.1]
   def change
     create_table :memberships, comment: "会员表" do |t|
       t.integer :user_id, null: false, comment: "用户ID"
