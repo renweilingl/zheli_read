@@ -52,6 +52,7 @@ class Admin::MediaBooksController < ApplicationController
       if book_params[:file_url].present? && book_params[:file_url] != old_file_url
         @book.ebook_pages.delete_all
         @book.catalogues.delete_all
+        @book.update_column(:import_status, 0)
         BookImportJob.perform_later(@book.id)
       end
       redirect_to admin_media_books_path, notice: '图书更新成功'
