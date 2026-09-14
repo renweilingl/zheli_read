@@ -40,8 +40,8 @@
           <th>二级分类</th>
           <th width="40">状态</th>
           <th width="80">付费类型</th>
+          <th width="40">音频ID</th>
           <th width="100">创建时间</th>
-          <!--th width="40">音频</th-->
           <th width="240" style="text-align:center;">操作</th>
         </tr>
       </thead>
@@ -75,6 +75,7 @@
             <td><%= book.category_subs.pluck(:name).join(" | ") %></td>
             <td><%= book.is_published? ? "发布" : "下线" %></td>
             <td><%= book.is_free? ? "免费" : "付费" %></td>
+            <td><%= book.media_id %></td>
             <td><%= book.created_at.strftime("%Y-%m-%d") %></td>
             <td style="text-align:center;">
               <div class="layui-btn-group">
