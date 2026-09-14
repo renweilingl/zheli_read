@@ -45,7 +45,16 @@ class Admin::MediaBooksController < ApplicationController
     authorize @book
     @suppliers = Supplier.all
 
+    old_file_url = @book.file_url
+
     if @book.update(book_params)
+      # 文件重新上传时，清除旧章节/页面并重新导入
+      if book_params[:file_url].present? && book_params[:file_url] != old_file_url
+        @book.ebook_pages.delete_all
+        @book.catalogues.delete_all
+        @book.update_column(:import_status, 0)
+        BookImportJob.perform_later(@book.id)
+      end
       redirect_to admin_media_books_path, notice: '图书更新成功'
     else
       render :edit
