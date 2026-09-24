@@ -18,9 +18,9 @@ class Operator::AppUsersController < ApplicationController
     ds = params[:effective_days].to_i.days
 
     if @app_user.vip_expires_at.blank? || @app_user.vip_expires_at < Time.now
-      @app_user.update(vip_expires_at: Time.now + ds)
+      @app_user.update(vip_expires_at: Time.now + ds, is_vip: true)
     else
-      @app_user.update(vip_expires_at: @app_user.vip_expires_at + ds)
+      @app_user.update(vip_expires_at: @app_user.vip_expires_at + ds, is_vip: true)
     end
 
     flash[:success] = "会员赠送成功"
