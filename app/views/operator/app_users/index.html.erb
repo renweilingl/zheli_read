@@ -1,0 +1,86 @@
+<div class="layui-tab">                                                                                                    
+  <div class="x-nav">                                                            
+    <span class="layui-breadcrumb">                                              
+      <a href="">会员管理</a>
+    </span>
+    <%= render 'common/user_info' %>
+  </div>
+                                                                                 
+  <div class="x-body"> 
+    <div class="layui-row">
+      <div class="layui-col-xs9">
+        <%= search_form_for(@q, url: :operator_app_users, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+          <div class="layui-input-inline">
+            <%= f.text_field :phone_eq, class: :'layui-input', placeholder: "手机号" %>
+          </div>
+          <div class="layui-input-inline">
+            <%= f.text_field :nickname_cont, class: :'layui-input', placeholder: "微信昵称" %>
+          </div>
+          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+          <%= link_to "重置", :operator_app_users, class: "layui-btn layui-btn-primary" %> 
+        <% end %>
+      </div>
+    </div>
+
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th>用户ID</th>
+          <th>微信昵称</th>
+          <th>手机号</th>
+          <th>渠道</th>
+          <th>会员到期</th>
+          <th>注册时间</th>
+          <th width="100" style="text-align:center;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @app_users.each do |r| %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.nickname %></td>
+            <td><%= r.phone %></td>
+            <td><%= r.channel %></td>
+            <td><%= r.vip_expires_at.blank? ? "" : r.vip_expires_at.strftime('%Y-%m-%d') %></td>
+            <td><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <td style="text-align:center;">
+              <div class="layui-btn-group">
+                <%= link_to '赠送会员', new_gift_vip_operator_app_user_path(r), class: "layui-btn layui-btn-sm" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @app_users.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px; text-align: center;"></div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  layui.use(['laypage', 'form', 'layer'], function(){
+    var laypage = layui.laypage,
+        form = layui.form,
+        layer = layui.layer;
+
+    <% if @app_users.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @app_users.total_entries %>,
+      limit: <%= @app_users.per_page %>,
+      curr: <%= @app_users.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+    <% end %>
+  });
+</script>

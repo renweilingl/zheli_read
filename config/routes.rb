@@ -118,7 +118,6 @@ Rails.application.routes.draw do
 
         get 'batch_new', on: :collection
         post 'batch_add', on: :collection
-
       end
       post 'auto_sort', on: :member
     end
@@ -127,6 +126,10 @@ Rails.application.routes.draw do
   namespace :operator do
     resources :packages
     resources :orders, only: [:index]
+    resources :app_users, only: [:index] do
+      get 'new_gift_vip', on: :member
+      put 'add_gift_vip', on: :member
+    end
   end
 
   resources :push_notifications, only: [:index, :show, :new, :create, :edit, :update, :destroy] do

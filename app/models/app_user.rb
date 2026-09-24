@@ -68,4 +68,8 @@ class AppUser < ApplicationRecord
   def generate_uuid
     self[:uuid] = SecureRandom.uuid.delete("-") if new_record? || uuid.blank?
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["avatar", "books_read", "channel", "created_at", "device_id", "grade_id", "id", "id_value", "is_vip", "nickname", "password_digest", "phone", "qq_openid", "reading_minutes", "reading_words", "role", "updated_at", "uuid", "vip_expires_at", "wechat_openid"]
+  end
 end
