@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_10_070000) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_29_013026) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -174,6 +174,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_10_070000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_category_subs_on_category_id"
+  end
+
+  create_table "channels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "version"
   end
 
   create_table "chapters", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
