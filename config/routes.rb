@@ -60,6 +60,7 @@ Rails.application.routes.draw do
 
     resources :permissions, only: [:index, :show]
     resources :suppliers
+    resources :channels
 
     resources :categories do
       resources :category_subs do
