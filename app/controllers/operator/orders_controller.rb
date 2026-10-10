@@ -46,7 +46,7 @@ class Operator::OrdersController < ApplicationController
   def get_data
     cond = params[:q] || {}
 
-    @start_date = Time.now.to_date - 7.days
+    @start_date = Time.now.to_date - 1.year
     @end_date = Time.now.to_date
     if params[:start_date].present?
       @start_date = params[:start_date]

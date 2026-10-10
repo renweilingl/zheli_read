@@ -132,6 +132,7 @@ Rails.application.routes.draw do
     resources :app_users, only: [:index] do
       get 'new_gift_vip', on: :member
       put 'add_gift_vip', on: :member
+      get 'export', on: :collection, :defaults => {:format => 'xls'}
     end
   end
 
