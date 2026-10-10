@@ -37,7 +37,8 @@
         </div>
 
         <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
-        <%= link_to "重置", :operator_orders, class: "layui-btn layui-btn-primary" %> 
+        <%#= link_to "重置", :operator_orders, class: "layui-btn layui-btn-primary" %> 
+        <a href="javascript:void(0);"  class='layui-btn layui-btn-primary' id="export-data">导出</a>
       <% end %>
     </div>
 
@@ -79,6 +80,15 @@
 </div>
 
 <script>
+  $(document).on("click", "a#export-data", function() {
+    var form = $(this).parents("form");
+    var action = form.attr("action");
+
+    form.attr("action", "/operator/orders/export");
+    form.submit();
+
+    form.attr("action",action);
+  });
   layui.use(['laypage', 'form', 'layer', 'laydate'], function(){
     var laydate = layui.laydate;
         laydate.render({

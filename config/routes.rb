@@ -126,7 +126,9 @@ Rails.application.routes.draw do
 
   namespace :operator do
     resources :packages
-    resources :orders, only: [:index]
+    resources :orders, only: [:index] do
+      get 'export', on: :collection, :defaults => {:format => 'xls'}
+    end
     resources :app_users, only: [:index] do
       get 'new_gift_vip', on: :member
       put 'add_gift_vip', on: :member
