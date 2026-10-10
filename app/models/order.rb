@@ -116,6 +116,6 @@ class Order < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["amount", "channel", "created_at", "id", "id_value", "membership_id", "order_no", "paid_at", "payment_method", "status", "updated_at", "user_id"]
+    ["amount", "channel", "created_at", "id", "id_value", "membership_id", "order_no", "paid_at", "payment_method", "status", "updated_at", "app_user_id"]
   end
 end

@@ -12,7 +12,16 @@
       <div class="layui-col-xs9">
         <%= search_form_for(@q, url: :operator_orders, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
           <div class="layui-input-inline">
+            <%= f.text_field :app_user_id_eq, class: :'layui-input', placeholder: "用户ID" %>
+          </div>
+          <div class="layui-input-inline">
+            <%= f.text_field :channel_eq, class: :'layui-input', placeholder: "渠道" %>
+          </div>
+          <div class="layui-input-inline">
             <%= f.text_field :order_no_eq, class: :'layui-input', placeholder: "订单编号" %>
+          </div>
+          <div class="layui-input-inline" style="width: 120px;">
+            <%= f.select :status_eq, options_for_select([['待支付','pending'], ['已支付','paid'],['支付失败','failed'],['已退款','refunded']], @q.status_eq), { include_blank: "所有状态" } %>
           </div>
           <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
           <%= link_to "重置", :operator_orders, class: "layui-btn layui-btn-primary" %> 
