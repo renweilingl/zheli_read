@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_29_013026) do
+ActiveRecord::Schema[7.1].define(version: 2026_10_10_000000) do
   create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "nickname"
     t.string "avatar"
@@ -405,9 +405,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_29_013026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "channel", limit: 32, comment: "支付渠道（继承自用户）"
+    t.bigint "package_id"
     t.index ["app_user_id"], name: "index_orders_on_user_id"
     t.index ["membership_id"], name: "index_orders_on_membership_id"
     t.index ["order_no"], name: "index_orders_on_order_no", unique: true
+    t.index ["package_id"], name: "index_orders_on_package_id"
     t.index ["status"], name: "index_orders_on_status"
   end
 
