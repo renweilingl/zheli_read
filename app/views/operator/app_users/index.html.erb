@@ -26,9 +26,11 @@
       <thead>
         <tr>
           <th>用户ID</th>
-          <th>微信昵称</th>
+          <th>昵称</th>
           <th>手机号</th>
           <th>渠道</th>
+          <th>是否付费</th>
+          <th>付费金额</th>
           <th>会员到期</th>
           <th>注册时间</th>
           <th width="100" style="text-align:center;">操作</th>
@@ -41,6 +43,8 @@
             <td><%= r.nickname %></td>
             <td><%= r.phone %></td>
             <td><%= r.channel %></td>
+            <td><%= r.is_vip? ? "是" : "否" %></td>
+            <td><%= r.orders.paid.sum(:amount).round(2) %></td>
             <td><%= r.vip_expires_at.blank? ? "" : r.vip_expires_at.strftime('%Y-%m-%d') %></td>
             <td><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             <td style="text-align:center;">

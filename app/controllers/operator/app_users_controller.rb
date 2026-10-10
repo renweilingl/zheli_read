@@ -4,7 +4,7 @@ class Operator::AppUsersController < ApplicationController
   def index
     @per_page = params[:per_page] || 20
 
-    @q = AppUser.ransack(params[:q])
+    @q = AppUser.includes(:orders).ransack(params[:q])
     @app_users = @q.result.paginate(page: params[:page], per_page: @per_page)
   end
 
