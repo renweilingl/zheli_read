@@ -9,24 +9,36 @@
                                                                                  
   <div class="x-body"> 
     <div class="layui-row">
-      <div class="layui-col-xs9">
-        <%= search_form_for(@q, url: :operator_orders, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
-          <div class="layui-input-inline">
-            <%= f.text_field :app_user_id_eq, class: :'layui-input', placeholder: "用户ID" %>
+      <%= search_form_for(@q, url: :operator_orders, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+        <div class="layui-input-inline">
+          <%= f.text_field :app_user_id_eq, class: :'layui-input', placeholder: "用户ID" %>
+        </div>
+        <div class="layui-input-inline">
+          <%= f.text_field :channel_eq, class: :'layui-input', placeholder: "渠道" %>
+        </div>
+        <div class="layui-input-inline">
+          <%= f.text_field :order_no_eq, class: :'layui-input', placeholder: "订单编号" %>
+        </div>
+        <div class="layui-input-inline" style="width: 120px;">
+          <%= f.select :status_eq, options_for_select([['待支付','pending'], ['已支付','paid'],['支付失败','failed'],['已退款','refunded']], @q.status_eq), { include_blank: "所有状态" } %>
+        </div>
+
+        <div class="layui-input-inline">
+          <label class="layui-form-label" style="width: 56px;">日期范围</label>
+          <div class="layui-inline" id="ID-laydate-range">
+            <div class="layui-input-inline">
+              <input type="text" name="start_date" value="<%= @start_date %>"  autocomplete="off" id="ID-laydate-start-date" class="layui-input" placeholder="开始日期">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline">
+              <input type="text" name="end_date" value="<%= @end_date %>" autocomplete="off" id="ID-laydate-end-date" class="layui-input" placeholder="结束日期">
+            </div>
           </div>
-          <div class="layui-input-inline">
-            <%= f.text_field :channel_eq, class: :'layui-input', placeholder: "渠道" %>
-          </div>
-          <div class="layui-input-inline">
-            <%= f.text_field :order_no_eq, class: :'layui-input', placeholder: "订单编号" %>
-          </div>
-          <div class="layui-input-inline" style="width: 120px;">
-            <%= f.select :status_eq, options_for_select([['待支付','pending'], ['已支付','paid'],['支付失败','failed'],['已退款','refunded']], @q.status_eq), { include_blank: "所有状态" } %>
-          </div>
-          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
-          <%= link_to "重置", :operator_orders, class: "layui-btn layui-btn-primary" %> 
-        <% end %>
-      </div>
+        </div>
+
+        <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+        <%= link_to "重置", :operator_orders, class: "layui-btn layui-btn-primary" %> 
+      <% end %>
     </div>
 
     <table class="layui-table">
@@ -67,7 +79,13 @@
 </div>
 
 <script>
-  layui.use(['laypage', 'form', 'layer'], function(){
+  layui.use(['laypage', 'form', 'layer', 'laydate'], function(){
+    var laydate = layui.laydate;
+        laydate.render({
+          elem: '#ID-laydate-range',
+          range: ['#ID-laydate-start-date', '#ID-laydate-end-date']
+        });
+
     var laypage = layui.laypage,
         form = layui.form,
         layer = layui.layer;
