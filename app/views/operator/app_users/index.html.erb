@@ -8,18 +8,25 @@
                                                                                  
   <div class="x-body"> 
     <div class="layui-row">
-      <div class="layui-col-xs9">
-        <%= search_form_for(@q, url: :operator_app_users, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
-          <div class="layui-input-inline">
-            <%= f.text_field :phone_eq, class: :'layui-input', placeholder: "手机号" %>
-          </div>
-          <div class="layui-input-inline">
-            <%= f.text_field :nickname_cont, class: :'layui-input', placeholder: "微信昵称" %>
-          </div>
-          <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
-          <%= link_to "重置", :operator_app_users, class: "layui-btn layui-btn-primary" %> 
-        <% end %>
-      </div>
+      <%= search_form_for(@q, url: :operator_app_users, :html => {class: :'layui-form layui-col-md12'}) do |f| %>
+        <div class="layui-input-inline">
+          <%= f.text_field :channel_eq, class: :'layui-input', placeholder: "渠道" %>
+        </div>
+        <div class="layui-input-inline">
+          <%= f.text_field :id_eq, class: :'layui-input', placeholder: "用户ID" %>
+        </div>
+        <div class="layui-input-inline">
+          <%= f.text_field :phone_eq, class: :'layui-input', placeholder: "手机号" %>
+        </div>
+        <div class="layui-input-inline">
+          <%= f.text_field :nickname_cont, class: :'layui-input', placeholder: "昵称" %>
+        </div>
+        <div class="layui-input-inline">                                       
+          <%= f.select :is_vip_eq, options_for_select([['是', true], ['否', false]], @q.is_vip_eq), { include_blank: "是否付费" } %>
+        </div> 
+        <button class="layui-btn layui-bg-blue" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+        <%= link_to "重置", :operator_app_users, class: "layui-btn layui-btn-primary" %> 
+      <% end %>
     </div>
 
     <table class="layui-table">
