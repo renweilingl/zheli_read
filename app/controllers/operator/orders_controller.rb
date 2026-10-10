@@ -58,7 +58,7 @@ class Operator::OrdersController < ApplicationController
     cond[:created_at_gteq] = @start_date
     cond[:created_at_lteq] = @end_date
 
-    @q = Order.includes(:app_user).ransack(cond)
+    @q = Order.includes(:app_user, :package).ransack(cond)
     @orders = @q.result
   end
 end
