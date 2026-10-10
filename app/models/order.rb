@@ -54,6 +54,19 @@ class Order < ApplicationRecord
   # 创建前自动生成订单号
   before_validation :generate_order_no, on: :create
 
+  def hum_status
+    case status
+    when 'pending'
+      '待支付'
+    when 'paid'
+      '已支付'
+    when 'failed'
+      '支付失败'
+    when 'refunded'
+      '已退款'
+    end
+  end
+
   # 标记为已支付
   def mark_paid!
     update!(status: :paid, paid_at: Time.current)

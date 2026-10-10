@@ -6,7 +6,7 @@ class Operator::OrdersController < ApplicationController
 
     @per_page = params[:per_page] || 20
 
-    @q = Order.where(status: "paid").ransack(params[:q])
+    @q = Order.includes(:app_user).ransack(params[:q])
     @orders = @q.result.paginate(page: params[:page], per_page: @per_page)
   end
 end
