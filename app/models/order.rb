@@ -36,6 +36,8 @@ class Order < ApplicationRecord
   belongs_to :app_user, class_name: 'AppUser' # 所属用户
   belongs_to :membership, optional: true # 关联会员
 
+  belongs_to :package, optional: true
+
   # 作用域
   scope :pending, -> { where(status: :pending) }
   scope :paid, -> { where(status: :paid) }

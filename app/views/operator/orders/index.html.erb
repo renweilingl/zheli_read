@@ -61,7 +61,7 @@
           <tr>
             <td><%= order.app_user_id %></td>
             <td><%= order.channel %></td>
-            <td></td>
+            <td><%= order.package&.name %></td>
             <td><%= order.order_no %></td>
             <td><%= order.amount.round(2) %></td>
             <td><%= order.payment_method %></td>
