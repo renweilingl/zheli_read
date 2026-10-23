@@ -11,7 +11,7 @@ module Admin
     def index
       authorize [:admin, ContentGroup], policy_class: Admin::ContentGroupPolicy
 
-      @content_groups = @recommend.content_groups.sorted.paginate(page: params[:page], per_page: 15)
+      @content_groups = @recommend.content_groups.sorted.paginate(page: params[:page], per_page: 10)
     end
 
     def show

@@ -52,13 +52,35 @@
         <% end %>
       </tbody>
     </table>
+    <% if @content_groups.total_pages > 1 %>
+      <div id="pagination" style="margin-top: 20px;"></div>
+    <% end %>
   </div>
 </div>
 
 <script>
-layui.use(['layer'], function(){
-  var layer = layui.layer;
+layui.use(['layer', 'laypage'], function(){
+  var layer = layui.layer,
+      laypage = layui.laypage;
   var $ = layui.$;
+
+  <% if @content_groups.total_pages > 1 %>
+    laypage.render({
+      elem: 'pagination',
+      count: <%= @content_groups.total_entries %>,
+      limit: <%= @content_groups.per_page %>,
+      curr: <%= @content_groups.current_page %>,
+      layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+      jump: function(obj, first){
+        if(!first){
+          var url = new URL(window.location.href);
+          url.searchParams.set('page', obj.curr);
+          url.searchParams.set('per_page', obj.limit);
+          window.location.href = url.toString();
+        }
+      }
+    });
+  <% end %>
 
   // 状态切换
   $(document).on('click', 'a[data-method="post"]', function(e){
