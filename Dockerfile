@@ -38,15 +38,15 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential default-libmysqlclient-dev git libyaml-dev pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# 安装与 Gemfile.lock 匹配的 Bundler 版本（使用 Ruby China 镜像源加速）
-RUN gem install bundler -v 4.0.10 --source https://gems.ruby-china.com/ --no-document
+# 安装与 Gemfile.lock 匹配的 Bundler 版本（使用清华镜像源加速）
+RUN gem install bundler -v 4.0.10 --source https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --no-document
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 
-# 使用 Ruby China 镜像源加速 bundle install
+# 使用清华镜像源加速 bundle install
 RUN bundle config set frozen false && \
-    bundle config set mirror.https://rubygems.org https://gems.ruby-china.com/ && \
+    bundle config set mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems/ && \
     bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile -j 1 --gemfile
