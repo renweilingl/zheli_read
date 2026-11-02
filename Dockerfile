@@ -39,7 +39,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # 安装与 Gemfile.lock 匹配的 Bundler 版本（使用阿里云镜像源加速）
-RUN gem install bundler -v 4.0.10 --source https://mirrors.aliyun.com/rubygems/ --no-document
+RUN gem install bundler -v 2.5.11 --source https://mirrors.aliyun.com/rubygems/ --no-document
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
