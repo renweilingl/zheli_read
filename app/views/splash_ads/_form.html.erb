@@ -369,10 +369,12 @@
     var ctx = resultCanvas.getContext('2d');
     ctx.drawImage(bannerOriginalImage, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
 
-    // 转换为Blob并上传
+    // 转换为Blob并上传，用 PNG 保留 alpha 通道，透明区域不会被压成黑/白底色
+    var uploadFileName = bannerFileName.replace(/\.[^.]+$/, '') + '.png';
+
     resultCanvas.toBlob(function(blob) {
       var formData = new FormData();
-      formData.append('file', blob, bannerFileName);
+      formData.append('file', blob, uploadFileName);
 
       var csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
 
@@ -403,7 +405,7 @@
         layui.layer.msg('上传失败', {icon: 2});
         closeBannerCropModal();
       });
-    }, 'image/jpeg', 0.9);
+    }, 'image/png');
   }
 
 layui.use(['form', 'upload', 'laydate', 'layer'], function() {
