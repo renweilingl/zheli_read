@@ -13,9 +13,9 @@ FROM reg.ylb.im/voicebook/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
-# 替换 Debian 源为清华镜像，解决国内网络问题
-RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list.d/debian.sources && \
-    sed -i 's/security.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list.d/debian.sources
+# 替换 Debian 源为 USTC 镜像，解决国内网络问题
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources && \
+    sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
 
 # Install base packages
 RUN apt-get update -qq && \
@@ -39,14 +39,14 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # 安装与 Gemfile.lock 匹配的 Bundler 版本（使用清华镜像源加速）
-RUN gem install bundler -v 4.0.10 --source https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --no-document
+RUN gem install bundler -v 4.0.10 --source https://mirrors.ustc.edu.cn/rubygems/ --no-document
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 
 # 使用清华镜像源加速 bundle install
 RUN bundle config set frozen false && \
-    bundle config set mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems/ && \
+    bundle config set mirror.https://rubygems.org https://mirrors.ustc.edu.cn/rubygems/ && \
     bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile -j 1 --gemfile
